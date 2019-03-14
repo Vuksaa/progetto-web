@@ -14,41 +14,39 @@
     </figure>
   </header>
 
-  <section>
-    <form action="process_login.php" method="post" name="login_form">
-      <fieldset>
-        <legend>Login</legend>
-        <label for"email">Email:
-          <input type="email" name="email" autocomplete="on" placeholder="Email.." required />
-        </label>
-        <label for"password">Password:
-          <input type="password" name="password" placeholder="Password.." required />
-        </label>
-        <input type="button" value="Login" onclick="" />
-      </fieldset>
-    </form>
-    <form action="process_signup.php" method="post" name="signup_form">
-      <fieldset>
-        <legend>Signup</legend>
-        <label for"email">Email:
-          <input type="email" name="email" autocomplete="on" placeholder="Email.." required />
-        </label>
-        <label for"password">Password:
-          <input type="password" name="password" placeholder="Password.." required />
-        </label>
-        <label for"confirmPassword">Confirm Password:
-          <input type="password" name="confirmPassword" placeholder="Confirm password.." required />
-        </label>
-        <label>
-          <input type="radio" name="userType" value="client" checked />Client
-        </label>
-        <label>
-          <input type="radio" name="userType" value="provider" />Provider
-        </label>
-        <input type="button" value="Signup" onclick="" />
-      </fieldset>
-    </form>
-  </section>
+  <form action="process_login.php" method="post" name="login_form">
+    <fieldset>
+      <legend>Login</legend>
+      <label for="logEmail">Email:
+        <input type="email" name="email" autocomplete="on" placeholder="Email.." required id="logEmail" />
+      </label>
+      <label for="logPassword">Password:
+        <input type="password" name="password" placeholder="Password.." required id="logPassword" />
+      </label>
+      <input type="button" value="Login" onclick="" />
+    </fieldset>
+  </form>
+  <form action="process_signup.php" method="post" name="signup_form">
+    <fieldset>
+      <legend>Signup</legend>
+      <label for="signEmail">Email:
+        <input type="email" name="email" autocomplete="on" placeholder="Email.." required id="signEmail" />
+      </label>
+      <label for="signPassword">Password:
+        <input type="password" name="password" placeholder="Password.." required id="signPassword" />
+      </label>
+      <label for="signConfirmPassword">Confirm Password:
+        <input type="password" name="confirmPassword" placeholder="Confirm password.." required id="signConfirmPassword" />
+      </label>
+      <label for="signClient">Client
+        <input type="radio" name="userType" value="client" checked id="signClient" />
+      </label>
+      <label for="signProvider">Provider
+        <input type="radio" name="userType" value="provider" id="signProvider" />
+      </label>
+      <input type="button" value="Signup" onclick="" />
+    </fieldset>
+  </form>
 
 
   <footer>
