@@ -12,49 +12,68 @@
 </head>
 
 <body>
-  <header>
+  <header class="jumbotron bg-primary">
     <figure>
       <img src="res/logo.png" alt="Logo">
     </figure>
   </header>
 
-  <form action="process_login.php" method="post" name="login_form">
-    <fieldset>
-      <legend>Login</legend>
-      <label for="logEmail">Email:
-        <input type="email" name="email" autocomplete="on" placeholder="Email.." required id="logEmail" />
-      </label>
-      <label for="logPassword">Password:
-        <input type="password" name="password" placeholder="Password.." required id="logPassword" />
-      </label>
-      <input type="button" value="Login" onclick="" />
-    </fieldset>
-  </form>
-  <form action="process_signup.php" method="post" name="signup_form">
-    <fieldset>
-      <legend>Signup</legend>
-      <label for="signEmail">Email:
-        <input type="email" name="email" autocomplete="on" placeholder="Email.." required id="signEmail" />
-      </label>
-      <label for="signPassword">Password:
-        <input type="password" name="password" placeholder="Password.." required id="signPassword" />
-      </label>
-      <label for="signConfirmPassword">Confirm Password:
-        <input type="password" name="confirmPassword" placeholder="Confirm password.." required id="signConfirmPassword" />
-      </label>
-      <label for="signClient">
-        <input type="radio" name="userType" value="client" checked id="signClient" />Client
-      </label>
-      <label for="signProvider">
-        <input type="radio" name="userType" value="provider" id="signProvider" />Provider
-      </label>
-      <input type="button" value="Signup" onclick="" />
-    </fieldset>
-  </form>
+  <nav class="navbar navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </nav>
+  <div class="pos-f-t">
+    <div class="collapse" id="navbarToggleExternalContent">
+      <div class="bg-dark p-4">
+        <h1 class="text-white h4">Menu</h1>
+        <ul>
+          <li><a href="signin.html">Sign-in</a></li>
+          <li><a href="homepage.html">Home</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
+  <div class="container">
+    <form action="process_login.php" method="post" name="login_form" class="form-signin">
+      <fieldset>
+        <legend class="form-signin-heading">Login</legend>
+        <label for="logEmail" class="sr-only">Email:</label>
+        <input type="email" class="form-control" name="email" autocomplete="on" placeholder="Email.." required autofocus id="logEmail" />
+        <label for="logPassword" class="sr-only">Password:</label>
+        <input type="password" class="form-control" name="password" placeholder="Password.." required id="logPassword" />
+        <input type="button" class="btn btn-primary btn-lg btn-block" value="Login" onclick="" />
+      </fieldset>
+    </form>
+    <form action="process_signup.php" method="post" name="signup_form" class="form-signin">
+      <fieldset>
+        <legend class="form-signin-heading">Signup</legend>
+        <label for="signEmail" class="sr-only">Email:</label>
+        <input type="email" class="form-control" name="email" autocomplete="on" placeholder="Email.." required id="signEmail" />
+        <label for="signPassword" class="sr-only">Password:</label>
+        <input type="password" class="form-control" name="password" placeholder="Password.." required id="signPassword" />
+        <label for="signConfirmPassword" class="sr-only">Confirm Password:</label>
+        <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm password.." required id="signConfirmPassword" />
+        <div class="form-check form-check-inline">
+          <label for="signClient" class="form-check-label">
+            <input type="radio" class="form-check-input" name="userType" value="client" checked id="signClient" />Client
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <label for="signProvider" class="form-check-label">
+            <input type="radio" class="form-check-input" name="userType" value="provider" id="signProvider" />Provider
+          </label>
+        </div>
+        <input type="button" class="btn btn-primary btn-lg btn-block" value="Signup" onclick="" />
+      </fieldset>
+    </form>
+  </div>
 
-  <footer>
-    <p>Dummy Copyrights</p>
+  <footer class="footer">
+    <div class="container">
+      <p class="text-muted">Dummy Copyrights</p>
+    </div>
   </footer>
 </body>
 
