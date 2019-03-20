@@ -12,7 +12,7 @@
 </head>
 
 <body>
-  <header>
+  <header class="jumbotron bg-primary">
     <figure>
       <img src="res/logo.png" alt="Logo">
     </figure>
@@ -25,6 +25,23 @@
       <li><a href="homepage.html">Home</a></li>
     </ul>
   </nav>
+
+  <nav class="navbar navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </nav>
+  <div class="pos-f-t">
+    <div class="collapse" id="navbarToggleExternalContent">
+      <div class="bg-dark p-4">
+        <h1 class="text-white h4">Menu</h1>
+        <ul>
+          <li><a href="signin.html">Sign-in</a></li>
+          <li><a href="homepage.html">Home</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
   <form action="/action_page.php">
     <label for="search">Search:
