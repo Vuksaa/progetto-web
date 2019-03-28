@@ -37,19 +37,25 @@
   </nav>
 
   <div class="container">
+      <!-- TOGLI QUESTO MARGIN QUANDO FAI IL CSS  -->
+      <div style="margin-top: 20px"></div>
+      <!-- TOGLI QUESTO MARGIN QUANDO FAI IL CSS  -->
     <div class="card">
-      <div class="card-header" id="headingFavouriteRestaurants">
         <h1 class="mb-0 form-group form-inline">
-          <button class="btn btn-link" data-toggle="collapse" data-target="#collapseFavouriteRestaurants" aria-expanded="true" aria-controls="collapseFavouriteRestaurants">
+          <!-- TOGLI QUESTO MARGIN QUANDO FAI IL CSS  -->
+          <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseFavouriteRestaurants" aria-expanded="true" aria-controls="collapseFavouriteRestaurants" style="margin: 1px">
             Your Favourite Restaurants
           </button>
-          <form class="form-inline">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
+          <!-- TOGLI QUESTO MARGIN QUANDO FAI IL CSS  -->
+
         </h1>
-      </div>
       <div id="collapseFavouriteRestaurants" class="collapse show" aria-labelledby="headingFavouriteRestaurants">
+          <div class="card-body">
+              <form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </form>
+          </div>
         <div class="card-body">
           <div class="card" style="width: 18rem;">
             <div class="card-body">
