@@ -36,13 +36,144 @@
     </div>
   </nav>
 
-  <div class="container">
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link active" id="nav-general-tab" data-toggle="tab" href="#nav-general" role="tab" aria-controls="nav-general" aria-selected="true">General</a>
+      <a class="nav-item nav-link" id="nav-allergene-tab" data-toggle="tab" href="#nav-allergene" role="tab" aria-controls="nav-profile" aria-selected="false">Allergenes</a>
+      <a class="nav-item nav-link" id="nav-address-tab" data-toggle="tab" href="#nav-address" role="tab" aria-controls="nav-profile" aria-selected="false">Addresses</a>
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab">
+    </div>
+    <div class="tab-pane fade" id="nav-allergene" role="tabpanel" aria-labelledby="nav-allergene-tab">
+      <div class="container">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Allergene</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Example allergene 1</td>
+              <td>
+                <button type="button" class="btn btn-primary">
+                  Remove
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Example allergene 2</td>
+              <td>
+                <button type="button" class="btn btn-primary">
+                  Remove
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Example allergene 3</td>
+              <td>
+                <button type="button" class="btn btn-primary">
+                  Remove
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">4</th>
+              <form>
+                <td>
+                  <label for="selectAllergene">Example select allergene</label>
+                  <select class="form-control" id="selectAllergene">
+                    <option>Allergene 1</option>
+                    <option>Allergene 2</option>
+                    <option>Allergene 3</option>
+                    <option>Allergene 4</option>
+                    <option>Allergene 5</option>
+                  </select>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-primary">
+                    Add
+                  </button>
+                </td>
+              </form>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="nav-address" role="tabpanel" aria-labelledby="nav-address-tab">
+      <div class="container">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Address</th>
+              <th scope="col">Additional info</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Example address 1</td>
+              <td>Example info 1</td>
+              <td>
+                <button type="button" class="btn btn-primary">
+                  Remove
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Example address 2</td>
+              <td>Example info 2</td>
+              <td>
+                <button type="button" class="btn btn-primary">
+                  Remove
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Example address 3</td>
+              <td>Example info 3</td>
+              <td>
+                <button type="button" class="btn btn-primary">
+                  Remove
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">4</th>
+              <form>
+                <td>
+                  <input type="text" class="form-control" placeholder="Address">
+                </td>
+                <td>
+                  <input type="text" class="form-control" placeholder="Additional info">
+                </td>
+                <td>
+                  <button type="button" class="btn btn-primary">
+                    Add
+                  </button>
+                </td>
+              </form>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
+
+
   <footer class="footer">
-    <div class="container">
-      <p class="text-muted">Dummy Copyrights</p>
-    </div>
+    <p class="text-muted">Dummy Copyrights</p>
   </footer>
 </body>
 
