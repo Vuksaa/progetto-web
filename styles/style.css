@@ -1,7 +1,24 @@
 .main-card {
-    margin-top: 20px
+    margin-top: 20px;
 }
 
 .card-searchbar {
-    margin-bottom: 15px
+    margin-bottom: 15px;
+}
+
+.centered-form {
+    align-content: center;
+}
+
+input[type=email], [type=password], [type=button], [type=radio], .txtarea {
+    margin-bottom: 10px;
+}
+
+.form-signin {
+    width: 400px;
+    margin: auto;
+}
+
+.form-signin-heading {
+    margin-bottom: 20px;
 }
