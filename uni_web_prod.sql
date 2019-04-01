@@ -23,8 +23,9 @@ DROP TABLE IF EXISTS `address`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `address` (
-  `address_id` int(11) NOT NULL,
-  `address` varchar(90) NOT NULL,
+  `address_id` int(11) NOT NULL AUTO_INCREMENT,
+  `address_name` varchar(90) NOT NULL,
+  `address_info` varchar(90),
   PRIMARY KEY (`address_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -37,7 +38,7 @@ DROP TABLE IF EXISTS `allergen`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `allergen` (
-  `allergen_id` int(11) NOT NULL,
+  `allergen_id` int(11) NOT NULL AUTO_INCREMENT,
   `allergen_name` varchar(45) NOT NULL,
   PRIMARY KEY (`allergen_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -51,7 +52,7 @@ DROP TABLE IF EXISTS `category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `category` (
-  `category_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `category_name` varchar(45) NOT NULL,
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -116,7 +117,7 @@ DROP TABLE IF EXISTS `ingredient`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ingredient` (
-  `ingredient_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ingredient_id` int(11) NOT NULL,
   `ingredient_name` varchar(45) NOT NULL,
   `allergen_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`ingredient_id`),
@@ -217,7 +218,7 @@ DROP TABLE IF EXISTS `provider`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `provider` (
-  `provider_id` int(11) NOT NULL,
+  `provider_id` int(11) NOT NULL AUTO_INCREMENT,
   `provider_name` varchar(90) NOT NULL,
   `provider_address` varchar(90) NOT NULL,
   `provider_email` varchar(45) NOT NULL,
