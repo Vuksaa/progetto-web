@@ -167,6 +167,7 @@ DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `product_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_name` varchar(45) NOT NULL,
+  `product_description` varchar(200),
   `product_price` float NOT NULL,
   `provider_id` int(11) NOT NULL,
   PRIMARY KEY (`product_id`),
