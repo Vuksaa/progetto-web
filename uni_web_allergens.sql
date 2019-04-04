@@ -1,4 +1,5 @@
 DELETE from allergen;
+ALTER TABLE table_name AUTO_INCREMENT = 1;
 CALL allergen_add("Shellfish");
 CALL allergen_add("Eggs");
 CALL allergen_add("Fish");
