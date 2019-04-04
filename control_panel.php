@@ -137,7 +137,33 @@
               echo "Execution failed: ".$statement->error;
             }
             $statement->close();
-          }
+          }else if(isset($_POST['btnClientAllergenAdd'])){
+              echo "I'm going to add a client allergen.";
+              if(!($statement=$conn->prepare("CALL client_allergen_add(?,?)"))){
+                echo "Prepare failed.";
+              }
+              if(!($statement->bind_param('ii',$_POST['selectClientId'],$_POST['selectAllergenId']))) {
+                echo "Bind failed.";
+              }
+              echo "Trying to execute.";
+              if(!($statement->execute())){
+                echo "Execution failed: ".$statement->error;
+              }
+              $statement->close();
+            } else if(isset($_POST['btnClientAllergenRemove'])){
+              echo "Trying to remove a client allergen.";
+              if(!($statement=$conn->prepare("CALL client_allergen_remove(?,?)"))){
+                echo "Prepare failed.";
+              }
+              if(!($statement->bind_param('ii',$_POST['clientId'].$_POST['allergenId']))) {
+                echo "Bind failed.";
+              }
+              echo "Trying to execute.";
+              if(!($statement->execute())){
+                echo "Execution failed: ".$statement->error;
+              }
+              $statement->close();
+            }
   ?>
 
   <nav>
@@ -146,6 +172,7 @@
       <a class="nav-item nav-link" id="nav-providers-tab" data-toggle="tab" href="#nav-providers" role="tab" aria-controls="providers" aria-selected="false">Providers</a>
       <a class="nav-item nav-link" id="nav-provider-types-tab" data-toggle="tab" href="#nav-provider-types" role="tab" aria-controls="provider-types" aria-selected="false">Provider Types</a>
       <a class="nav-item nav-link" id="nav-allergens-tab" data-toggle="tab" href="#nav-allergens" role="tab" aria-controls="allergens" aria-selected="false">Allergens</a>
+      <a class="nav-item nav-link" id="nav-client-allergen-tab" data-toggle="tab" href="#nav-client-allergen" role="tab" aria-controls="client-allergen" aria-selected="false">Client Allergen</a>
     </div>
   </nav>
   <div class="tab-content" id="nav-tabContent">
@@ -390,6 +417,83 @@
                 <td><?php echo $row['allergen_name'];?></td>
                 <td>
                   <button name="btnAllergenRemove" type="submit" class="btn btn-primary" value"allergenRemove">
+                    Remove
+                  </button>
+                </td>
+            </tr>
+            </form>
+            <?php  endwhile ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="nav-client-allergen" role="tabpanel" aria-labelledby="nav-client-allergen-tab">
+      <div class="table-responsive">
+        <table class="table table-hover table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Client ID</th>
+              <th scope="col">Allergen ID</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Add Client Allergen</th>
+              <form action="control_panel.php" method="post" name="client_allergen_add_form">
+                <fieldset>
+                  <td>
+                    <label for="selectClientId" class="sr-only">Select Client ID</label>
+                    <select class="form-control" name="selectClientId" id="selectClientId">
+                    <?php
+                      $query = $conn->query("SELECT client_id,client_email FROM client");
+                      while ($row = mysqli_fetch_array($query)){
+                        $id=$row['client_id'];
+                        $email=$row['client_email'];
+                        echo "<option value='".$id."'>".$email."</option>" ;
+                      }
+                    ?>
+                    </select>
+                  </td>
+                  <td>
+                    <label for="selectAllergenId" class="sr-only">Select Allergen ID</label>
+                    <select class="form-control" name="selectAllergenId" id="selectAllergenId">
+                    <?php
+                      $query = $conn->query("SELECT * FROM allergen");
+                      while ($row = mysqli_fetch_array($query)){
+                        $id=$row['allergen_id'];
+                        $name=$row['allergen_name'];
+                        echo "<option value='".$id."'>".$name."</option>" ;
+                      }
+                    ?>
+                    </select>
+                  </td>
+                  <td>
+                    <button type="submit" name="btnClientAllergenAdd" class="btn btn-primary btn-lg btn-block" value="clientAllergenAdd">
+                      Add
+                    </button>
+                  </td>
+                </fieldset>
+              </form>
+            </tr>
+            <?php
+              $query = $conn->query("SELECT * FROM client_allergen");
+              $i=1;
+              while ($row = mysqli_fetch_array($query)):
+            ?>
+            <tr>
+              <form action="control_panel.php" method="post" name="client_allergen_remove_form">
+                <th scope="row"><?php echo $i++;?></th>
+                <?php
+                  $clientId=$row['client_id'];
+                  $allergenId=$row['allergen_id'];
+                  echo "<input type='number' name='clientId' value='".$clientId."' hidden>" ;
+                  echo "<input type='number' name='allergenId' value='".$allergenId."' hidden>" ;
+                  ?>
+                <td><?php echo $row['client_id'];?></td>
+                <td><?php echo $row['allergen_id'];?></td>
+                <td>
+                  <button name="btnClientAllergenRemove" type="submit" class="btn btn-primary" value"clientAllergenRemove">
                     Remove
                   </button>
                 </td>
