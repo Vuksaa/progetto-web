@@ -155,7 +155,7 @@
               if(!($statement=$conn->prepare("CALL client_allergen_remove(?,?)"))){
                 echo "Prepare failed.";
               }
-              if(!($statement->bind_param('ii',$_POST['clientId'].$_POST['allergenId']))) {
+              if(!($statement->bind_param('ii',$_POST['clientId'],$_POST['allergenId']))) {
                 echo "Bind failed.";
               }
               echo "Trying to execute.";
