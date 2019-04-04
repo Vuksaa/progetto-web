@@ -117,7 +117,7 @@ DROP TABLE IF EXISTS `ingredient`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ingredient` (
-  `ingredient_id` int(11) NOT NULL,
+  `ingredient_id` int(11) NOT NULL AUTO_INCREMENT,
   `ingredient_name` varchar(45) NOT NULL,
   `allergen_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`ingredient_id`),
@@ -167,6 +167,7 @@ DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `product_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_name` varchar(45) NOT NULL,
+  `product_description` varchar(200),
   `product_price` float NOT NULL,
   `provider_id` int(11) NOT NULL,
   PRIMARY KEY (`product_id`),
