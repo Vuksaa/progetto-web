@@ -14,11 +14,11 @@
 <body>
   <?php
   $servername = "localhost";
-  $username = "admin";
-  $password = "admin";
-  $db = "tecweb";
+  $username = "root";
+  $password="";
+  $db = "uni_web_prod";
 
-  $conn = new mysqli($servername, $username, $password,$db);
+  $conn = new mysqli($servername, $username,$password,$db);
 
   if($conn->connect_error) {
     die("Connection failed: ".$conn->connect_error);
@@ -433,8 +433,8 @@
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Client ID</th>
-              <th scope="col">Allergen ID</th>
+              <th scope="col">Client</th>
+              <th scope="col">Allergen</th>
             </tr>
           </thead>
           <tbody>
@@ -477,7 +477,7 @@
               </form>
             </tr>
             <?php
-              $query = $conn->query("SELECT * FROM client_allergen");
+              $query = $conn->query("SELECT client_allergen.client_id,client_allergen.allergen_id,client.client_email,allergen.allergen_name FROM (client_allergen JOIN client on client_allergen.client_id=client.client_id) JOIN allergen on client_allergen.allergen_id=allergen.allergen_id ");
               $i=1;
               while ($row = mysqli_fetch_array($query)):
             ?>
@@ -490,8 +490,8 @@
                   echo "<input type='number' name='clientId' value='".$clientId."' hidden>" ;
                   echo "<input type='number' name='allergenId' value='".$allergenId."' hidden>" ;
                   ?>
-                <td><?php echo $row['client_id'];?></td>
-                <td><?php echo $row['allergen_id'];?></td>
+                <td><?php echo $row['client_email'];?></td>
+                <td><?php echo $row['allergen_name'];?></td>
                 <td>
                   <button name="btnClientAllergenRemove" type="submit" class="btn btn-primary" value"clientAllergenRemove">
                     Remove
