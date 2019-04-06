@@ -6,3 +6,9 @@
 ## TODO:
 * Explore LESS? https://stackoverflow.com/questions/1065435/can-a-css-class-inherit-one-or-more-other-classes
 * Make footers stay at the bottom of the pages
+
+# To dump a database
+* Navigate to your Xampp directory.
+* Go to mysql\bin
+* Run the following command: `mysqldump -u root -p uni_web_prod > filename.sql`
+* Password is (should be) blank
