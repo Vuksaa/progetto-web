@@ -25,9 +25,12 @@ DROP TABLE IF EXISTS `address`;
 CREATE TABLE `address` (
   `address_id` int(11) NOT NULL AUTO_INCREMENT,
   `address_name` varchar(90) NOT NULL,
-  `address_info` varchar(90) DEFAULT NULL,
-  PRIMARY KEY (`address_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `address_info` varchar(90) NOT NULL,
+  `client_id` int(11) NOT NULL,
+  PRIMARY KEY (`address_id`),
+  KEY `client_id_idx` (`client_id`),
+  CONSTRAINT `client_id` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,6 +39,7 @@ CREATE TABLE `address` (
 
 LOCK TABLES `address` WRITE;
 /*!40000 ALTER TABLE `address` DISABLE KEYS */;
+INSERT INTO `address` VALUES (1,'Casa','Via Guglielmo Oberdan 20',1),(2,'Casa','Via Raniero Arsendi 13',2),(3,'Lavoro','Via Giacomo della Torre 7',2),(4,'Casa','Via Solferino 1',3),(5,'Casa','Via Romanello da Forli 11',4),(6,'Casa','Via Valverde 28',5),(7,'Nonna','Via Lombardini 4',5),(8,'Casa','Via Alberto Bani 4',6),(9,'Casa','Via Italo Stegher 10',7),(10,'Casa','Viale Roma 31',8),(11,'Casa','Via Leonardo Da Vinci 2',9);
 /*!40000 ALTER TABLE `address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,7 +114,7 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES (1,'haldor.rasim@gmail.com','haldor','Haldor','Rasim'),(2,'izz.helga@gmail.com','izz','Izz ud-Din','Helga'),(3,'njal.itimad@gmail.com','njal','Njal','I\'timad'),(4,'stefana.dawood@gmail.com','stefana','Stefana','Dawood'),(5,'toki.halvor@gmail.com','toki','TÃ³ki','Halvor'),(6,'benjaminas.khadija@gmail.com','benjaminas','Benjaminas','Khadija'),(7,'sverrir.ingvildr@gmail.com','sverrir','Sverrir','Ingvildr'),(8,'johanneke.tycho@gmail.com','johanneke','Johanneke','Tycho'),(9,'fazl.shafaqat@gmail.com','fazl','Fazl','Shafaqat');
+INSERT INTO `client` VALUES (1,'haldor.rasim@gmail.com','haldor','Haldor','Rasim'),(2,'izz.helga@gmail.com','izz','Izz ud-Din','Helga'),(3,'njal.itimad@gmail.com','njal','Njal','I\'timad'),(4,'stefana.dawood@gmail.com','stefana','Stefana','Dawood'),(5,'toki.halvor@gmail.com','toki','Toki','Halvor'),(6,'benjaminas.khadija@gmail.com','benjaminas','Benjaminas','Khadija'),(7,'sverrir.ingvildr@gmail.com','sverrir','Sverrir','Ingvildr'),(8,'johanneke.tycho@gmail.com','johanneke','Johanneke','Tycho'),(9,'fazl.shafaqat@gmail.com','fazl','Fazl','Shafaqat');
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -167,6 +171,33 @@ LOCK TABLES `client_order` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `client_provider`
+--
+
+DROP TABLE IF EXISTS `client_provider`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `client_provider` (
+  `client_id` int(11) NOT NULL,
+  `provider_id` int(11) NOT NULL,
+  PRIMARY KEY (`client_id`,`provider_id`),
+  KEY `provider_id` (`provider_id`),
+  CONSTRAINT `client_provider_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_id`),
+  CONSTRAINT `client_provider_ibfk_2` FOREIGN KEY (`provider_id`) REFERENCES `provider` (`provider_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `client_provider`
+--
+
+LOCK TABLES `client_provider` WRITE;
+/*!40000 ALTER TABLE `client_provider` DISABLE KEYS */;
+INSERT INTO `client_provider` VALUES (1,3),(1,5),(2,5),(3,1),(3,2),(4,5),(4,7),(5,1),(5,8),(6,3),(6,7),(7,2),(7,5),(7,6),(7,7),(8,2);
+/*!40000 ALTER TABLE `client_provider` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `ingredient`
 --
 
@@ -189,7 +220,7 @@ CREATE TABLE `ingredient` (
 
 LOCK TABLES `ingredient` WRITE;
 /*!40000 ALTER TABLE `ingredient` DISABLE KEYS */;
-INSERT INTO `ingredient` VALUES (1,'Alcol',NULL),(2,'Ammoniaca per dolci',NULL),(3,'Coloranti alimentari',NULL),(4,'Caffè',NULL),(5,'Cinghiale',NULL),(6,'Fegato',NULL),(7,'Filetto',NULL),(8,'Manzo',NULL),(9,'Petto di pollo',NULL),(10,'Tacchino',NULL),(11,'Vitello',NULL),(12,'Avena',NULL),(13,'Farro',NULL),(14,'Orzo',NULL),(15,'Quinoia',NULL),(16,'Riso',NULL),(17,'Astice',NULL),(18,'Capesante',NULL),(19,'Cozze',NULL),(20,'Cicale di mare',NULL),(21,'Gamberoni',NULL),(22,'Polpo',NULL),(23,'Seppia',NULL),(24,'Frutti di mare',NULL),(25,'Miele',NULL),(26,'Caramello',NULL),(27,'Zucchero',NULL),(28,'Zucchero di canna',NULL),(29,'Alloro',NULL),(30,'Erba cipollina',NULL),(31,'Basilico',NULL),(32,'Maggiorana',NULL),(33,'Menta',NULL),(34,'Prezzemolo',NULL),(35,'Origano',NULL),(36,'Rosmarino',NULL),(37,'Timo',NULL),(38,'Farina 0',NULL),(39,'Farina 00',NULL),(40,'Farina di canapa',NULL),(41,'Farina di farro',NULL),(42,'Farina di mais',NULL),(43,'Farina integrale',NULL),(44,'Farina di riso',NULL),(45,'Semola',NULL),(46,'Caciocavallo',NULL),(47,'Caprino',NULL),(48,'Feta',NULL),(49,'Cheddar',NULL),(50,'Emmental',NULL),(51,'Philadelphia',NULL),(52,'Gruviera',NULL),(53,'Grana',NULL),(54,'Gorgonzola',NULL),(55,'Parmigiano',NULL),(56,'Pecorino',NULL),(57,'Provolone',NULL),(58,'Arance',NULL),(59,'Banane',NULL),(60,'Fichi',NULL),(61,'Ciliegie',NULL),(62,'Kiwi',NULL),(63,'Limone',NULL),(64,'Frutti di bosco',NULL),(65,'Pesche',NULL),(66,'More',NULL),(67,'Mirtilli',NULL),(68,'Cocco',NULL),(69,'Papaya',NULL),(70,'Lime',NULL),(71,'Mango',NULL),(72,'Anacardi',NULL),(73,'Arachidi',NULL),(74,'Bacche di Goji',NULL),(75,'Mandorle',NULL),(76,'Pinoli',NULL),(77,'Noci',NULL),(78,'Nocciole',NULL),(79,'Carote',NULL),(80,'Funghi',NULL),(81,'Funghi porcini',NULL),(82,'Daikon',NULL),(83,'Patate',NULL),(84,'Ravanelli',NULL),(85,'Tartufo',NULL),(86,'Burro',NULL),(87,'Besciamella',NULL),(88,'Latte',NULL),(89,'Latte di mandorla',NULL),(90,'Mozzarella',NULL),(91,'Ricotta',NULL),(92,'Fagiolini',NULL),(93,'Fave',NULL),(94,'Piselli',NULL),(95,'Lenticchie',NULL),(96,'Fagioli',NULL),(97,'Aceto balsamico',NULL),(98,'Ketchup',NULL),(99,'Salsa tartara',NULL),(100,'Maionese',NULL),(101,'Olio di oliva',NULL),(102,'Tabasco',NULL),(103,'Salsa barbecue',NULL),(104,'Wasabi',NULL),(105,'Salsa di soia',NULL),(106,'Asparagi',NULL),(107,'Cavolfiore',NULL),(108,'Cetrioli',NULL),(109,'Cipolle',NULL),(110,'Aglio',NULL),(111,'Peperoni',NULL),(112,'Zucchine',NULL),(113,'Lasagne',NULL),(114,'Spaghetti',NULL),(115,'Penne',NULL),(116,'Acciughe',NULL),(117,'Orata',NULL),(118,'Pesce spada',NULL),(119,'Pesce persico',NULL),(120,'Salmone',NULL),(121,'Tonno',NULL),(122,'Spigola',NULL),(123,'Sgombro',NULL),(124,'Bacon',NULL),(125,'Cotechino',NULL),(126,'Guanciale',NULL),(127,'Salame',NULL),(128,'Pancetta',NULL),(129,'Prosciutto crudo',NULL),(130,'Prosciutto cotto',NULL),(131,'Uova',NULL),(132,'Curry',NULL),(133,'Paprica',NULL),(134,'Zenzero',NULL);
+INSERT INTO `ingredient` VALUES (1,'Alcol',NULL),(2,'Ammoniaca per dolci',NULL),(3,'Coloranti alimentari',NULL),(4,'Caffè',NULL),(5,'Cinghiale',NULL),(6,'Fegato',NULL),(7,'Filetto',NULL),(8,'Manzo',NULL),(9,'Petto di pollo',NULL),(10,'Tacchino',NULL),(11,'Vitello',NULL),(12,'Avena',NULL),(13,'Farro',NULL),(14,'Orzo',NULL),(15,'Quinoia',NULL),(16,'Riso',NULL),(17,'Astice',3),(18,'Capesante',3),(19,'Cozze',3),(20,'Cicale di mare',3),(21,'Gamberoni',3),(22,'Polpo',3),(23,'Seppia',3),(24,'Frutti di mare',3),(25,'Miele',NULL),(26,'Caramello',NULL),(27,'Zucchero',NULL),(28,'Zucchero di canna',NULL),(29,'Alloro',NULL),(30,'Erba cipollina',NULL),(31,'Basilico',NULL),(32,'Maggiorana',NULL),(33,'Menta',NULL),(34,'Prezzemolo',NULL),(35,'Origano',NULL),(36,'Rosmarino',NULL),(37,'Timo',NULL),(38,'Farina 0',8),(39,'Farina 00',8),(40,'Farina di canapa',NULL),(41,'Farina di farro',NULL),(42,'Farina di mais',NULL),(43,'Farina integrale',NULL),(44,'Farina di riso',NULL),(45,'Semola',NULL),(46,'Caciocavallo',4),(47,'Caprino',4),(48,'Feta',4),(49,'Cheddar',4),(50,'Emmental',4),(51,'Philadelphia',4),(52,'Gruviera',4),(53,'Grana',4),(54,'Gorgonzola',4),(55,'Parmigiano',4),(56,'Pecorino',4),(57,'Provolone',4),(58,'Arance',NULL),(59,'Banane',NULL),(60,'Fichi',NULL),(61,'Ciliegie',NULL),(62,'Kiwi',NULL),(63,'Limone',NULL),(64,'Frutti di bosco',NULL),(65,'Pesche',19),(66,'More',NULL),(67,'Mirtilli',NULL),(68,'Cocco',NULL),(69,'Papaya',NULL),(70,'Lime',NULL),(71,'Mango',NULL),(72,'Anacardi',7),(73,'Arachidi',7),(74,'Bacche di Goji',7),(75,'Mandorle',7),(76,'Pinoli',7),(77,'Noci',7),(78,'Nocciole',7),(79,'Carote',NULL),(80,'Funghi',NULL),(81,'Funghi porcini',NULL),(82,'Daikon',NULL),(83,'Patate',NULL),(84,'Ravanelli',NULL),(85,'Tartufo',NULL),(86,'Burro',NULL),(87,'Besciamella',NULL),(88,'Latte',NULL),(89,'Latte di mandorla',NULL),(90,'Mozzarella',NULL),(91,'Ricotta',NULL),(92,'Fagiolini',NULL),(93,'Fave',NULL),(94,'Piselli',NULL),(95,'Lenticchie',NULL),(96,'Fagioli',NULL),(97,'Aceto balsamico',NULL),(98,'Ketchup',NULL),(99,'Salsa tartara',NULL),(100,'Maionese',2),(101,'Olio di oliva',NULL),(102,'Tabasco',NULL),(103,'Salsa barbecue',NULL),(104,'Wasabi',NULL),(105,'Salsa di soia',NULL),(106,'Asparagi',NULL),(107,'Cavolfiore',NULL),(108,'Cetrioli',NULL),(109,'Cipolle',NULL),(110,'Aglio',NULL),(111,'Peperoni',NULL),(112,'Zucchine',NULL),(113,'Lasagne',NULL),(114,'Spaghetti',NULL),(115,'Penne',NULL),(116,'Acciughe',3),(117,'Orata',3),(118,'Pesce spada',3),(119,'Pesce persico',3),(120,'Salmone',3),(121,'Tonno',3),(122,'Spigola',3),(123,'Sgombro',3),(124,'Bacon',NULL),(125,'Cotechino',NULL),(126,'Guanciale',NULL),(127,'Salame',NULL),(128,'Pancetta',NULL),(129,'Prosciutto crudo',NULL),(130,'Prosciutto cotto',NULL),(131,'Uova',2),(132,'Curry',NULL),(133,'Paprica',NULL),(134,'Zenzero',NULL);
 /*!40000 ALTER TABLE `ingredient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -203,7 +234,10 @@ DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
   `order_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_address` varchar(90) NOT NULL,
-  PRIMARY KEY (`order_id`)
+  `status_id` int(11) NOT NULL,
+  PRIMARY KEY (`order_id`),
+  KEY `status_id_idx` (`status_id`),
+  CONSTRAINT `status_id` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -214,32 +248,6 @@ CREATE TABLE `order` (
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `order_status`
---
-
-DROP TABLE IF EXISTS `order_status`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `order_status` (
-  `order_id` int(11) NOT NULL,
-  `status_id` int(11) NOT NULL,
-  PRIMARY KEY (`order_id`,`status_id`),
-  KEY `status_id` (`status_id`),
-  CONSTRAINT `order_status_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`),
-  CONSTRAINT `order_status_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `order_status`
---
-
-LOCK TABLES `order_status` WRITE;
-/*!40000 ALTER TABLE `order_status` DISABLE KEYS */;
-/*!40000 ALTER TABLE `order_status` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -436,4 +444,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-06 12:43:46
+-- Dump completed on 2019-04-07 13:16:34
