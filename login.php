@@ -1,3 +1,32 @@
+<?php
+  if (/*$_SERVER["REQUEST_METHOD"] == "POST" && */isset($_POST['email']) && isset($_POST['password'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $servername = "localhost";
+    $username = "root";
+    $dbpassword="";
+    $db = "uni_web_prod";
+    $conn = new mysqli($servername, $username,$dbpassword,$db);
+    echo "Testing connection... ";
+    if($conn->connect_error) {
+      header('Location: login_failed.php');
+      die("Connection failed: ".$conn->connect_error);
+    }
+    echo "Connection successful. ";
+    if ($result = $conn->query("SELECT * FROM client WHERE client_email = '$email' AND client_password = '$password'")) {
+      session_start();
+      $row = mysqli_fetch_row($result);
+      $_SESSION['user_id'] = $row[0];
+      $_SESSION['logged'] = TRUE;
+      $_SESSION['client_name'] = $row[3];
+      header('Location: home_clients.php');
+      exit;
+    } else {
+      echo "DEBUG: Bad credentials. Mail: $email. Password: $password.";
+    }
+  }
+ ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,14 +67,14 @@
   </div>
 
   <div class="container pt-5">
-    <form action="process_login.php" method="post" name="login_form" class="form-signin">
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="login_form" class="form-signin">
       <fieldset>
         <legend class="form-signin-heading">Login</legend>
         <label for="logEmail" class="sr-only">Email:</label>
         <input type="email" class="form-control" name="email" autocomplete="on" placeholder="Email.." required autofocus id="logEmail" />
         <label for="logPassword" class="sr-only">Password:</label>
         <input type="password" class="form-control" name="password" placeholder="Password.." required id="logPassword" />
-        <input type="button" class="btn btn-primary btn-lg btn-block" value="Login" onclick="" />
+        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Login" onclick="" />
       </fieldset>
       <p class="text-muted small">Don't have an account? Sign in <a href="signup.html">here</a></p>
     </form>
