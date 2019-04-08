@@ -35,10 +35,10 @@
           <a class="nav-link" href="home_clients.php"><i class="fas fa-home"></i> Home<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="profile_clients.html"><i class="fas fa-user"></i> Profile</a>
+          <a class="nav-link" href="profile_clients.php"><i class="fas fa-user"></i> Profile</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="orders_clients.html"><i class="fas fa-book"></i> Orders</a>
+          <a class="nav-link" href="orders_clients.php"><i class="fas fa-book"></i> Orders</a>
         </li>
       </ul>
       <ul class="navbar-nav navbar-right">
