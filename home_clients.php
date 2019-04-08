@@ -22,7 +22,7 @@
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="home_clients.php">
       <img src="res/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
       Project
     </a>
@@ -32,7 +32,7 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="home_clients.html"><i class="fas fa-home"></i> Home<span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="home_clients.php"><i class="fas fa-home"></i> Home<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="profile_clients.html"><i class="fas fa-user"></i> Profile</a>
@@ -65,16 +65,16 @@
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
-             <div class="card-body">
-               <h5 class="card-title">Restaurant title</h5>
-               <h6 class="card-subtitle mb-2 text-muted">Restaurant subtitle</h6>
-               <p class="card-text">This is an example of a restaurant text. This is one of your favourite restaurants!</p>
-               <div class="btn-group btn-group-justified">
-                 <a href="#" class="btn btn-primary inline">Show</a>
-                 <a href="#" class="btn btn-primary inline">Details</a>
-                 <a href="#" class="btn btn-primary inline">Remove Favourite</a>
-               </div>
-             </div>
+          <div class="card-body">
+            <h5 class="card-title">Restaurant title</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Restaurant subtitle</h6>
+            <p class="card-text">This is an example of a restaurant text. This is one of your favourite restaurants!</p>
+            <div class="btn-group btn-group-justified">
+              <a href="#" class="btn btn-primary inline">Show</a>
+              <a href="#" class="btn btn-primary inline">Details</a>
+              <a href="#" class="btn btn-primary inline">Remove Favourite</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -113,19 +113,19 @@
                 */
                 while ($row = $result->fetch_assoc()) {
                   ?>
-                  <div class="card col-sm-4" style="width: 18rem; margin: 2px">
-                    <div class="card-body">
-                      <h5 class="card-title"><?php echo $row['provider_name'] ?></h5>
-                      <h6 class="card-subtitle mb-2 text-muted">Restaurant subtitle</h6>
-                      <p class="card-text">This is an example of a restaurant text.</p>
-                      <div class="btn-group btn-group-justified">
-                        <a href="#" class="btn btn-primary inline">Show</a>
-                        <a href="#" class="btn btn-primary inline">Details</a>
-                        <a href="#" class="btn btn-primary inline">Add Favourite</a>
-                      </div>
-                    </div>
-                  </div>
-                  <?php
+            <div class="card col-sm-4" style="width: 18rem; margin: 2px">
+              <div class="card-body">
+                <h5 class="card-title"><?php echo $row['provider_name'] ?></h5>
+                <h6 class="card-subtitle mb-2 text-muted">Restaurant subtitle</h6>
+                <p class="card-text">This is an example of a restaurant text.</p>
+                <div class="btn-group btn-group-justified">
+                  <a href="#" class="btn btn-primary inline">Show</a>
+                  <a href="#" class="btn btn-primary inline">Details</a>
+                  <a href="#" class="btn btn-primary inline">Add Favourite</a>
+                </div>
+              </div>
+            </div>
+            <?php
                 }
                 $result->close();
               } else {

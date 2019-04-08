@@ -6,6 +6,8 @@
     $username = "root";
     $dbpassword="";
     $db = "uni_web_prod";
+    $cId=0;
+    $cName="";
     $conn = new mysqli($servername, $username,$dbpassword,$db);
     echo "Testing connection... ";
     if($conn->connect_error) {
@@ -13,12 +15,23 @@
       die("Connection failed: ".$conn->connect_error);
     }
     echo "Connection successful. ";
-    if ($result = $conn->query("SELECT * FROM client WHERE client_email = '$email' AND client_password = '$password'")) {
+      if(!($statement=$conn->prepare("SELECT client_id,client_name FROM client WHERE client_email = ? AND client_password = ? LIMIT 1"))){
+        echo "Prepare failed.";
+      }
+      if(!($statement->bind_param('ss',$email,$password))) {
+        echo "Bind failed";
+      }
+    if ($statement->execute()) {
+      echo " Executed.";
+      $statement->store_result();
+      $statement->bind_result($cId,$cName);
+      $statement->fetch();
       session_start();
-      $row = mysqli_fetch_row($result);
-      $_SESSION['user_id'] = $row[0];
+      $_SESSION['user_id'] = $cId;
       $_SESSION['logged'] = TRUE;
-      $_SESSION['client_name'] = $row[3];
+      $_SESSION['client_name'] = $cName;
+      echo " Test id:".$cId." name:".$_SESSION['client_name'];
+      $statement->close();
       header('Location: home_clients.php');
       exit;
     } else {
@@ -38,7 +51,7 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="styles\style.css"/>
+  <link rel="stylesheet" href="styles\style.css" />
 </head>
 
 <body>
