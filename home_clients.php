@@ -100,19 +100,14 @@
               if($conn->connect_error) {
                 die("Connection failed: ".$conn->connect_error);
               }
-              if ($result = $conn->query("SELECT * FROM provider")) {
-                /*
-                SELECT p.provider_id, provider_name, category_name
-                FROM provider p
-                LEFT JOIN provider_category pc
-                ON p.provider_id = pc.provider_id
-                LEFT JOIN category c
-                ON c.category_id = pc.category_id
-
-                this should be the correct query but it does not work in php (works fine in mysql workbench)
-                */
-                while ($row = $result->fetch_assoc()) {
-                  ?>
+              if ($result = $conn->query("SELECT p.provider_id, p.provider_name, c.category_name
+                                          FROM provider p
+                                          LEFT JOIN provider_category pc
+                                          ON p.provider_id = pc.provider_id
+                                          LEFT JOIN category c
+                                          ON c.category_id = pc.category_id")) {
+              while ($row = $result->fetch_assoc()) {
+            ?>
             <div class="card col-sm-4" style="width: 18rem; margin: 2px">
               <div class="card-body">
                 <h5 class="card-title"><?php echo $row['provider_name'] ?></h5>
