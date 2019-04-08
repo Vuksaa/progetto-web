@@ -100,19 +100,32 @@
               if($conn->connect_error) {
                 die("Connection failed: ".$conn->connect_error);
               }
-              if ($result = $conn->query("SELECT p.provider_id, p.provider_name, c.category_name
+              if ($allProviders = $conn->query("SELECT p.provider_id, p.provider_name, t.type_name
+                                          FROM provider p
+                                          LEFT JOIN type t
+                                          ON p.type_id = t.type_id")) {
+              while ($providerRow = $allProviders->fetch_assoc()) {
+            ?>
+            <div class="card col-sm-4" style="width: 18rem; margin: 2px">
+              <div class="card-body">
+                <h5 class="card-title"><?php echo $providerRow['provider_name'] ?></h5>
+                <h6 class="card-subtitle mb-2 text-muted"><?php echo $providerRow['type_name'] ?></h6>
+                <p class="card-text">
+                  <?php
+                    if ($providerCategories = $conn->query("SELECT c.category_name
                                           FROM provider p
                                           LEFT JOIN provider_category pc
                                           ON p.provider_id = pc.provider_id
                                           LEFT JOIN category c
-                                          ON c.category_id = pc.category_id")) {
-              while ($row = $result->fetch_assoc()) {
-            ?>
-            <div class="card col-sm-4" style="width: 18rem; margin: 2px">
-              <div class="card-body">
-                <h5 class="card-title"><?php echo $row['provider_name'] ?></h5>
-                <h6 class="card-subtitle mb-2 text-muted">Restaurant subtitle</h6>
-                <p class="card-text">This is an example of a restaurant text.</p>
+                                          ON c.category_id = pc.category_id
+                                          WHERE p.provider_id = '".$providerRow['provider_id']."'")) {
+                      while ($categoryRow = $providerCategories->fetch_assoc()) {
+                        echo "<span class=\"badge badge-pill badge-info\">".$categoryRow['category_name']."</span> ";
+                      }
+                      $providerCategories->close();
+                    }
+                  ?>
+                </p>
                 <div class="btn-group btn-group-justified">
                   <a href="#" class="btn btn-primary inline">Show</a>
                   <a href="#" class="btn btn-primary inline">Details</a>
@@ -122,7 +135,7 @@
             </div>
             <?php
                 }
-                $result->close();
+                $allProviders->close();
               } else {
                 echo "Query failed";
               }
