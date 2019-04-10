@@ -54,28 +54,33 @@
 
   <div class="container">
 
-    <div class="card">
-      <div class="card-header form-group form-inline">
-        Your Orders
-        <form class="form-inline">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-      </div>
-      <div class="card-body">
-        <div class="card" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">Order title</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Order subtitle</h6>
-            <p class="card-text">This is an example of an order text</p>
-            <div class="btn-group btn-group-justified">
-              <a href="#" class="btn btn-primary inline">Details</a>
+    <div class="card main-card">
+      <h1 class="mb-0 form-group form-inline">
+        <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapsePreparedOrders" aria-expanded="true" aria-controls="collapsePreparedOrders">
+          Your Orders
+        </button>
+      </h1>
+      <div id="collapsePreparedOrders" class="collapse show" aria-labelledby="headingRestaurants">
+        <div class="card-body">
+          <form class="form-inline card-searchbar">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+          <div class="row">
+            <div class="card col-sm-4" style="width: 18rem; margin: 2px">
+              <div class="card-body">
+                <h5 class="card-title">Order title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Order subtitle</h6>
+                <p class="card-text">Example of an order text.</p>
+                <div class="btn-group btn-group-justified">
+                  <a href="#" class="btn btn-primary inline">Details</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 
   <footer class="footer">
