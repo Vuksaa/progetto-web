@@ -75,7 +75,7 @@
         }
         $statement->close();
       }
-?>
+  ?>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <a class="navbar-brand" href="home_clients.php">
       <img src="res/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
@@ -94,6 +94,14 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="orders_clients.php"><i class="fas fa-book"></i> Orders</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav navbar-right">
+        <li class="nav-item">
+          <div class="navbar-text">Welcome, <?php echo $_SESSION['client_name']; ?>. Bon appétit!</div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </li>
       </ul>
     </div>
