@@ -21,6 +21,40 @@
 </head>
 
 <body>
+  <?php
+    $servername = "localhost";
+    $username = "root";
+    $password="";
+    $db = "uni_web_prod";
+    $conn = new mysqli($servername, $username,$password,$db);
+    if($conn->connect_error) {
+      die("Connection failed: ".$conn->connect_error);
+    }if(isset($_POST['btnClientProviderAdd'])){
+        if(!($statement=$conn->prepare("INSERT INTO client_provider(client_provider.client_id,client_provider.provider_id)
+                                VALUES (?,?)"))){
+          echo "Prepare failed.";
+        }
+        if(!($statement->bind_param('ii',$_SESSION['user_id'],$_POST['providerId']))) {
+          echo "Bind failed.";
+        }
+        if(!($statement->execute())){
+          echo "Execution failed: ".$statement->error;
+        }
+        $statement->close();
+      } else if(isset($_POST['btnClientProviderRemove'])){
+        if(!($statement=$conn->prepare("DELETE FROM client_provider
+                                WHERE client_provider.client_id=? AND client_provider.provider_id=?"))){
+          echo "Prepare failed.";
+        }
+        if(!($statement->bind_param('ii',$_SESSION['user_id'],$_POST['providerId']))) {
+          echo "Bind failed.";
+        }
+        if(!($statement->execute())){
+          echo "Execution failed: ".$statement->error;
+        }
+        $statement->close();
+      }
+  ?>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <a class="navbar-brand" href="home_clients.php">
       <img src="res/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
@@ -65,16 +99,54 @@
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
-          <div class="card col-sm-4">
-            <div class="card-body">
-              <h5 class="card-title">Restaurant title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Restaurant subtitle</h6>
-              <p class="card-text">This is an example of a restaurant text. This is one of your favourite restaurants!</p>
-              <div class="btn-group btn-group-justified">
-                <a href="#" class="btn btn-primary inline">Show</a>
-                <a href="#" class="btn btn-primary inline">Remove Favourite</a>
+          <div class="row">
+            <?php
+              if ($favProviders = $conn->query("SELECT p.provider_id, p.provider_name, t.type_name
+                                          FROM client_provider cp
+                                          JOIN provider p
+                                          ON cp.provider_id = p.provider_id
+                                          LEFT JOIN type t
+                                          ON p.type_id = t.type_id
+                                          WHERE cp.client_id = '".$_SESSION['user_id']."'")) {
+              while ($providerRow = $favProviders->fetch_assoc()) {
+            ?>
+            <div class="card col-sm-4" style="width: 18rem; margin: 2px">
+              <div class="card-body">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="client_provider_remove_form">
+                  <?php echo "<input type='number' name='providerId' value='".$providerRow['provider_id']."' hidden>" ; ?>
+                  <h5 class="card-title"><?php echo $providerRow['provider_name'] ?>
+                    <button type="submit" name="btnClientProviderRemove" class="btn btn-link" value="clientProviderRemove"><i class="fas fa-star"></i></button>
+                  </h5>
+                </form>
+                <h6 class="card-subtitle mb-2 text-muted"><?php echo $providerRow['type_name'] ?></h6>
+                <p class="card-text">
+                  <?php
+                    if ($providerCategories = $conn->query("SELECT c.category_name
+                                          FROM provider p
+                                          LEFT JOIN provider_category pc
+                                          ON p.provider_id = pc.provider_id
+                                          LEFT JOIN category c
+                                          ON c.category_id = pc.category_id
+                                          WHERE p.provider_id = '".$providerRow['provider_id']."'")) {
+                      while ($categoryRow = $providerCategories->fetch_assoc()) {
+                        echo "<span class='badge badge-pill badge-info'>".$categoryRow['category_name']."</span>";
+                      }
+                      $providerCategories->close();
+                    }
+                  ?>
+                </p>
+                <div class="btn-group btn-group-justified">
+                  <button class="btn btn-primary inline">Show</button>
+                </div>
               </div>
             </div>
+            <?php
+                }
+                $favProviders->close();
+              } else {
+                echo "Query failed";
+              }
+             ?>
           </div>
         </div>
       </div>
@@ -93,14 +165,6 @@
           </form>
           <div class="row">
             <?php
-              $servername = "localhost";
-              $username = "root";
-              $password="";
-              $db = "uni_web_prod";
-              $conn = new mysqli($servername, $username,$password,$db);
-              if($conn->connect_error) {
-                die("Connection failed: ".$conn->connect_error);
-              }
               if ($allProviders = $conn->query("SELECT p.provider_id, p.provider_name, t.type_name
                                           FROM provider p
                                           LEFT JOIN type t
@@ -109,7 +173,12 @@
             ?>
             <div class="card col-sm-4" style="width: 18rem; margin: 2px">
               <div class="card-body">
-                <h5 class="card-title"><?php echo $providerRow['provider_name'] ?></h5>
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="client_provider_add_form">
+                  <?php echo "<input type='number' name='providerId' value='".$providerRow['provider_id']."' hidden>" ; ?>
+                  <h5 class="card-title"><?php echo $providerRow['provider_name'] ?>
+                    <button type="submit" name="btnClientProviderAdd" class="btn btn-link" value="clientProviderAdd"><i class="far fa-star"></i></button>
+                  </h5>
+                </form>
                 <h6 class="card-subtitle mb-2 text-muted"><?php echo $providerRow['type_name'] ?></h6>
                 <p class="card-text">
                   <?php
@@ -121,15 +190,14 @@
                                           ON c.category_id = pc.category_id
                                           WHERE p.provider_id = '".$providerRow['provider_id']."'")) {
                       while ($categoryRow = $providerCategories->fetch_assoc()) {
-                        echo "<span class=\"badge badge-pill badge-info\">".$categoryRow['category_name']."</span> ";
+                        echo "<span class='badge badge-pill badge-info'>".$categoryRow['category_name']."</span>";
                       }
                       $providerCategories->close();
                     }
                   ?>
                 </p>
                 <div class="btn-group btn-group-justified">
-                  <a href="#" class="btn btn-primary inline">Show</a>
-                  <a href="#" class="btn btn-primary inline">Add Favourite</a>
+                  <button class="btn btn-primary inline">Show</button>
                 </div>
               </div>
             </div>
@@ -144,7 +212,9 @@
         </div>
       </div>
     </div>
-
+    <?php
+      $conn->close();
+    ?>
     <footer class="footer">
       <div class="container">
         <p class="text-muted">Dummy Copyrights</p>
