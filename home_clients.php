@@ -65,14 +65,15 @@
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
-          <div class="card-body">
-            <h5 class="card-title">Restaurant title</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Restaurant subtitle</h6>
-            <p class="card-text">This is an example of a restaurant text. This is one of your favourite restaurants!</p>
-            <div class="btn-group btn-group-justified">
-              <a href="#" class="btn btn-primary inline">Show</a>
-              <a href="#" class="btn btn-primary inline">Details</a>
-              <a href="#" class="btn btn-primary inline">Remove Favourite</a>
+          <div class="card col-sm-4">
+            <div class="card-body">
+              <h5 class="card-title">Restaurant title</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Restaurant subtitle</h6>
+              <p class="card-text">This is an example of a restaurant text. This is one of your favourite restaurants!</p>
+              <div class="btn-group btn-group-justified">
+                <a href="#" class="btn btn-primary inline">Show</a>
+                <a href="#" class="btn btn-primary inline">Remove Favourite</a>
+              </div>
             </div>
           </div>
         </div>
@@ -128,7 +129,6 @@
                 </p>
                 <div class="btn-group btn-group-justified">
                   <a href="#" class="btn btn-primary inline">Show</a>
-                  <a href="#" class="btn btn-primary inline">Details</a>
                   <a href="#" class="btn btn-primary inline">Add Favourite</a>
                 </div>
               </div>

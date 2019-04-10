@@ -25,13 +25,13 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="home_clients.php"><i class="fas fa-home"></i>Home</a>
+          <a class="nav-link" href="home_clients.php"><i class="fas fa-home"></i> Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="profile_clients.php"><i class="fas fa-user"></i>Profile</a>
+          <a class="nav-link" href="profile_clients.php"><i class="fas fa-user"></i> Profile</a>
         </li>
         <li class="nav-item  active">
-          <a class="nav-link" href="orders_clients.php"><i class="fas fa-book"></i>Orders<span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="orders_clients.php"><i class="fas fa-book"></i> Orders<span class="sr-only">(current)</span></a>
         </li>
       </ul>
     </div>
