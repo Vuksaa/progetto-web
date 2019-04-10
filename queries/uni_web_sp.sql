@@ -1,7 +1,7 @@
 DELIMITER //
-CREATE OR REPLACE PROCEDURE address_add (IN p_address VARCHAR (90), IN p_info VARCHAR (90))
+CREATE OR REPLACE PROCEDURE address_add (IN p_address VARCHAR (90), IN p_info VARCHAR (90), IN p_clientId INT(11))
   BEGIN
-    INSERT INTO address (address.address_name, address.address_info) VALUES (p_address, p_info);
+    INSERT INTO address (address.address_name, address.address_info, address.client_id) VALUES (p_address, p_info, p_clientId);
   END;
 //
 CREATE OR REPLACE PROCEDURE address_remove (IN p_id INT(11))

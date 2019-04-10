@@ -52,7 +52,29 @@
         echo "Execution failed: ".$statement->error;
       }
       $statement->close();
-    }
+    } else if(isset($_POST['btnClientAddressAdd'])){
+        if(!($statement=$conn->prepare("CALL address_add(?,?,?)"))){
+          echo "Prepare failed.";
+        }
+        if(!($statement->bind_param('ssi',$_POST['addressName'],$_POST['addressInfo'],$_SESSION['user_id']))) {
+          echo "Bind failed.";
+        }
+        if(!($statement->execute())){
+          echo "Execution failed: ".$statement->error;
+        }
+        $statement->close();
+      } else if(isset($_POST['btnClientAddressRemove'])){
+        if(!($statement=$conn->prepare("CALL address_remove(?)"))){
+          echo "Prepare failed.";
+        }
+        if(!($statement->bind_param('i',$_POST['addressId']))) {
+          echo "Bind failed.";
+        }
+        if(!($statement->execute())){
+          echo "Execution failed: ".$statement->error;
+        }
+        $statement->close();
+      }
 ?>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <a class="navbar-brand" href="home_clients.php">
@@ -124,7 +146,8 @@
               </form>
             </tr>
             <?php
-            if(!($statement=$conn->prepare("SELECT a.allergen_id,a.allergen_name                                    FROM allergen a JOIN client_allergen ca
+            if(!($statement=$conn->prepare("SELECT a.allergen_id,a.allergen_name
+                                    FROM allergen a JOIN client_allergen ca
                                     ON a.allergen_id=ca.allergen_id
                                     WHERE ca.client_id=?"))) {
               echo "Prepare failed.";
@@ -154,11 +177,11 @@
                     Remove
                   </button>
                 </td>
+              </form>
             </tr>
-            </form>
             <?php
-          endwhile;
-              $conn->close();
+              endwhile;
+              $statement->close();
             ?>
           </tbody>
         </table>
@@ -170,57 +193,70 @@
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Address</th>
-              <th scope="col">Additional info</th>
+              <th scope="col">Address Name</th>
+              <th scope="col">Address info</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <th scope="row">1</th>
-              <td>Example address 1</td>
-              <td>Example info 1</td>
-              <td>
-                <button type="button" class="btn btn-primary">
-                  Remove
-                </button>
-              </td>
+              <th scope="row">Add Address</th>
+              <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="address_add_form">
+                <fieldset>
+                  <?php echo "<input type='number' name='clientId' value='".$_SESSION['user_id']."' hidden>" ; ?>
+                  <td>
+                    <label for="clientAddressName" class="sr-only">Address Name:</label>
+                    <input type="text" class="form-control" name="addressName" autocomplete="on" placeholder="Address Name.." required autofocus id="addressName" />
+                  </td>
+                  <td>
+                    <label for="clientAddressInfo" class="sr-only">Address Info:</label>
+                    <input type="text" class="form-control" name="addressInfo" autocomplete="on" placeholder="Address Info.." required autofocus id="addressInfo" />
+                  </td>
+                  <td>
+                    <button type="submit" name="btnClientAddressAdd" class="btn btn-primary btn-lg btn-block" value="clientAddressAdd">
+                      Add
+                    </button>
+                  </td>
+                </fieldset>
+              </form>
             </tr>
+            <?php
+            if(!($statement=$conn->prepare("SELECT a.address_id,a.address_name,a.address_info
+                                    FROM address a WHERE a.client_id=?"))) {
+              echo "Prepare failed.";
+            }
+            if(!($statement->bind_param('i',$_SESSION['user_id']))) {
+              echo "Bind failed";
+            }
+            if(!($statement->execute()))  {
+              echo "Execute failed.";
+            }
+            $statement->store_result();
+            $addressId=0;
+            $addressName="";
+            $addressInfo="";
+            $statement->bind_result($addressId,$addressName,$addressInfo);
+            $i=1;
+            while ($statement->fetch()):
+            ?>
             <tr>
-              <th scope="row">2</th>
-              <td>Example address 2</td>
-              <td>Example info 2</td>
-              <td>
-                <button type="button" class="btn btn-primary">
-                  Remove
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Example address 3</td>
-              <td>Example info 3</td>
-              <td>
-                <button type="button" class="btn btn-primary">
-                  Remove
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">4</th>
-              <form>
+              <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="address_remove_form">
+                <th scope="row"><?php echo $i++;?></th>
+                <?php
+                  echo "<input type='number' name='addressId' value='".$addressId."' hidden>" ;
+                ?>
+                <td><?php echo $addressName;?></td>
+                <td><?php echo $addressInfo;?></td>
                 <td>
-                  <input type="text" class="form-control" placeholder="Address">
-                </td>
-                <td>
-                  <input type="text" class="form-control" placeholder="Additional info">
-                </td>
-                <td>
-                  <button type="button" class="btn btn-primary">
-                    Add
+                  <button name="btnClientAddressRemove" type="submit" class="btn btn-primary" value"clientAddressRemove">
+                    Remove
                   </button>
                 </td>
               </form>
             </tr>
+            <?php
+              endwhile;
+              $statement->close();
+            ?>
           </tbody>
         </table>
       </div>
@@ -228,7 +264,9 @@
   </div>
 
 
-
+  <?php
+    $conn->close();
+   ?>
   <footer class="footer">
     <p class="text-muted">Dummy Copyrights</p>
   </footer>
