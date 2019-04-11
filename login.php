@@ -15,17 +15,20 @@
       die("Connection failed: ".$conn->connect_error);
     }
     echo "Connection successful. ";
-      if(!($statement=$conn->prepare("SELECT client_id,client_name FROM client WHERE client_email = ? AND client_password = ? LIMIT 1"))){
-        echo "Prepare failed.";
-      }
-      if(!($statement->bind_param('ss',$email,$password))) {
-        echo "Bind failed";
-      }
-    if ($statement->execute()) {
-      echo " Executed.";
-      $statement->store_result();
-      $statement->bind_result($cId,$cName);
-      $statement->fetch();
+    if(!($statement=$conn->prepare("SELECT client_id,client_name FROM client WHERE client_email = ? AND client_password = ? LIMIT 1"))){
+      echo "Prepare failed.";
+    }
+    if(!($statement->bind_param('ss',$email,$password))) {
+      echo "Bind failed";
+    }
+    if (!($statement->execute())) {
+      echo "Execution failed.";
+    }
+    echo " Executed.";
+    $statement->store_result();
+    $statement->bind_result($cId,$cName);
+    $statement->fetch();
+    if($statement->num_rows > 0) {
       session_start();
       $_SESSION['user_id'] = $cId;
       $_SESSION['logged'] = TRUE;
