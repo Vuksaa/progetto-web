@@ -165,10 +165,16 @@
           </form>
           <div class="row">
             <?php
+              // TODO: use one query and separate favourite and non-favourite restaurants in php?
               if ($allProviders = $conn->query("SELECT p.provider_id, p.provider_name, t.type_name
                                           FROM provider p
                                           LEFT JOIN type t
-                                          ON p.type_id = t.type_id")) {
+                                          ON p.type_id = t.type_id
+                                          WHERE p.provider_id NOT IN (SELECT p.provider_id
+                                                                      FROM client_provider cp
+                                                                      JOIN provider p
+                                                                      ON cp.provider_id = p.provider_id
+                                                                      WHERE cp.client_id = '".$_SESSION['user_id']."')")) {
               while ($providerRow = $allProviders->fetch_assoc()) {
             ?>
             <div class="card col-sm-4" style="width: 18rem; margin: 2px">
