@@ -6,8 +6,8 @@
     $username = "root";
     $dbpassword="";
     $db = "uni_web_prod";
-    $cId=0;
-    $cName="";
+    $uId=0;
+    $uName="";
     $conn = new mysqli($servername, $username,$dbpassword,$db);
     echo "Testing connection... ";
     if($conn->connect_error) {
@@ -26,21 +26,47 @@
     }
     echo " Executed.";
     $statement->store_result();
-    $statement->bind_result($cId,$cName);
+    $statement->bind_result($uId,$uName);
     $statement->fetch();
     if($statement->num_rows > 0) {
       session_start();
-      $_SESSION['user_id'] = $cId;
+      $_SESSION['user_id'] = $uId;
       $_SESSION['logged'] = TRUE;
-      $_SESSION['client_name'] = $cName;
-      echo " Test id:".$cId." name:".$_SESSION['client_name'];
+      $_SESSION['user_name'] = $uName;
+      $_SESSION['user_type'] = "client";
+      echo " Test id:".$uId." name:".$_SESSION['user_name'];
       $statement->close();
       header('Location: home_clients.php');
       exit;
     } else {
-      echo "DEBUG: Bad credentials. Mail: $email. Password: $password.";
-    }
+        if(!($statement=$conn->prepare("SELECT provider_id,provider_name FROM provider WHERE provider_email = ? AND provider_password = ? LIMIT 1"))){
+          echo "Prepare failed.";
+        }
+        if(!($statement->bind_param('ss',$email,$password))) {
+          echo "Bind failed";
+        }
+        if (!($statement->execute())) {
+          echo "Execution failed.";
+        }
+        echo " Executed.";
+        $statement->store_result();
+        $statement->bind_result($uId,$uName);
+        $statement->fetch();
+        if($statement->num_rows > 0) {
+          session_start();
+          $_SESSION['user_id'] = $uId;
+          $_SESSION['logged'] = TRUE;
+          $_SESSION['user_name'] = $uName;
+          $_SESSION['user_type'] = "provider";
+          echo " Test id:".$uId." name:".$_SESSION['user_name'];
+          $statement->close();
+          header('Location: home_providers.php');
+          exit;
+      } else {
+        echo "DEBUG: Bad credentials. Mail: $email. Password: $password.";
+      }
   }
+}
  ?>
 
 <!DOCTYPE html>

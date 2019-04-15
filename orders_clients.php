@@ -3,6 +3,9 @@
   if (!isset($_SESSION['logged']) || $_SESSION['logged'] == FALSE) {
     header('Location: login.php');
     exit();
+  } else if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] == "provider") {
+    header('Location: profile_providers.php');
+    exit();
   }
 ?>
 <!DOCTYPE html>
@@ -43,7 +46,7 @@
       </ul>
       <ul class="navbar-nav navbar-right">
         <li class="nav-item">
-          <div class="navbar-text">Welcome, <?php echo $_SESSION['client_name']; ?>. Bon appétit!</div>
+          <div class="navbar-text">Welcome, <?php echo $_SESSION['user_name']; ?>. Bon appétit!</div>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
