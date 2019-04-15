@@ -94,6 +94,15 @@ CREATE OR REPLACE PROCEDURE product_add (IN p_name VARCHAR(45), IN p_description
     INSERT INTO product (product.product_name,product.product_description,product.product_price,product.provider_id) VALUES (p_name,p_description,p_price,p_providerId);
   END;
 //
+CREATE OR REPLACE PROCEDURE product_modify (IN p_id INT (11), IN p_name VARCHAR(45), IN p_description VARCHAR(200), IN p_price FLOAT)
+  BEGIN
+    UPDATE product
+    SET product.product_name=p_name,
+    product.product_description=p_description,
+    product.product_price=p_price
+    WHERE product.product_id=p_id;
+  END;
+//
 CREATE OR REPLACE PROCEDURE product_remove (IN p_id INT(11))
   BEGIN
     DELETE FROM product WHERE product.product_id = p_id;

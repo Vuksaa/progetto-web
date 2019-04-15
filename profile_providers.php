@@ -34,16 +34,29 @@
     die("Connection failed: ".$conn->connect_error);
   }
   if(isset($_POST['btnProductAdd'])){
-      if(!($statement=$conn->prepare("CALL product_add(?,?,?,?)"))){
-        echo "Prepare failed.";
+    if($_POST['btnProductAdd']=="productAdd") {
+        if(!($statement=$conn->prepare("CALL product_add(?,?,?,?)"))){
+          echo "Prepare failed.";
+        }
+        if(!($statement->bind_param('ssdi',$_POST['productName'],$_POST['productDescription'],$_POST['productPrice'],$_SESSION['user_id']))) {
+          echo "Bind failed.";
+        }
+        if(!($statement->execute())){
+          echo "Execution failed: ".$statement->error;
+        }
+        $statement->close();
+    } else if($_POST['btnProductAdd']=="productModify") {
+        if(!($statement=$conn->prepare("CALL product_modify(?,?,?,?)"))){
+          echo "Prepare failed.";
+        }
+        if(!($statement->bind_param('issd',$_POST['productId'],$_POST['productName'],$_POST['productDescription'],$_POST['productPrice']))) {
+          echo "Bind failed.";
+        }
+        if(!($statement->execute())){
+          echo "Execution failed: ".$statement->error;
+        }
+        $statement->close();
       }
-      if(!($statement->bind_param('ssdi',$_POST['productName'],$_POST['productDescription'],$_POST['productPrice'],$_SESSION['user_id']))) {
-        echo "Bind failed.";
-      }
-      if(!($statement->execute())){
-        echo "Execution failed: ".$statement->error;
-      }
-      $statement->close();
     } else if(isset($_POST['btnProductRemove'])){
       if(!($statement=$conn->prepare("CALL product_remove(?)"))){
         echo "Prepare failed.";
@@ -127,7 +140,11 @@
                       <h5 class="card-title"><?php echo $productRow['product_name'] ?> </h5>
                       <p class="card-text"><?php echo $productRow['product_description'] ?></p>
                       <div class="btn-group btn-group-justified">
-                        <button class="btn btn-primary inline">Show</button>
+                        <button type="button" class="btn btn-primary inline" data-toggle="modal" data-target="#productAddModal" data-id="<?php echo $productRow['product_id']?>"
+                          data-name="<?php echo $productRow['product_name']?>" data-description="<?php echo $productRow['product_description']?>"
+                           data-price="<?php echo $productRow['product_price']?>">
+                          Modify
+                        </button>
                         <button type="submit" name="btnProductRemove" class="btn btn-primary" value="productRemove">Remove</button>
                       </div>
                     </form>
@@ -157,8 +174,9 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-          <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="product_add_form">
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="product_add_form">
+          <div class="modal-body">
+            <input type="number" name="productId" value="" id="productId" hidden>
             <div class="form-group">
               <label for="productName" class="col-form-label">Name:</label>
               <input type="text" class="form-control" name="productName" id="productName" required>
@@ -171,11 +189,11 @@
               <label for="productPrice" class="col-form-label">Price:</label>
               <input type="number" step="any" class="form-control" name="productPrice" id="productPrice" required></input>
             </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" name="btnProductAdd" value="productAdd" class="btn btn-primary">Add product</button>
-        </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" name="btnProductAdd" value="productAdd" class="btn btn-primary" id="btnProductAdd">Add product</button>
+          </div>
         </form>
       </div>
     </div>
@@ -190,5 +208,24 @@
     </div>
   </footer>
 </body>
+
+<script>
+//REDO with ajax?
+  $('#productAddModal').on('show.bs.modal', function(event) {
+    var button = $(event.relatedTarget);
+    var productId = button.data('id');
+    var productName = button.data('name');
+    var productDescription = button.data('description');
+    var productPrice = button.data('price');
+    var modal = $(this);
+    modal.find('#productId').val(productId);
+    modal.find('.modal-title').text("Modify the product");
+    modal.find('#productName').val(productName);
+    modal.find('#productDescription').val(productDescription);
+    modal.find('#productPrice').val(productPrice);
+    modal.find('#btnProductAdd').text("Modify");
+    modal.find('#btnProductAdd').val("productModify");
+  })
+</script>
 
 </html>
