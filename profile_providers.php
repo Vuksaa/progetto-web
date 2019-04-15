@@ -33,6 +33,29 @@
   if($conn->connect_error) {
     die("Connection failed: ".$conn->connect_error);
   }
+  if(isset($_POST['btnProductAdd'])){
+      if(!($statement=$conn->prepare("CALL product_add(?,?,?,?)"))){
+        echo "Prepare failed.";
+      }
+      if(!($statement->bind_param('ssdi',$_POST['productName'],$_POST['productDescription'],$_POST['productPrice'],$_SESSION['user_id']))) {
+        echo "Bind failed.";
+      }
+      if(!($statement->execute())){
+        echo "Execution failed: ".$statement->error;
+      }
+      $statement->close();
+    } else if(isset($_POST['btnProductRemove'])){
+      if(!($statement=$conn->prepare("CALL product_remove(?)"))){
+        echo "Prepare failed.";
+      }
+      if(!($statement->bind_param('i',$_POST['productId']))) {
+        echo "Bind failed.";
+      }
+      if(!($statement->execute())){
+        echo "Execution failed: ".$statement->error;
+      }
+      $statement->close();
+    }
 
   ?>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
@@ -99,15 +122,15 @@
               ?>
                 <div class="card col-sm-4" style="width: 18rem; margin: 2px">
                   <div class="card-body">
-                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="product_product_remove_form">
+                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="product_remove_form">
                       <?php echo "<input type='number' name='productId' value='".$productRow['product_id']."' hidden>" ; ?>
                       <h5 class="card-title"><?php echo $productRow['product_name'] ?> </h5>
+                      <p class="card-text"><?php echo $productRow['product_description'] ?></p>
+                      <div class="btn-group btn-group-justified">
+                        <button class="btn btn-primary inline">Show</button>
+                        <button type="submit" name="btnProductRemove" class="btn btn-primary" value="productRemove">Remove</button>
+                      </div>
                     </form>
-                    <p class="card-text"><?php echo $productRow['product_description'] ?></p>
-                    <div class="btn-group btn-group-justified">
-                      <button class="btn btn-primary inline">Show</button>
-                      <button type="submit" name="btnProviderProductRemove" class="btn btn-primary" value="providerProductRemove">Remove</button>
-                    </div>
                   </div>
                 </div>
                 <?php
@@ -135,25 +158,25 @@
           </button>
         </div>
         <div class="modal-body">
-          <form>
+          <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="product_add_form">
             <div class="form-group">
               <label for="productName" class="col-form-label">Name:</label>
-              <input type="text" class="form-control" id="productName" required>
+              <input type="text" class="form-control" name="productName" id="productName" required>
             </div>
             <div class="form-group">
               <label for="message-text" class="col-form-label">Description:</label>
-              <textarea class="form-control" id="productDescription"></textarea>
+              <textarea class="form-control" name="productDescription" id="productDescription"></textarea>
             </div>
             <div class="form-group">
               <label for="productPrice" class="col-form-label">Price:</label>
-              <input type="number" step="any" class="form-control" id="productPrice" required></input>
+              <input type="number" step="any" class="form-control" name="productPrice" id="productPrice" required></input>
             </div>
-          </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Add product</button>
+          <button type="submit" name="btnProductAdd" value="productAdd" class="btn btn-primary">Add product</button>
         </div>
+        </form>
       </div>
     </div>
   </div>

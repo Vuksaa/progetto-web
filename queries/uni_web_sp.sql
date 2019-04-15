@@ -89,9 +89,9 @@ CREATE OR REPLACE PROCEDURE order_status_remove (IN p_orderId INT (11),IN p_stat
     DELETE FROM order_status WHERE order_status.order_id = p_orderId AND order_status.status_id = p_statusId;
   END;
 //
-CREATE OR REPLACE PROCEDURE product_add (IN p_name VARCHAR(45), IN p_price FLOAT, IN p_providerId INT(11))
+CREATE OR REPLACE PROCEDURE product_add (IN p_name VARCHAR(45), IN p_description VARCHAR(200), IN p_price FLOAT, IN p_providerId INT(11))
   BEGIN
-    INSERT INTO product (product.product_name,product.product_price,product.provider_id) VALUES (p_name,p_price,p_providerId);
+    INSERT INTO product (product.product_name,product.product_description,product.product_price,product.provider_id) VALUES (p_name,p_description,p_price,p_providerId);
   END;
 //
 CREATE OR REPLACE PROCEDURE product_remove (IN p_id INT(11))
