@@ -70,7 +70,7 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
           <div class="row">
-            <div class="card col-sm-4" style="width: 18rem; margin: 2px">
+            <div class="card col-sm-3">
               <div class="card-body">
                 <h5 class="card-title">Order title</h5>
                 <h6 class="card-subtitle mb-2 text-muted">Order subtitle</h6>

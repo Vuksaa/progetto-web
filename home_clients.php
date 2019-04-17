@@ -113,7 +113,7 @@
                                           WHERE cp.client_id = '".$_SESSION['user_id']."'")) {
               while ($providerRow = $favProviders->fetch_assoc()) {
             ?>
-            <div class="card col-sm-4" style="width: 18rem; margin: 2px">
+            <div class="card col-sm-3">
               <div class="card-body">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="client_provider_remove_form">
                   <?php echo "<input type='number' name='providerId' value='".$providerRow['provider_id']."' hidden>" ; ?>
@@ -180,7 +180,7 @@
                                                                       WHERE cp.client_id = '".$_SESSION['user_id']."')")) {
               while ($providerRow = $allProviders->fetch_assoc()) {
             ?>
-            <div class="card col-sm-4" style="width: 18rem; margin: 2px">
+            <div class="card col-sm-3">
               <div class="card-body">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="client_provider_add_form">
                   <?php echo "<input type='number' name='providerId' value='".$providerRow['provider_id']."' hidden>" ; ?>

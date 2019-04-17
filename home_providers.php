@@ -54,7 +54,6 @@
       </ul>
     </div>
   </nav>
-  </nav>
 
   <div class="container">
     <div class="card main-card">
@@ -65,15 +64,17 @@
       </h1>
       <div id="collapseIncomingOrders" class="collapse show" aria-labelledby="headingIncomingOrders">
         <div class="card-body">
-          <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title">Order title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Order subtitle</h6>
-              <p class="card-text">This is an example of an order text</p>
-              <div class="btn-group btn-group-justified">
-                <a href="#" class="btn btn-primary inline">Accept</a>
-                <a href="#" class="btn btn-primary inline">Reject</a>
-                <a href="#" class="btn btn-primary inline">Details</a>
+          <div class="row">
+            <div class="card col-sm-3">
+              <div class="card-body">
+                <h5 class="card-title">Order title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Order subtitle</h6>
+                <p class="card-text">This is an example of an order text</p>
+                <div class="btn-group btn-group-justified">
+                  <a href="#" class="btn btn-primary inline">Accept</a>
+                  <a href="#" class="btn btn-primary inline">Reject</a>
+                  <a href="#" class="btn btn-primary inline">Details</a>
+                </div>
               </div>
             </div>
           </div>
@@ -88,15 +89,17 @@
       </h1>
       <div id="collapsePreparedOrders" class="collapse" aria-labelledby="headingPreparedOrders">
         <div class="card-body">
-          <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title">Order title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Order subtitle</h6>
-              <p class="card-text">This is an example of an order text</p>
-              <div class="btn-group btn-group-justified">
-                <a href="#" class="btn btn-primary inline">Accept</a>
-                <a href="#" class="btn btn-primary inline">Reject</a>
-                <a href="#" class="btn btn-primary inline">Details</a>
+          <div class="row">
+            <div class="card col-sm-3">
+              <div class="card-body">
+                <h5 class="card-title">Order title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Order subtitle</h6>
+                <p class="card-text">This is an example of an order text</p>
+                <div class="btn-group btn-group-justified">
+                  <a href="#" class="btn btn-primary inline">Accept</a>
+                  <a href="#" class="btn btn-primary inline">Reject</a>
+                  <a href="#" class="btn btn-primary inline">Details</a>
+                </div>
               </div>
             </div>
           </div>
@@ -111,13 +114,15 @@
       </h1>
       <div id="collapseCompletedOrders" class="collapse" aria-labelledby="headingCompletedOrders">
         <div class="card-body">
-          <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title">Order title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Order subtitle</h6>
-              <p class="card-text">This is an example of an order text</p>
-              <div class="btn-group btn-group-justified">
-                <a href="#" class="btn btn-primary inline">Details</a>
+          <div class="row">
+            <div class="card col-sm-3">
+              <div class="card-body">
+                <h5 class="card-title">Order title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Order subtitle</h6>
+                <p class="card-text">This is an example of an order text</p>
+                <div class="btn-group btn-group-justified">
+                  <a href="#" class="btn btn-primary inline">Details</a>
+                </div>
               </div>
             </div>
           </div>
