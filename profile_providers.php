@@ -125,7 +125,7 @@
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
               </form>
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#productAddModal">Add Product</button>
+              <button type="button" class="btn btn-primary" value="productAdd" data-toggle="modal" data-target="#productAddModal">Add Product</button>
               <div class="row">
                 <?php
                 if ($products = $conn->query("SELECT product_id, product_name, product_price, product_description
@@ -140,7 +140,7 @@
                       <h5 class="card-title"><?php echo $productRow['product_name'] ?> </h5>
                       <p class="card-text"><?php echo $productRow['product_description'] ?></p>
                       <div class="btn-group btn-group-justified">
-                        <button type="button" class="btn btn-primary inline" data-toggle="modal" data-target="#productAddModal" data-id="<?php echo $productRow['product_id']?>"
+                        <button type="button" class="btn btn-primary inline" name="btnProductMpdify" value="productModify" data-toggle="modal" data-target="#productAddModal" data-id="<?php echo $productRow['product_id']?>"
                           data-name="<?php echo $productRow['product_name']?>" data-description="<?php echo $productRow['product_description']?>"
                            data-price="<?php echo $productRow['product_price']?>">
                           Modify
@@ -219,7 +219,11 @@
     var productPrice = button.data('price');
     var modal = $(this);
     modal.find('#productId').val(productId);
-    modal.find('.modal-title').text("Modify the product");
+    if(button.val()=="productModify"){
+      modal.find('.modal-title').text("Modify the product");
+    } else {
+      modal.find('.modal-title').text("Add a product");
+    }
     modal.find('#productName').val(productName);
     modal.find('#productDescription').val(productDescription);
     modal.find('#productPrice').val(productPrice);
