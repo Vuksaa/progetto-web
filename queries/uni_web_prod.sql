@@ -78,7 +78,7 @@ CREATE TABLE `category` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `category_name` varchar(45) NOT NULL,
   PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -87,7 +87,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (1,'Osteria'),(2,'Pub'),(3,'Piadineria'),(4,'Aperto tardi'),(5,'Colazione'),(6,'Hamburgeria'),(7,'Vegetariano'),(8,'Vegano'),(9,'Orientale'),(10,'Sushi'),(11,'Tradizione locale'),(12,'Dolci'),(13,'Poche calorie');
+INSERT INTO `category` VALUES (1,'Osteria'),(2,'Pub'),(3,'Piadineria'),(4,'Aperto tardi'),(5,'Colazione'),(6,'Hamburgeria'),(7,'Vegetariano'),(8,'Vegano'),(9,'Orientale'),(10,'Sushi'),(11,'Tradizione locale'),(12,'Dolci'),(13,'Poche calorie'),(14,'Pesce');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -105,7 +105,7 @@ CREATE TABLE `client` (
   `client_name` varchar(45) NOT NULL,
   `client_surname` varchar(45) NOT NULL,
   PRIMARY KEY (`client_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -114,7 +114,7 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES (1,'haldor.rasim@gmail.com','haldor','Haldor','Rasim'),(2,'izz.helga@gmail.com','izz','Izz ud-Din','Helga'),(3,'njal.itimad@gmail.com','njal','Njal','I\'timad'),(4,'stefana.dawood@gmail.com','stefana','Stefana','Dawood'),(5,'toki.halvor@gmail.com','toki','Toki','Halvor'),(6,'benjaminas.khadija@gmail.com','benjaminas','Benjaminas','Khadija'),(7,'sverrir.ingvildr@gmail.com','sverrir','Sverrir','Ingvildr'),(8,'johanneke.tycho@gmail.com','johanneke','Johanneke','Tycho'),(9,'fazl.shafaqat@gmail.com','fazl','Fazl','Shafaqat');
+INSERT INTO `client` VALUES (1,'haldor.rasim@gmail.com','haldor','Haldor','Rasim'),(2,'izz.helga@gmail.com','izz','Izz ud-Din','Helga'),(3,'njal.itimad@gmail.com','njal','Njal','I\'timad'),(4,'stefana.dawood@gmail.com','stefana','Stefana','Dawood'),(5,'toki.halvor@gmail.com','toki','Toki','Halvor'),(6,'benjaminas.khadija@gmail.com','benjaminas','Benjaminas','Khadija'),(7,'sverrir.ingvildr@gmail.com','sverrir','Sverrir','Ingvildr'),(8,'johanneke.tycho@gmail.com','johanneke','Johanneke','Tycho'),(9,'fazl.shafaqat@gmail.com','fazl','Fazl','Shafaqat'),(10,'1@1.1','1','1','1');
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -385,6 +385,7 @@ CREATE TABLE `provider_category` (
 
 LOCK TABLES `provider_category` WRITE;
 /*!40000 ALTER TABLE `provider_category` DISABLE KEYS */;
+INSERT INTO `provider_category` VALUES (1,5),(1,6),(3,9),(4,6),(5,3),(5,7),(5,11),(6,1),(6,14),(7,4);
 /*!40000 ALTER TABLE `provider_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -444,4 +445,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-07 13:16:34
+-- Dump completed on 2019-04-21 16:30:58
