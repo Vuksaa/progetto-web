@@ -5,6 +5,7 @@
 
 ## TODO:
 * Explore LESS? https://stackoverflow.com/questions/1065435/can-a-css-class-inherit-one-or-more-other-classes
+# DONE:
 * Make footers stay at the bottom of the pages
 
 # To dump a database
