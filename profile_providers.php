@@ -140,7 +140,7 @@
                       <h5 class="card-title"><?php echo $productRow['product_name'] ?> </h5>
                       <p class="card-text"><?php echo $productRow['product_description'] ?></p>
                       <div class="btn-group btn-group-justified">
-                        <button type="button" class="btn btn-primary inline" name="btnProductMpdify" value="productModify" data-toggle="modal" data-target="#productAddModal" data-id="<?php echo $productRow['product_id']?>"
+                        <button type="button" class="btn btn-primary inline" name="btnProductModify" value="productModify" data-toggle="modal" data-target="#productAddModal" data-id="<?php echo $productRow['product_id']?>"
                           data-name="<?php echo $productRow['product_name']?>" data-description="<?php echo $productRow['product_description']?>"
                            data-price="<?php echo $productRow['product_price']?>">
                           Modify
