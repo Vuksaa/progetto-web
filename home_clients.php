@@ -89,7 +89,7 @@
     </div>
   </nav>
 
-  <div class="container">
+  <div class="container mt-4 mb-4">
     <div class="card main-card">
       <h1 class="mb-0 form-group form-inline">
         <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseFavouriteRestaurants" aria-expanded="true" aria-controls="collapseFavouriteRestaurants">
@@ -139,7 +139,8 @@
                   ?>
                 </p>
                 <div class="btn-group btn-group-justified">
-                  <button class="btn btn-primary inline">Show</button>
+                  <button class="btn btn-primary inline" data-toggle="modal" data-target="#peekOnProvider">Peek</button>
+                  <button class="btn btn-primary inline">Order</button>
                 </div>
               </div>
             </div>
@@ -206,7 +207,8 @@
                   ?>
                 </p>
                 <div class="btn-group btn-group-justified">
-                  <button class="btn btn-primary inline">Show</button>
+                  <button class="btn btn-primary inline" data-toggle="modal" data-target="#peekOnProvider">Peek</button>
+                  <button class="btn btn-primary inline">Order</button>
                 </div>
               </div>
             </div>
@@ -230,5 +232,26 @@
       </div>
     </footer>
 </body>
+
+<!-- modal for peeking on a provider's main dishes/products, without entering in their profile page or in a "place order" page -->
+<div id="peekOnProvider" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title place-order-header">Presented dishes</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>List of dishes/products (with their price) chosen by the provider goes here. "Dish"/"Product" flavour according to provider type?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 </html>
