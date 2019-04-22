@@ -65,8 +65,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="home_clients.php"><i class="fas fa-home"></i> Home<span class="sr-only">(current)</span></a>
+        <li class="nav-item">
+          <a class="nav-link" href="home_clients.php"><i class="fas fa-home"></i> Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="profile_clients.php"><i class="fas fa-user"></i> Profile</a>
@@ -87,6 +87,7 @@
   </nav>
 
   <div class="container pt-4 pb-4">
+    <h3 class="pb-2">Place order</h3>
     <div class="card">
       <ul class="list-group list-group-flush">
         <li class="list-group-item">
@@ -95,25 +96,55 @@
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
+          <div class="card">
+            <!-- maybe let providers add images for their products? <img class="card-img-top" src="..." alt="Card image cap"> -->
+            <div class="card-body" id="listedProductIDCard">
+              <h5 class="card-title">Product name</h5>
+              <p class="card-text font-weight-light">Ingredient 1, Ingredient 2, Ingredient 3</p>
+              <form class="form-group row">
+                <label for="productIDQuantity" class="col-sm-2 col-form-label">Quantity</label>
+                <input type="number" class="form-control col-sm-1" id="productIDQuantity" placeholder="Quantity" value="1" required>
+              </form>
+              <form class="form-group row">
+                <label for="productIDNotes" class="col-sm-2 col-form-label">Notes</label>
+                <input type="text" class="form-control col-sm-5" id="productIDNotes" placeholder="Notes">
+              </form>
+              <a href="#" class="btn btn-primary far fa-plus-square"></a>
+            </div>
+          </div>
         </li>
         <li class="list-group-item">
           <h5 class="card-title">Order review</h5>
+          <div class="card">
+            <div class="card-body" id="orderedProductIDCard">
+              <h5 class="card-title">Product name</h5>
+              <p class="card-text font-weight-light">Ingredient 1, Ingredient 2, Ingredient 3</p>
+              <form class="form-group row">
+                <label for="productIDQuantity" class="col-sm-2 col-form-label">Quantity</label>
+                <input type="number" class="form-control col-sm-1" id="productIDQuantity" placeholder="Quantity" value="1" required>
+              </form>
+              <form class="form-group row">
+                <label for="productIDNotes" class="col-sm-2 col-form-label">Notes</label>
+                <input type="text" class="form-control col-sm-5" id="productIDNotes" placeholder="Notes">
+              </form>
+              <a href="#" class="btn btn-primary far fa-minus-square"></a>
+            </div>
+          </div>
         </li>
         <li class="list-group-item">
           <h5 class="card-title">Address and confirmation</h5>
             <form class="pt-2">
               <div class="form-group col-md-4">
-                <div class="custom-control custom-radio">
-                  <input type="radio" id="radioSelectAddress" name="customRadio" class="custom-control-input" checked="true">
-                  <label class="custom-control-label" for="customRadio1">Select address</label>
+                <div class="form-check custom-radio">
+                  <input class="form-check-input" type="radio" id="radioSelectAddress" name="addressRadio" checked>
+                  <label class="form-check-label" for="customRadio1">Select address</label>
                 </div>
-                <div class="custom-control custom-radio">
-                  <input type="radio" id="radioEnterAddress" name="customRadio" class="custom-control-input">
-                  <label class="custom-control-label" for="customRadio2">Enter address</label>
+                <div class="form-check custom-radio">
+                  <input class="form-check-input" type="radio" id="radioEnterAddress" name="addressRadio">
+                  <label class="form-check-label" for="customRadio2">Enter address</label>
                 </div>
               </div>
-              <!-- Hide this div if radioSelectAddress is unchecked -->
-              <div class="form-group col-md-4" id="formSelectAddress">
+              <div class="form-group col-md-4 pt-2" id="formSelectAddress">
                 <select class="custom-select" required>
                   <option value="">Select address</option>
                   <option value="1">Address 1</option>
@@ -121,21 +152,17 @@
                   <option value="3">Address 3</option>
                 </select>
               </div>
-              <!-- Hide this div if radioEnterAddress is unchecked -->
-              <div class="form-group col-md-4" id="formEnterAddress">
+              <!-- created with the d-none class so that it doesn't briefly show up before the DOM is ready -->
+              <div class="form-group col-md-4 pt-2 d-none" id="formEnterAddress">
                 <label for="enteredAddress">Address</label>
-                <input type="text" class="form-control" id="enteredAddress" placeholder="Address" required>
+                <input type="text" class="form-control p-1" id="enteredAddress" placeholder="Address" required>
                 <!-- TODO: align with the other forms (why is it 3px to the left compared to other elements??) -->
-                <div class="form-check">
-                  <input type="checkbox" class="custom-control-input" value="" id="checkSaveAddress" required>
-                  <label class="custom-control-label" for="checkSaveAddress">
-                    Save this address
-                  </label>
+                <div class="form-check pt-2">
+                  <input type="checkbox" class="custom-control-input" value="" id="checkSaveAddress">
+                  <label class="custom-control-label" for="checkSaveAddress">Save this address</label>
                 </div>
               </div>
-
-            <!-- Selected address here (empty if there is no address selected) -->
-            <h6 class="pt-3" id="addressSelected">Selected address (maybe remove this altogether)</h6>
+            <button type="button" id="btnComplete" class="btn btn-primary mt-4">Pay and order</button>
           </form>
         </li>
       </ul>
@@ -151,5 +178,28 @@
     </div>
   </footer>
 </body>
+
+<script type="text/javascript">
+$(function() {
+  // Hide "enter address" form, and add event handlers for hiding the appropriate form on the radiobuttons
+  // We remove the class d-none from formEnterAddress so jquery can handle hiding/showing with its hide and show functions
+  $("#formEnterAddress").hide()
+  $("#formEnterAddress").removeClass("d-none")
+  $("#radioEnterAddress").on('change', function(e) {
+    $("#formEnterAddress").show()
+    $("#formSelectAddress").hide()
+  })
+  $("#radioSelectAddress").on('change', function(e) {
+    $("#formEnterAddress").hide()
+    $("#formSelectAddress").show()
+  })
+
+  $("#btnComplete").on('click', function(e) {
+    if ($("#radioSelectAddress:checked").val() && $("#enteredAddress").val() === '') {
+      alert("Must select an address!")
+    }
+  })
+})
+</script>
 
 </html>
