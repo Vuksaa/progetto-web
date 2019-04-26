@@ -21,40 +21,6 @@
 </head>
 
 <body>
-  <?php
-    $servername = "localhost";
-    $username = "root";
-    $password="";
-    $db = "uni_web_prod";
-    $conn = new mysqli($servername, $username,$password,$db);
-    if($conn->connect_error) {
-      die("Connection failed: ".$conn->connect_error);
-    }if(isset($_POST['btnClientProviderAdd'])){
-        if(!($statement=$conn->prepare("INSERT INTO client_provider(client_provider.client_id,client_provider.provider_id)
-                                VALUES (?,?)"))){
-          echo "Prepare failed.";
-        }
-        if(!($statement->bind_param('ii',$_SESSION['user_id'],$_POST['providerId']))) {
-          echo "Bind failed.";
-        }
-        if(!($statement->execute())){
-          echo "Execution failed: ".$statement->error;
-        }
-        $statement->close();
-      } else if(isset($_POST['btnClientProviderRemove'])){
-        if(!($statement=$conn->prepare("DELETE FROM client_provider
-                                WHERE client_provider.client_id=? AND client_provider.provider_id=?"))){
-          echo "Prepare failed.";
-        }
-        if(!($statement->bind_param('ii',$_SESSION['user_id'],$_POST['providerId']))) {
-          echo "Bind failed.";
-        }
-        if(!($statement->execute())){
-          echo "Execution failed: ".$statement->error;
-        }
-        $statement->close();
-      }
-  ?>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <a class="navbar-brand" href="home_clients.php">
       <img src="res/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
