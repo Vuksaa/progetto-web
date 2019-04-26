@@ -56,7 +56,9 @@
   </div>
 
   <?php
-    $conn->close();
+    if (isset($conn) && $conn != null) {
+      $conn->close();
+    }
   ?>
   <footer class="footer">
     <div class="container">
