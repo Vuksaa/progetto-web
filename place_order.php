@@ -21,40 +21,6 @@
 </head>
 
 <body>
-  <?php
-    $servername = "localhost";
-    $username = "root";
-    $password="";
-    $db = "uni_web_prod";
-    $conn = new mysqli($servername, $username,$password,$db);
-    if($conn->connect_error) {
-      die("Connection failed: ".$conn->connect_error);
-    }if(isset($_POST['btnClientProviderAdd'])){
-        if(!($statement=$conn->prepare("INSERT INTO client_provider(client_provider.client_id,client_provider.provider_id)
-                                VALUES (?,?)"))){
-          echo "Prepare failed.";
-        }
-        if(!($statement->bind_param('ii',$_SESSION['user_id'],$_POST['providerId']))) {
-          echo "Bind failed.";
-        }
-        if(!($statement->execute())){
-          echo "Execution failed: ".$statement->error;
-        }
-        $statement->close();
-      } else if(isset($_POST['btnClientProviderRemove'])){
-        if(!($statement=$conn->prepare("DELETE FROM client_provider
-                                WHERE client_provider.client_id=? AND client_provider.provider_id=?"))){
-          echo "Prepare failed.";
-        }
-        if(!($statement->bind_param('ii',$_SESSION['user_id'],$_POST['providerId']))) {
-          echo "Bind failed.";
-        }
-        if(!($statement->execute())){
-          echo "Execution failed: ".$statement->error;
-        }
-        $statement->close();
-      }
-  ?>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <a class="navbar-brand" href="home_clients.php">
       <img src="res/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
@@ -86,6 +52,16 @@
     </div>
   </nav>
 
+  <!-- <div class="container p-5">
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="providerSelection" class="form">
+      <fieldset>
+        <label for="providerId" class="sr-only">Email:</label>
+        <input type="text" class="form-control" name="providerId" autocomplete="off" placeholder="<?php echo $_POST["providerId"] ?>" required autofocus id="providerId" />
+        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Confirm" onclick="" />
+      </fieldset>
+      <p class="text-muted small">Current id: <?php echo $_POST["providerId"] ?></p>
+    </form>
+  </div> -->
   <div class="container pt-4 pb-4">
     <h3 class="pb-2">Place order</h3>
     <div class="card">
@@ -120,11 +96,11 @@
               <h5 class="card-title">Product name</h5>
               <p class="card-text font-weight-light">Ingredient 1, Ingredient 2, Ingredient 3</p>
               <form class="form-group row">
-                <label for="productIDQuantity" class="col-sm-2 col-form-label">Quantity</label>
+                <label for="productIDQuantity" class="col-form-label col-sm-2">Quantity</label>
                 <input type="number" class="form-control col-sm-1" id="productIDQuantity" placeholder="Quantity" value="1" required>
               </form>
               <form class="form-group row">
-                <label for="productIDNotes" class="col-sm-2 col-form-label">Notes</label>
+                <label for="productIDNotes" class="col-form-label col-sm-2">Notes</label>
                 <input type="text" class="form-control col-sm-5" id="productIDNotes" placeholder="Notes">
               </form>
               <a href="#" class="btn btn-primary far fa-minus-square"></a>
@@ -137,11 +113,11 @@
               <div class="form-group col-md-4">
                 <div class="form-check custom-radio">
                   <input class="form-check-input" type="radio" id="radioSelectAddress" name="addressRadio" checked>
-                  <label class="form-check-label" for="customRadio1">Select address</label>
+                  <label class="form-check-label" for="radioSelectAddress">Select address</label>
                 </div>
                 <div class="form-check custom-radio">
                   <input class="form-check-input" type="radio" id="radioEnterAddress" name="addressRadio">
-                  <label class="form-check-label" for="customRadio2">Enter address</label>
+                  <label class="form-check-label" for="radioEnterAddress">Enter address</label>
                 </div>
               </div>
               <div class="form-group col-md-4 pt-2" id="formSelectAddress">
@@ -153,13 +129,18 @@
                 </select>
               </div>
               <!-- created with the d-none class so that it doesn't briefly show up before the DOM is ready -->
-              <div class="form-group col-md-4 pt-2 d-none" id="formEnterAddress">
-                <label for="enteredAddress">Address</label>
-                <input type="text" class="form-control p-1" id="enteredAddress" placeholder="Address" required>
-                <!-- TODO: align with the other forms (why is it 3px to the left compared to other elements??) -->
-                <div class="form-check pt-2">
+              <div class="form-group d-none" id="formEnterAddress">
+                <div class="form-group row">
+                  <label for="enteredAddress" class="col-form-label col-sm-1">Address</label>
+                  <input type="text" class="form-control col-sm-4" id="enteredAddress" placeholder="Address" required>
+                </div>
+                <div class="form-check">
                   <input type="checkbox" class="custom-control-input" value="" id="checkSaveAddress">
                   <label class="custom-control-label" for="checkSaveAddress">Save this address</label>
+                </div>
+                <div class="form-group row pt-1 d-none" id="formEnterAddressName">
+                  <label for="enteredAddressName" class="col-form-label col-sm-1">Name</label>
+                  <input type="text" class="form-control col-sm-2" id="enteredAddressName" placeholder="Name">
                 </div>
               </div>
             <button type="button" id="btnComplete" class="btn btn-primary mt-4">Pay and order</button>
@@ -168,10 +149,6 @@
       </ul>
     </div>
   </div>
-
-  <?php
-    $conn->close();
-  ?>
   <footer class="footer">
     <div class="container">
       <p class="text-muted">Dummy Copyrights</p>
@@ -194,9 +171,21 @@ $(function() {
     $("#formSelectAddress").show()
   })
 
+  // validation
   $("#btnComplete").on('click', function(e) {
     if ($("#radioSelectAddress:checked").val() && $("#enteredAddress").val() === '') {
       alert("Must select an address!")
+    }
+  })
+
+  // hide the field for entering the address name if the user doesn't wish to save it. it is hidden by default
+  $("#formEnterAddressName").hide()
+  $("#formEnterAddressName").removeClass("d-none")
+  $("#checkSaveAddress").on('change', function(e) {
+    if ($(this).is(":checked") == true) {
+      $("#formEnterAddressName").show()
+    } else {
+      $("#formEnterAddressName").hide()
     }
   })
 })
