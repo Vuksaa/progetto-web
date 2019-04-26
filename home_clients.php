@@ -24,6 +24,7 @@
 </head>
 
 <body>
+  <!-- This php block is for adding favourites -->
   <?php
     $servername = "localhost";
     $username = "root";
