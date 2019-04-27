@@ -1,5 +1,6 @@
 # Links
 * [DOC](https://docs.google.com/document/d/1yc5-OVwv479ZF38MzWlKc9_w-5nIRfYCWxpPrJ_8tp4/edit)
+* [Google Sheets page](https://docs.google.com/spreadsheets/d/18Ro4jAbf_LOkBPr_DmGApGaRwqbGOY-PE3fro7E6BCI/edit#gid=0)
 * [Database](https://www.draw.io/#G19gvFu-5DhesNLPpEbtIoWQu4_ogbwmRx)
 
 # TODOs:
