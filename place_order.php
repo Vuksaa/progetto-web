@@ -3,6 +3,8 @@
   if (!isset($_SESSION['logged']) || $_SESSION['logged'] == FALSE) {
     header('Location: login.php');
     exit();
+  } else {
+
   }
 ?>
 <!DOCTYPE html>
@@ -21,37 +23,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-    <a class="navbar-brand" href="home_clients.php">
-      <img src="res/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-      Project
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="home_clients.php"><i class="fas fa-home"></i> Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="profile_clients.php"><i class="fas fa-user"></i> Profile</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="orders_clients.php"><i class="fas fa-book"></i> Orders</a>
-        </li>
-      </ul>
-      <ul class="navbar-nav navbar-right">
-        <li class="nav-item">
-          <div class="navbar-text">Welcome, <?php echo $_SESSION['user_name']; ?>. Bon appétit!</div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-
+  <?php include("fragments/navbar.php"); ?>
   <!-- <div class="container p-5">
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="providerSelection" class="form">
       <fieldset>
@@ -110,7 +82,7 @@
         <li class="list-group-item">
           <h5 class="card-title">Address and confirmation</h5>
             <form class="pt-2">
-              <div class="form-group col-md-4">
+              <div class="form-group">
                 <div class="form-check custom-radio">
                   <input class="form-check-input" type="radio" id="radioSelectAddress" name="addressRadio" checked>
                   <label class="form-check-label" for="radioSelectAddress">Select address</label>
@@ -120,8 +92,15 @@
                   <label class="form-check-label" for="radioEnterAddress">Enter address</label>
                 </div>
               </div>
-              <div class="form-group col-md-4 pt-2" id="formSelectAddress">
-                <select class="custom-select" required>
+              <div class="form-group pt-2" id="formSelectAddress">
+                <?php
+                // SELECT a.address_name, a.address_info
+                // FROM client c
+                // JOIN address a
+                // ON a.client_id = c.client_id
+                // WHERE a.client_id = 10
+                ?>
+                <select class="custom-select col-sm-3" required>
                   <option value="">Select address</option>
                   <option value="1">Address 1</option>
                   <option value="2">Address 2</option>
@@ -129,9 +108,9 @@
                 </select>
               </div>
               <!-- created with the d-none class so that it doesn't briefly show up before the DOM is ready -->
-              <div class="form-group d-none" id="formEnterAddress">
+              <div class="form-group pt-2 d-none" id="formEnterAddress">
                 <div class="form-group row">
-                  <label for="enteredAddress" class="col-form-label col-sm-1">Address</label>
+                  <label for="enteredAddress" class="col-form-label col-sm-auto">Address</label>
                   <input type="text" class="form-control col-sm-4" id="enteredAddress" placeholder="Address" required>
                 </div>
                 <div class="form-check">
@@ -139,7 +118,7 @@
                   <label class="custom-control-label" for="checkSaveAddress">Save this address</label>
                 </div>
                 <div class="form-group row pt-1 d-none" id="formEnterAddressName">
-                  <label for="enteredAddressName" class="col-form-label col-sm-1">Name</label>
+                  <label for="enteredAddressName" class="col-form-label col-sm-auto">Name</label>
                   <input type="text" class="form-control col-sm-2" id="enteredAddressName" placeholder="Name">
                 </div>
               </div>
@@ -149,11 +128,7 @@
       </ul>
     </div>
   </div>
-  <footer class="footer">
-    <div class="container">
-      <p class="text-muted">Dummy Copyrights</p>
-    </div>
-  </footer>
+  <?php include("fragments/footer.php"); ?>
 </body>
 
 <script type="text/javascript">
@@ -191,4 +166,5 @@ $(function() {
 })
 </script>
 
+<?php include("fragments/connection-end.php"); ?>
 </html>
