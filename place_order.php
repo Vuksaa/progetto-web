@@ -3,9 +3,8 @@
   if (!isset($_SESSION['logged']) || $_SESSION['logged'] == FALSE) {
     header('Location: login.php');
     exit();
-  } else {
-
   }
+  include("fragments/connection-begin.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -93,18 +92,23 @@
                 </div>
               </div>
               <div class="form-group pt-2" id="formSelectAddress">
-                <?php
-                // SELECT a.address_name, a.address_info
-                // FROM client c
-                // JOIN address a
-                // ON a.client_id = c.client_id
-                // WHERE a.client_id = 10
-                ?>
                 <select class="custom-select col-sm-3" required>
-                  <option value="">Select address</option>
-                  <option value="1">Address 1</option>
-                  <option value="2">Address 2</option>
-                  <option value="3">Address 3</option>
+                  <?php
+                  if ($addresses = $conn->query("
+                    SELECT a.address_name, a.address_info
+                    FROM client c
+                    JOIN address a
+                    ON a.client_id = c.client_id
+                    WHERE a.client_id = '".$_SESSION['user_id']."'
+                    ")) {
+                    echo '<option value="">Select address</option>';
+                    while ($address = $addresses->fetch_assoc()) {
+                      echo '<option value="'.$address['address_info'].'">'.$address['address_info'].'</option>';
+                    }
+                  } else {
+                    echo '<option value="">No addresses set</option>';
+                  }
+                  ?>
                 </select>
               </div>
               <!-- created with the d-none class so that it doesn't briefly show up before the DOM is ready -->
