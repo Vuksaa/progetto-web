@@ -22,17 +22,8 @@
 </head>
 
 <body>
+  <!-- The provider's ID should be in $_GET['provider'] -->
   <?php include("fragments/navbar.php"); ?>
-  <!-- <div class="container p-5">
-    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="providerSelection" class="form">
-      <fieldset>
-        <label for="providerId" class="sr-only">Email:</label>
-        <input type="text" class="form-control" name="providerId" autocomplete="off" placeholder="<?php echo $_POST["providerId"] ?>" required autofocus id="providerId" />
-        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Confirm" onclick="" />
-      </fieldset>
-      <p class="text-muted small">Current id: <?php echo $_POST["providerId"] ?></p>
-    </form>
-  </div> -->
   <div class="container pt-4 pb-4">
     <h3 class="pb-2">Place order</h3>
     <div class="card">

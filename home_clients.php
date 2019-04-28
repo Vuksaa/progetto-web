@@ -134,7 +134,7 @@
                 </p>
                 <div class="btn-group btn-group-justified">
                   <button class="btn btn-primary inline" data-toggle="modal" data-target="#peekOnProvider">Peek</button>
-                  <button class="btn btn-primary inline">Order</button>
+                  <button class="btn btn-primary inline btn-place-order">Order</button>
                 </div>
               </div>
             </div>
@@ -202,7 +202,7 @@
                 </p>
                 <div class="btn-group btn-group-justified">
                   <button class="btn btn-primary inline" data-toggle="modal" data-target="#peekOnProvider">Peek</button>
-                  <button class="btn btn-primary inline">Order</button>
+                  <button class="btn btn-primary inline btn-place-order" data-provider-id="<?php echo $providerRow['provider_id']; ?>">Order</button>
                 </div>
               </div>
             </div>
@@ -217,9 +217,7 @@
         </div>
       </div>
     </div>
-    <?php
-      $conn->close();
-    ?>
+    <?php include("fragments/connection-end.php"); ?>
     <footer class="footer">
       <div class="container">
         <p class="text-muted">Dummy Copyrights</p>
@@ -247,5 +245,12 @@
   </div>
 </div>
 
+<script type="text/javascript">
+$(function() {
+  $(".btn-place-order").click(function() {
+    window.location.href = "place_order.php?provider=" + $(this).data("provider-id")
+  })
+})
+</script>
 
 </html>
