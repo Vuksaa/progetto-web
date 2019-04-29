@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-  <a class="navbar-brand" href="home_clients.php">
+  <a class="navbar-brand" <?php echo ($_SESSION['user_type'] == 'client') ? 'href="home_clients.php"' : 'href="home_providers.php"'; ?>>
     <img src="res/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
     Project
   </a>

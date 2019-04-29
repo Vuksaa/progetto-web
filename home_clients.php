@@ -1,7 +1,7 @@
 <?php include("fragments/logged-check.php"); ?>
 <?php
   if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] == "provider") {
-    header('Location: profile_providers.php');
+    header('Location: home_providers.php');
     exit();
   }
 ?>
