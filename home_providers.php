@@ -16,7 +16,7 @@
 <body>
   <?php include("fragments/navbar.php"); ?>
 
-  <div class="container">
+  <div class="container mt-4 mb-4">
     <div class="card main-card">
       <h1 class="mb-0">
         <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseIncomingOrders" aria-expanded="true" aria-controls="collapseIncomingOrders">
