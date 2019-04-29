@@ -167,14 +167,14 @@
     modal.find('#productId').val(productId);
     if(button.val()=="productModify"){
       modal.find('.modal-title').text("Modify the product");
+      modal.find('#productName').val(productName);
+      modal.find('#productDescription').val(productDescription);
+      modal.find('#productPrice').val(productPrice);
+      modal.find('#btnProductAdd').text("Modify");
+      modal.find('#btnProductAdd').val("productModify");
     } else {
       modal.find('.modal-title').text("Add a product");
     }
-    modal.find('#productName').val(productName);
-    modal.find('#productDescription').val(productDescription);
-    modal.find('#productPrice').val(productPrice);
-    modal.find('#btnProductAdd').text("Modify");
-    modal.find('#btnProductAdd').val("productModify");
   })
 </script>
 <?php include("fragments/connection-end.php"); ?>
