@@ -12,8 +12,7 @@
   <div class="container pt-4 pb-4">
   </div>
 
-  <?php include("fragments/connection-end.php"); ?>
   <?php include("fragments/footer.php"); ?>
 </body>
-
+<?php include("fragments/connection-end.php"); ?>
 </html>

@@ -7,7 +7,7 @@
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="home_clients.php">
       <img src="res/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
       Project
     </a>
@@ -23,8 +23,8 @@
       <div class="bg-dark p-4">
         <h1 class="text-white h4">Menu</h1>
         <ul>
-          <li><a href="signin.html">Sign-in</a></li>
-          <li><a href="homepage.html">Home</a></li>
+          <li><a href="login.php">Login</a></li>
+          <li><a href="home_clients.php">Home</a></li>
         </ul>
       </div>
     </div>
