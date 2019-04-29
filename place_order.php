@@ -28,34 +28,51 @@
     <h3 class="pb-2">Place order</h3>
     <div class="card">
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          <h5 class="card-title">Menu</h5>
-          <form class="form-inline card-searchbar">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <li class="list-group-item" id="listedProducts">
+          <h4 class="card-title">Menu</h5>
+          <div class="card-searchbar">
+            <input class="form-control mr-sm-2" id="searchProducts" type="search" placeholder="Search" aria-label="Search">
           </form>
-          <div class="card">
-            <!-- maybe let providers add images for their products? <img class="card-img-top" src="..." alt="Card image cap"> -->
-            <div class="card-body" id="listedProductIDCard">
-              <h5 class="card-title">Product name</h5>
-              <p class="card-text font-weight-light">Ingredient 1, Ingredient 2, Ingredient 3</p>
-              <form class="form-group row">
-                <label for="productIDQuantity" class="col-sm-2 col-form-label">Quantity</label>
-                <input type="number" class="form-control col-sm-1" id="productIDQuantity" placeholder="Quantity" value="1" required>
-              </form>
-              <form class="form-group row">
-                <label for="productIDNotes" class="col-sm-2 col-form-label">Notes</label>
-                <input type="text" class="form-control col-sm-5" id="productIDNotes" placeholder="Notes">
-              </form>
-              <a href="#" class="btn btn-primary far fa-plus-square"></a>
-            </div>
-          </div>
+
+          <?php
+          if ($listedProducts = $conn->query("
+          SELECT product_id, product_name, product_price
+          FROM provider
+          JOIN product
+          ON provider.provider_id = product.provider_id
+          WHERE provider.provider_id ='".$_GET['provider']."'
+          ")) {
+            while ($product = $listedProducts->fetch_assoc()) {
+              ?>
+              <div class="card">
+                <div class="card-body">
+                  <h6 class="card-title"><?php echo $product['product_name']; ?></h5>
+                  <p class="card-text font-weight-light">Ingredient 1, Ingredient 2, Ingredient 3</p>
+                  <form class="form-group row">
+                    <label class="col-sm-2 col-form-label">Price</label>
+                    <label class="col-sm-1 col-form-label"><?php echo $product['product_price']." €"; ?></label>
+                  </form>
+                  <form class="form-group row">
+                    <label for="product<?php echo $product['product_id']; ?>Quantity" class="col-sm-2 col-form-label">Quantity</label>
+                    <input type="number" class="form-control col-sm-1" id="product<?php echo $product['product_id']; ?>Quantity" placeholder="Quantity" value="1" required>
+                  </form>
+                  <form class="form-group row">
+                    <label for="product<?php echo $product['product_id']; ?>Notes" class="col-sm-2 col-form-label">Notes</label>
+                    <textarea class="form-control col-sm-5" id="product<?php echo $product['product_id']; ?>Notes"></textarea>
+                  </form>
+                  <a href="#" class="btn btn-primary far fa-plus-square"></a>
+                </div>
+              </div>
+              <?php
+            }
+          }
+          ?>
         </li>
         <li class="list-group-item">
-          <h5 class="card-title">Order review</h5>
+          <h4 class="card-title">Order review</h5>
           <div class="card">
             <div class="card-body" id="orderedProductIDCard">
-              <h5 class="card-title">Product name</h5>
+              <h6 class="card-title">Product name</h5>
               <p class="card-text font-weight-light">Ingredient 1, Ingredient 2, Ingredient 3</p>
               <form class="form-group row">
                 <label for="productIDQuantity" class="col-form-label col-sm-2">Quantity</label>
@@ -123,7 +140,9 @@
       </ul>
     </div>
   </div>
-  <?php include("fragments/footer.php"); ?>
+  <?php
+  include("fragments/footer.php");
+  ?>
 </body>
 
 <script type="text/javascript">
@@ -157,6 +176,23 @@ $(function() {
     } else {
       $("#formEnterAddressName").hide()
     }
+  })
+
+  $("#searchProducts").on('keyup', function(e) {
+    var inputed = $(this).val().toLowerCase()
+    var items = $("#listedProducts .card")
+    if (inputed == "") {
+      items.show()
+      return
+    }
+    $.each(items, function() {
+      var providerName = $(this).find(".card-title").text().toLowerCase()
+      if (providerName.indexOf(inputed) == -1) {
+        $(this).hide()
+      } else {
+        $(this).show()
+      }
+    })
   })
 })
 </script>
