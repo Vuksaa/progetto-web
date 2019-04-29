@@ -112,11 +112,11 @@
         <input type="password" class="form-control" name="password" placeholder="Password.." required id="logPassword" />
         <input type="submit" class="btn btn-primary btn-lg btn-block" value="Login" onclick="" />
       </fieldset>
-      <p class="text-muted small">Don't have an account? Sign in <a href="signup.html">here</a></p>
+      <p class="text-muted small">Don't have an account? Sign in <a href="signup.php">here</a></p>
     </form>
   </div>
 
   <?php include("fragments/footer.php"); ?>
 </body>
-
+<?php include("fragments/connection-end.php"); ?>
 </html>

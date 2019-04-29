@@ -1,13 +1,11 @@
+<?php include("fragments/logged-check.php"); ?>
 <?php
-  session_start();
-  if (!isset($_SESSION['logged']) || $_SESSION['logged'] == FALSE) {
-    header('Location: login.php');
-    exit();
-  } else if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] == "client") {
+  if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] == "client") {
     header('Location: home_clients.php');
     exit();
   }
 ?>
+<?php include("fragments/connection-begin.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -96,5 +94,5 @@
 
   <?php include("fragments/footer.php"); ?>
 </body>
-
+<?php include("fragments/connection-end.php"); ?>
 </html>

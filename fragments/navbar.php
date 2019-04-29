@@ -9,10 +9,10 @@
   <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="home_clients.php"><i class="fas fa-home"></i> Home</a>
+        <a class="nav-link" <?php echo ($_SESSION['user_type'] == 'client') ? 'href="home_clients.php"' : 'href="home_providers.php"'; ?>><i class="fas fa-home"></i> Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="profile_clients.php"><i class="fas fa-user"></i> Profile</a>
+        <a class="nav-link" <?php echo ($_SESSION['user_type'] == 'client') ? 'href="profile_clients.php"' : 'href="profile_providers.php"'; ?>><i class="fas fa-user"></i> Profile</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="orders_clients.php"><i class="fas fa-book"></i> Orders</a>
@@ -20,7 +20,7 @@
     </ul>
     <ul class="navbar-nav navbar-right">
       <li class="nav-item">
-        <div class="navbar-text">Welcome, <?php echo $_SESSION['user_name']; if($_SESSION['user_type'] == 'client') echo ". Bon appétit!"; else echo ".";?></div>
+        <div class="navbar-text">Welcome, <?php echo $_SESSION['user_name']; echo ($_SESSION['user_type'] == 'client') ? '. Bon appétit!' : '.';?></div>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>

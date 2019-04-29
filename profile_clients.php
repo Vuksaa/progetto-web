@@ -1,13 +1,11 @@
+<?php include("fragments/logged-check.php"); ?>
 <?php
-  session_start();
-  if (!isset($_SESSION['logged']) || $_SESSION['logged'] == FALSE) {
-    header('Location: login.php');
-    exit();
-  } else if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] == "provider") {
-    header('Location: home_providers.php');
+  if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] == "provider") {
+    header('Location: profile_providers.php');
     exit();
   }
 ?>
+<?php include("fragments/connection-begin.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,14 +15,6 @@
 
 <body>
   <?php
-  $servername = "localhost";
-  $username = "root";
-  $password="";
-  $db = "uni_web_prod";
-  $conn = new mysqli($servername, $username,$password,$db);
-  if($conn->connect_error) {
-    die("Connection failed: ".$conn->connect_error);
-  }
   if(isset($_POST['btnClientAllergenAdd'])){
       if(!($statement=$conn->prepare("CALL client_allergen_add(?,?)"))){
         echo "Prepare failed.";
@@ -237,11 +227,7 @@
     </div>
   </div>
 
-
-  <?php
-    $conn->close();
-   ?>
    <?php include("fragments/footer.php"); ?>
 </body>
-
+<?php include("fragments/connection-end.php"); ?>
 </html>

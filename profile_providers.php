@@ -1,13 +1,11 @@
+<?php include("fragments/logged-check.php"); ?>
 <?php
-  session_start();
-  if (!isset($_SESSION['logged']) || $_SESSION['logged'] == FALSE) {
-    header('Location: login.php');
-    exit();
-  } else if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] == "client") {
+  if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] == "client") {
     header('Location: profile_clients.php');
     exit();
   }
 ?>
+<?php include("fragments/connection-begin.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,52 +15,43 @@
 
 <body>
   <?php
-  $servername = "localhost";
-  $username = "root";
-  $password="";
-  $db = "uni_web_prod";
-  $conn = new mysqli($servername, $username,$password,$db);
-  if($conn->connect_error) {
-    die("Connection failed: ".$conn->connect_error);
-  }
-  if(isset($_POST['btnProductAdd'])){
-    if($_POST['btnProductAdd']=="productAdd") {
-        if(!($statement=$conn->prepare("CALL product_add(?,?,?,?)"))){
+    if(isset($_POST['btnProductAdd'])){
+      if($_POST['btnProductAdd']=="productAdd") {
+          if(!($statement=$conn->prepare("CALL product_add(?,?,?,?)"))){
+            echo "Prepare failed.";
+          }
+          if(!($statement->bind_param('ssdi',$_POST['productName'],$_POST['productDescription'],$_POST['productPrice'],$_SESSION['user_id']))) {
+            echo "Bind failed.";
+          }
+          if(!($statement->execute())){
+            echo "Execution failed: ".$statement->error;
+          }
+          $statement->close();
+      } else if($_POST['btnProductAdd']=="productModify") {
+          if(!($statement=$conn->prepare("CALL product_modify(?,?,?,?)"))){
+            echo "Prepare failed.";
+          }
+          if(!($statement->bind_param('issd',$_POST['productId'],$_POST['productName'],$_POST['productDescription'],$_POST['productPrice']))) {
+            echo "Bind failed.";
+          }
+          if(!($statement->execute())){
+            echo "Execution failed: ".$statement->error;
+          }
+          $statement->close();
+        }
+      } else if(isset($_POST['btnProductRemove'])){
+        if(!($statement=$conn->prepare("CALL product_remove(?)"))){
           echo "Prepare failed.";
         }
-        if(!($statement->bind_param('ssdi',$_POST['productName'],$_POST['productDescription'],$_POST['productPrice'],$_SESSION['user_id']))) {
+        if(!($statement->bind_param('i',$_POST['productId']))) {
           echo "Bind failed.";
         }
         if(!($statement->execute())){
           echo "Execution failed: ".$statement->error;
         }
         $statement->close();
-    } else if($_POST['btnProductAdd']=="productModify") {
-        if(!($statement=$conn->prepare("CALL product_modify(?,?,?,?)"))){
-          echo "Prepare failed.";
-        }
-        if(!($statement->bind_param('issd',$_POST['productId'],$_POST['productName'],$_POST['productDescription'],$_POST['productPrice']))) {
-          echo "Bind failed.";
-        }
-        if(!($statement->execute())){
-          echo "Execution failed: ".$statement->error;
-        }
-        $statement->close();
       }
-    } else if(isset($_POST['btnProductRemove'])){
-      if(!($statement=$conn->prepare("CALL product_remove(?)"))){
-        echo "Prepare failed.";
-      }
-      if(!($statement->bind_param('i',$_POST['productId']))) {
-        echo "Bind failed.";
-      }
-      if(!($statement->execute())){
-        echo "Execution failed: ".$statement->error;
-      }
-      $statement->close();
-    }
-
-  ?>
+    ?>
   <?php include("fragments/navbar.php"); ?>
 
   <nav>
@@ -162,12 +151,12 @@
     </div>
   </div>
 
-  <?php include("fragments/connection-end.php"); ?>
   <?php include("fragments/footer.php"); ?>
 </body>
 
 <script>
-//REDO with ajax?
+//TODO REDO with ajax?
+//Autocompletes Modify product modal
   $('#productAddModal').on('show.bs.modal', function(event) {
     var button = $(event.relatedTarget);
     var productId = button.data('id');
@@ -188,5 +177,5 @@
     modal.find('#btnProductAdd').val("productModify");
   })
 </script>
-
+<?php include("fragments/connection-end.php"); ?>
 </html>

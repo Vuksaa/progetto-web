@@ -1,13 +1,11 @@
+<?php include("fragments/logged-check.php"); ?>
 <?php
-  session_start();
-  if (!isset($_SESSION['logged']) || $_SESSION['logged'] == FALSE) {
-    header('Location: login.php');
-    exit();
-  } else if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] == "provider") {
+  if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] == "provider") {
     header('Location: profile_providers.php');
     exit();
   }
 ?>
+<?php include("fragments/connection-begin.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,14 +16,6 @@
 <body>
   <!-- This php block is for adding favourites -->
   <?php
-    $servername = "localhost";
-    $username = "root";
-    $password="";
-    $db = "uni_web_prod";
-    $conn = new mysqli($servername, $username,$password,$db);
-    if($conn->connect_error) {
-      die("Connection failed: ".$conn->connect_error);
-    }
     if(isset($_POST['btnClientProviderAdd'])){
         if(!($statement=$conn->prepare("INSERT INTO client_provider(client_provider.client_id,client_provider.provider_id)
                                 VALUES (?,?)"))){
@@ -217,12 +207,7 @@
         </div>
       </div>
     </div>
-    <?php include("fragments/connection-end.php"); ?>
-    <footer class="footer">
-      <div class="container">
-        <p class="text-muted">Dummy Copyrights</p>
-      </div>
-    </footer>
+    <?php include("fragments/footer.php"); ?>
 </body>
 
 <!-- modal for peeking on a provider's main dishes/products, without entering in their profile page or in a "place order" page -->
@@ -252,5 +237,5 @@ $(function() {
   })
 })
 </script>
-
+<?php include("fragments/connection-end.php"); ?>
 </html>
