@@ -12,68 +12,84 @@
   <?php include("fragments/navbar.php"); ?>
   <div class="container pt-4 pb-4">
     <h3 class="pb-2">Place order</h3>
-    <div class="card">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item" id="listedProducts">
-          <h4 class="card-title">Menu</h5>
-          <div class="card-searchbar">
-            <input class="form-control mr-sm-2" id="searchProducts" type="search" placeholder="Search" aria-label="Search">
-          </form>
 
-          <?php
-          if ($listedProducts = $conn->query("
-          SELECT product_id, product_name, product_price
-          FROM provider
-          JOIN product
-          ON provider.provider_id = product.provider_id
-          WHERE provider.provider_id ='".$_GET['provider']."'
-          ")) {
-            while ($product = $listedProducts->fetch_assoc()) {
-              ?>
-              <div class="card">
-                <div class="card-body">
-                  <h6 class="card-title"><?php echo $product['product_name']; ?></h5>
-                  <p class="card-text font-weight-light">Ingredient 1, Ingredient 2, Ingredient 3</p>
-                  <form class="form-group row">
-                    <label class="col-sm-2 col-form-label">Price</label>
-                    <label class="col-sm-1 col-form-label"><?php echo $product['product_price']." €"; ?></label>
-                  </form>
-                  <form class="form-group row">
-                    <label for="product<?php echo $product['product_id']; ?>Quantity" class="col-sm-2 col-form-label">Quantity</label>
-                    <input type="number" class="form-control col-sm-1" id="product<?php echo $product['product_id']; ?>Quantity" placeholder="Quantity" value="1" required>
-                  </form>
-                  <form class="form-group row">
-                    <label for="product<?php echo $product['product_id']; ?>Notes" class="col-sm-2 col-form-label">Notes</label>
-                    <textarea class="form-control col-sm-5" id="product<?php echo $product['product_id']; ?>Notes"></textarea>
-                  </form>
-                  <a href="#" class="btn btn-primary far fa-plus-square"></a>
+    <div class="container accordion mt-4 mb-4" id="mainAccordion">
+      <div class="card main-card">
+        <button class="btn btn-secondary btn-lg btn-block active" id="headingMenu" data-toggle="collapse" data-target="#collapseMenu" aria-expanded="true" aria-controls="collapseMenu">
+          Menu
+        </button>
+        <div id="collapseMenu" class="collapse show" aria-labelledby="headingMenu" data-parent="#mainAccordion">
+          <div class="card-body">
+            <div class="card-searchbar">
+              <input class="form-control mr-sm-2" id="searchProducts" type="search" placeholder="Search" aria-label="Search">
+            </form>
+
+            <?php
+            if ($listedProducts = $conn->query("
+            SELECT product_id, product_name, product_price
+            FROM provider
+            JOIN product
+            ON provider.provider_id = product.provider_id
+            WHERE provider.provider_id ='".$_GET['provider']."'
+            ")) {
+              while ($product = $listedProducts->fetch_assoc()) {
+                ?>
+                <div class="card">
+                  <div class="card-body">
+                    <h6 class="card-title"><?php echo $product['product_name']; ?></h5>
+                    <p class="card-text font-weight-light">Ingredient 1, Ingredient 2, Ingredient 3</p>
+                    <form class="form-group row">
+                      <label class="col-sm-2 col-form-label">Price</label>
+                      <label class="col-sm-1 col-form-label"><?php echo $product['product_price']." €"; ?></label>
+                    </form>
+                    <form class="form-group row">
+                      <label for="product<?php echo $product['product_id']; ?>Quantity" class="col-sm-2 col-form-label">Quantity</label>
+                      <input type="number" class="form-control col-sm-1" id="product<?php echo $product['product_id']; ?>Quantity" placeholder="Quantity" value="1" required>
+                    </form>
+                    <form class="form-group row">
+                      <label for="product<?php echo $product['product_id']; ?>Notes" class="col-sm-2 col-form-label">Notes</label>
+                      <textarea class="form-control col-sm-5" id="product<?php echo $product['product_id']; ?>Notes"></textarea>
+                    </form>
+                    <a href="#" class="btn btn-primary far fa-plus-square"></a>
+                  </div>
                 </div>
-              </div>
-              <?php
+                <?php
+              }
             }
-          }
-          ?>
-        </li>
-        <li class="list-group-item">
-          <h4 class="card-title">Order review</h5>
-          <div class="card">
-            <div class="card-body" id="orderedProductIDCard">
-              <h6 class="card-title">Product name</h5>
-              <p class="card-text font-weight-light">Ingredient 1, Ingredient 2, Ingredient 3</p>
-              <form class="form-group row">
-                <label for="productIDQuantity" class="col-form-label col-sm-2">Quantity</label>
-                <input type="number" class="form-control col-sm-1" id="productIDQuantity" placeholder="Quantity" value="1" required>
-              </form>
-              <form class="form-group row">
-                <label for="productIDNotes" class="col-form-label col-sm-2">Notes</label>
-                <input type="text" class="form-control col-sm-5" id="productIDNotes" placeholder="Notes">
-              </form>
-              <a href="#" class="btn btn-primary far fa-minus-square"></a>
+            ?>
+          </div>
+        </div>
+      </div>
+      <div class="card main-card">
+        <button class="btn btn-secondary btn-lg btn-block active" id="headingOrder" data-toggle="collapse" data-target="#collapseOrder" aria-expanded="false" aria-controls="collapseOrder">
+          Order
+        </button>
+        <div id="collapseOrder" class="collapse" aria-labelledby="headingOrder" data-parent="#mainAccordion">
+          <div class="card-body">
+            <div class="card">
+              <div class="card-body" id="orderedProductIDCard">
+                <h6 class="card-title">Product name</h5>
+                <p class="card-text font-weight-light">Ingredient 1, Ingredient 2, Ingredient 3</p>
+                <form class="form-group row">
+                  <label for="productIDQuantity" class="col-form-label col-sm-2">Quantity</label>
+                  <input type="number" class="form-control col-sm-1" id="productIDQuantity" placeholder="Quantity" value="1" required>
+                </form>
+                <form class="form-group row">
+                  <label for="productIDNotes" class="col-form-label col-sm-2">Notes</label>
+                  <input type="text" class="form-control col-sm-5" id="productIDNotes" placeholder="Notes">
+                </form>
+                <a href="#" class="btn btn-primary far fa-minus-square"></a>
+              </div>
             </div>
           </div>
-        </li>
-        <li class="list-group-item">
-          <h5 class="card-title">Address and confirmation</h5>
+        </div>
+      </div>
+      <div class="card main-card">
+        <button class="btn btn-secondary btn-lg btn-block active" id="headingConfirmation" data-toggle="collapse" data-target="#collapseConfirmation" aria-expanded="false" aria-controls="collapseConfirmation">
+          Address &amp; Confirmation
+        </button>
+        <div id="collapseConfirmation" class="collapse" aria-labelledby="headingConfirmation" data-parent="#mainAccordion">
+          <div class="card-body">
             <form class="pt-2">
               <div class="form-group">
                 <div class="form-check custom-radio">
@@ -122,10 +138,10 @@
               </div>
             <button type="button" id="btnComplete" class="btn btn-primary mt-4">Pay and order</button>
           </form>
-        </li>
-      </ul>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
   <?php
   include("fragments/footer.php");
   ?>
