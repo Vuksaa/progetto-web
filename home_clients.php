@@ -124,7 +124,7 @@
                 </p>
                 <div class="btn-group btn-group-justified">
                   <button class="btn btn-primary inline" data-toggle="modal" data-target="#peekOnProvider">Peek</button>
-                  <button class="btn btn-primary inline btn-place-order">Order</button>
+                  <button class="btn btn-primary inline btn-place-order" data-provider-id="<?php echo $providerRow['provider_id']; ?>">Order</button>
                 </div>
               </div>
             </div>
@@ -141,7 +141,7 @@
     </div>
     <div class="card main-card">
       <h1 class="mb-0">
-        <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseAllRestaurants" aria-expanded="false" aria-controls="collapsePreparedOrders">
+        <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseAllRestaurants" aria-expanded="false" aria-controls="collapseAllRestaurants">
           Restaurants
         </button>
       </h1>
