@@ -9,6 +9,7 @@
 <body>
   <?php include("fragments/navbar.php"); ?>
 
+  <h3 class="pb-2">Template</h3>
   <div class="container pt-4 pb-4">
   </div>
 
