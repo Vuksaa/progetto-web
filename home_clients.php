@@ -73,14 +73,14 @@
     </div>
   </nav>
 
-  <div class="container mt-4 mb-4">
+  <div class="container accordion mt-4 mb-4" id="mainAccordion">
     <div class="card main-card">
-      <h1 class="mb-0 form-group form-inline">
+      <h1 class="mb-0">
         <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseFavouriteRestaurants" aria-expanded="true" aria-controls="collapseFavouriteRestaurants">
           Your Favourite Restaurants
         </button>
       </h1>
-      <div id="collapseFavouriteRestaurants" class="collapse show" aria-labelledby="headingFavouriteRestaurants">
+      <div id="collapseFavouriteRestaurants" class="collapse show" aria-labelledby="headingFavouriteRestaurants" data-parent="#mainAccordion">
         <div class="card-body">
           <form class="form-inline card-searchbar">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -140,12 +140,12 @@
       </div>
     </div>
     <div class="card main-card">
-      <h1 class="mb-0 form-group form-inline">
-        <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapsePreparedOrders" aria-expanded="true" aria-controls="collapsePreparedOrders">
+      <h1 class="mb-0">
+        <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseAllRestaurants" aria-expanded="false" aria-controls="collapsePreparedOrders">
           Restaurants
         </button>
       </h1>
-      <div id="collapsePreparedOrders" class="collapse show" aria-labelledby="headingRestaurants">
+      <div id="collapseAllRestaurants" class="collapse" aria-labelledby="headingRestaurants" data-parent="#mainAccordion">
         <div class="card-body">
           <form class="form-inline card-searchbar">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
