@@ -42,36 +42,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-    <a class="navbar-brand" href="home_clients.php">
-      <img src="res/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-      Project
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="home_clients.php"><i class="fas fa-home"></i> Home<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="profile_clients.php"><i class="fas fa-user"></i> Profile</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="orders_clients.php"><i class="fas fa-book"></i> Orders</a>
-        </li>
-      </ul>
-      <ul class="navbar-nav navbar-right">
-        <li class="nav-item">
-          <div class="navbar-text">Welcome, <?php echo $_SESSION['user_name']; ?>. Bon appétit!</div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+  <?php include("fragments/navbar.php"); ?>
 
   <div class="container mt-4 mb-4">
     <h3 class="pb-2">Provider list</h3>
@@ -239,6 +210,11 @@ $(function() {
   $(".btn-place-order").click(function() {
     window.location.href = "place_order.php?provider=" + $(this).data("provider-id")
   })
+  /* Set navbar voice active with respective screen reader functionality */
+  var element = $("nav div ul li a:contains('Home')");
+  var parent = element.parent();
+  element.append( "<span class='sr-only'>(current)</span>" );
+  parent.addClass("active");
 })
 </script>
 <?php include("fragments/connection-end.php"); ?>
