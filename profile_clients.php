@@ -227,7 +227,16 @@
     </div>
   </div>
 
-   <?php include("fragments/footer.php"); ?>
+  <?php include("fragments/footer.php"); ?>
 </body>
+<script type="text/javascript">
+$(function() {
+  /* Set navbar voice active with respective screen reader functionality */
+  var element = $("nav div ul li a:contains('Profile')");
+  var parent = element.parent();
+  element.append( "<span class='sr-only'>(current)</span>" );
+  parent.addClass("active");
+})
+</script>
 <?php include("fragments/connection-end.php"); ?>
 </html>
