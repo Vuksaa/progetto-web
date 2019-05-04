@@ -1,5 +1,7 @@
-<?php include("fragments/logged-check.php"); ?>
-<?php include("fragments/connection-begin.php"); ?>
+<?php
+include("fragments/logged-check.php");
+include("fragments/connection-begin.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,11 +22,13 @@
         </button>
         <div id="collapseMenu" class="collapse show" aria-labelledby="headingMenu" data-parent="#mainAccordion">
           <div class="card-body">
-            <div class="card-searchbar">
-              <input class="form-control mr-sm-2" id="searchProducts" type="search" placeholder="Search" aria-label="Search">
-            </form>
+            <div class="card-searchbar col-5">
+              <input class="form-control" id="searchProducts" type="search" placeholder="Search" aria-label="Search">
+            </div>
 
             <?php
+            // temporary value for testing purposes
+            $productGroupSize = 2;
             if ($listedProducts = $conn->query("
             SELECT product_id, product_name, product_price
             FROM provider
@@ -32,9 +36,10 @@
             ON provider.provider_id = product.provider_id
             WHERE provider.provider_id ='".$_GET['provider']."'
             ")) {
+              $productNumber = 0;
               while ($product = $listedProducts->fetch_assoc()) {
                 ?>
-                <div class="card mt-2" data-product-id="<?php echo $providerRow['product_id']; ?>">
+                <div class="card mt-2 productCard d-none" data-product-group="<?php echo (int)($productNumber / $productGroupSize); ?>" data-product-id="<?php echo $product['product_id']; ?>">
                   <div class="card-body">
                     <h6 class="card-title"><?php echo $product['product_name']; ?></h5>
                     <p class="card-text font-weight-light">Ingredient 1, Ingredient 2, Ingredient 3</p>
@@ -54,9 +59,13 @@
                   </div>
                 </div>
                 <?php
+                $productNumber = $productNumber + 1;
               }
             }
             ?>
+            <button class="btn btn-primary btn-sm btn-block active col-2 mt-2" id="productsShowMore">
+              Show more
+            </button>
         </div>
       </div>
     </div>
@@ -198,6 +207,18 @@ $(function() {
       }
     })
   })
+
+  // function for showing products when the "show more" button is clicked.
+  // the class d-none is used because the searchbar already hides products with the hide function
+  var nextHiddenProductGroup = 0
+  function showNextProducts() {
+    $(".productCard").filter(function() {
+      return ($(this).data("product-group") == nextHiddenProductGroup)
+    }).removeClass("d-none")
+    nextHiddenProductGroup++
+  }
+  showNextProducts()
+  $("#productsShowMore").on('click', showNextProducts)
 })
 </script>
 
