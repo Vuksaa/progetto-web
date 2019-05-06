@@ -30,11 +30,9 @@ include("fragments/connection-begin.php");
             // temporary value for testing purposes
             $productGroupSize = 2;
             if ($listedProducts = $conn->query("
-            SELECT product_id, product_name, product_price
-            FROM provider
-            JOIN product
-            ON provider.provider_id = product.provider_id
-            WHERE provider.provider_id ='".$_GET['provider']."'
+            SELECT *
+            FROM product_by_provider
+            WHERE provider_id ='".$_GET['provider']."'
             ")) {
               $productNumber = 0;
               while ($product = $listedProducts->fetch_assoc()) {
@@ -42,7 +40,21 @@ include("fragments/connection-begin.php");
                 <div class="card mt-2 productCard d-none" data-product-group="<?php echo (int)($productNumber / $productGroupSize); ?>" data-product-id="<?php echo $product['product_id']; ?>">
                   <div class="card-body">
                     <h6 class="card-title"><?php echo $product['product_name']; ?></h5>
-                    <p class="card-text font-weight-light">Ingredient 1, Ingredient 2, Ingredient 3</p>
+                    <p class="card-text font-weight-light">
+                      <?php
+                      if ($ingredients = $conn->query("
+                      SELECT *
+                      FROM ingredient_by_product
+                      WHERE product_id = '".$product['product_id']."'
+                      ")) {
+                        $ingredient = $ingredients->fetch_assoc();
+                        echo $ingredient['ingredient_name'];
+                        while ($ingredient = $ingredients->fetch_assoc()) {
+                          echo ", ".$ingredient['ingredient_name'];
+                        }
+                      }
+                      ?>
+                    </p>
                     <form class="form-group row">
                       <label class="col-sm-2 col-form-label">Price</label>
                       <label class="col-sm-1 col-form-label"><?php echo $product['product_price']." €"; ?></label>
