@@ -25,7 +25,7 @@ include("fragments/connection-begin.php");
             <div class="card-searchbar col-5">
               <input class="form-control" id="searchProducts" type="search" placeholder="Search" aria-label="Search">
             </div>
-            
+
             <?php
             // temporary value for testing purposes
             $productGroupSize = 2;
@@ -191,16 +191,19 @@ $(function() {
     }
   })
 
+  // filter the listed products whenever the searchbar's text changes
   $("#searchProducts").on('keyup', function(e) {
     var inputed = $(this).val().toLowerCase()
     var items = $("#listedProducts .card")
+    // show all listed product if the searchbar is blank
     if (inputed == "") {
       items.show()
       return
     }
     $.each(items, function() {
-      var providerName = $(this).find(".card-title").text().toLowerCase()
-      if (providerName.indexOf(inputed) == -1) {
+      var productName = $(this).find(".card-title").text().toLowerCase()
+      // true if the text inputed in the searchbar is not contained in the product's name
+      if (productName.indexOf(inputed) == -1) {
         $(this).hide()
       } else {
         $(this).show()
