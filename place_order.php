@@ -21,11 +21,11 @@ include("fragments/connection-begin.php");
           Menu
         </button>
         <div id="collapseMenu" class="collapse show" aria-labelledby="headingMenu" data-parent="#mainAccordion">
-          <div class="card-body">
+          <div class="card-body" id="listedProducts">
             <div class="card-searchbar col-5">
               <input class="form-control" id="searchProducts" type="search" placeholder="Search" aria-label="Search">
             </div>
-
+            
             <?php
             // temporary value for testing purposes
             $productGroupSize = 2;
