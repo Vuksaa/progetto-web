@@ -226,6 +226,20 @@ INSERT INTO `ingredient` VALUES (1,'Alcol',NULL),(2,'Ammoniaca per dolci',NULL),
 UNLOCK TABLES;
 
 --
+-- Temporary table structure for view `ingredient_by_product`
+--
+
+DROP TABLE IF EXISTS `ingredient_by_product`;
+/*!50001 DROP VIEW IF EXISTS `ingredient_by_product`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `ingredient_by_product` (
+  `product_id` tinyint NOT NULL,
+  `ingredient_name` tinyint NOT NULL
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `order`
 --
 
@@ -282,6 +296,22 @@ INSERT INTO `product` VALUES (1,'Confettura di albicocche 200g',NULL,2.5,2),(2,'
 UNLOCK TABLES;
 
 --
+-- Temporary table structure for view `product_by_provider`
+--
+
+DROP TABLE IF EXISTS `product_by_provider`;
+/*!50001 DROP VIEW IF EXISTS `product_by_provider`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `product_by_provider` (
+  `provider_id` tinyint NOT NULL,
+  `product_id` tinyint NOT NULL,
+  `product_name` tinyint NOT NULL,
+  `product_price` tinyint NOT NULL
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `product_ingredient`
 --
 
@@ -304,7 +334,7 @@ CREATE TABLE `product_ingredient` (
 
 LOCK TABLES `product_ingredient` WRITE;
 /*!40000 ALTER TABLE `product_ingredient` DISABLE KEYS */;
-INSERT INTO `product_ingredient` VALUES (2,49),(2,109),(2,124),(2,136),(2,137),(2,138),(3,139),(3,140),(4,141),(5,30),(5,42),(5,143),(6,49),(6,108),(6,111),(6,135),(7,30),(7,80),(7,96),(7,109),(7,111),(7,138),(7,144),(7,145),(7,146),(7,147),(7,148);
+INSERT INTO `product_ingredient` VALUES (2,49),(2,109),(2,124),(2,136),(2,137),(2,138),(3,139),(3,140),(4,109),(4,141),(5,30),(5,42),(5,143),(6,49),(6,108),(6,111),(6,135),(7,30),(7,80),(7,96),(7,109),(7,111),(7,138),(7,144),(7,145),(7,146),(7,147),(7,148);
 /*!40000 ALTER TABLE `product_ingredient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -439,6 +469,44 @@ LOCK TABLES `type` WRITE;
 INSERT INTO `type` VALUES (1,'Ristorante'),(2,'Supermercato');
 /*!40000 ALTER TABLE `type` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Final view structure for view `ingredient_by_product`
+--
+
+/*!50001 DROP TABLE IF EXISTS `ingredient_by_product`*/;
+/*!50001 DROP VIEW IF EXISTS `ingredient_by_product`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `ingredient_by_product` AS select `product`.`product_id` AS `product_id`,`ingredient`.`ingredient_name` AS `ingredient_name` from (((`provider` join `product` on((`provider`.`provider_id` = `product`.`provider_id`))) join `product_ingredient` on((`product`.`product_id` = `product_ingredient`.`product_id`))) join `ingredient` on((`product_ingredient`.`ingredient_id` = `ingredient`.`ingredient_id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `product_by_provider`
+--
+
+/*!50001 DROP TABLE IF EXISTS `product_by_provider`*/;
+/*!50001 DROP VIEW IF EXISTS `product_by_provider`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `product_by_provider` AS select `provider`.`provider_id` AS `provider_id`,`product`.`product_id` AS `product_id`,`product`.`product_name` AS `product_name`,`product`.`product_price` AS `product_price` from (`provider` join `product` on((`provider`.`provider_id` = `product`.`provider_id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -449,4 +517,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-06 16:16:16
+-- Dump completed on 2019-05-06 16:40:49
