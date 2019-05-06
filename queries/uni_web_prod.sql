@@ -30,7 +30,7 @@ CREATE TABLE `address` (
   PRIMARY KEY (`address_id`),
   KEY `client_id_idx` (`client_id`),
   CONSTRAINT `client_id` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `address` (
 
 LOCK TABLES `address` WRITE;
 /*!40000 ALTER TABLE `address` DISABLE KEYS */;
-INSERT INTO `address` VALUES (1,'Casa','Via Guglielmo Oberdan 20',1),(2,'Casa','Via Raniero Arsendi 13',2),(3,'Lavoro','Via Giacomo della Torre 7',2),(4,'Casa','Via Solferino 1',3),(5,'Casa','Via Romanello da Forli 11',4),(6,'Casa','Via Valverde 28',5),(7,'Nonna','Via Lombardini 4',5),(8,'Casa','Via Alberto Bani 4',6),(9,'Casa','Via Italo Stegher 10',7),(10,'Casa','Viale Roma 31',8),(11,'Casa','Via Leonardo Da Vinci 2',9);
+INSERT INTO `address` VALUES (1,'Casa','Via Guglielmo Oberdan 20',1),(2,'Casa','Via Raniero Arsendi 13',2),(3,'Lavoro','Via Giacomo della Torre 7',2),(4,'Casa','Via Solferino 1',3),(5,'Casa','Via Romanello da Forli 11',4),(6,'Casa','Via Valverde 28',5),(7,'Nonna','Via Lombardini 4',5),(8,'Casa','Via Alberto Bani 4',6),(9,'Casa','Via Italo Stegher 10',7),(10,'Casa','Viale Roma 31',8),(11,'Casa','Via Leonardo Da Vinci 2',9),(12,'Casa','Via Romeo Galli 50',10),(13,'Lavoro','Via Domenico Martoni 21',10);
 /*!40000 ALTER TABLE `address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -141,6 +141,7 @@ CREATE TABLE `client_allergen` (
 
 LOCK TABLES `client_allergen` WRITE;
 /*!40000 ALTER TABLE `client_allergen` DISABLE KEYS */;
+INSERT INTO `client_allergen` VALUES (10,9);
 /*!40000 ALTER TABLE `client_allergen` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -193,7 +194,7 @@ CREATE TABLE `client_provider` (
 
 LOCK TABLES `client_provider` WRITE;
 /*!40000 ALTER TABLE `client_provider` DISABLE KEYS */;
-INSERT INTO `client_provider` VALUES (1,3),(1,5),(2,5),(3,1),(3,2),(4,5),(4,7),(5,1),(5,8),(6,3),(6,7),(7,2),(7,5),(7,6),(7,7),(8,2);
+INSERT INTO `client_provider` VALUES (1,3),(1,5),(2,5),(3,1),(3,2),(4,5),(4,7),(5,1),(5,8),(6,3),(6,7),(7,2),(7,5),(7,6),(7,7),(8,2),(10,1);
 /*!40000 ALTER TABLE `client_provider` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -211,7 +212,7 @@ CREATE TABLE `ingredient` (
   PRIMARY KEY (`ingredient_id`),
   KEY `allergen_id_idx` (`allergen_id`),
   CONSTRAINT `allergen_id` FOREIGN KEY (`allergen_id`) REFERENCES `allergen` (`allergen_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=135 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=149 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,7 +221,7 @@ CREATE TABLE `ingredient` (
 
 LOCK TABLES `ingredient` WRITE;
 /*!40000 ALTER TABLE `ingredient` DISABLE KEYS */;
-INSERT INTO `ingredient` VALUES (1,'Alcol',NULL),(2,'Ammoniaca per dolci',NULL),(3,'Coloranti alimentari',NULL),(4,'Caffè',NULL),(5,'Cinghiale',NULL),(6,'Fegato',NULL),(7,'Filetto',NULL),(8,'Manzo',NULL),(9,'Petto di pollo',NULL),(10,'Tacchino',NULL),(11,'Vitello',NULL),(12,'Avena',NULL),(13,'Farro',NULL),(14,'Orzo',NULL),(15,'Quinoia',NULL),(16,'Riso',NULL),(17,'Astice',3),(18,'Capesante',3),(19,'Cozze',3),(20,'Cicale di mare',3),(21,'Gamberoni',3),(22,'Polpo',3),(23,'Seppia',3),(24,'Frutti di mare',3),(25,'Miele',NULL),(26,'Caramello',NULL),(27,'Zucchero',NULL),(28,'Zucchero di canna',NULL),(29,'Alloro',NULL),(30,'Erba cipollina',NULL),(31,'Basilico',NULL),(32,'Maggiorana',NULL),(33,'Menta',NULL),(34,'Prezzemolo',NULL),(35,'Origano',NULL),(36,'Rosmarino',NULL),(37,'Timo',NULL),(38,'Farina 0',8),(39,'Farina 00',8),(40,'Farina di canapa',NULL),(41,'Farina di farro',NULL),(42,'Farina di mais',NULL),(43,'Farina integrale',NULL),(44,'Farina di riso',NULL),(45,'Semola',NULL),(46,'Caciocavallo',4),(47,'Caprino',4),(48,'Feta',4),(49,'Cheddar',4),(50,'Emmental',4),(51,'Philadelphia',4),(52,'Gruviera',4),(53,'Grana',4),(54,'Gorgonzola',4),(55,'Parmigiano',4),(56,'Pecorino',4),(57,'Provolone',4),(58,'Arance',NULL),(59,'Banane',NULL),(60,'Fichi',NULL),(61,'Ciliegie',NULL),(62,'Kiwi',NULL),(63,'Limone',NULL),(64,'Frutti di bosco',NULL),(65,'Pesche',19),(66,'More',NULL),(67,'Mirtilli',NULL),(68,'Cocco',NULL),(69,'Papaya',NULL),(70,'Lime',NULL),(71,'Mango',NULL),(72,'Anacardi',7),(73,'Arachidi',7),(74,'Bacche di Goji',7),(75,'Mandorle',7),(76,'Pinoli',7),(77,'Noci',7),(78,'Nocciole',7),(79,'Carote',NULL),(80,'Funghi',NULL),(81,'Funghi porcini',NULL),(82,'Daikon',NULL),(83,'Patate',NULL),(84,'Ravanelli',NULL),(85,'Tartufo',NULL),(86,'Burro',NULL),(87,'Besciamella',NULL),(88,'Latte',NULL),(89,'Latte di mandorla',NULL),(90,'Mozzarella',NULL),(91,'Ricotta',NULL),(92,'Fagiolini',NULL),(93,'Fave',NULL),(94,'Piselli',NULL),(95,'Lenticchie',NULL),(96,'Fagioli',NULL),(97,'Aceto balsamico',NULL),(98,'Ketchup',NULL),(99,'Salsa tartara',NULL),(100,'Maionese',2),(101,'Olio di oliva',NULL),(102,'Tabasco',NULL),(103,'Salsa barbecue',NULL),(104,'Wasabi',NULL),(105,'Salsa di soia',NULL),(106,'Asparagi',NULL),(107,'Cavolfiore',NULL),(108,'Cetrioli',NULL),(109,'Cipolle',NULL),(110,'Aglio',NULL),(111,'Peperoni',NULL),(112,'Zucchine',NULL),(113,'Lasagne',NULL),(114,'Spaghetti',NULL),(115,'Penne',NULL),(116,'Acciughe',3),(117,'Orata',3),(118,'Pesce spada',3),(119,'Pesce persico',3),(120,'Salmone',3),(121,'Tonno',3),(122,'Spigola',3),(123,'Sgombro',3),(124,'Bacon',NULL),(125,'Cotechino',NULL),(126,'Guanciale',NULL),(127,'Salame',NULL),(128,'Pancetta',NULL),(129,'Prosciutto crudo',NULL),(130,'Prosciutto cotto',NULL),(131,'Uova',2),(132,'Curry',NULL),(133,'Paprica',NULL),(134,'Zenzero',NULL);
+INSERT INTO `ingredient` VALUES (1,'Alcol',NULL),(2,'Ammoniaca per dolci',NULL),(3,'Coloranti alimentari',NULL),(4,'Caffè',NULL),(5,'Cinghiale',NULL),(6,'Fegato',NULL),(7,'Filetto',NULL),(8,'Manzo',NULL),(9,'Petto di pollo',NULL),(10,'Tacchino',NULL),(11,'Vitello',NULL),(12,'Avena',NULL),(13,'Farro',NULL),(14,'Orzo',NULL),(15,'Quinoia',NULL),(16,'Riso',NULL),(17,'Astice',3),(18,'Capesante',3),(19,'Cozze',3),(20,'Cicale di mare',3),(21,'Gamberoni',3),(22,'Polpo',3),(23,'Seppia',3),(24,'Frutti di mare',3),(25,'Miele',NULL),(26,'Caramello',NULL),(27,'Zucchero',NULL),(28,'Zucchero di canna',NULL),(29,'Alloro',NULL),(30,'Erba cipollina',NULL),(31,'Basilico',NULL),(32,'Maggiorana',NULL),(33,'Menta',NULL),(34,'Prezzemolo',NULL),(35,'Origano',NULL),(36,'Rosmarino',NULL),(37,'Timo',NULL),(38,'Farina 0',8),(39,'Farina 00',8),(40,'Farina di canapa',NULL),(41,'Farina di farro',NULL),(42,'Farina di mais',NULL),(43,'Farina integrale',NULL),(44,'Farina di riso',NULL),(45,'Semola',NULL),(46,'Caciocavallo',4),(47,'Caprino',4),(48,'Feta',4),(49,'Cheddar',4),(50,'Emmental',4),(51,'Philadelphia',4),(52,'Gruviera',4),(53,'Grana',4),(54,'Gorgonzola',4),(55,'Parmigiano',4),(56,'Pecorino',4),(57,'Provolone',4),(58,'Arance',NULL),(59,'Banane',NULL),(60,'Fichi',NULL),(61,'Ciliegie',NULL),(62,'Kiwi',NULL),(63,'Limone',NULL),(64,'Frutti di bosco',NULL),(65,'Pesche',19),(66,'More',NULL),(67,'Mirtilli',NULL),(68,'Cocco',NULL),(69,'Papaya',NULL),(70,'Lime',NULL),(71,'Mango',NULL),(72,'Anacardi',7),(73,'Arachidi',7),(74,'Bacche di Goji',7),(75,'Mandorle',7),(76,'Pinoli',7),(77,'Noci',7),(78,'Nocciole',7),(79,'Carote',NULL),(80,'Funghi',NULL),(81,'Funghi porcini',NULL),(82,'Daikon',NULL),(83,'Patate',NULL),(84,'Ravanelli',NULL),(85,'Tartufo',NULL),(86,'Burro',NULL),(87,'Besciamella',NULL),(88,'Latte',NULL),(89,'Latte di mandorla',NULL),(90,'Mozzarella',NULL),(91,'Ricotta',NULL),(92,'Fagiolini',NULL),(93,'Fave',NULL),(94,'Piselli',NULL),(95,'Lenticchie',NULL),(96,'Fagioli',NULL),(97,'Aceto balsamico',NULL),(98,'Ketchup',NULL),(99,'Salsa tartara',NULL),(100,'Maionese',2),(101,'Olio di oliva',NULL),(102,'Tabasco',NULL),(103,'Salsa barbecue',NULL),(104,'Wasabi',NULL),(105,'Salsa di soia',NULL),(106,'Asparagi',NULL),(107,'Cavolfiore',NULL),(108,'Cetrioli',NULL),(109,'Cipolle',NULL),(110,'Aglio',NULL),(111,'Peperoni',NULL),(112,'Zucchine',NULL),(113,'Lasagne',NULL),(114,'Spaghetti',NULL),(115,'Penne',NULL),(116,'Acciughe',3),(117,'Orata',3),(118,'Pesce spada',3),(119,'Pesce persico',3),(120,'Salmone',3),(121,'Tonno',3),(122,'Spigola',3),(123,'Sgombro',3),(124,'Bacon',NULL),(125,'Cotechino',NULL),(126,'Guanciale',NULL),(127,'Salame',NULL),(128,'Pancetta',NULL),(129,'Prosciutto crudo',NULL),(130,'Prosciutto cotto',NULL),(131,'Uova',2),(132,'Curry',NULL),(133,'Paprica',NULL),(134,'Zenzero',NULL),(135,'Wurstel',NULL),(136,'Hamburger',NULL),(137,'Lattuga',NULL),(138,'Pomodoro',NULL),(139,'Pollo',NULL),(140,'Cornflakes',NULL),(141,'Birra',NULL),(143,'Formaggi',NULL),(144,'Mais',NULL),(145,'Avocado',NULL),(146,'Salsa Fuego',NULL),(147,'Tequila',NULL),(148,'Tortilla',NULL);
 /*!40000 ALTER TABLE `ingredient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -238,7 +239,7 @@ CREATE TABLE `order` (
   PRIMARY KEY (`order_id`),
   KEY `status_id_idx` (`status_id`),
   CONSTRAINT `status_id` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -247,6 +248,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
+INSERT INTO `order` VALUES (1,'Via Romeo Galli 50',1);
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -275,7 +277,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'Confettura di albicocche 200g',NULL,2.5,2),(2,'Bacon Cheeseburger',NULL,10,1),(3,'Chicken nuggets',NULL,5,1),(4,'Onion rings',NULL,5,1),(5,'Nachos Chips Cheese',NULL,4,1),(6,'New York Dog',NULL,8,1),(7,'Vegan Fajitas',NULL,7,1),(8,'Acqua 0.5L',NULL,0.33,2),(9,'Biscotti 100g',NULL,1,2),(10,'Latte 1L',NULL,1,2),(11,'Baguette',NULL,0.7,2),(12,'Carne macinata di tacchino 300g',NULL,2.5,2),(13,'Involtini di primavera',NULL,0.8,3),(14,'Pollo alle mandorle',NULL,4,3),(15,'Riso alla cantonese',NULL,2,3),(16,'Wanton fritti',NULL,1,3),(17,'Granchio',NULL,5,3),(18,'Pollo al curry',NULL,3.5,3),(19,'Cacio e pepe',NULL,11,4),(20,'Parmigiana di Melanzane',NULL,6,4),(21,'Burg di pollo',NULL,10.5,4),(22,'Contadino',NULL,12,4),(23,'Vagabondo',NULL,11.5,4),(24,'Vegetariano',NULL,9.5,4),(25,'Piadina cotto e fontina',NULL,4,5),(26,'Piadina crudo squacquerone e rucola',NULL,5,5),(27,'Crescione erbe grigliate',NULL,4,5),(28,'Crescione erbe e salsiccia',NULL,3.5,5),(29,'Crescione zucca e patate',NULL,3,5),(30,'Alici gratinate',NULL,11,6),(31,'Il nostro fritto',NULL,19,6),(32,'Gnocchi di zucca',NULL,13,6),(33,'Strozzapreti',NULL,16,6),(34,'Seppia scottata',NULL,13,6),(35,'Serra croccante',NULL,13,6),(36,'Tataki di ricciola',NULL,14,6),(37,'Antipasto dello Chef secondo stagione',NULL,7,7),(38,'Antipasti del giorno senza glutine',NULL,7,7),(39,'Passatelli asciutti di farro con gambuccio di',NULL,9,7),(40,'Mezze lune al baccalá e patate saltate con gl',NULL,12,7),(41,'Sacher vegan con farro e panna fresca vegetal',NULL,5,7),(42,'Mooncake',NULL,1.89,8),(43,'Prosciutto crudo',NULL,1.49,8),(44,'Spaghetti biologici',NULL,0.55,8),(45,'Insalata di tonno',NULL,0.99,8),(46,'Olio extra vergine di oliva',NULL,2.79,8),(47,'Bruschette',NULL,0.75,8),(48,'Lavazza Suerte Caffé',NULL,4.89,8);
+INSERT INTO `product` VALUES (1,'Confettura di albicocche 200g',NULL,2.5,2),(2,'Bacon Cheeseburger',NULL,10,1),(3,'Chicken nuggets',NULL,5,1),(4,'Onion rings',NULL,5,1),(5,'Nachos Chips Cheese',NULL,4,1),(6,'New York Dog',NULL,8,1),(7,'Vegan Fajitas',NULL,7,1),(8,'Acqua 0.5L',NULL,0.33,2),(9,'Biscotti 100g',NULL,1,2),(10,'Latte 1L',NULL,1,2),(11,'Baguette',NULL,0.7,2),(12,'Carne macinata di tacchino 300g',NULL,2.5,2),(13,'Involtini di primavera',NULL,0.8,3),(14,'Pollo alle mandorle',NULL,4,3),(15,'Riso alla cantonese',NULL,2,3),(16,'Wanton fritti',NULL,1,3),(17,'Granchio',NULL,5,3),(18,'Pollo al curry',NULL,3.5,3),(19,'Cacio e pepe',NULL,11,4),(20,'Parmigiana di Melanzane',NULL,6,4),(21,'Burg di pollo',NULL,10.5,4),(22,'Contadino',NULL,12,4),(23,'Vagabondo',NULL,11.5,4),(24,'Vegetariano',NULL,9.5,4),(25,'Piadina cotto e fontina',NULL,4,5),(26,'Piadina crudo squacquerone e rucola',NULL,5,5),(27,'Crescione erbe grigliate',NULL,4,5),(28,'Crescione erbe e salsiccia',NULL,3.5,5),(29,'Crescione zucca e patate',NULL,3,5),(30,'Alici gratinate',NULL,11,6),(31,'Il nostro fritto',NULL,19,6),(32,'Gnocchi di zucca',NULL,13,6),(33,'Strozzapreti',NULL,16,6),(34,'Seppia scottata',NULL,13,6),(35,'Serra croccante',NULL,13,6),(36,'Tataki di ricciola',NULL,14,6),(37,'Antipasto dello Chef secondo stagione',NULL,7,7),(38,'Antipasti del giorno senza glutine',NULL,7,7),(39,'Passatelli asciutti di farro con gambuccio di',NULL,9,7),(40,'Mezze lune al baccalá e patate saltate con gl',NULL,12,7),(41,'Sacher vegan con farro e panna fresca vegetal',NULL,5,7),(42,'Mooncake',NULL,1.89,8),(43,'Prosciutto crudo',NULL,1.49,8),(44,'Spaghetti biologici',NULL,0.55,8),(45,'Insalata di tonno',NULL,0.99,8),(46,'Olio extra vergine di oliva',NULL,2.79,8),(47,'Bruschette',NULL,0.75,8),(48,'Lavazza Suerte Caffe\'','',4.89,8);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -302,6 +304,7 @@ CREATE TABLE `product_ingredient` (
 
 LOCK TABLES `product_ingredient` WRITE;
 /*!40000 ALTER TABLE `product_ingredient` DISABLE KEYS */;
+INSERT INTO `product_ingredient` VALUES (2,49),(2,109),(2,124),(2,136),(2,137),(2,138),(3,139),(3,140),(4,141),(5,30),(5,42),(5,143),(6,49),(6,108),(6,111),(6,135),(7,30),(7,80),(7,96),(7,109),(7,111),(7,138),(7,144),(7,145),(7,146),(7,147),(7,148);
 /*!40000 ALTER TABLE `product_ingredient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -400,7 +403,7 @@ CREATE TABLE `status` (
   `status_id` int(11) NOT NULL AUTO_INCREMENT,
   `status_name` varchar(45) NOT NULL,
   PRIMARY KEY (`status_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -409,6 +412,7 @@ CREATE TABLE `status` (
 
 LOCK TABLES `status` WRITE;
 /*!40000 ALTER TABLE `status` DISABLE KEYS */;
+INSERT INTO `status` VALUES (1,'Arrivato'),(2,'Pronto'),(3,'Concluso');
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -445,4 +449,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-21 16:30:58
+-- Dump completed on 2019-05-06 16:16:16
