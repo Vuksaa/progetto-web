@@ -21,60 +21,66 @@ include("fragments/connection-begin.php");
           Menu
         </button>
         <div id="collapseMenu" class="collapse show" aria-labelledby="headingMenu" data-parent="#mainAccordion">
-          <div class="card-body" id="listedProducts">
+          <div class="card-body">
             <div class="card-searchbar col-5">
               <input class="form-control" id="searchProducts" type="search" placeholder="Search" aria-label="Search">
             </div>
-
-            <?php
-            // temporary value for testing purposes
-            $productGroupSize = 2;
-            if ($listedProducts = $conn->query("
-            SELECT *
-            FROM product_by_provider
-            WHERE provider_id ='".$_GET['provider']."'
-            ")) {
-              $productNumber = 0;
-              while ($product = $listedProducts->fetch_assoc()) {
-                ?>
-                <div class="card mt-2 productCard d-none" data-product-group="<?php echo (int)($productNumber / $productGroupSize); ?>" data-product-id="<?php echo $product['product_id']; ?>">
-                  <div class="card-body">
-                    <h6 class="card-title"><?php echo $product['product_name']; ?></h5>
-                    <p class="card-text font-weight-light">
-                      <?php
-                      if ($ingredients = $conn->query("
-                      SELECT *
-                      FROM ingredient_by_product
-                      WHERE product_id = '".$product['product_id']."'
-                      ")) {
-                        $ingredient = $ingredients->fetch_assoc();
-                        echo $ingredient['ingredient_name'];
-                        while ($ingredient = $ingredients->fetch_assoc()) {
-                          echo ", ".$ingredient['ingredient_name'];
+            <div id="listedProducts">
+              <?php
+              // temporary value for testing purposes
+              $productGroupSize = 2;
+              if ($listedProducts = $conn->query("
+              SELECT *
+              FROM product_by_provider
+              WHERE provider_id ='".$_GET['provider']."'
+              ")) {
+                $productNumber = 0;
+                while ($product = $listedProducts->fetch_assoc()) {
+                  ?>
+                  <div class="card mt-2 productCard listedProduct d-none" data-product-group="<?php echo (int)($productNumber / $productGroupSize); ?>" data-product-id="<?php echo $product['product_id']; ?>">
+                    <div class="card-body">
+                      <h6 class="card-title"><?php echo $product['product_name']; ?></h5>
+                      <p class="card-text font-weight-light">
+                        <?php
+                        if ($ingredients = $conn->query("
+                        SELECT *
+                        FROM ingredient_by_product
+                        WHERE product_id = '".$product['product_id']."'
+                        ")) {
+                          $ingredient = $ingredients->fetch_assoc();
+                          echo $ingredient['ingredient_name'];
+                          while ($ingredient = $ingredients->fetch_assoc()) {
+                            echo ", ".$ingredient['ingredient_name'];
+                          }
                         }
-                      }
-                      ?>
-                    </p>
-                    <form class="form-group row">
-                      <label class="col-sm-2 col-form-label">Price</label>
-                      <label class="col-sm-1 col-form-label"><?php echo $product['product_price']." €"; ?></label>
-                    </form>
-                    <form class="form-group row">
-                      <label for="product<?php echo $product['product_id']; ?>Quantity" class="col-sm-2 col-form-label">Quantity</label>
-                      <input type="number" class="form-control col-sm-1" id="product<?php echo $product['product_id']; ?>Quantity" placeholder="Quantity" value="1" required>
-                    </form>
-                    <form class="form-group row">
-                      <label for="product<?php echo $product['product_id']; ?>Notes" class="col-sm-2 col-form-label">Notes</label>
-                      <textarea class="form-control col-sm-5" id="product<?php echo $product['product_id']; ?>Notes"></textarea>
-                    </form>
-                    <a href="#" class="btn btn-primary far fa-plus-square"></a>
+                        ?>
+                      </p>
+                      <form class="form-group row">
+                        <label class="col-sm-2 col-form-label">Price</label>
+                        <label class="col-sm-1 col-form-label"><?php echo $product['product_price']." €"; ?></label>
+                      </form>
+                      <form class="form-group row">
+                        <label for="product<?php echo $product['product_id']; ?>Quantity" class="col-sm-2 col-form-label">Quantity</label>
+                        <input type="number" class="form-control col-sm-1" id="product<?php echo $product['product_id']; ?>Quantity" placeholder="Quantity" value="1" required>
+                      </form>
+                      <form class="form-group row">
+                        <label for="product<?php echo $product['product_id']; ?>Notes" class="col-sm-2 col-form-label">Notes</label>
+                        <textarea class="form-control col-sm-5" id="product<?php echo $product['product_id']; ?>Notes"></textarea>
+                      </form>
+                      <button class="btn btn-primary btnAddProduct">
+                        <i class="far fa-plus-square"></i>
+                      </button>
+                      <button class="btn btn-primary btnRemoveProduct">
+                        <i class="far fa-minus-square"></i>
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <?php
-                $productNumber = $productNumber + 1;
+                  <?php
+                  $productNumber = $productNumber + 1;
+                }
               }
-            }
-            ?>
+              ?>
+            </div>
             <button class="btn btn-primary btn-sm btn-block active col-2 mt-2" id="productsShowMore">
               Show more
             </button>
@@ -87,20 +93,7 @@ include("fragments/connection-begin.php");
       </button>
         <div id="collapseOrder" class="collapse" aria-labelledby="headingOrder" data-parent="#mainAccordion">
           <div class="card-body">
-            <div class="card">
-              <div class="card-body" id="orderedProductIDCard">
-                <h6 class="card-title">Product name</h5>
-                <p class="card-text font-weight-light">Ingredient 1, Ingredient 2, Ingredient 3</p>
-                <form class="form-group row">
-                  <label for="productIDQuantity" class="col-form-label col-sm-2">Quantity</label>
-                  <input type="number" class="form-control col-sm-1" id="productIDQuantity" placeholder="Quantity" value="1" required>
-                </form>
-                <form class="form-group row">
-                  <label for="productIDNotes" class="col-form-label col-sm-2">Notes</label>
-                  <input type="text" class="form-control col-sm-5" id="productIDNotes" placeholder="Notes">
-                </form>
-                <a href="#" class="btn btn-primary far fa-minus-square"></a>
-              </div>
+            <div id="toOrderProducts">
             </div>
           </div>
         </div>
@@ -206,7 +199,7 @@ $(function() {
   // filter the listed products whenever the searchbar's text changes
   $("#searchProducts").on('keyup', function(e) {
     var inputed = $(this).val().toLowerCase()
-    var items = $("#listedProducts .card")
+    var items = $(".listedProduct")
     // show all listed product if the searchbar is blank
     if (inputed == "") {
       items.show()
@@ -234,6 +227,26 @@ $(function() {
   }
   showNextProducts()
   $("#productsShowMore").on('click', showNextProducts)
+
+  // hide "-" buttons on each product card, since at first the order is empty
+  $(".btnRemoveProduct").hide()
+  $(".btnAddProduct").on('click', function(e) {
+    var productCard = $(this).parent().parent()
+    productCard.detach().appendTo("#toOrderProducts")
+    productCard.find(".btnAddProduct").hide()
+    productCard.find(".btnRemoveProduct").show()
+    productCard.removeClass("listedProduct")
+    productCard.addClass("toOrderProduct")
+  })
+  $(".btnRemoveProduct").on('click', function(e) {
+    var productCard = $(this).parent().parent()
+    productCard.detach().appendTo("#listedProducts")
+    productCard.find(".btnAddProduct").show()
+    productCard.find(".btnRemoveProduct").hide()
+    productCard.addClass("listedProduct")
+    productCard.removeClass("toOrderProduct")
+  })
+
 })
 </script>
 
