@@ -1,77 +1,5 @@
-<?php
-  if (/*$_SERVER["REQUEST_METHOD"] == "POST" && */isset($_POST['email']) && isset($_POST['password'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $servername = "localhost";
-    $username = "root";
-    $dbpassword="";
-    $db = "uni_web_prod";
-    $uId=0;
-    $uName="";
-    $conn = new mysqli($servername, $username,$dbpassword,$db);
-    echo "Testing connection... ";
-    if($conn->connect_error) {
-      header('Location: login_failed.php');
-      die("Connection failed: ".$conn->connect_error);
-    }
-    echo "Connection successful. ";
-    if(!($statement=$conn->prepare("SELECT client_id,client_name FROM client WHERE client_email = ? AND client_password = ? LIMIT 1"))){
-      echo "Prepare failed.";
-    }
-    if(!($statement->bind_param('ss',$email,$password))) {
-      echo "Bind failed";
-    }
-    if (!($statement->execute())) {
-      echo "Execution failed.";
-    }
-    echo " Executed.";
-    $statement->store_result();
-    $statement->bind_result($uId,$uName);
-    $statement->fetch();
-    if($statement->num_rows > 0) {
-      session_start();
-      $_SESSION['user_id'] = $uId;
-      $_SESSION['logged'] = TRUE;
-      $_SESSION['user_name'] = $uName;
-      $_SESSION['user_type'] = "client";
-      echo " Test id:".$uId." name:".$_SESSION['user_name'];
-      $statement->close();
-      header('Location: home_clients.php');
-      exit;
-    } else {
-        if(!($statement=$conn->prepare("SELECT provider_id,provider_name FROM provider WHERE provider_email = ? AND provider_password = ? LIMIT 1"))){
-          echo "Prepare failed.";
-        }
-        if(!($statement->bind_param('ss',$email,$password))) {
-          echo "Bind failed";
-        }
-        if (!($statement->execute())) {
-          echo "Execution failed.";
-        }
-        echo " Executed.";
-        $statement->store_result();
-        $statement->bind_result($uId,$uName);
-        $statement->fetch();
-        if($statement->num_rows > 0) {
-          session_start();
-          $_SESSION['user_id'] = $uId;
-          $_SESSION['logged'] = TRUE;
-          $_SESSION['user_name'] = $uName;
-          $_SESSION['user_type'] = "provider";
-          echo " Test id:".$uId." name:".$_SESSION['user_name'];
-          $statement->close();
-          header('Location: home_providers.php');
-          exit;
-      } else {
-        echo "DEBUG: Bad credentials. Mail: $email. Password: $password.";
-      }
-  }
-}
- ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <?php include("fragments/head-contents.php"); ?>
 </head>
@@ -103,20 +31,55 @@
   </div>
 
   <div class="container pt-5">
-    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="login_form" class="form-signin">
+    <form class="form-signin">
       <fieldset>
         <legend class="form-signin-heading">Login</legend>
         <label for="logEmail" class="sr-only">Email:</label>
-        <input type="email" class="form-control" name="email" autocomplete="on" placeholder="Email.." required autofocus id="logEmail" />
+        <input type="email" class="form-control" autocomplete="on" placeholder="Email.." required autofocus id="loginEmail"/>
         <label for="logPassword" class="sr-only">Password:</label>
-        <input type="password" class="form-control" name="password" placeholder="Password.." required id="logPassword" />
-        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Login" onclick="" />
+        <input type="password" class="form-control" placeholder="Password.." required id="loginPassword"/>
+        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Login"/>
       </fieldset>
-      <p class="text-muted small">Don't have an account? Sign in <a href="signup.php">here</a></p>
+      <p class="text-muted small mt-1">Don't have an account? Sign in <a href="signup.php">here</a></p>
+      <p id="result" class="mt-3"></p>
     </form>
   </div>
 
   <?php include("fragments/footer.php"); ?>
 </body>
+<script type="text/javascript">
+$(function() {
+  $("form").on('submit', function(e) {
+    // prevent the submit button from refreshing the page
+    e.preventDefault()
+    $.post("/ajax/login_submitted.php", {
+      email: $("#loginEmail").val(),
+      password: $("#loginPassword").val()
+    }).done(function(response) {
+      if (response === "LOGIN_SUCCESS_CLIENT") {
+        $("input .submit").prop('disabled', true)
+        $("#result").text("Login successful. Redirecting shortly...")
+        $("#result").fadeOut()
+        $("#result").fadeIn()
+        setTimeout(function() {
+          window.location.href = "home_clients.php"
+        }, 2500)
+      } else if (response === "LOGIN_SUCCESS_PROVIDER") {
+        $("input .submit").prop('disabled', true)
+        $("#result").text("Login successful. Redirecting shortly...")
+        $("#result").fadeOut()
+        $("#result").fadeIn()
+        setTimeout(function() {
+          window.location.href = "home_providers.php"
+        }, 2500)
+      } else {
+        $("#result").fadeOut()
+        $("#result").text(response)
+        $("#result").fadeIn()
+      }
+    })
+  })
+})
+</script>
 <?php include("fragments/connection-end.php"); ?>
 </html>
