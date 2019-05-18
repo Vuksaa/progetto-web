@@ -61,7 +61,7 @@ $(function() {
   $("form").on('submit', function(e) {
     // prevent the submit button from refreshing the page
     e.preventDefault()
-    $.post("/ajax/login_submitted.php", {
+    $.post("ajax/login_submitted.php", {
       email: $("#loginEmail").val(),
       password: $("#loginPassword").val()
     }).done(function(response) {
