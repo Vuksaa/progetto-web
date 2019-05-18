@@ -41,7 +41,14 @@
         <input type="submit" class="btn btn-primary btn-lg btn-block" value="Login"/>
       </fieldset>
       <p class="text-muted small mt-1">Don't have an account? Sign in <a href="signup.php">here</a></p>
-      <p id="result" class="mt-3"></p>
+      <div class="mt-3 d-none" id="alertDiv">
+        <div class="alert alert-success" role="alert">
+          Login successful. Redirecting shortly...
+        </div>
+        <div class="alert alert-danger" role="alert">
+
+        </div>
+      </div>
     </form>
   </div>
 
@@ -49,6 +56,8 @@
 </body>
 <script type="text/javascript">
 $(function() {
+  $(".alert").hide()
+  $("#alertDiv").removeClass("d-none")
   $("form").on('submit', function(e) {
     // prevent the submit button from refreshing the page
     e.preventDefault()
@@ -56,26 +65,26 @@ $(function() {
       email: $("#loginEmail").val(),
       password: $("#loginPassword").val()
     }).done(function(response) {
-      if (response === "LOGIN_SUCCESS_CLIENT") {
-        $("input .submit").prop('disabled', true)
-        $("#result").text("Login successful. Redirecting shortly...")
-        $("#result").fadeOut()
-        $("#result").fadeIn()
-        setTimeout(function() {
-          window.location.href = "home_clients.php"
-        }, 2500)
-      } else if (response === "LOGIN_SUCCESS_PROVIDER") {
-        $("input .submit").prop('disabled', true)
-        $("#result").text("Login successful. Redirecting shortly...")
-        $("#result").fadeOut()
-        $("#result").fadeIn()
-        setTimeout(function() {
-          window.location.href = "home_providers.php"
-        }, 2500)
+      if(response.indexOf("LOGIN_SUCCESS") != -1) {
+        $("input.submit").prop('disabled', true)
+        $(".alert.alert-danger").hide()
+        $(".alert.alert-success").show()
+        $(".alert.alert-success").fadeOut()
+        $(".alert.alert-success").fadeIn()
+        if (response === "LOGIN_SUCCESS_CLIENT") {
+          setTimeout(function() {
+            window.location.href = "home_clients.php"
+          }, 2500)
+        } else if (response === "LOGIN_SUCCESS_PROVIDER") {
+          setTimeout(function() {
+            window.location.href = "home_providers.php"
+          }, 2500)
+        }
       } else {
-        $("#result").fadeOut()
-        $("#result").text(response)
-        $("#result").fadeIn()
+        $(".alert.alert-success").hide()
+        $(".alert.alert-danger").fadeOut()
+        $(".alert.alert-danger").text(response)
+        $(".alert.alert-danger").fadeIn()
       }
     })
   })
