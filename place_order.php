@@ -61,11 +61,11 @@ include("fragments/connection-begin.php");
                       </form>
                       <form class="form-group row">
                         <label for="product<?php echo $product['product_id']; ?>Quantity" class="col-sm-2 col-form-label">Quantity</label>
-                        <input type="number" class="form-control col-sm-1" id="product<?php echo $product['product_id']; ?>Quantity" placeholder="Quantity" value="1" required>
+                        <input type="number" class="form-control col-sm-1 productQuantity" id="product<?php echo $product['product_id']; ?>Quantity" placeholder="Quantity" value="1" required>
                       </form>
                       <form class="form-group row">
                         <label for="product<?php echo $product['product_id']; ?>Notes" class="col-sm-2 col-form-label">Notes</label>
-                        <textarea class="form-control col-sm-5" id="product<?php echo $product['product_id']; ?>Notes"></textarea>
+                        <textarea class="form-control col-sm-5 productNotes" id="product<?php echo $product['product_id']; ?>Notes"></textarea>
                       </form>
                       <button class="btn btn-primary btnAddProduct">
                         <i class="far fa-plus-square"></i>
@@ -116,7 +116,7 @@ include("fragments/connection-begin.php");
                   </div>
                 </div>
                 <div class="form-group pt-2" id="formSelectAddress">
-                  <select class="custom-select col-sm-3" required>
+                  <select class="custom-select col-sm-3" id="selectedAddress" required>
                     <?php
                     if ($addresses = $conn->query("
                       SELECT a.address_name, a.address_info
@@ -135,8 +135,7 @@ include("fragments/connection-begin.php");
                     ?>
                   </select>
                 </div>
-                <!-- created with the d-none class so that it doesn't briefly show up before the DOM is ready -->
-                <div class="form-group pt-2 d-none" id="formEnterAddress">
+                <div class="form-group pt-2" id="formEnterAddress">
                   <div class="form-group row">
                     <label for="enteredAddress" class="col-form-label col-sm-auto">Address</label>
                     <input type="text" class="form-control col-sm-4" id="enteredAddress" placeholder="Address" required>
@@ -145,12 +144,16 @@ include("fragments/connection-begin.php");
                     <input type="checkbox" class="custom-control-input" value="" id="checkSaveAddress">
                     <label class="custom-control-label" for="checkSaveAddress">Save this address</label>
                   </div>
-                  <div class="form-group row pt-1 d-none" id="formEnterAddressName">
+                  <div class="form-group row pt-1" id="formEnterAddressName">
                     <label for="enteredAddressName" class="col-form-label col-sm-auto">Name</label>
                     <input type="text" class="form-control col-sm-2" id="enteredAddressName" placeholder="Name">
                   </div>
                 </div>
               <button type="button" id="btnComplete" class="btn btn-primary mt-4">Pay and order</button>
+              <div class="alert alert-danger mt-2" role="alert">
+              </div>
+              <div class="alert alert-success mt-2" role="alert">
+              </div>
             </form>
             </div>
           </div>
@@ -165,10 +168,10 @@ include("fragments/connection-begin.php");
 
 <script type="text/javascript">
 $(function() {
+  $(".alert").hide()
+
   // Hide "enter address" form, and add event handlers for hiding the appropriate form on the radiobuttons
-  // We remove the class d-none from formEnterAddress so jquery can handle hiding/showing with its hide and show functions
   $("#formEnterAddress").hide()
-  $("#formEnterAddress").removeClass("d-none")
   $("#radioEnterAddress").on('change', function(e) {
     $("#formEnterAddress").show()
     $("#formSelectAddress").hide()
@@ -178,16 +181,8 @@ $(function() {
     $("#formSelectAddress").show()
   })
 
-  // validation
-  $("#btnComplete").on('click', function(e) {
-    if ($("#radioSelectAddress:checked").val() && $("#enteredAddress").val() === '') {
-      alert("Must select an address!")
-    }
-  })
-
   // hide the field for entering the address name if the user doesn't wish to save it. it is hidden by default
   $("#formEnterAddressName").hide()
-  $("#formEnterAddressName").removeClass("d-none")
   $("#checkSaveAddress").on('change', function(e) {
     if ($(this).is(":checked") == true) {
       $("#formEnterAddressName").show()
@@ -250,6 +245,45 @@ $(function() {
       productCard.addClass("listedProduct")
       productCard.removeClass("toOrderProduct")
       productCard.show()
+    })
+  })
+
+  $("#btnComplete").on('click', function(e) {
+    // TODO: place the order
+    if ($(".toOrderProduct").length == 0) {
+      $(".alert.alert-danger").text("Must select at least 1 product.")
+      $(".alert.alert-danger").fadeOut()
+      $(".alert.alert-danger").fadeIn()
+      return
+    }
+    if ($("#selectedAddress").val() === '' && $("#enteredAddress").val() === '') {
+      $(".alert.alert-danger").text("Must select or enter an address.")
+      $(".alert.alert-danger").fadeOut()
+      $(".alert.alert-danger").fadeIn()
+      return
+    }
+    order = {}
+    if ($("#radioSelectAddress:checked").val()) {
+      // grab the address from the dropdown
+      order["address"] = $("#selectedAddress").val()
+    } else {
+      // grab the address from the textbox
+      order["address"] = $("#enteredAddress").val()
+    }
+    // create the array for the products
+    order["products"] = []
+    $.each($(".toOrderProduct"), function() {
+      product = {}
+      product["id"] = $(this).data("product-id")
+      product["quantity"] = $(this).find(".productQuantity").val()
+      product["notes"] = $(this).find(".productNotes").val()
+      order["products"].push(product)
+    })
+    $.post("ajax/order_placed.php", JSON.stringify(order)).done(function(response) {
+      $(".alert.alert-danger").fadeOut(function() {
+        $(".alert.alert-success").text(response)
+        $(".alert.alert-success").fadeIn()
+      })
     })
   })
 
