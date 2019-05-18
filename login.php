@@ -67,8 +67,7 @@ $(function() {
     }).done(function(response) {
       if(response.indexOf("LOGIN_SUCCESS") != -1) {
         $("input.submit").prop('disabled', true)
-        $(".alert.alert-danger").hide()
-        $(".alert.alert-success").show()
+        $(".alert.alert-danger").fadeOut()
         $(".alert.alert-success").fadeOut()
         $(".alert.alert-success").fadeIn()
         if (response === "LOGIN_SUCCESS_CLIENT") {
@@ -81,7 +80,7 @@ $(function() {
           }, 2500)
         }
       } else {
-        $(".alert.alert-success").hide()
+        $(".alert.alert-success").fadeOut()
         $(".alert.alert-danger").fadeOut()
         $(".alert.alert-danger").text(response)
         $(".alert.alert-danger").fadeIn()
