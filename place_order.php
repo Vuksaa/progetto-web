@@ -265,13 +265,15 @@ $(function() {
     order = {}
     if ($("#radioSelectAddress:checked").val()) {
       // grab the address from the dropdown
-      order["address"] = $("#selectedAddress").val()
+      order["selectedAddress"] = $("#selectedAddress").val()
     } else {
       // grab the address from the textbox
-      order["address"] = $("#enteredAddress").val()
+      order["enteredAddress"] = $("#enteredAddress").val()
+      order["saveAddress"] = $("#checkSaveAddress").is(":checked")
+      order["enteredAddressName"] = $("#enteredAddressName").val()
     }
     // create the array for the products
-    order["products"] = []
+    order.products = []
     $.each($(".toOrderProduct"), function() {
       product = {}
       product["id"] = $(this).data("product-id")
@@ -279,11 +281,20 @@ $(function() {
       product["notes"] = $(this).find(".productNotes").val()
       order["products"].push(product)
     })
-    $.post("ajax/order_placed.php", JSON.stringify(order)).done(function(response) {
-      $(".alert.alert-danger").fadeOut(function() {
-        $(".alert.alert-success").text(response)
-        $(".alert.alert-success").fadeIn()
-      })
+    $.post("ajax/order_placed.php", {
+      data: JSON.stringify(order)
+    }).done(function(response) {
+      if (response.indexOf("SUCCESS") != -1) {
+        $(".alert.alert-danger").fadeOut(function() {
+          $(".alert.alert-success").text(response + " TODO: open modal and redirect to home?")
+          $(".alert.alert-success").fadeIn()
+        })
+      } else {
+        $(".alert.alert-success").fadeOut(function() {
+          $(".alert.alert-danger").text(response)
+          $(".alert.alert-danger").fadeIn()
+        })
+      }
     })
   })
 
