@@ -249,11 +249,11 @@ DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
   `order_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_address` varchar(90) NOT NULL,
-  `status_id` int(11) NOT NULL,
+  `status_id` int(11) NOT NULL DEFAULT '4',
   PRIMARY KEY (`order_id`),
   KEY `status_id_idx` (`status_id`),
   CONSTRAINT `status_id` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -262,7 +262,6 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (1,'Via Romeo Galli 50',1);
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -349,6 +348,7 @@ CREATE TABLE `product_order` (
   `product_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `notes` varchar(180) DEFAULT NULL,
+  `quantity` int(11) NOT NULL,
   PRIMARY KEY (`product_id`,`order_id`),
   KEY `order_id` (`order_id`),
   CONSTRAINT `product_order_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
@@ -433,7 +433,7 @@ CREATE TABLE `status` (
   `status_id` int(11) NOT NULL AUTO_INCREMENT,
   `status_name` varchar(45) NOT NULL,
   PRIMARY KEY (`status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -442,7 +442,7 @@ CREATE TABLE `status` (
 
 LOCK TABLES `status` WRITE;
 /*!40000 ALTER TABLE `status` DISABLE KEYS */;
-INSERT INTO `status` VALUES (1,'Arrivato'),(2,'Pronto'),(3,'Concluso');
+INSERT INTO `status` VALUES (1,'Arrivato'),(2,'Pronto'),(3,'Concluso'),(4,'In attesa');
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -517,4 +517,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-06 16:40:49
+-- Dump completed on 2019-05-19 10:58:51
