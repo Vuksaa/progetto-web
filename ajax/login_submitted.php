@@ -1,17 +1,9 @@
 <?php
 $email = $_POST['email'];
 $password = $_POST['password'];
-$servername = "localhost";
-$username = "root";
-$dbpassword="";
-$db = "uni_web_prod";
 $uId=0;
 $uName="";
-$conn = new mysqli($servername, $username,$dbpassword,$db);
-if($conn->connect_error) {
-  echo "CONNECTION ERROR";
-  die("Connection failed: ".$conn->connect_error);
-}
+include("../fragments/connection-begin.php");
 $statement=$conn->prepare("
   SELECT client_id, client_name
   FROM client
