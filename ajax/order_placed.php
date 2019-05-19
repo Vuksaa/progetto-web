@@ -54,4 +54,5 @@ if ($statement=$conn->prepare("
   echo "ORDER_FAIL_PREPARE_ORDER_INSERT";
 }
 $statement->close();
+include("../fragments/connection-end.php");
 ?>

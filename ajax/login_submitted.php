@@ -49,4 +49,5 @@ if ($statement->num_rows > 0) {
     echo "Login failed. Invalid credentials.";
   }
 }
+include("../fragments/connection-end.php");
 ?>
