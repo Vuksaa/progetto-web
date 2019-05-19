@@ -37,7 +37,7 @@ include("fragments/connection-begin.php");
                 $productNumber = 0;
                 while ($product = $listedProducts->fetch_assoc()) {
                   ?>
-                  <div class="card mt-2 productCard listedProduct d-none" data-product-group="<?php echo (int)($productNumber / $productGroupSize); ?>" data-product-id="<?php echo $product['product_id']; ?>">
+                  <div class="card mt-2 productCard d-none" data-product-group="<?php echo (int)($productNumber / $productGroupSize); ?>" data-product-id="<?php echo $product['product_id']; ?>">
                     <div class="card-body">
                       <h6 class="card-title"><?php echo $product['product_name']; ?></h5>
                       <p class="card-text font-weight-light">
@@ -194,7 +194,7 @@ $(function() {
   // filter the listed products whenever the searchbar's text changes
   $("#searchProducts").on('keyup', function(e) {
     var inputed = $(this).val().toLowerCase()
-    var items = $(".listedProduct")
+    var items = $("#listedProducts .productCard")
     // show all listed product if the searchbar is blank
     if (inputed == "") {
       items.show()
@@ -231,8 +231,6 @@ $(function() {
       productCard.detach().appendTo("#toOrderProducts")
       productCard.find(".btnAddProduct").hide()
       productCard.find(".btnRemoveProduct").show()
-      productCard.removeClass("listedProduct")
-      productCard.addClass("toOrderProduct")
       productCard.show()
     })
   })
@@ -242,8 +240,6 @@ $(function() {
       productCard.detach().appendTo("#listedProducts")
       productCard.find(".btnAddProduct").show()
       productCard.find(".btnRemoveProduct").hide()
-      productCard.addClass("listedProduct")
-      productCard.removeClass("toOrderProduct")
       productCard.show()
     })
   })
