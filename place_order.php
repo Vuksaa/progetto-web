@@ -245,7 +245,6 @@ $(function() {
   })
 
   $("#btnComplete").on('click', function(e) {
-    // TODO: place the order
     if ($(".toOrderProduct").length == 0) {
       $(".alert.alert-danger").text("Must select at least 1 product.")
       $(".alert.alert-danger").fadeOut()

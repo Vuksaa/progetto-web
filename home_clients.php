@@ -1,6 +1,6 @@
 <?php include("fragments/logged-check.php"); ?>
 <?php
-  if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] == "provider") {
+  if ($_SESSION['user_type'] == "provider") {
     header('Location: home_providers.php');
     exit();
   }
@@ -57,9 +57,8 @@
           <div class="card-body">
             <form class="form-inline card-searchbar">
               <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
-            <div class="row">
+            <div class="row" id="favouriteProviders">
               <?php
                 if ($favProviders = $conn->query("SELECT p.provider_id, p.provider_name, t.type_name
                                             FROM client_provider cp
@@ -70,14 +69,12 @@
                                             WHERE cp.client_id = '".$_SESSION['user_id']."'")) {
                 while ($providerRow = $favProviders->fetch_assoc()) {
               ?>
-              <div class="card col-sm-3">
+              <div class="card col-sm-3 providerCard favouriteProvider" data-provider-id="<?php echo $providerRow['provider_id']; ?>">
                 <div class="card-body">
-                  <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="client_provider_remove_form">
-                    <?php echo "<input type='number' name='providerId' value='".$providerRow['provider_id']."' hidden>" ; ?>
-                    <h5 class="card-title"><?php echo $providerRow['provider_name'] ?>
-                      <button type="submit" name="btnClientProviderRemove" class="btn btn-link" value="clientProviderRemove"><i class="fas fa-star"></i></button>
-                    </h5>
-                  </form>
+                  <h5 class="card-title"><?php echo $providerRow['provider_name'] ?>
+                    <button name="addFavourite" class="btn btn-link"><i class="far fa-star"></i></button>
+                    <button name="removeFavourite" class="btn btn-link"><i class="fas fa-star"></i></button>
+                  </h5>
                   <h6 class="card-subtitle mb-2 text-muted"><?php echo $providerRow['type_name'] ?></h6>
                   <p class="card-text">
                     <?php
@@ -97,7 +94,7 @@
                   </p>
                   <div class="btn-group btn-group-justified">
                     <button class="btn btn-primary inline" data-toggle="modal" data-target="#peekOnProvider">Peek</button>
-                    <button class="btn btn-primary inline btn-place-order" data-provider-id="<?php echo $providerRow['provider_id']; ?>">Order</button>
+                    <button class="btn btn-primary inline btn-place-order">Order</button>
                   </div>
                 </div>
               </div>
@@ -122,9 +119,8 @@
           <div class="card-body">
             <form class="form-inline card-searchbar">
               <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
-            <div class="row">
+            <div class="row" id="listedProviders">
               <?php
                 // TODO: use one query and separate favourite and non-favourite restaurants in php?
                 if ($allProviders = $conn->query("SELECT p.provider_id, p.provider_name, t.type_name
@@ -138,14 +134,12 @@
                                                                         WHERE cp.client_id = '".$_SESSION['user_id']."')")) {
                 while ($providerRow = $allProviders->fetch_assoc()) {
               ?>
-              <div class="card col-sm-3">
+              <div class="card col-sm-3 providerCard listedProvider" data-provider-id="<?php echo $providerRow['provider_id']; ?>">
                 <div class="card-body">
-                  <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="client_provider_add_form">
-                    <?php echo "<input type='number' name='providerId' value='".$providerRow['provider_id']."' hidden>" ; ?>
-                    <h5 class="card-title"><?php echo $providerRow['provider_name'] ?>
-                      <button type="submit" name="btnClientProviderAdd" class="btn btn-link" value="clientProviderAdd"><i class="far fa-star"></i></button>
-                    </h5>
-                  </form>
+                  <h5 class="card-title"><?php echo $providerRow['provider_name'] ?>
+                    <button name="addFavourite" class="btn btn-link"><i class="far fa-star"></i></button>
+                    <button name="removeFavourite" class="btn btn-link"><i class="fas fa-star"></i></button>
+                  </h5>
                   <h6 class="card-subtitle mb-2 text-muted"><?php echo $providerRow['type_name'] ?></h6>
                   <p class="card-text">
                     <?php
@@ -165,7 +159,7 @@
                   </p>
                   <div class="btn-group btn-group-justified">
                     <button class="btn btn-primary inline" data-toggle="modal" data-target="#peekOnProvider">Peek</button>
-                    <button class="btn btn-primary inline btn-place-order" data-provider-id="<?php echo $providerRow['provider_id']; ?>">Order</button>
+                    <button class="btn btn-primary inline btn-place-order">Order</button>
                   </div>
                 </div>
               </div>
@@ -208,13 +202,46 @@
 <script type="text/javascript">
 $(function() {
   $(".btn-place-order").click(function() {
-    window.location.href = "place_order.php?provider=" + $(this).data("provider-id")
+    window.location.href = "place_order.php?provider=" + $(this).parent().parent().parent().data("provider-id")
   })
   /* Set navbar voice active with respective screen reader functionality */
   var element = $("nav div ul li a:contains('Home')");
   var parent = element.parent();
   element.append( "<span class='sr-only'>(current)</span>" );
   parent.addClass("active");
+
+  $("#favouriteProviders button[name='addFavourite']").hide()
+  $("#listedProviders button[name='removeFavourite']").hide()
+
+  $("button[name='addFavourite']").on('click', function() {
+    var providerCard = $(this).parent().parent().parent()
+    var thisButton = $(this)
+    $.post("ajax/add_favourite_provider.php", {
+
+    }).done(function() {
+      providerCard.find("button[name='removeFavourite']").show()
+      thisButton.hide()
+      providerCard.fadeOut(250, function() {
+          providerCard.detach().appendTo("#favouriteProviders")
+          providerCard.show()
+      })
+    })
+  })
+  $("button[name='removeFavourite']").on('click', function() {
+    var providerCard = $(this).parent().parent().parent()
+    var thisButton = $(this)
+    $.post("ajax/remove_favourite_provider.php", {
+
+    }).done(function() {
+      providerCard.find("button[name='addFavourite']").show()
+      thisButton.hide()
+      providerCard.fadeOut(250, function() {
+        providerCard.detach().appendTo("#listedProviders")
+        providerCard.show()
+
+      })
+    })
+  })
 })
 </script>
 <?php include("fragments/connection-end.php"); ?>
