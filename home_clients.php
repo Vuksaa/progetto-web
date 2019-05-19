@@ -6,44 +6,13 @@
   }
 ?>
 <?php include("fragments/connection-begin.php"); ?>
-<!-- This php block is for adding favourites -->
-<?php
-  if(isset($_POST['btnClientProviderAdd'])){
-      if(!($statement=$conn->prepare("INSERT INTO client_provider(client_provider.client_id,client_provider.provider_id)
-                              VALUES (?,?)"))){
-        echo "Prepare failed.";
-      }
-      if(!($statement->bind_param('ii',$_SESSION['user_id'],$_POST['providerId']))) {
-        echo "Bind failed.";
-      }
-      if(!($statement->execute())){
-        echo "Execution failed: ".$statement->error;
-      }
-      $statement->close();
-    } else if(isset($_POST['btnClientProviderRemove'])){
-      if(!($statement=$conn->prepare("DELETE FROM client_provider
-                              WHERE client_provider.client_id=? AND client_provider.provider_id=?"))){
-        echo "Prepare failed.";
-      }
-      if(!($statement->bind_param('ii',$_SESSION['user_id'],$_POST['providerId']))) {
-        echo "Bind failed.";
-      }
-      if(!($statement->execute())){
-        echo "Execution failed: ".$statement->error;
-      }
-      $statement->close();
-    }
-?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <?php include("fragments/head-contents.php"); ?>
 </head>
-
 <body>
   <?php include("fragments/navbar.php"); ?>
-
   <div class="container mt-4 mb-4">
     <h3 class="pb-2">Provider list</h3>
     <div class="container accordion mt-4 mb-4" id="mainAccordion">
@@ -217,29 +186,32 @@ $(function() {
     var providerCard = $(this).parent().parent().parent()
     var thisButton = $(this)
     $.post("ajax/add_favourite_provider.php", {
-
-    }).done(function() {
-      providerCard.find("button[name='removeFavourite']").show()
-      thisButton.hide()
-      providerCard.fadeOut(250, function() {
+      providerId: providerCard.data("provider-id")
+    }).done(function(response) {
+      if (response == "SUCCESS") {
+        providerCard.find("button[name='removeFavourite']").show()
+        thisButton.hide()
+        providerCard.fadeOut(250, function() {
           providerCard.detach().appendTo("#favouriteProviders")
           providerCard.show()
-      })
+        })
+      }
     })
   })
   $("button[name='removeFavourite']").on('click', function() {
     var providerCard = $(this).parent().parent().parent()
     var thisButton = $(this)
     $.post("ajax/remove_favourite_provider.php", {
-
-    }).done(function() {
-      providerCard.find("button[name='addFavourite']").show()
-      thisButton.hide()
-      providerCard.fadeOut(250, function() {
-        providerCard.detach().appendTo("#listedProviders")
-        providerCard.show()
-
-      })
+      providerId: providerCard.data("provider-id")
+    }).done(function(response) {
+      if (response == "SUCCESS") {
+        providerCard.find("button[name='addFavourite']").show()
+        thisButton.hide()
+        providerCard.fadeOut(250, function() {
+          providerCard.detach().appendTo("#listedProviders")
+          providerCard.show()
+        })
+      }
     })
   })
 })
