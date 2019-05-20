@@ -14,9 +14,15 @@
       <li class="nav-item">
         <a class="nav-link" <?php echo ($_SESSION['user_type'] == 'client') ? 'href="profile_clients.php"' : 'href="profile_providers.php"'; ?>><i class="fas fa-user"></i> Profile</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="orders_clients.php"><i class="fas fa-book"></i> Orders</a>
-      </li>
+      <?php
+      if ($_SESSION['user_type'] == 'client') {
+        echo '
+        <li class="nav-item">
+          <a class="nav-link" href="orders_clients.php"><i class="fas fa-book"></i> Orders</a>
+        </li>
+        ';
+      }
+      ?>
     </ul>
     <ul class="navbar-nav navbar-right">
       <li class="nav-item">

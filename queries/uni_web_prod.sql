@@ -194,7 +194,7 @@ CREATE TABLE `client_provider` (
 
 LOCK TABLES `client_provider` WRITE;
 /*!40000 ALTER TABLE `client_provider` DISABLE KEYS */;
-INSERT INTO `client_provider` VALUES (1,3),(1,5),(2,5),(3,1),(3,2),(4,5),(4,7),(5,1),(5,8),(6,3),(6,7),(7,2),(7,5),(7,6),(7,7),(8,2),(10,1);
+INSERT INTO `client_provider` VALUES (1,3),(1,5),(2,5),(3,1),(3,2),(4,5),(4,7),(5,1),(5,8),(6,3),(6,7),(7,2),(7,5),(7,6),(7,7),(8,2),(10,1),(10,2),(10,3);
 /*!40000 ALTER TABLE `client_provider` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -250,10 +250,11 @@ CREATE TABLE `order` (
   `order_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_address` varchar(90) NOT NULL,
   `status_id` int(11) NOT NULL DEFAULT '4',
+  `creation_timestamp` datetime NOT NULL,
   PRIMARY KEY (`order_id`),
   KEY `status_id_idx` (`status_id`),
   CONSTRAINT `status_id` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -382,7 +383,7 @@ CREATE TABLE `provider` (
   PRIMARY KEY (`provider_id`),
   KEY `type_id_idx` (`type_id`),
   CONSTRAINT `type_id` FOREIGN KEY (`type_id`) REFERENCES `type` (`type_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -391,7 +392,7 @@ CREATE TABLE `provider` (
 
 LOCK TABLES `provider` WRITE;
 /*!40000 ALTER TABLE `provider` DISABLE KEYS */;
-INSERT INTO `provider` VALUES (1,'America Graffiti','Via Costanzo II, 11','americagraffiti@gmail.com','americagraffiti',1),(2,'Conad','Via Silvio Corbari, 21','conad@gmail.com','conad',2),(3,'Rosticceria Cinese \"Oriente\" di Liu','Viale Domenico Bolognesi, 170','oriente@gmail.com','oriente',1),(4,'Bio Burg','Via Domenico Martoni, 44','bioburg@gmail.com','bioburg',1),(5,'Piadineria \"Da Nino\"','Piazzale Atleti Azzurri d\'Italia, 1','danino@gmail.com','danino',1),(6,'Osteria \"Casa di mare\"','Via Theodoli, 6','casadimare@gmail.com','casadimare',1),(7,'Bistro\' Verdepaglia Forli','Corso Armando Diaz, 14','verdepaglia@gmail.com','verdepaglia',1),(8,'Lidl','Via A. Ciani, 1','lidl@gmail.com','lidl',2);
+INSERT INTO `provider` VALUES (1,'America Graffiti','Via Costanzo II, 11','americagraffiti@gmail.com','americagraffiti',1),(2,'Conad','Via Silvio Corbari, 21','conad@gmail.com','conad',2),(3,'Rosticceria Cinese \"Oriente\" di Liu','Viale Domenico Bolognesi, 170','oriente@gmail.com','oriente',1),(4,'Bio Burg','Via Domenico Martoni, 44','bioburg@gmail.com','bioburg',1),(5,'Piadineria \"Da Nino\"','Piazzale Atleti Azzurri d\'Italia, 1','danino@gmail.com','danino',1),(6,'Osteria \"Casa di mare\"','Via Theodoli, 6','casadimare@gmail.com','casadimare',1),(7,'Bistro\' Verdepaglia Forli','Corso Armando Diaz, 14','verdepaglia@gmail.com','verdepaglia',1),(8,'Lidl','Via A. Ciani, 1','lidl@gmail.com','lidl',2),(9,'2','Corso della Repubblica, 15','2@2.2','2',2);
 /*!40000 ALTER TABLE `provider` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -517,4 +518,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-19 10:58:51
+-- Dump completed on 2019-05-20 17:18:21

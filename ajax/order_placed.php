@@ -13,8 +13,9 @@ if (isset($order["enteredAddress"])) {
       INSERT INTO `uni_web_prod`.`address` (`address_name`, `address_info`, `client_id`)
       VALUES (?, ?, ?);
     ")) {
-      $statement->bind_param('ssi', $order["enteredAddressName"], $order_address, $_SESSION["user_id"]));
+      $statement->bind_param('ssi', $order["enteredAddressName"], $order_address, $_SESSION["user_id"]);
       $statement->execute();
+      $statement->close();
     } else {
       echo "ORDER_FAIL_PREPARE_ADDRESS_INSERT";
     }
@@ -22,13 +23,12 @@ if (isset($order["enteredAddress"])) {
 } else {
   $order_address = $order["selectedAddress"];
 }
-$statement->close();
 
 // create the order record
 if ($statement=$conn->prepare("
-  INSERT INTO `order` (order_address)
-  VALUES (?);
-")) {
+  INSERT INTO `order` (order_address, creation_timestamp)
+  VALUES (?, NOW());
+  ")) {
   $statement->bind_param('s', $order_address);
   $statement->execute();
   $order_id = $conn->insert_id;

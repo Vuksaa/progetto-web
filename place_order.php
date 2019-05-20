@@ -245,7 +245,7 @@ $(function() {
   })
 
   $("#btnComplete").on('click', function(e) {
-    if ($(".toOrderProduct").length == 0) {
+    if ($("#listedProducts .productCard").length == 0) {
       $(".alert.alert-danger").text("Must select at least 1 product.")
       $(".alert.alert-danger").fadeOut()
       $(".alert.alert-danger").fadeIn()
@@ -269,7 +269,7 @@ $(function() {
     }
     // create the array for the products
     order.products = []
-    $.each($(".toOrderProduct"), function() {
+    $.each($("#listedProducts .productCard"), function() {
       product = {}
       product["id"] = $(this).data("product-id")
       product["quantity"] = $(this).find(".productQuantity").val()
