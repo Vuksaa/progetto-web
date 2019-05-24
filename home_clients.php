@@ -29,14 +29,16 @@
             </form>
             <div class="row" id="favouriteProviders">
               <?php
-                if ($favProviders = $conn->query("SELECT p.provider_id, p.provider_name, t.type_name
-                                            FROM client_provider cp
-                                            JOIN provider p
-                                            ON cp.provider_id = p.provider_id
-                                            LEFT JOIN type t
-                                            ON p.type_id = t.type_id
-                                            WHERE cp.client_id = '".$_SESSION['user_id']."'")) {
-                while ($providerRow = $favProviders->fetch_assoc()) {
+                if ($favProviders = $conn->query(
+                  "SELECT p.provider_id, p.provider_name, t.type_name
+                  FROM client_provider cp
+                  JOIN provider p
+                  ON cp.provider_id = p.provider_id
+                  LEFT JOIN type t
+                  ON p.type_id = t.type_id
+                  WHERE cp.client_id = '".$_SESSION['user_id']."'"
+                )) {
+                  while ($providerRow = $favProviders->fetch_assoc()) {
               ?>
               <div class="card col-sm-3 providerCard favouriteProvider" data-provider-id="<?php echo $providerRow['provider_id']; ?>">
                 <div class="card-body">
@@ -93,16 +95,20 @@
             <div class="row" id="listedProviders">
               <?php
                 // TODO: use one query and separate favourite and non-favourite restaurants in php?
-                if ($allProviders = $conn->query("SELECT p.provider_id, p.provider_name, t.type_name
-                                            FROM provider p
-                                            LEFT JOIN type t
-                                            ON p.type_id = t.type_id
-                                            WHERE p.provider_id NOT IN (SELECT p.provider_id
-                                                                        FROM client_provider cp
-                                                                        JOIN provider p
-                                                                        ON cp.provider_id = p.provider_id
-                                                                        WHERE cp.client_id = '".$_SESSION['user_id']."')")) {
-                while ($providerRow = $allProviders->fetch_assoc()) {
+                if ($allProviders = $conn->query(
+                  "SELECT p.provider_id, p.provider_name, t.type_name
+                  FROM provider p
+                  LEFT JOIN type t
+                  ON p.type_id = t.type_id
+                  WHERE p.provider_id NOT IN (
+                    SELECT p.provider_id
+                    FROM client_provider cp
+                    JOIN provider p
+                    ON cp.provider_id = p.provider_id
+                    WHERE cp.client_id = '".$_SESSION['user_id']."'
+                  )"
+                )) {
+                  while ($providerRow = $allProviders->fetch_assoc()) {
               ?>
               <div class="card col-sm-3 providerCard listedProvider" data-provider-id="<?php echo $providerRow['provider_id']; ?>">
                 <div class="card-body">
@@ -117,13 +123,15 @@
                   <h6 class="card-subtitle mb-2 text-muted"><?php echo $providerRow['type_name'] ?></h6>
                   <p class="card-text">
                     <?php
-                      if ($providerCategories = $conn->query("SELECT c.category_name
-                                            FROM provider p
-                                            LEFT JOIN provider_category pc
-                                            ON p.provider_id = pc.provider_id
-                                            LEFT JOIN category c
-                                            ON c.category_id = pc.category_id
-                                            WHERE p.provider_id = '".$providerRow['provider_id']."'")) {
+                      if ($providerCategories = $conn->query(
+                        "SELECT c.category_name
+                        FROM provider p
+                        LEFT JOIN provider_category pc
+                        ON p.provider_id = pc.provider_id
+                        LEFT JOIN category c
+                        ON c.category_id = pc.category_id
+                        WHERE p.provider_id = '".$providerRow['provider_id']."'"
+                      )) {
                         while ($categoryRow = $providerCategories->fetch_assoc()) {
                           echo "<span class='badge badge-pill badge-info'>".$categoryRow['category_name']."</span>";
                         }
