@@ -269,7 +269,7 @@ $(function() {
     }
     // create the array for the products
     order.products = []
-    $.each($("#listedProducts .productCard"), function() {
+    $.each($("#toOrderProducts .productCard"), function() {
       product = {}
       product["id"] = $(this).data("product-id")
       product["quantity"] = $(this).find(".productQuantity").val()
