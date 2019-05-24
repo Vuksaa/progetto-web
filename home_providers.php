@@ -31,16 +31,18 @@
         $incomingOrders = array();
         $preparedOrders = array();
         $completedOrders = array();
-          if ($allOrders = $conn->query("SELECT o.order_id,o.order_address,p.product_name,s.status_name,s.status_id,po.notes
-                                      FROM uni_web_prod.order o
-                                      JOIN product_order po
-                                      ON o.order_id = po.order_id
-                                      JOIN product p
-                                      ON po.product_id = p.product_id
-                                      LEFT JOIN status s
-                                      ON o.status_id = s.status_id
-                                      WHERE p.provider_id = '".$_SESSION['user_id']."'
-                                      ORDER BY s.status_id ASC")) {
+          if ($allOrders = $conn->query(
+            "SELECT o.order_id, o.order_address, p.product_name, s.status_name, s.status_id, po.notes, o.creation_timestamp
+            FROM uni_web_prod.order o
+            JOIN product_order po
+            ON o.order_id = po.order_id
+            JOIN product p
+            ON po.product_id = p.product_id
+            LEFT JOIN status s
+            ON o.status_id = s.status_id
+            WHERE p.provider_id = '".$_SESSION['user_id']."'
+            ORDER BY o.creation_timestamp ASC"
+)) {
             while ($orderRow = $allOrders->fetch_assoc()) {
               if($orderRow['status_id'] == 1) {
                 $incomingOrders[] = $orderRow;
