@@ -37,10 +37,8 @@
                                       ON o.order_id = po.order_id
                                       JOIN product p
                                       ON po.product_id = p.product_id
-                                      JOIN order_status os
-                                      ON os.order_id = o.order_id
                                       LEFT JOIN status s
-                                      ON os.status_id = s.status_id
+                                      ON o.status_id = s.status_id
                                       WHERE p.provider_id = '".$_SESSION['user_id']."'
                                       ORDER BY s.status_id ASC")) {
             while ($orderRow = $allOrders->fetch_assoc()) {
