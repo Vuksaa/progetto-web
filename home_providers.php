@@ -26,54 +26,29 @@
         </button>
       </h1>
       <div id="collapseIncomingOrders" class="collapse show" aria-labelledby="headingIncomingOrders" data-parent="#mainAccordion">
-        <?php
-        //Sort all orders based on status (1=incoming,2=prepared,3=completed)
-        $incomingOrders = array();
-        $preparedOrders = array();
-        $completedOrders = array();
-          if ($allOrders = $conn->query(
-            "SELECT o.order_id, o.order_address, p.product_name, s.status_name, s.status_id, po.notes, o.creation_timestamp
-            FROM uni_web_prod.order o
-            JOIN product_order po
-            ON o.order_id = po.order_id
-            JOIN product p
-            ON po.product_id = p.product_id
-            LEFT JOIN status s
-            ON o.status_id = s.status_id
-            WHERE p.provider_id = '".$_SESSION['user_id']."'
-            ORDER BY o.creation_timestamp ASC, o.order_id ASC"
-          )) {
-            while ($orderRow = $allOrders->fetch_assoc()) {
-              if($orderRow['status_id'] == 4) {
-                $incomingOrders[] = $orderRow;
-              } else if($orderRow['status_id'] == 1) {
-                $preparedOrders[] = $orderRow;
-              } else {
-                $completedOrders[] = $orderRow;
-              }
-            }
-         $allOrders->close();
-        } else {
-          echo "Query failed";
-        }
-        ?>
         <div class="card-body" id="ordersIncoming">
-          <?php
-          foreach ($incomingOrders as $incomingOrder) {
-           ?>
-          <div class="card" data-orderId="<?php echo $incomingOrder['order_id']; ?>">
+          <!-- <div class="card orderCard" data-orderId="5">
             <div class="card-body">
-              <h5 class="card-title"><?php echo $incomingOrder['product_name'] ?></h5>
-              <h6 class="card-subtitle mb-2 text-muted"><?php echo $incomingOrder['order_address'] ?></h6>
-              <p class="card-text"><?php echo $incomingOrder['notes'] ?></p>
-              <div class="btn-group btn-group-justified">
-                <a href="#" class="btn btn-primary inline">Accept</a>
-                <a href="#" class="btn btn-primary inline">Reject</a>
-                <a href="#" class="btn btn-primary inline">Details</a>
+              <h5 class="card-title">Bob's order</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Order address</h6>
+              <div class="card-text">
+                <div class="border p-2">
+                  <div class="row">
+                    <label class="col-sm-2 col-form-label border-right">Product</label>
+                    <label class="col col-form-label">Product name</label>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-2 col-form-label border-right">Quantity</label>
+                    <label class="col col-form-label">2</label>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-2 col-form-label border-right">Notes</label>
+                    <label class="col col-form-label">Notes 1 Blabla blabla</label>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <?php } ?>
+          </div> -->
         </div>
       </div>
     <div class="card main-card">
@@ -84,22 +59,6 @@
       </h1>
       <div id="collapsePreparedOrders" class="collapse" aria-labelledby="headingPreparedOrders" data-parent="#mainAccordion">
         <div class="card-body" id="ordersAccepted">
-          <?php
-          foreach ($preparedOrders as $preparedOrder) {
-           ?>
-          <div class="card" data-orderId="<?php echo $preparedOrder['order_id']; ?>">
-            <div class="card-body">
-              <h5 class="card-title"><?php echo $preparedOrder['product_name'] ?></h5>
-              <h6 class="card-subtitle mb-2 text-muted"><?php echo $preparedOrder['order_address'] ?></h6>
-              <p class="card-text"><?php echo $preparedOrder['notes'] ?></p>
-              <div class="btn-group btn-group-justified">
-                <a href="#" class="btn btn-primary inline">Accept</a>
-                <a href="#" class="btn btn-primary inline">Reject</a>
-                <a href="#" class="btn btn-primary inline">Details</a>
-              </div>
-            </div>
-          </div>
-          <?php } ?>
         </div>
       </div>
     </div>
@@ -111,25 +70,12 @@
       </h1>
       <div id="collapseCompletedOrders" class="collapse" aria-labelledby="headingCompletedOrders" data-parent="#mainAccordion">
         <div class="card-body" id="ordersCompleted">
-          <?php
-          foreach ($completedOrders as $completedOrder) {
-           ?>
-          <div class="card" data-orderId="<?php echo $completedOrder['order_id']; ?>">
-            <div class="card-body">
-              <h5 class="card-title"><?php echo $completedOrder['product_name'] ?></h5>
-              <h6 class="card-subtitle mb-2 text-muted"><?php echo $completedOrder['order_address'] ?></h6>
-              <p class="card-text"><?php echo $completedOrder['notes'] ?></p>
-              <div class="btn-group btn-group-justified">
-                <a href="#" class="btn btn-primary inline">Details</a>
-              </div>
-            </div>
-          </div>
-          <?php } ?>
         </div>
       </div>
     </div>
   </div>
   </div>
+</div>
 
   <?php include("fragments/footer.php"); ?>
 </body>
@@ -173,6 +119,9 @@ $(function() {
   // fetch all orders and place them in their section.
   $.post({
     url: "ajax/fetch_recent_orders.php",
+    data: {
+      order_recency: "ALL"
+    },
     success: function(response) {
       if (response === 'ERROR') {
         alert("ERROR");
@@ -187,6 +136,7 @@ $(function() {
           ),
           function(index, it) {
             allOrders[it.order_id] = {
+              client_name: it.client_name,
               creation_timestamp: it.creation_timestamp,
               order_address: it.order_address,
               status_id: it.status_id,
@@ -202,12 +152,128 @@ $(function() {
             notes: it.notes
           })
         })
-        // TODO: place each order in its section
-        // $.each(allOrders, function(index, it) {
-        //   if (it.status_id === 4) {
-        //     $("#ordersIncoming").prepend('')
-        //   }
-        // })
+        // TODO: order the orders by creation_timestamp
+        $.each(allOrders, function(index, it) {
+          if (it.status_id == 4) {
+            var element = `
+            <div class="card orderCard mb-3" data-orderId="` + index + `">
+              <div class="card-body">
+                <div class="card-title">
+                  <h7 class="text-muted float-right">` + it.creation_timestamp + `</h7>
+                  <h5>` + it.client_name + `'s order</h5>
+                </div>
+                <h5 class="card-title"></h5>
+                <h6 class="card-subtitle mb-2 text-muted">` + it.order_address + `</h6>`
+            $.each(it.products, function(index, orderedProduct) {
+              element += `
+              <div class="card-text">
+                <div class="border-top border-bottom p-2">
+                  <div class="row">
+                    <label class="col-sm-2 col-form-label border-right">Product</label>
+                    <label class="col col-form-label">` + orderedProduct.product_name + `</label>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-2 col-form-label border-right">Quantity</label>
+                    <label class="col col-form-label">` + orderedProduct.quantity + `</label>
+                  </div>`
+              if (orderedProduct.notes != "") {
+                element += `
+                <div class="row">
+                  <label class="col-sm-2 col-form-label border-right">Notes</label>
+                  <label class="col col-form-label">` + orderedProduct.notes + `</label>
+                </div>`
+              }
+              element += `
+                  </div>
+                </div>`
+            })
+            element += `
+                <div class="btn-group btn-group-justified pt-2">
+                  <a href="#" class="btn btn-primary inline">Accept</a>
+                  <a href="#" class="btn btn-primary inline">Reject</a>
+                </div>
+              </div>
+            </div>`
+            $("#ordersIncoming").prepend(element)
+          } else if (it.status_id == 1) {
+            var element = `
+            <div class="card orderCard mb-3" data-orderId="` + index + `">
+              <div class="card-body">
+                <div class="card-title">
+                  <h7 class="text-muted float-right">` + it.creation_timestamp + `</h7>
+                  <h5>` + it.client_name + `'s order</h5>
+                </div>
+                <h5 class="card-title"></h5>
+                <h6 class="card-subtitle mb-2 text-muted">` + it.order_address + `</h6>`
+            $.each(it.products, function(index, orderedProduct) {
+              element += `
+              <div class="card-text">
+                <div class="border-top border-bottom p-2">
+                  <div class="row">
+                    <label class="col-sm-2 col-form-label border-right">Product</label>
+                    <label class="col col-form-label">` + orderedProduct.product_name + `</label>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-2 col-form-label border-right">Quantity</label>
+                    <label class="col col-form-label">` + orderedProduct.quantity + `</label>
+                  </div>`
+              if (orderedProduct.notes != "") {
+                element += `
+                <div class="row">
+                  <label class="col-sm-2 col-form-label border-right">Notes</label>
+                  <label class="col col-form-label">` + orderedProduct.notes + `</label>
+                </div>`
+              }
+              element += `
+                  </div>
+                </div>`
+            })
+            element += `
+                <div class="btn-group btn-group-justified pt-2">
+                  <a href="#" class="btn btn-primary inline">Complete</a>
+                </div>
+              </div>
+            </div>`
+            $("#ordersAccepted").prepend(element)
+          } else {
+            var element = `
+            <div class="card orderCard mb-3" data-orderId="` + index + `">
+              <div class="card-body">
+                <div class="card-title">
+                  <h7 class="text-muted float-right">` + it.creation_timestamp + `</h7>
+                  <h5>` + it.client_name + `'s order</h5>
+                </div>
+                <h5 class="card-title"></h5>
+                <h6 class="card-subtitle mb-2 text-muted">` + it.order_address + `</h6>`
+            $.each(it.products, function(index, orderedProduct) {
+              element += `
+              <div class="card-text">
+                <div class="border-top border-bottom p-2">
+                  <div class="row">
+                    <label class="col-sm-2 col-form-label border-right">Product</label>
+                    <label class="col col-form-label">` + orderedProduct.product_name + `</label>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-2 col-form-label border-right">Quantity</label>
+                    <label class="col col-form-label">` + orderedProduct.quantity + `</label>
+                  </div>`
+              if (orderedProduct.notes != "") {
+                element += `
+                <div class="row">
+                  <label class="col-sm-2 col-form-label border-right">Notes</label>
+                  <label class="col col-form-label">` + orderedProduct.notes + `</label>
+                </div>`
+              }
+              element += `
+                  </div>
+                </div>`
+            })
+            element += `
+              </div>
+            </div>`
+            $("#ordersCompleted").prepend(element)
+          }
+        })
       }
     }
   })
