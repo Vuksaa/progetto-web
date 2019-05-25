@@ -168,6 +168,7 @@ CREATE TABLE `client_order` (
 
 LOCK TABLES `client_order` WRITE;
 /*!40000 ALTER TABLE `client_order` DISABLE KEYS */;
+INSERT INTO `client_order` VALUES (10,5),(10,6),(10,7),(10,8),(10,9);
 /*!40000 ALTER TABLE `client_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -194,7 +195,7 @@ CREATE TABLE `client_provider` (
 
 LOCK TABLES `client_provider` WRITE;
 /*!40000 ALTER TABLE `client_provider` DISABLE KEYS */;
-INSERT INTO `client_provider` VALUES (1,3),(1,5),(2,5),(3,1),(3,2),(4,5),(4,7),(5,1),(5,8),(6,3),(6,7),(7,2),(7,5),(7,6),(7,7),(8,2),(10,1),(10,2),(10,3);
+INSERT INTO `client_provider` VALUES (1,3),(1,5),(2,5),(3,1),(3,2),(4,5),(4,7),(5,1),(5,8),(6,3),(6,7),(7,2),(7,5),(7,6),(7,7),(8,2),(10,1),(10,3),(10,4),(10,5),(10,6),(10,8);
 /*!40000 ALTER TABLE `client_provider` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -254,7 +255,7 @@ CREATE TABLE `order` (
   PRIMARY KEY (`order_id`),
   KEY `status_id_idx` (`status_id`),
   CONSTRAINT `status_id` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -263,6 +264,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
+INSERT INTO `order` VALUES (5,'Via Romeo Galli 50',4,'2019-05-24 12:19:46'),(6,'Via Domenico Martoni 21',4,'2019-05-24 12:22:48'),(7,'Via Campo di Marte, 50',4,'2019-05-23 11:19:21'),(8,'Via Domenico Martoni 21',4,'2019-05-25 12:21:25'),(9,'Corso della Repubblica 3',4,'2019-05-25 12:22:17');
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -363,6 +365,7 @@ CREATE TABLE `product_order` (
 
 LOCK TABLES `product_order` WRITE;
 /*!40000 ALTER TABLE `product_order` DISABLE KEYS */;
+INSERT INTO `product_order` VALUES (42,5,'23141234',5),(43,5,'CRUDO',2),(44,6,'SPAGHETTIIIIII',2),(46,7,'aiofdjasfdasdf',1),(46,9,'',1),(47,8,'wow',3),(48,9,'caffÃ¨',2);
 /*!40000 ALTER TABLE `product_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -443,7 +446,7 @@ CREATE TABLE `status` (
 
 LOCK TABLES `status` WRITE;
 /*!40000 ALTER TABLE `status` DISABLE KEYS */;
-INSERT INTO `status` VALUES (1,'Arrivato'),(2,'Pronto'),(3,'Concluso'),(4,'In attesa');
+INSERT INTO `status` VALUES (1,'Accettato'),(2,'Rifiutato'),(3,'Concluso'),(4,'In attesa');
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -518,4 +521,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-20 17:18:21
+-- Dump completed on 2019-05-25 17:26:12
