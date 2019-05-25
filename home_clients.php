@@ -116,10 +116,7 @@
                     <button name="addFavourite" class="btn btn-link"><i class="far fa-star"></i></button>
                     <button name="removeFavourite" class="btn btn-link"><i class="fas fa-star"></i></button>
                   </div>
-                  <h5 class="card-title"><?php echo $providerRow['provider_name'] ?>
-                    <button name="addFavourite" class="btn btn-link"><i class="far fa-star"></i></button>
-                    <button name="removeFavourite" class="btn btn-link"><i class="fas fa-star"></i></button>
-                  </h5>
+                  <h5 class="card-title"><?php echo $providerRow['provider_name'] ?></h5>
                   <h6 class="card-subtitle mb-2 text-muted"><?php echo $providerRow['type_name'] ?></h6>
                   <p class="card-text">
                     <?php
