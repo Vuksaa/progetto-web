@@ -129,41 +129,45 @@ $(function() {
         var responseArray = JSON.parse(response)
         // take all elements with a distinct order_id and create an "order" element for each order
         // distinct filter taken from https://stackoverflow.com/a/47313334
-        var allOrders = {}
+        var allOrders = []
         $.each(responseArray.filter(
           (arr, index, self) => index === self.findIndex(
             (t) => (t.order_id === arr.order_id))
           ),
           function(index, it) {
-            allOrders[it.order_id] = {
+            allOrders.push({
+              order_id: it.order_id,
               client_name: it.client_name,
               creation_timestamp: it.creation_timestamp,
               order_address: it.order_address,
               status_id: it.status_id,
               products: []
-            }
+            })
           }
         )
         // fill the orders with their respective products
         $.each(responseArray, function(index, it) {
-          allOrders[it.order_id].products.push({
+          allOrders.filter(self => self.order_id === it.order_id)[0].products.push({
+          // allOrders[it.order_id].products.push({
             product_name: it.product_name,
             quantity: it.quantity,
             notes: it.notes
           })
         })
-        // TODO: order the orders by creation_timestamp
+        // order by date
+        allOrders.sort(function(a, b) { return Date.parse(b.creation_timestamp) - Date.parse(a.creation_timestamp) })
+        // put each order in its section
         $.each(allOrders, function(index, it) {
+          var element = `
+          <div class="card orderCard mb-3" data-orderId="` + index + `">
+            <div class="card-body">
+              <div class="card-title">
+                <h7 class="text-muted float-right">` + it.creation_timestamp + `</h7>
+                <h5>` + it.client_name + `'s order</h5>
+              </div>
+              <h5 class="card-title"></h5>
+              <h6 class="card-subtitle mb-2 text-muted">` + it.order_address + `</h6>`
           if (it.status_id == 4) {
-            var element = `
-            <div class="card orderCard mb-3" data-orderId="` + index + `">
-              <div class="card-body">
-                <div class="card-title">
-                  <h7 class="text-muted float-right">` + it.creation_timestamp + `</h7>
-                  <h5>` + it.client_name + `'s order</h5>
-                </div>
-                <h5 class="card-title"></h5>
-                <h6 class="card-subtitle mb-2 text-muted">` + it.order_address + `</h6>`
             $.each(it.products, function(index, orderedProduct) {
               element += `
               <div class="card-text">
@@ -196,15 +200,6 @@ $(function() {
             </div>`
             $("#ordersIncoming").prepend(element)
           } else if (it.status_id == 1) {
-            var element = `
-            <div class="card orderCard mb-3" data-orderId="` + index + `">
-              <div class="card-body">
-                <div class="card-title">
-                  <h7 class="text-muted float-right">` + it.creation_timestamp + `</h7>
-                  <h5>` + it.client_name + `'s order</h5>
-                </div>
-                <h5 class="card-title"></h5>
-                <h6 class="card-subtitle mb-2 text-muted">` + it.order_address + `</h6>`
             $.each(it.products, function(index, orderedProduct) {
               element += `
               <div class="card-text">
@@ -236,15 +231,6 @@ $(function() {
             </div>`
             $("#ordersAccepted").prepend(element)
           } else {
-            var element = `
-            <div class="card orderCard mb-3" data-orderId="` + index + `">
-              <div class="card-body">
-                <div class="card-title">
-                  <h7 class="text-muted float-right">` + it.creation_timestamp + `</h7>
-                  <h5>` + it.client_name + `'s order</h5>
-                </div>
-                <h5 class="card-title"></h5>
-                <h6 class="card-subtitle mb-2 text-muted">` + it.order_address + `</h6>`
             $.each(it.products, function(index, orderedProduct) {
               element += `
               <div class="card-text">
