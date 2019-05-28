@@ -19,65 +19,40 @@
   <div class="container mt-4 mb-4">
     <h3 class="pb-2">Order list</h3>
     <div class="container accordion mt-4 mb-4" id="mainAccordion">
-    <div class="card main-card">
-      <h1 class="mb-0">
-        <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseIncomingOrders" aria-expanded="true" aria-controls="collapseIncomingOrders">
-          Incoming Orders
-        </button>
-      </h1>
-      <div id="collapseIncomingOrders" class="collapse show" aria-labelledby="headingIncomingOrders" data-parent="#mainAccordion">
-        <div class="card-body" id="ordersIncoming">
-          <!-- <div class="card orderCard" data-orderId="5">
-            <div class="card-body">
-              <h5 class="card-title">Bob's order</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Order address</h6>
-              <div class="card-text">
-                <div class="border p-2">
-                  <div class="row">
-                    <label class="col-sm-2 col-form-label border-right">Product</label>
-                    <label class="col col-form-label">Product name</label>
-                  </div>
-                  <div class="row">
-                    <label class="col-sm-2 col-form-label border-right">Quantity</label>
-                    <label class="col col-form-label">2</label>
-                  </div>
-                  <div class="row">
-                    <label class="col-sm-2 col-form-label border-right">Notes</label>
-                    <label class="col col-form-label">Notes 1 Blabla blabla</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> -->
+      <div class="card main-card">
+        <h1 class="mb-0">
+          <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseIncomingOrders" aria-expanded="true" aria-controls="collapseIncomingOrders">
+            Incoming Orders
+          </button>
+        </h1>
+        <div id="collapseIncomingOrders" class="collapse show" aria-labelledby="headingIncomingOrders" data-parent="#mainAccordion">
+          <div class="card-body" id="ordersIncoming"></div>
+        </div>
+      <div class="card main-card">
+        <h1 class="mb-0">
+          <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapsePreparedOrders" aria-expanded="false" aria-controls="collapsePreparedOrders">
+            Accepted Orders
+          </button>
+        </h1>
+        <div id="collapsePreparedOrders" class="collapse" aria-labelledby="headingPreparedOrders" data-parent="#mainAccordion">
+          <div class="card-body" id="ordersAccepted"></div>
         </div>
       </div>
-    <div class="card main-card">
-      <h1 class="mb-0">
-        <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapsePreparedOrders" aria-expanded="false" aria-controls="collapsePreparedOrders">
-          Prepared Orders
-        </button>
-      </h1>
-      <div id="collapsePreparedOrders" class="collapse" aria-labelledby="headingPreparedOrders" data-parent="#mainAccordion">
-        <div class="card-body" id="ordersAccepted">
+      <div class="card main-card">
+        <h1 class="mb-0">
+          <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseCompletedOrders" aria-expanded="false" aria-controls="collapseCompletedOrders">
+            Completed Orders
+          </button>
+        </h1>
+        <div id="collapseCompletedOrders" class="collapse" aria-labelledby="headingCompletedOrders" data-parent="#mainAccordion">
+          <div class="card-body" id="ordersCompleted"></div>
         </div>
       </div>
     </div>
-    <div class="card main-card">
-      <h1 class="mb-0">
-        <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseCompletedOrders" aria-expanded="false" aria-controls="collapseCompletedOrders">
-          Completed Orders
-        </button>
-      </h1>
-      <div id="collapseCompletedOrders" class="collapse" aria-labelledby="headingCompletedOrders" data-parent="#mainAccordion">
-        <div class="card-body" id="ordersCompleted">
-        </div>
-      </div>
-    </div>
-  </div>
   </div>
 </div>
 
-  <?php include("fragments/footer.php"); ?>
+<?php include("fragments/footer.php"); ?>
 </body>
 <script type="text/javascript">
 <?php
@@ -159,11 +134,11 @@ $(function() {
         // put each order in its section
         $.each(allOrders, function(index, it) {
           var element = `
-          <div class="card orderCard mb-3" data-orderId="` + index + `">
+          <div class="card orderCard mb-3" data-orderId="` + it.order_id + `">
             <div class="card-body">
               <div class="card-title">
                 <h7 class="text-muted float-right">` + it.creation_timestamp + `</h7>
-                <h5>` + it.client_name + `'s order</h5>
+                <h5>` + (it.status_id != 2 ? it.client_name + `'s order` : `<strike>` + it.client_name + `'s order</strike>`) + `</h5>
               </div>
               <h5 class="card-title"></h5>
               <h6 class="card-subtitle mb-2 text-muted">` + it.order_address + `</h6>`
@@ -193,8 +168,8 @@ $(function() {
             })
             element += `
                 <div class="btn-group btn-group-justified pt-2">
-                  <a href="#" class="btn btn-primary inline">Accept</a>
-                  <a href="#" class="btn btn-primary inline">Reject</a>
+                  <button class="btn btn-primary inline btnAccept" onclick="btnAcceptClick(this)">Accept</button>
+                  <button class="btn btn-primary inline btnReject" onclick="btnRejectClick(this)">Reject</button>
                 </div>
               </div>
             </div>`
@@ -225,7 +200,7 @@ $(function() {
             })
             element += `
                 <div class="btn-group btn-group-justified pt-2">
-                  <a href="#" class="btn btn-primary inline">Complete</a>
+                  <button class="btn btn-primary inline" onclick="btnCompleteClick(this)">Complete</button>
                 </div>
               </div>
             </div>`
@@ -266,6 +241,72 @@ $(function() {
 
   // fetchAwaitingOrders()
 })
+
+function btnAcceptClick(e) {
+  var orderId = $(e).parent().parent().parent().data('orderid')
+  $.post("ajax/change_order_state.php", {
+    order_id: orderId,
+    new_state: 1
+  }).done(function(result) {
+    if (result === "SUCCESS") {
+      var buttonBar = $(e).parent()
+      var orderCard = buttonBar.parent().parent()
+      orderCard.slideUp(400, function() {
+        orderCard.detach().appendTo("#ordersAccepted")
+        buttonBar.children().remove()
+        buttonBar.append('<button class="btn btn-primary inline" onclick="btnCompleteClick(this)">Complete</button>')
+        orderCard.show()
+      })
+    } else {
+      console.log(result)
+    }
+  })
+}
+
+function btnRejectClick(e) {
+  var orderId = $(e).parent().parent().parent().data('orderid')
+  $.post("ajax/change_order_state.php", {
+    order_id: orderId,
+    new_state: 2
+  }).done(function(result) {
+    if (result === "SUCCESS") {
+      var buttonBar = $(e).parent()
+      var orderCard = buttonBar.parent().parent()
+      orderCard.slideUp(400, function() {
+        orderCard.detach().appendTo("#ordersCompleted")
+        buttonBar.children().remove()
+        buttonBar.append('<button class="btn btn-primary inline" onclick="btnCompleteClick(this)">Complete</button>')
+        orderCard.show()
+        var cardTitle = orderCard.find(".card-title h5")
+        cardTitle.html("<strike>" + cardTitle.text() + "</strike>")
+      })
+    } else {
+      console.log(result)
+    }
+  })
+}
+
+function btnCompleteClick(e) {
+  var orderId = $(e).parent().parent().parent().data('orderid')
+  $.post("ajax/change_order_state.php", {
+    order_id: orderId,
+    new_state: 3
+  }).done(function(result) {
+    if (result === "SUCCESS") {
+      var buttonBar = $(e).parent()
+      var orderCard = buttonBar.parent().parent()
+      orderCard.slideUp(400, function() {
+        orderCard.detach().appendTo("#ordersCompleted")
+        buttonBar.children().remove()
+        buttonBar.append('<button class="btn btn-primary inline" onclick="btnCompleteClick(this)">Complete</button>')
+        orderCard.show()
+      })
+    } else {
+      console.log(result)
+    }
+  })
+}
+
 </script>
 <?php include("fragments/connection-end.php"); ?>
 </html>
