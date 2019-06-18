@@ -30,27 +30,25 @@
     </div>
   </div>
 
-  <div class="container pt-5">
-    <form class="form-signin">
-      <fieldset>
-        <legend class="form-signin-heading">Login</legend>
-        <label for="logEmail" class="sr-only">Email:</label>
-        <input type="email" class="form-control" autocomplete="on" placeholder="Email.." required autofocus id="loginEmail"/>
-        <label for="logPassword" class="sr-only">Password:</label>
-        <input type="password" class="form-control" placeholder="Password.." required id="loginPassword"/>
-        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Login"/>
-      </fieldset>
-      <p class="text-muted small mt-1">Don't have an account? Sign in <a href="signup.php">here</a></p>
-      <div class="mt-3 d-none" id="alertDiv">
-        <div class="alert alert-success" role="alert">
-          Login successful. Redirecting shortly...
-        </div>
-        <div class="alert alert-danger" role="alert">
-
-        </div>
+  <form class="form-signin container pt-5">
+    <fieldset>
+      <legend class="form-signin-heading">Login</legend>
+      <label for="logEmail" class="sr-only">Email:</label>
+      <input type="email" class="form-control" autocomplete="on" placeholder="Email.." required autofocus id="loginEmail"/>
+      <label for="logPassword" class="sr-only">Password:</label>
+      <input type="password" class="form-control" placeholder="Password.." required id="loginPassword"/>
+      <input type="submit" class="btn btn-primary btn-lg btn-block" value="Login"/>
+    </fieldset>
+    <p class="text-muted small mt-1">Don't have an account? Sign in <a href="signup.php">here</a></p>
+    <div class="mt-3 d-none" id="alertDiv">
+      <div class="alert alert-success" role="alert">
+        Login successful. Redirecting shortly...
       </div>
-    </form>
-  </div>
+      <div class="alert alert-danger" role="alert">
+
+      </div>
+    </div>
+  </form>
 
   <?php include("fragments/footer.php"); ?>
 </body>
