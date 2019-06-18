@@ -30,30 +30,28 @@
     </div>
   </div>
 
-  <div class="container pt-5">
-    <form action="process_signup.php" method="post" name="signup_form" class="form-signin">
-      <fieldset>
-        <legend class="form-signin-heading">Signup</legend>
-        <label for="signEmail" class="sr-only">Email:</label>
-        <input type="email" class="form-control" name="email" autocomplete="on" placeholder="Email.." required id="signEmail" />
-        <label for="signPassword" class="sr-only">Password:</label>
-        <input type="password" class="form-control" name="password" placeholder="Password.." required id="signPassword" />
-        <label for="signConfirmPassword" class="sr-only">Confirm Password:</label>
-        <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm password.." required id="signConfirmPassword" />
-        <div class="form-check form-check-inline">
-          <label for="signClient" class="form-check-label">
-            <input type="radio" class="form-check-input" name="userType" value="client" checked id="signClient" />Client
-          </label>
-        </div>
-        <div class="form-check form-check-inline">
-          <label for="signProvider" class="form-check-label">
-            <input type="radio" class="form-check-input" name="userType" value="provider" id="signProvider" />Provider
-          </label>
-        </div>
-        <input type="button" class="btn btn-primary btn-lg btn-block" value="Signup" onclick="" />
-      </fieldset>
-    </form>
-  </div>
+  <form action="process_signup.php" method="post" name="signup_form" class="form-signin container pt-5">
+    <fieldset>
+      <legend class="form-signin-heading">Signup</legend>
+      <label for="signEmail" class="sr-only">Email:</label>
+      <input type="email" class="form-control" name="email" autocomplete="on" placeholder="Email.." required id="signEmail" />
+      <label for="signPassword" class="sr-only">Password:</label>
+      <input type="password" class="form-control" name="password" placeholder="Password.." required id="signPassword" />
+      <label for="signConfirmPassword" class="sr-only">Confirm Password:</label>
+      <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm password.." required id="signConfirmPassword" />
+      <div class="form-check form-check-inline">
+        <label for="signClient" class="form-check-label">
+          <input type="radio" class="form-check-input" name="userType" value="client" checked id="signClient" />Client
+        </label>
+      </div>
+      <div class="form-check form-check-inline">
+        <label for="signProvider" class="form-check-label">
+          <input type="radio" class="form-check-input" name="userType" value="provider" id="signProvider" />Provider
+        </label>
+      </div>
+      <input type="button" class="btn btn-primary btn-lg btn-block" value="Signup" onclick="" />
+    </fieldset>
+  </form>
 
   <?php include("fragments/footer.php"); ?>
 </body>
