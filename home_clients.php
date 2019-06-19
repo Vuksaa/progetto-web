@@ -24,9 +24,9 @@
         </h1>
         <div id="collapseFavouriteRestaurants" class="collapse show" aria-labelledby="headingFavouriteRestaurants" data-parent="#mainAccordion">
           <div class="card-body">
-            <form class="form-inline card-searchbar">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            </form>
+            <div class="card-searchbar col-5">
+              <input class="form-control mr-sm-2" id="searchFavourites" type="search" placeholder="Search" aria-label="Search Favourites">
+            </div>
             <div class="row" id="favouriteProviders">
               <?php
                 if ($favProviders = $conn->query(
@@ -89,9 +89,9 @@
         </h1>
         <div id="collapseAllRestaurants" class="collapse" aria-labelledby="headingRestaurants" data-parent="#mainAccordion">
           <div class="card-body">
-            <form class="form-inline card-searchbar">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            </form>
+            <div class="card-searchbar col-5">
+              <input class="form-control mr-sm-2" id="searchListed" type="search" placeholder="Search" aria-label="Search Listed">
+            </div>
             <div class="row" id="listedProviders">
               <?php
                 // TODO: use one query and separate favourite and non-favourite restaurants in php?
@@ -180,6 +180,44 @@
 
 <script type="text/javascript">
 $(function() {
+  $("#searchFavourites").on('keyup', function(e) {
+    var inputed = $(this).val().toLowerCase()
+    var items = $(".favouriteProvider")
+    // show all listed product if the searchbar is blank
+    if (inputed == "") {
+      items.show()
+      return
+    }
+    $.each(items, function() {
+      var providerName = $(this).find(".card-title").text().toLowerCase()
+      // true if the text inputed in the searchbar is not contained in the product's name
+      if (providerName.indexOf(inputed) == -1) {
+        $(this).hide()
+      } else {
+        $(this).show()
+      }
+    })
+  })
+  $("#searchListed").on('keyup', function(e) {
+    var inputed = $(this).val().toLowerCase()
+    var items = $(".listedProvider")
+    // show all listed product if the searchbar is blank
+    if (inputed == "") {
+      items.show()
+      return
+    }
+    $.each(items, function() {
+      var providerName = $(this).find(".card-title").text().toLowerCase()
+      // true if the text inputed in the searchbar is not contained in the product's name
+      if (providerName.indexOf(inputed) == -1) {
+        $(this).hide()
+      } else {
+        $(this).show()
+      }
+    })
+  })
+
+
   $(".btn-place-order").click(function() {
     window.location.href = "place_order.php?provider=" + $(this).parent().parent().parent().data("provider-id")
   })
@@ -204,6 +242,9 @@ $(function() {
         providerCard.fadeOut(250, function() {
           providerCard.detach().appendTo("#favouriteProviders")
           providerCard.show()
+          // if (providerCard.find(".card-title").text().toLowerCase().indexOf($("#favouriteProviders").val().toLowerCase()) == -1) {
+          //   providerCard.show()
+          // }
         })
       }
     })
@@ -220,6 +261,9 @@ $(function() {
         providerCard.fadeOut(250, function() {
           providerCard.detach().appendTo("#listedProviders")
           providerCard.show()
+          // if (providerCard.find(".card-title").text().toLowerCase().indexOf($("#listedProviders").val().toLowerCase()) == -1) {
+          //   providerCard.show()
+          // }
         })
       }
     })
