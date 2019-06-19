@@ -15,18 +15,7 @@
 
 <body>
   <?php
-  if(isset($_POST['btnClientAllergenAdd'])){
-      if(!($statement=$conn->prepare("CALL client_allergen_add(?,?)"))){
-        echo "Prepare failed.";
-      }
-      if(!($statement->bind_param('ii',$_SESSION['user_id'],$_POST['selectAllergenId']))) {
-        echo "Bind failed.";
-      }
-      if(!($statement->execute())){
-        echo "Execution failed: ".$statement->error;
-      }
-      $statement->close();
-    } else if(isset($_POST['btnClientAllergenRemove'])){
+  if(isset($_POST['btnClientAllergenRemove'])){
       if(!($statement=$conn->prepare("CALL client_allergen_remove(?,?)"))){
         echo "Prepare failed.";
       }
@@ -65,90 +54,56 @@
 
   <nav class="sticky-top">
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-      <a class="nav-item nav-link active" id="nav-general-tab" data-toggle="tab" href="#nav-general" role="tab" aria-controls="nav-general" aria-selected="true">General</a>
-      <a class="nav-item nav-link" id="nav-allergen-tab" data-toggle="tab" href="#nav-allergen" role="tab" aria-controls="nav-profile" aria-selected="false">Allergens</a>
+      <a class="nav-item nav-link active" id="nav-allergen-tab" data-toggle="tab" href="#nav-allergen" role="tab" aria-controls="nav-profile" aria-selected="false">Allergens</a>
       <a class="nav-item nav-link" id="nav-address-tab" data-toggle="tab" href="#nav-address" role="tab" aria-controls="nav-profile" aria-selected="false">Addresses</a>
     </div>
   </nav>
   <div class="tab-content" id="nav-tabContent">
-    <div class="tab-pane fade show active" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab">
-    </div>
-    <div class="tab-pane fade" id="nav-allergen" role="tabpanel" aria-labelledby="nav-allergen-tab">
-      <div class="container">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Allergen</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">Add Allergen</th>
-              <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="allergen_add_form">
-                <fieldset>
-                  <?php echo "<input type='number' name='clientId' value='".$_SESSION['user_id']."' hidden>" ; ?>
-                  <td>
-                    <label for="selectAllergenId" class="sr-only">Select Allergen ID</label>
-                    <select class="form-control" name="selectAllergenId" id="selectAllergenId">
-                      <?php
-                        $query = $conn->query("SELECT * FROM allergen");
-                        while ($row = mysqli_fetch_array($query)){
-                          $id=$row['allergen_id'];
-                          $name=$row['allergen_name'];
-                          echo "<option value='".$id."'>".$name."</option>" ;
-                        }
-                      ?>
-                    </select>
-                  </td>
-                  <td>
-                    <button type="submit" name="btnClientAllergenAdd" class="btn btn-primary btn-lg btn-block" value="clientAllergenAdd">
-                      Add
-                    </button>
-                  </td>
-                </fieldset>
-              </form>
-            </tr>
+    <div class="tab-pane fade show active" id="nav-allergen" role="tabpanel" aria-labelledby="nav-allergen-tab">
+      <div class="container pt-3">
+        <div class="form-group row pb-2">
+          <label for="selectAllergenId" class="sr-only">Select Allergen</label>
+          <select class="form-control col-3 m-2" name="selectAllergenId" id="selectedAllergenId">
             <?php
-            if(!($statement=$conn->prepare("SELECT a.allergen_id,a.allergen_name
-                                    FROM allergen a JOIN client_allergen ca
-                                    ON a.allergen_id=ca.allergen_id
-                                    WHERE ca.client_id=?"))) {
-              echo "Prepare failed.";
-            }
-            if(!($statement->bind_param('i',$_SESSION['user_id']))) {
-              echo "Bind failed";
-            }
-            if(!($statement->execute()))  {
-              echo "Execute failed.";
-            }
-            $statement->store_result();
-            $allergenName="";
-            $allergenId=0;
-            $statement->bind_result($allergenId,$allergenName);
-            $i=1;
-            while ($statement->fetch()):
+              $query = $conn->query("SELECT * FROM allergen");
+              while ($row = mysqli_fetch_array($query)){
+                $id=$row['allergen_id'];
+                $name=$row['allergen_name'];
+                echo "<option data-allergenId='".$id."' data-allergenName='".$name."'>".$name."</option>" ;
+              }
             ?>
-            <tr>
-              <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="allergen_remove_form">
-                <th scope="row"><?php echo $i++;?></th>
-                <?php
-                  echo "<input type='number' name='allergenId' value='".$allergenId."' hidden>" ;
-                  ?>
-                <td><?php echo $allergenName;?></td>
-                <td>
-                  <button name="btnClientAllergenRemove" type="submit" class="btn btn-primary" value"clientAllergenRemove">
-                    Remove
-                  </button>
-                </td>
-              </form>
-            </tr>
-            <?php
-              endwhile;
-              $statement->close();
-            ?>
-          </tbody>
-        </table>
+          </select>
+          <button type="submit" id="btnAddAllergen" class="btn btn-primary col-2 m-2" value="clientAllergenAdd">
+            Add
+          </button>
+        </div>
+        <ul class="list-group" id="allergensList">
+          <?php
+          if(!($statement=$conn->prepare("SELECT a.allergen_id,a.allergen_name
+                                  FROM allergen a JOIN client_allergen ca
+                                  ON a.allergen_id=ca.allergen_id
+                                  WHERE ca.client_id=?"))) {
+            echo "Prepare failed.";
+          }
+          if(!($statement->bind_param('i',$_SESSION['user_id']))) {
+            echo "Bind failed";
+          }
+          if(!($statement->execute()))  {
+            echo "Execute failed.";
+          }
+          $statement->store_result();
+          $allergenName="";
+          $allergenId=0;
+          $statement->bind_result($allergenId,$allergenName);
+          $i=1;
+          while ($statement->fetch()):
+          ?>
+          <button type="button" class="list-group-item list-group-item-action col-5 m-0" data-allergenId="<?php echo $allergenId ?>"><?php echo $allergenName;?></button>
+          <?php
+            endwhile;
+            $statement->close();
+          ?>
+        </ul>
       </div>
     </div>
     <div class="tab-pane fade" id="nav-address" role="tabpanel" aria-labelledby="nav-address-tab">
@@ -176,7 +131,7 @@
                     <input type="text" class="form-control" name="addressInfo" autocomplete="on" placeholder="Address Info.." required autofocus id="addressInfo" />
                   </td>
                   <td>
-                    <button type="submit" name="btnClientAddressAdd" class="btn btn-primary btn-lg btn-block" value="clientAddressAdd">
+                    <button type="submit" name="btnClientAddressAdd" class="btn btn-primary btn-block" value="clientAddressAdd">
                       Add
                     </button>
                   </td>
@@ -211,7 +166,7 @@
                 <td><?php echo $addressName;?></td>
                 <td><?php echo $addressInfo;?></td>
                 <td>
-                  <button name="btnClientAddressRemove" type="submit" class="btn btn-primary" value"clientAddressRemove">
+                  <button name="btnClientAddressRemove" type="submit" class="btn btn-primary btn-block" value"clientAddressRemove">
                     Remove
                   </button>
                 </td>
@@ -236,6 +191,19 @@ $(function() {
   var parent = element.parent();
   element.append( "<span class='sr-only'>(current)</span>" );
   parent.addClass("active");
+
+  $("#btnAddAllergen").on('click', function(e) {
+    var allergen = $("#selectedAllergenId :selected")
+    var allergenId = $(allergen).data("allergenid")
+    var allergenName = $(allergen).data("allergenname")
+    $.post("ajax/add_allergen.php", {
+      allergen: allergenId
+    }).done(function(response) {
+      if (response == "OK") {
+        $("#allergensList").append('<button type="button" class="list-group-item list-group-item-action col-5 m-0" data-allergenId="' + allergenId + '">' + allergenName + '</button>')
+      }
+    })
+  })
 })
 </script>
 <?php include("fragments/connection-end.php"); ?>
