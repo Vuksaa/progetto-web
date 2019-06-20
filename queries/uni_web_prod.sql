@@ -30,7 +30,7 @@ CREATE TABLE `address` (
   PRIMARY KEY (`address_id`),
   KEY `client_id_idx` (`client_id`),
   CONSTRAINT `client_id` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -141,7 +141,7 @@ CREATE TABLE `client_allergen` (
 
 LOCK TABLES `client_allergen` WRITE;
 /*!40000 ALTER TABLE `client_allergen` DISABLE KEYS */;
-INSERT INTO `client_allergen` VALUES (10,9);
+INSERT INTO `client_allergen` VALUES (10,1),(10,9),(10,13),(10,14),(10,16),(10,17);
 /*!40000 ALTER TABLE `client_allergen` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -168,7 +168,7 @@ CREATE TABLE `client_order` (
 
 LOCK TABLES `client_order` WRITE;
 /*!40000 ALTER TABLE `client_order` DISABLE KEYS */;
-INSERT INTO `client_order` VALUES (10,5),(10,6),(10,7),(10,8),(10,9);
+INSERT INTO `client_order` VALUES (10,5),(10,6),(10,8),(10,9),(10,10),(10,11),(10,12),(10,13),(10,14),(10,15),(10,16),(10,17),(10,18),(10,19),(10,20),(10,21),(10,22);
 /*!40000 ALTER TABLE `client_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -195,7 +195,7 @@ CREATE TABLE `client_provider` (
 
 LOCK TABLES `client_provider` WRITE;
 /*!40000 ALTER TABLE `client_provider` DISABLE KEYS */;
-INSERT INTO `client_provider` VALUES (1,3),(1,5),(2,5),(3,1),(3,2),(4,5),(4,7),(5,1),(5,8),(6,3),(6,7),(7,2),(7,5),(7,6),(7,7),(8,2),(10,1),(10,3),(10,4),(10,5),(10,6),(10,8);
+INSERT INTO `client_provider` VALUES (1,3),(1,5),(2,5),(3,1),(3,2),(4,5),(4,7),(5,1),(5,8),(6,3),(6,7),(7,2),(7,5),(7,6),(7,7),(8,2),(10,3),(10,5),(10,7),(10,8);
 /*!40000 ALTER TABLE `client_provider` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -255,7 +255,7 @@ CREATE TABLE `order` (
   PRIMARY KEY (`order_id`),
   KEY `status_id_idx` (`status_id`),
   CONSTRAINT `status_id` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -264,7 +264,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (5,'Via Romeo Galli 50',4,'2019-05-24 12:19:46'),(6,'Via Domenico Martoni 21',4,'2019-05-24 12:22:48'),(7,'Via Campo di Marte, 50',4,'2019-05-23 11:19:21'),(8,'Via Domenico Martoni 21',4,'2019-05-25 12:21:25'),(9,'Corso della Repubblica 3',4,'2019-05-25 12:22:17');
+INSERT INTO `order` VALUES (5,'Via Romeo Galli 50',2,'2019-05-24 12:19:46'),(6,'Via Domenico Martoni 21',1,'2019-05-24 12:22:48'),(8,'Via Domenico Martoni 21',3,'2019-05-25 12:21:25'),(9,'Corso della Repubblica 3',4,'2019-05-25 12:22:17'),(10,'Via Romeo Galli 50',4,'2019-06-18 16:48:42'),(11,'Via Romeo Galli 50',4,'2019-06-18 16:53:36'),(12,'Via Romeo Galli 50',4,'2019-06-18 16:54:26'),(13,'Via Romeo Galli 50',4,'2019-06-18 16:54:26'),(14,'Via Romeo Galli 50',4,'2019-06-18 16:54:26'),(15,'Via Romeo Galli 50',4,'2019-06-18 16:54:27'),(16,'Via Romeo Galli 50',4,'2019-06-18 16:56:03'),(17,'Via Romeo Galli 50',4,'2019-06-18 17:03:31'),(18,'Via Romeo Galli 50',4,'2019-06-18 17:04:18'),(19,'Via Romeo Galli 50',4,'2019-06-18 17:04:38'),(20,'Via Romeo Galli 50',4,'2019-06-18 17:04:47'),(21,'Via Romeo Galli 50',4,'2019-06-18 17:04:58'),(22,'Via Domenico Martoni 21',4,'2019-06-18 17:05:27');
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -365,7 +365,7 @@ CREATE TABLE `product_order` (
 
 LOCK TABLES `product_order` WRITE;
 /*!40000 ALTER TABLE `product_order` DISABLE KEYS */;
-INSERT INTO `product_order` VALUES (42,5,'23141234',5),(43,5,'CRUDO',2),(44,6,'SPAGHETTIIIIII',2),(46,7,'aiofdjasfdasdf',1),(46,9,'',1),(47,8,'wow',3),(48,9,'caffÃ¨',2);
+INSERT INTO `product_order` VALUES (2,10,'',1),(2,11,'',1),(2,12,'',1),(2,13,'',1),(2,14,'',1),(2,15,'',1),(42,5,'23141234',5),(42,16,'',1),(42,17,'',1),(42,18,'',1),(42,19,'',1),(42,20,'',1),(43,5,'CRUDO',2),(43,21,'',1),(43,22,'',1),(44,6,'SPAGHETTIIIIII',2),(45,22,'',1),(46,9,'',1),(47,8,'wow',3),(48,9,'caffÃ¨',2);
 /*!40000 ALTER TABLE `product_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -383,6 +383,8 @@ CREATE TABLE `provider` (
   `provider_email` varchar(45) NOT NULL,
   `provider_password` varchar(45) NOT NULL,
   `type_id` int(11) NOT NULL,
+  `opening_hours` time NOT NULL,
+  `closing_hours` time NOT NULL,
   PRIMARY KEY (`provider_id`),
   KEY `type_id_idx` (`type_id`),
   CONSTRAINT `type_id` FOREIGN KEY (`type_id`) REFERENCES `type` (`type_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -395,7 +397,7 @@ CREATE TABLE `provider` (
 
 LOCK TABLES `provider` WRITE;
 /*!40000 ALTER TABLE `provider` DISABLE KEYS */;
-INSERT INTO `provider` VALUES (1,'America Graffiti','Via Costanzo II, 11','americagraffiti@gmail.com','americagraffiti',1),(2,'Conad','Via Silvio Corbari, 21','conad@gmail.com','conad',2),(3,'Rosticceria Cinese \"Oriente\" di Liu','Viale Domenico Bolognesi, 170','oriente@gmail.com','oriente',1),(4,'Bio Burg','Via Domenico Martoni, 44','bioburg@gmail.com','bioburg',1),(5,'Piadineria \"Da Nino\"','Piazzale Atleti Azzurri d\'Italia, 1','danino@gmail.com','danino',1),(6,'Osteria \"Casa di mare\"','Via Theodoli, 6','casadimare@gmail.com','casadimare',1),(7,'Bistro\' Verdepaglia Forli','Corso Armando Diaz, 14','verdepaglia@gmail.com','verdepaglia',1),(8,'Lidl','Via A. Ciani, 1','lidl@gmail.com','lidl',2),(9,'2','Corso della Repubblica, 15','2@2.2','2',2);
+INSERT INTO `provider` VALUES (1,'America Graffiti','Via Costanzo II, 11','americagraffiti@gmail.com','americagraffiti',1,'00:00:00','00:00:00'),(2,'Conad','Via Silvio Corbari, 21','conad@gmail.com','conad',2,'00:00:00','00:00:00'),(3,'Rosticceria Cinese \"Oriente\" di Liu','Viale Domenico Bolognesi, 170','oriente@gmail.com','oriente',1,'00:00:00','00:00:00'),(4,'Bio Burg','Via Domenico Martoni, 44','bioburg@gmail.com','bioburg',1,'00:00:00','00:00:00'),(5,'Piadineria \"Da Nino\"','Piazzale Atleti Azzurri d\'Italia, 1','danino@gmail.com','danino',1,'00:00:00','00:00:00'),(6,'Osteria \"Casa di mare\"','Via Theodoli, 6','casadimare@gmail.com','casadimare',1,'00:00:00','00:00:00'),(7,'Bistro\' Verdepaglia Forli','Corso Armando Diaz, 14','verdepaglia@gmail.com','verdepaglia',1,'00:00:00','00:00:00'),(8,'Lidl','Via A. Ciani, 1','lidl@gmail.com','lidl',2,'00:00:00','00:00:00'),(9,'2','Corso della Repubblica, 15','2@2.2','2',2,'00:00:00','00:00:00');
 /*!40000 ALTER TABLE `provider` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -521,4 +523,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-25 17:26:12
+-- Dump completed on 2019-06-20 18:16:22
