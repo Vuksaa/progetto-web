@@ -15,76 +15,38 @@
 
 <body>
   <?php
-  if(isset($_POST['btnClientAllergenRemove'])){
-      if(!($statement=$conn->prepare("CALL client_allergen_remove(?,?)"))){
-        echo "Prepare failed.";
-      }
-      if(!($statement->bind_param('ii',$_SESSION['user_id'],$_POST['allergenId']))) {
-        echo "Bind failed.";
-      }
-      if(!($statement->execute())){
-        echo "Execution failed: ".$statement->error;
-      }
-      $statement->close();
-    } else if(isset($_POST['btnClientAddressAdd'])){
-        if(!($statement=$conn->prepare("CALL address_add(?,?,?)"))){
-          echo "Prepare failed.";
-        }
-        if(!($statement->bind_param('ssi',$_POST['addressName'],$_POST['addressInfo'],$_SESSION['user_id']))) {
-          echo "Bind failed.";
-        }
-        if(!($statement->execute())){
-          echo "Execution failed: ".$statement->error;
-        }
-        $statement->close();
-      } else if(isset($_POST['btnClientAddressRemove'])){
-        if(!($statement=$conn->prepare("CALL address_remove(?)"))){
-          echo "Prepare failed.";
-        }
-        if(!($statement->bind_param('i',$_POST['addressId']))) {
-          echo "Bind failed.";
-        }
-        if(!($statement->execute())){
-          echo "Execution failed: ".$statement->error;
-        }
-        $statement->close();
-      }
-
-
-
-
-      // create objects for allergens and addresses here to make the html cleaner
-      if(!($allergens=$conn->prepare("SELECT a.allergen_id,a.allergen_name
-                              FROM allergen a JOIN client_allergen ca
-                              ON a.allergen_id=ca.allergen_id
-                              WHERE ca.client_id=?"))) {
-        echo "Prepare failed.";
-      }
-      if(!($allergens->bind_param('i',$_SESSION['user_id']))) {
-        echo "Bind failed";
-      }
-      if(!($allergens->execute()))  {
-        echo "Execute failed.";
-      }
-      $allergens->store_result();
-      $allergenName="";
-      $allergenId=0;
-      $allergens->bind_result($allergenId,$allergenName);
-      if(!($addresses=$conn->prepare("SELECT a.address_id,a.address_name,a.address_info
-                              FROM address a WHERE a.client_id=?"))) {
-        echo "Prepare failed.";
-      }
-      if(!($addresses->bind_param('i',$_SESSION['user_id']))) {
-        echo "Bind failed";
-      }
-      if(!($addresses->execute()))  {
-        echo "Execute failed.";
-      }
-      $addresses->store_result();
-      $addressId=0;
-      $addressName="";
-      $addressInfo="";
-      $addresses->bind_result($addressId,$addressName,$addressInfo);
+    // create objects for allergens and addresses here to make the html cleaner
+    if(!($allergens=$conn->prepare("SELECT a.allergen_id,a.allergen_name
+                            FROM allergen a JOIN client_allergen ca
+                            ON a.allergen_id=ca.allergen_id
+                            WHERE ca.client_id=?"))) {
+      echo "Prepare failed.";
+    }
+    if(!($allergens->bind_param('i',$_SESSION['user_id']))) {
+      echo "Bind failed";
+    }
+    if(!($allergens->execute()))  {
+      echo "Execute failed.";
+    }
+    $allergens->store_result();
+    $allergenName="";
+    $allergenId=0;
+    $allergens->bind_result($allergenId,$allergenName);
+    if(!($addresses=$conn->prepare("SELECT a.address_id,a.address_name,a.address_info
+                            FROM address a WHERE a.client_id=?"))) {
+      echo "Prepare failed.";
+    }
+    if(!($addresses->bind_param('i',$_SESSION['user_id']))) {
+      echo "Bind failed";
+    }
+    if(!($addresses->execute()))  {
+      echo "Execute failed.";
+    }
+    $addresses->store_result();
+    $addressId=0;
+    $addressName="";
+    $addressInfo="";
+    $addresses->bind_result($addressId,$addressName,$addressInfo);
   ?>
   <?php include("fragments/navbar.php"); ?>
 
@@ -171,23 +133,56 @@ $(function() {
       allergen: allergenId
     }).done(function(response) {
       if (response.indexOf("ERROR") == -1) {
-        $("#allergens").append('<button type="button" class="btnRemoveAllergen list-group-item list-group-item-action col-3 m-0" data-allergenId="' + allergenId + '">' + allergenName + '</button>')
-      }
+        var newAllergen = '<button type="button" class="btnRemoveAllergen list-group-item list-group-item-action col-3 m-0" data-allergenId="' + allergenId + '">' + allergenName + '</button>'
+        $(newAllergen).appendTo("#allergens").on('click', removeAllergen)
+      } else console.log(response)
     })
   })
   $("#btnAddAddress").on('click', function(e) {
-    var addressName = $(this).parent().find("#addressName").val()
-    var addressInfo = $(this).parent().find("#addressInfo").val()
+    var addressName = $(this).parent().find("#addressName")
+    var addressInfo = $(this).parent().find("#addressInfo")
     $.post("ajax/add_address.php", {
-      name: addressName,
-      info: addressInfo
+      name: addressName.val(),
+      info: addressInfo.val()
     }).done(function(response) {
       if (response.indexOf("ERROR") == -1) {
-        $("#addresses").append('<button type="button" class="btnRemoveAddress list-group-item list-group-item-action col-5 m-0" data-addressid="' + response + '">' + addressName + ', ' + addressInfo + '</button>')
-      }
+        var newAddress = '<button type="button" class="btnRemoveAddress list-group-item list-group-item-action col-5 m-0" data-addressid="' + response + '">' + addressName.val() + ', ' + addressInfo.val() + '</button>'
+        $(newAddress).appendTo("#addresses").on('click', removeAddress)
+        $(addressName).val("")
+        $(addressInfo).val("")
+      } else console.log(response)
     })
   })
+  $(".btnRemoveAllergen").on('click', removeAllergen)
+  $(".btnRemoveAddress").on('click', removeAddress)
 })
+
+function removeAllergen() {
+  self = $(this)
+  $.post("ajax/remove_allergen.php", {
+    allergen: $(self).data("allergenid")
+  }).done(function(response) {
+    if (response.indexOf("ERROR") == -1) {
+      $(self).fadeOut(200, function() {
+        $(self).remove()
+      })
+    } else console.log(response)
+  })
+}
+
+function removeAddress() {
+  self = $(this)
+  $.post("ajax/remove_address.php", {
+    address: $(self).data("addressid")
+  }).always(function(response) {
+    if (response.indexOf("ERROR") == -1) {
+      $(self).fadeOut(200, function() {
+        $(self).remove()
+      })
+    } else console.log(response)
+  })
+}
+
 </script>
 <?php include("fragments/connection-end.php"); ?>
 </html>

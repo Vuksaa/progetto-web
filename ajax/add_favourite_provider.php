@@ -9,13 +9,13 @@ if ($statement=$conn->prepare("
       if($statement->execute()) {
         echo "SUCCESS";
       } else {
-        echo "Execution failed: ".$statement->error;
+        echo "ERROR: Execution failed: ".$statement->error;
       }
     } else {
-      echo "Bind failed.";
+      echo "ERROR: Bind failed.";
     }
 } else {
-  echo "Prepare statement failed.";
+  echo "ERROR: Prepare statement failed.";
 }
 $statement->close();
 include("../fragments/connection-end.php");

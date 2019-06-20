@@ -1,16 +1,16 @@
 <?php
 session_start();
 include("../fragments/connection-begin.php");
-if(!($statement=$conn->prepare("CALL address_add(?,?,?, @insertedAddressId)"))){
+if(!($statement=$conn->prepare("CALL address_remove(?)"))){
   echo "ERROR: Prepare failed.";
 }
-if(!($statement->bind_param('ssi',$_POST['name'],$_POST['info'],$_SESSION['user_id']))) {
+if(!($statement->bind_param('i',$_POST['address']))) {
   echo "ERROR: Bind failed.";
 }
 if(!($statement->execute())){
   echo "ERROR: Execution failed: ".$statement->error;
 }
-echo $statement->get_result()->fetch_assoc()['insertedAddressId'];
+echo "OK";
 $statement->close();
 include("../fragments/connection-end.php");
 ?>
