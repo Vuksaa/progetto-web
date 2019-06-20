@@ -29,7 +29,7 @@ CREATE OR REPLACE PROCEDURE category_remove (IN p_id INT(11))
     DELETE FROM category WHERE category.category_id = p_id;
   END;
 //
-CREATE OR REPLACE PROCEDURE client_add (IN p_email VARCHAR (45),IN p_password VARCHAR (45),IN p_name VARCHAR (45),IN p_surname VARCHAR (45))
+CREATE OR REPLACE PROCEDURE client_add (IN p_email VARCHAR (45),IN p_password VARCHAR (255),IN p_name VARCHAR (45),IN p_surname VARCHAR (45))
   BEGIN
     INSERT INTO client (client.client_email,client.client_password,client.client_name,client.client_surname) VALUES (p_email,p_password,p_name,p_surname);
   END;
@@ -128,7 +128,7 @@ CREATE OR REPLACE PROCEDURE product_order_remove (IN p_productId INT(11),p_order
     DELETE FROM product_order WHERE product_order.product_id = p_productId AND product_order.order_id= p_orderId;
   END;
 //
-CREATE OR REPLACE PROCEDURE provider_add (IN p_name VARCHAR (90),IN p_address VARCHAR (90),IN p_email VARCHAR (45),IN p_password VARCHAR (45),p_typeId INT(11))
+CREATE OR REPLACE PROCEDURE provider_add (IN p_name VARCHAR (90),IN p_address VARCHAR (90),IN p_email VARCHAR (45),IN p_password VARCHAR (255),p_typeId INT(11))
   BEGIN
     INSERT INTO provider (provider.provider_name,provider.provider_address,provider.provider_email,provider.provider_password,provider.type_id) VALUES (p_name,p_address,p_email,p_password,p_typeId);
   END;

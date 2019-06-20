@@ -101,7 +101,7 @@ DROP TABLE IF EXISTS `client`;
 CREATE TABLE `client` (
   `client_id` int(11) NOT NULL AUTO_INCREMENT,
   `client_email` varchar(45) NOT NULL,
-  `client_password` varchar(45) NOT NULL,
+  `client_password` varchar(255) NOT NULL,
   `client_name` varchar(45) NOT NULL,
   `client_surname` varchar(45) NOT NULL,
   PRIMARY KEY (`client_id`)
@@ -381,7 +381,7 @@ CREATE TABLE `provider` (
   `provider_name` varchar(90) NOT NULL,
   `provider_address` varchar(90) NOT NULL,
   `provider_email` varchar(45) NOT NULL,
-  `provider_password` varchar(45) NOT NULL,
+  `provider_password` varchar(255) NOT NULL,
   `type_id` int(11) NOT NULL,
   PRIMARY KEY (`provider_id`),
   KEY `type_id_idx` (`type_id`),

@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <form action="process_signup.php" method="post" name="signup_form" class="form-signin container pt-5">
+  <form action="ajax/signup_submitted.php" method="post" name="signup_form" class="form-signin container pt-5" accept-charset="UTF-8">
     <fieldset>
       <legend class="form-signin-heading">Signup</legend>
       <label for="signEmail" class="sr-only">Email:</label>
@@ -39,6 +39,16 @@
       <input type="password" class="form-control" name="password" placeholder="Password.." required id="signPassword" />
       <label for="signConfirmPassword" class="sr-only">Confirm Password:</label>
       <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm password.." required id="signConfirmPassword" />
+      <label for="signName" class="sr-only">Name:</label>
+      <input type="text" class="form-control" name="name" autocomplete="on" placeholder="client Name.." required id="signName" />
+      <label for="signSurname" class="sr-only">Surname:</label>
+      <input type="text" class="form-control" name="surname" autocomplete="on" placeholder="client Surname.." required id="signSurname" />
+      <label for="signPName" class="sr-only">PName:</label>
+      <input type="text" class="form-control" name="pname" autocomplete="on" placeholder="provider name.." required id="signPName" />
+      <label for="signPAddress" class="sr-only">PAddress:</label>
+      <input type="text" class="form-control" name="paddress" autocomplete="on" placeholder="provider address.." required id="signPAddress" />
+      <label for="signPType" class="sr-only">PType:</label>
+      <input type="number" class="form-control" name="typeId" autocomplete="on" placeholder="provider type id.." required id="signPType" />
       <div class="form-check form-check-inline">
         <label for="signClient" class="form-check-label">
           <input type="radio" class="form-check-input" name="userType" value="client" checked id="signClient" />Client
@@ -49,7 +59,9 @@
           <input type="radio" class="form-check-input" name="userType" value="provider" id="signProvider" />Provider
         </label>
       </div>
-      <input type="button" class="btn btn-primary btn-lg btn-block" value="Signup" onclick="" />
+      <button type="submit" class="btn btn-primary btn-lg btn-block" value="userSignup">
+        Signup
+      </button>
     </fieldset>
   </form>
 
