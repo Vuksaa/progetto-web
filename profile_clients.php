@@ -49,6 +49,42 @@
         }
         $statement->close();
       }
+
+
+
+
+      // create objects for allergens and addresses here to make the html cleaner
+      if(!($allergens=$conn->prepare("SELECT a.allergen_id,a.allergen_name
+                              FROM allergen a JOIN client_allergen ca
+                              ON a.allergen_id=ca.allergen_id
+                              WHERE ca.client_id=?"))) {
+        echo "Prepare failed.";
+      }
+      if(!($allergens->bind_param('i',$_SESSION['user_id']))) {
+        echo "Bind failed";
+      }
+      if(!($allergens->execute()))  {
+        echo "Execute failed.";
+      }
+      $allergens->store_result();
+      $allergenName="";
+      $allergenId=0;
+      $allergens->bind_result($allergenId,$allergenName);
+      if(!($addresses=$conn->prepare("SELECT a.address_id,a.address_name,a.address_info
+                              FROM address a WHERE a.client_id=?"))) {
+        echo "Prepare failed.";
+      }
+      if(!($addresses->bind_param('i',$_SESSION['user_id']))) {
+        echo "Bind failed";
+      }
+      if(!($addresses->execute()))  {
+        echo "Execute failed.";
+      }
+      $addresses->store_result();
+      $addressId=0;
+      $addressName="";
+      $addressInfo="";
+      $addresses->bind_result($addressId,$addressName,$addressInfo);
   ?>
   <?php include("fragments/navbar.php"); ?>
 
@@ -59,11 +95,12 @@
     </div>
   </nav>
   <div class="tab-content" id="nav-tabContent">
+
     <div class="tab-pane fade show active" id="nav-allergen" role="tabpanel" aria-labelledby="nav-allergen-tab">
       <div class="container pt-3">
-        <div class="form-group row pb-2">
+        <div class="form-group row p-3">
           <label for="selectAllergenId" class="sr-only">Select Allergen</label>
-          <select class="form-control col-3 m-2" name="selectAllergenId" id="selectedAllergenId">
+          <select class="form-control col-3" name="selectAllergenId" id="selectedAllergenId">
             <?php
               $query = $conn->query("SELECT * FROM allergen");
               while ($row = mysqli_fetch_array($query)){
@@ -73,111 +110,45 @@
               }
             ?>
           </select>
-          <button type="submit" id="btnAddAllergen" class="btn btn-primary col-2 m-2" value="clientAllergenAdd">
+          <button type="submit" id="btnAddAllergen" class="btn btn-primary col-1 ml-2" value="clientAllergenAdd">
             Add
           </button>
         </div>
-        <ul class="list-group" id="allergensList">
+        <ul class="list-group" id="allergens">
           <?php
-          if(!($statement=$conn->prepare("SELECT a.allergen_id,a.allergen_name
-                                  FROM allergen a JOIN client_allergen ca
-                                  ON a.allergen_id=ca.allergen_id
-                                  WHERE ca.client_id=?"))) {
-            echo "Prepare failed.";
-          }
-          if(!($statement->bind_param('i',$_SESSION['user_id']))) {
-            echo "Bind failed";
-          }
-          if(!($statement->execute()))  {
-            echo "Execute failed.";
-          }
-          $statement->store_result();
-          $allergenName="";
-          $allergenId=0;
-          $statement->bind_result($allergenId,$allergenName);
-          $i=1;
-          while ($statement->fetch()):
+            while ($allergens->fetch()):
           ?>
-          <button type="button" class="list-group-item list-group-item-action col-5 m-0" data-allergenId="<?php echo $allergenId ?>"><?php echo $allergenName;?></button>
+          <button type="button" class="btnRemoveAllergen list-group-item list-group-item-action col-3 m-0" data-allergenId="<?php echo $allergenId ?>"><?php echo $allergenName;?></button>
           <?php
             endwhile;
-            $statement->close();
+            $allergens->close();
           ?>
         </ul>
       </div>
     </div>
     <div class="tab-pane fade" id="nav-address" role="tabpanel" aria-labelledby="nav-address-tab">
-      <div class="container">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Address Name</th>
-              <th scope="col">Address info</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">Add Address</th>
-              <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="address_add_form">
-                <fieldset>
-                  <?php echo "<input type='number' name='clientId' value='".$_SESSION['user_id']."' hidden>" ; ?>
-                  <td>
-                    <label for="clientAddressName" class="sr-only">Address Name:</label>
-                    <input type="text" class="form-control" name="addressName" autocomplete="on" placeholder="Address Name.." required autofocus id="addressName" />
-                  </td>
-                  <td>
-                    <label for="clientAddressInfo" class="sr-only">Address Info:</label>
-                    <input type="text" class="form-control" name="addressInfo" autocomplete="on" placeholder="Address Info.." required autofocus id="addressInfo" />
-                  </td>
-                  <td>
-                    <button type="submit" name="btnClientAddressAdd" class="btn btn-primary btn-block" value="clientAddressAdd">
-                      Add
-                    </button>
-                  </td>
-                </fieldset>
-              </form>
-            </tr>
-            <?php
-            if(!($statement=$conn->prepare("SELECT a.address_id,a.address_name,a.address_info
-                                    FROM address a WHERE a.client_id=?"))) {
-              echo "Prepare failed.";
-            }
-            if(!($statement->bind_param('i',$_SESSION['user_id']))) {
-              echo "Bind failed";
-            }
-            if(!($statement->execute()))  {
-              echo "Execute failed.";
-            }
-            $statement->store_result();
-            $addressId=0;
-            $addressName="";
-            $addressInfo="";
-            $statement->bind_result($addressId,$addressName,$addressInfo);
-            $i=1;
-            while ($statement->fetch()):
-            ?>
-            <tr>
-              <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="address_remove_form">
-                <th scope="row"><?php echo $i++;?></th>
-                <?php
-                  echo "<input type='number' name='addressId' value='".$addressId."' hidden>" ;
-                ?>
-                <td><?php echo $addressName;?></td>
-                <td><?php echo $addressInfo;?></td>
-                <td>
-                  <button name="btnClientAddressRemove" type="submit" class="btn btn-primary btn-block" value"clientAddressRemove">
-                    Remove
-                  </button>
-                </td>
-              </form>
-            </tr>
-            <?php
-              endwhile;
-              $statement->close();
-            ?>
-          </tbody>
-        </table>
+      <div class="container pt-3">
+        <div class="form-group row p-3">
+          <label for="clientAddressName" class="sr-only">Address Name</label>
+          <input type="text" class="form-control col-2" name="addressName" autocomplete="on" placeholder="Address Name.." required autofocus id="addressName" />
+
+          <label for="clientAddressInfo" class="sr-only">Address Street Info</label>
+          <input type="text" class="form-control col-4 ml-2" name="addressInfo" autocomplete="on" placeholder="Address Street Info.." required autofocus id="addressInfo" />
+
+          <button type="submit" id="btnAddAddress" class="btn btn-primary col-1 ml-2" value="clientAddressAdd">
+            Add
+          </button>
+        </div>
+        <ul class="list-group" id="addresses">
+          <?php
+            while ($addresses->fetch()):
+          ?>
+          <button type="button" class="btnRemoveAddress list-group-item list-group-item-action col-5 m-0" data-addressid="<?php echo $addressId; ?>"><?php echo $addressName;?>, <?php echo $addressInfo;?></button>
+          <?php
+            endwhile;
+            $addresses->close();
+          ?>
+        </ul>
       </div>
     </div>
   </div>
@@ -199,8 +170,20 @@ $(function() {
     $.post("ajax/add_allergen.php", {
       allergen: allergenId
     }).done(function(response) {
-      if (response == "OK") {
-        $("#allergensList").append('<button type="button" class="list-group-item list-group-item-action col-5 m-0" data-allergenId="' + allergenId + '">' + allergenName + '</button>')
+      if (response.indexOf("ERROR") == -1) {
+        $("#allergens").append('<button type="button" class="btnRemoveAllergen list-group-item list-group-item-action col-3 m-0" data-allergenId="' + allergenId + '">' + allergenName + '</button>')
+      }
+    })
+  })
+  $("#btnAddAddress").on('click', function(e) {
+    var addressName = $(this).parent().find("#addressName").val()
+    var addressInfo = $(this).parent().find("#addressInfo").val()
+    $.post("ajax/add_address.php", {
+      name: addressName,
+      info: addressInfo
+    }).done(function(response) {
+      if (response.indexOf("ERROR") == -1) {
+        $("#addresses").append('<button type="button" class="btnRemoveAddress list-group-item list-group-item-action col-5 m-0" data-addressid="' + response + '">' + addressName + ', ' + addressInfo + '</button>')
       }
     })
   })
