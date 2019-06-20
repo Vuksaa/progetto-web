@@ -1,6 +1,9 @@
 <?php
 $email = $_POST['email'];
-$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+$options = [
+    'salt' => "thistringisforsalttest"
+];
+$password = password_hash($_POST['password'], PASSWORD_DEFAULT, $options);
 $userType = $_POST['userType'];
 include("../fragments/connection-begin.php");
 if($userType==="client") {
