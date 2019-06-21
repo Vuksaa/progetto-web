@@ -30,7 +30,7 @@ CREATE TABLE `address` (
   PRIMARY KEY (`address_id`),
   KEY `client_id_idx` (`client_id`),
   CONSTRAINT `client_id` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,7 +105,7 @@ CREATE TABLE `client` (
   `client_name` varchar(45) NOT NULL,
   `client_surname` varchar(45) NOT NULL,
   PRIMARY KEY (`client_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -114,7 +114,7 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES (1,'haldor.rasim@gmail.com','haldor','Haldor','Rasim'),(2,'izz.helga@gmail.com','izz','Izz ud-Din','Helga'),(3,'njal.itimad@gmail.com','njal','Njal','I\'timad'),(4,'stefana.dawood@gmail.com','stefana','Stefana','Dawood'),(5,'toki.halvor@gmail.com','toki','Toki','Halvor'),(6,'benjaminas.khadija@gmail.com','benjaminas','Benjaminas','Khadija'),(7,'sverrir.ingvildr@gmail.com','sverrir','Sverrir','Ingvildr'),(8,'johanneke.tycho@gmail.com','johanneke','Johanneke','Tycho'),(9,'fazl.shafaqat@gmail.com','fazl','Fazl','Shafaqat'),(10,'1@1.1','1','1','1');
+INSERT INTO `client` VALUES (1,'haldor.rasim@gmail.com','$2y$10$thistringisforsalttesedksZnocIeYFWqF7N42YiEVD3nN4lurW','Haldor','Rasim'),(2,'izz.helga@gmail.com','$2y$10$thistringisforsaltteseYgVq.zjH5kw.PK4VALrtmzuXAyvjJUm','Izz ud-Din','Helga'),(3,'njal.itimad@gmail.com','$2y$10$thistringisforsaltteseaWOuwRELXu9YKf5dZ5iM2lji36.XXgy','Njal','I\'timad'),(4,'stefana.dawood@gmail.com','$2y$10$thistringisforsaltteseC1l1j26Al1NUOfGwYTxF0ItpB6np0Ky','Stefana','Dawood'),(5,'toki.halvor@gmail.com','$2y$10$thistringisforsalttesenibGdpGtbO8/u5DkwW6tXvBKxiletfS','Toki','Halvor'),(6,'benjaminas.khadija@gmail.com','$2y$10$thistringisforsaltteseVnVZW1RLBWoySCL4u//1V7rz9v1KsFu','Benjaminas','Khadija'),(7,'sverrir.ingvildr@gmail.com','$2y$10$thistringisforsaltteseNhwvhIkYizPXGBsdsMBjw2hU9jA9eaC','Sverrir','Ingvildr'),(8,'johanneke.tycho@gmail.com','$2y$10$thistringisforsalttesehzkoHNhmxQ2p8yds7ZQOc6LtHA9aNSC','Johanneke','Tycho'),(9,'fazl.shafaqat@gmail.com','$2y$10$thistringisforsaltteseQVV3fUSGqPdkk/4KtMniX2AoJaz3Jge','Fazl','Shafaqat'),(10,'1@1.1','$2y$10$thistringisforsaltteseLwlFrjHJ8POpCmXJK9.Fi20B1/CCdPO','1','1');
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -397,7 +397,7 @@ CREATE TABLE `provider` (
 
 LOCK TABLES `provider` WRITE;
 /*!40000 ALTER TABLE `provider` DISABLE KEYS */;
-INSERT INTO `provider` VALUES (1,'America Graffiti','Via Costanzo II, 11','americagraffiti@gmail.com','americagraffiti',1,'00:00:00','00:00:00'),(2,'Conad','Via Silvio Corbari, 21','conad@gmail.com','conad',2,'00:00:00','00:00:00'),(3,'Rosticceria Cinese \"Oriente\" di Liu','Viale Domenico Bolognesi, 170','oriente@gmail.com','oriente',1,'00:00:00','00:00:00'),(4,'Bio Burg','Via Domenico Martoni, 44','bioburg@gmail.com','bioburg',1,'00:00:00','00:00:00'),(5,'Piadineria \"Da Nino\"','Piazzale Atleti Azzurri d\'Italia, 1','danino@gmail.com','danino',1,'00:00:00','00:00:00'),(6,'Osteria \"Casa di mare\"','Via Theodoli, 6','casadimare@gmail.com','casadimare',1,'00:00:00','00:00:00'),(7,'Bistro\' Verdepaglia Forli','Corso Armando Diaz, 14','verdepaglia@gmail.com','verdepaglia',1,'00:00:00','00:00:00'),(8,'Lidl','Via A. Ciani, 1','lidl@gmail.com','lidl',2,'00:00:00','00:00:00'),(9,'2','Corso della Repubblica, 15','2@2.2','2',2,'00:00:00','00:00:00');
+INSERT INTO `provider` VALUES (1,'America Graffiti','Via Costanzo II, 11','americagraffiti@gmail.com','$2y$10$thistringisforsaltteseTyRVZyGf4uaLDDdVmF44hw7qyovSjNG',1,'00:00:00','00:00:00'),(2,'Conad','Via Silvio Corbari, 21','conad@gmail.com','$2y$10$thistringisforsaltteseZLEGPDZM4SctKO0PDAMeIkQKruugh3i',2,'00:00:00','00:00:00'),(3,'Rosticceria Cinese \"Oriente\" di Liu','Viale Domenico Bolognesi, 170','oriente@gmail.com','$2y$10$thistringisforsaltteseBGfhCS7GDJUi1eB0eYZj5aP.cXoCfwO',1,'00:00:00','00:00:00'),(4,'Bio Burg','Via Domenico Martoni, 44','bioburg@gmail.com','$2y$10$thistringisforsaltteseKfxVQPm79FsBMDvwck5ySxIahUcAYS2',1,'00:00:00','00:00:00'),(5,'Piadineria \"Da Nino\"','Piazzale Atleti Azzurri d\'Italia, 1','danino@gmail.com','$2y$10$thistringisforsaltteseIU0WseCBu.k6ywNlu30kocqSCb5lw9q',1,'00:00:00','00:00:00'),(6,'Osteria \"Casa di mare\"','Via Theodoli, 6','casadimare@gmail.com','$2y$10$thistringisforsaltteseCYWssbJZWehzUU3uQryGUJ2MQj4frjS',1,'00:00:00','00:00:00'),(7,'Bistro\' Verdepaglia Forli','Corso Armando Diaz, 14','verdepaglia@gmail.com','$2y$10$thistringisforsalttesee0uaQtxbKI/wLHr5saq/Nti3r.w0MDa',1,'00:00:00','00:00:00'),(8,'Lidl','Via A. Ciani, 1','lidl@gmail.com','$2y$10$thistringisforsalttesecMmjobKHfHbqiXq94XsUvHODoolMity',2,'00:00:00','00:00:00'),(9,'2','Corso della Repubblica, 15','2@2.2','$2y$10$thistringisforsaltteseX0.PUA92W8N.oMNR45fjJ1iWTmR0mTS',2,'00:00:00','00:00:00');
 /*!40000 ALTER TABLE `provider` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -523,4 +523,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-20 18:16:22
+-- Dump completed on 2019-06-21 17:51:04
