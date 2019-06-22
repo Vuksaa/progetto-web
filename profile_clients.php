@@ -59,24 +59,11 @@
   <div class="tab-content" id="nav-tabContent">
 
     <div class="tab-pane fade show active" id="nav-allergen" role="tabpanel" aria-labelledby="nav-allergen-tab">
-      <div class="container pt-3">
-        <div class="form-group row p-3">
-          <label for="selectAllergenId" class="sr-only">Select Allergen</label>
-          <select class="form-control col-3" name="selectAllergenId" id="selectedAllergenId">
-            <?php
-              $query = $conn->query("SELECT * FROM allergen");
-              while ($row = mysqli_fetch_array($query)){
-                $id=$row['allergen_id'];
-                $name=$row['allergen_name'];
-                echo "<option data-allergenId='".$id."' data-allergenName='".$name."'>".$name."</option>" ;
-              }
-            ?>
-          </select>
-          <button type="submit" id="btnAddAllergen" class="btn btn-primary col-1 ml-2" value="clientAllergenAdd">
-            Add
-          </button>
-        </div>
+      <div class="container p-3">
         <ul class="list-group" id="allergens">
+          <button type="button" class="list-group-item list-group-item-action text-center col-3 m-0" data-toggle="modal" data-target="#modalAddAllergen">
+            <i class="far fa-plus-square"></i>
+          </button>
           <?php
             while ($allergens->fetch()):
           ?>
@@ -90,18 +77,10 @@
     </div>
     <div class="tab-pane fade" id="nav-address" role="tabpanel" aria-labelledby="nav-address-tab">
       <div class="container pt-3">
-        <div class="form-group row p-3">
-          <label for="clientAddressName" class="sr-only">Address Name</label>
-          <input type="text" class="form-control col-2" name="addressName" autocomplete="on" placeholder="Address Name.." required autofocus id="addressName" />
-
-          <label for="clientAddressInfo" class="sr-only">Address Street Info</label>
-          <input type="text" class="form-control col-4 ml-2" name="addressInfo" autocomplete="on" placeholder="Address Street Info.." required autofocus id="addressInfo" />
-
-          <button type="submit" id="btnAddAddress" class="btn btn-primary col-1 ml-2" value="clientAddressAdd">
-            Add
-          </button>
-        </div>
         <ul class="list-group" id="addresses">
+          <button type="button" class="list-group-item list-group-item-action text-center col-5 m-0" id="btnAddressModal" data-toggle="modal" data-target="#modalAddAddress">
+            <i class="far fa-plus-square"></i>
+          </button>
           <?php
             while ($addresses->fetch()):
           ?>
@@ -115,6 +94,62 @@
     </div>
   </div>
 
+  <!-- Modals -->
+  <div class="modal fade" id="modalAddAllergen" tabindex="-1" role="dialog" aria-labelledby="modalLabelAddAllergen" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabelAddAllergen">Add Allergen</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label for="selectAllergenId" class="sr-only">Select Allergen</label>
+          <select class="form-control" name="selectAllergenId" id="selectedAllergenId">
+            <?php
+              $query = $conn->query("SELECT * FROM allergen");
+              while ($row = mysqli_fetch_array($query)){
+                $id=$row['allergen_id'];
+                $name=$row['allergen_name'];
+                echo "<option data-allergenId='".$id."' data-allergenName='".$name."'>".$name."</option>" ;
+              }
+            ?>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" id="btnAddAllergen" class="btn btn-primary col-2 ml-2" value="clientAllergenAdd" data-dismiss="modal">
+            Add
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modalAddAddress" tabindex="-1" role="dialog" aria-labelledby="modalLabelAddAddress" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabelAddAddress">Add Address</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="clientAddressName" class="sr-only">Address Name</label>
+            <input type="text" class="form-control mb-2" name="addressName" autocomplete="on" placeholder="Address Name.." required autofocus id="addressName" />
+            <label for="clientAddressInfo" class="sr-only">Address Street Info</label>
+            <input type="text" class="form-control" name="addressInfo" autocomplete="on" placeholder="Address Street Info.." required autofocus id="addressInfo" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" id="btnAddAddress" class="btn btn-primary col-2 ml-2" value="clientAddressAdd" data-dismiss="modal">
+            Add
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
   <?php include("fragments/footer.php"); ?>
 </body>
 <script type="text/javascript">
@@ -134,22 +169,26 @@ $(function() {
     }).done(function(response) {
       if (response.indexOf("ERROR") == -1) {
         var newAllergen = '<button type="button" class="btnRemoveAllergen list-group-item list-group-item-action col-3 m-0" data-allergenId="' + allergenId + '">' + allergenName + '</button>'
+        $(newAllergen).hide()
         $(newAllergen).appendTo("#allergens").on('click', removeAllergen)
+        $(newAllergen).slideDown(200)
       } else console.log(response)
     })
   })
   $("#btnAddAddress").on('click', function(e) {
-    var addressName = $(this).parent().find("#addressName")
-    var addressInfo = $(this).parent().find("#addressInfo")
+    var addressName = $(this).parent().parent().find("#addressName")
+    var addressInfo = $(this).parent().parent().find("#addressInfo")
     $.post("ajax/add_address.php", {
       name: addressName.val(),
       info: addressInfo.val()
     }).done(function(response) {
       if (response.indexOf("ERROR") == -1) {
         var newAddress = '<button type="button" class="btnRemoveAddress list-group-item list-group-item-action col-5 m-0" data-addressid="' + response + '">' + addressName.val() + ', ' + addressInfo.val() + '</button>'
+        $(newAddress).hide()
         $(newAddress).appendTo("#addresses").on('click', removeAddress)
         $(addressName).val("")
         $(addressInfo).val("")
+        $(newAddress).slideDown(200)
       } else console.log(response)
     })
   })
@@ -163,7 +202,7 @@ function removeAllergen() {
     allergen: $(self).data("allergenid")
   }).done(function(response) {
     if (response.indexOf("ERROR") == -1) {
-      $(self).fadeOut(200, function() {
+      $(self).slideUp(200, function() {
         $(self).remove()
       })
     } else console.log(response)
@@ -176,7 +215,7 @@ function removeAddress() {
     address: $(self).data("addressid")
   }).always(function(response) {
     if (response.indexOf("ERROR") == -1) {
-      $(self).fadeOut(200, function() {
+      $(self).slideUp(200, function() {
         $(self).remove()
       })
     } else console.log(response)
