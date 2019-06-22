@@ -65,11 +65,9 @@
             <i class="far fa-plus-square"></i>
           </button>
           <?php
-            while ($allergens->fetch()):
-          ?>
-          <button type="button" class="btnRemoveAllergen list-group-item list-group-item-action col-3 m-0" data-allergenId="<?php echo $allergenId ?>"><?php echo $allergenName;?></button>
-          <?php
-            endwhile;
+            while ($allergens->fetch()) {
+              echo '<button type="button" class="btnRemoveAllergen list-group-item list-group-item-action col-3 m-0" data-allergenId="'.$allergenId.'">'.$allergenName.'</button>';
+            }
             $allergens->close();
           ?>
         </ul>
@@ -82,11 +80,9 @@
             <i class="far fa-plus-square"></i>
           </button>
           <?php
-            while ($addresses->fetch()):
-          ?>
-          <button type="button" class="btnRemoveAddress list-group-item list-group-item-action col-5 m-0" data-addressid="<?php echo $addressId; ?>"><?php echo $addressName;?>, <?php echo $addressInfo;?></button>
-          <?php
-            endwhile;
+            while ($addresses->fetch()) {
+              echo '<button type="button" class="btnRemoveAddress list-group-item list-group-item-action col-5 m-0" data-addressid="'.$addressId.'">'.$addressName.', '.$addressInfo.'</button>';
+            }
             $addresses->close();
           ?>
         </ul>
