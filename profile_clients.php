@@ -209,7 +209,7 @@ function removeAddress() {
   self = $(this)
   $.post("ajax/remove_address.php", {
     address: $(self).data("addressid")
-  }).always(function(response) {
+  }).done(function(response) {
     if (response.indexOf("ERROR") == -1) {
       $(self).slideUp(200, function() {
         $(self).remove()

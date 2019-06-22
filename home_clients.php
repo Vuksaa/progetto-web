@@ -15,6 +15,7 @@
   <?php include("fragments/navbar.php"); ?>
   <div class="container mt-4 mb-4">
     <h3 class="pb-2">Provider list</h3>
+    <button type="button" class="btn btn-outline-info col-2" data-toggle="modal" data-target="#modalFilters">Filters <span id="filterState">(inactive)</span></button>
     <div class="container accordion mt-4 mb-4" id="mainAccordion">
       <div class="card main-card">
         <h1 class="mb-0">
@@ -30,7 +31,7 @@
             <div class="row" id="favouriteProviders">
               <?php
                 if ($favProviders = $conn->query(
-                  "SELECT p.provider_id, p.provider_name, t.type_name
+                  "SELECT p.provider_id, p.provider_name, t.type_id, t.type_name
                   FROM client_provider cp
                   JOIN provider p
                   ON cp.provider_id = p.provider_id
@@ -47,10 +48,10 @@
                     <button name="removeFavourite" class="btn btn-link"><i class="fas fa-star"></i></button>
                   </div>
                   <h5 class="card-title"><?php echo $providerRow['provider_name'] ?></h5>
-                  <h6 class="card-subtitle mb-2 text-muted"><?php echo $providerRow['type_name'] ?></h6>
+                  <h6 class="card-subtitle mb-2 text-muted providerType" data-id="<?php echo $providerRow['type_id']; ?>"><?php echo $providerRow['type_name'] ?></h6>
                   <p class="card-text">
                     <?php
-                      if ($providerCategories = $conn->query("SELECT c.category_name
+                      if ($providerCategories = $conn->query("SELECT c.category_id, c.category_name
                                             FROM provider p
                                             LEFT JOIN provider_category pc
                                             ON p.provider_id = pc.provider_id
@@ -58,7 +59,7 @@
                                             ON c.category_id = pc.category_id
                                             WHERE p.provider_id = '".$providerRow['provider_id']."'")) {
                         while ($categoryRow = $providerCategories->fetch_assoc()) {
-                          echo "<span class='badge badge-pill badge-info'>".$categoryRow['category_name']."</span>";
+                          echo "<span class='badge badge-pill badge-info providerCategory' data-id='".$categoryRow['category_id']."'>".$categoryRow['category_name']."</span>";
                         }
                         $providerCategories->close();
                       }
@@ -96,7 +97,7 @@
               <?php
                 // TODO: use one query and separate favourite and non-favourite restaurants in php?
                 if ($allProviders = $conn->query(
-                  "SELECT p.provider_id, p.provider_name, t.type_name
+                  "SELECT p.provider_id, p.provider_name, t.type_id, t.type_name
                   FROM provider p
                   LEFT JOIN type t
                   ON p.type_id = t.type_id
@@ -117,11 +118,11 @@
                     <button name="removeFavourite" class="btn btn-link"><i class="fas fa-star"></i></button>
                   </div>
                   <h5 class="card-title"><?php echo $providerRow['provider_name'] ?></h5>
-                  <h6 class="card-subtitle mb-2 text-muted"><?php echo $providerRow['type_name'] ?></h6>
+                  <h6 class="card-subtitle mb-2 text-muted providerType" data-id="<?php echo $providerRow['type_id']; ?>"><?php echo $providerRow['type_name'] ?></h6>
                   <p class="card-text">
                     <?php
                       if ($providerCategories = $conn->query(
-                        "SELECT c.category_name
+                        "SELECT c.category_id, c.category_name
                         FROM provider p
                         LEFT JOIN provider_category pc
                         ON p.provider_id = pc.provider_id
@@ -130,7 +131,7 @@
                         WHERE p.provider_id = '".$providerRow['provider_id']."'"
                       )) {
                         while ($categoryRow = $providerCategories->fetch_assoc()) {
-                          echo "<span class='badge badge-pill badge-info'>".$categoryRow['category_name']."</span>";
+                          echo "<span class='badge badge-pill badge-info providerCategory' data-id='".$categoryRow['category_id']."'>".$categoryRow['category_name']."</span>";
                         }
                         $providerCategories->close();
                       }
@@ -178,8 +179,138 @@
   </div>
 </div>
 
+<!-- Modal for filters -->
+<div class="modal fade" id="modalFilters" tabindex="-1" role="dialog" aria-labelledby="modalLabelFilters" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title ml-2 mr-2" id="modalLabelFilters">Filters</h5>
+        <button type="button" class="close btnSaveFilters" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body ml-2 mr-2">
+        <div class="pb-2 mb-3 border-bottom">
+          <div class="pb-2 pt-2 custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="checkFilterByTypes">
+            <label class="custom-control-label" for="checkFilterByTypes"><h5>Types</h5></label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="checkTypesAll">
+            <label class="custom-control-label" for="checkTypesAll">All</label>
+          </div>
+          <?php
+            if ($types = $conn->query(
+              "SELECT type_id, type_name FROM type"
+            )) {
+              while ($type = $types->fetch_assoc()) {
+                $typeId = $type['type_id'];
+                $typeName = $type['type_name'];
+                ?>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input checkType" id="type<?php echo $typeId; ?>" data-id="<?php echo $typeId; ?>">
+                  <label class="custom-control-label" for="type<?php echo $typeId; ?>"><?php echo $typeName; ?></label>
+                </div>
+                <?php
+              }
+              $types->close();
+            }
+          ?>
+        </div>
+        <div class="pb-2">
+          <div class="pb-2 pt-2 custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="checkFilterByCategories">
+            <label class="custom-control-label" for="checkFilterByCategories"><h5>Categories</h5></label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="checkCategoriesAll">
+            <label class="custom-control-label" for="checkCategoriesAll">All</label>
+          </div>
+          <?php
+            if ($categories = $conn->query(
+              "SELECT category_id, category_name FROM category"
+            )) {
+              while ($category = $categories->fetch_assoc()) {
+                $categoryId = $category['category_id'];
+                $categoryName = $category['category_name'];
+                ?>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input checkCategory" id="category<?php echo $categoryId; ?>" data-id="<?php echo $categoryId; ?>">
+                  <label class="custom-control-label" for="category<?php echo $categoryId; ?>"><?php echo $categoryName; ?></label>
+                </div>
+                <?php
+              }
+              $categories->close();
+            }
+          ?>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary col-2 ml-2 btnSaveFilters" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">
 $(function() {
+  // $("input[type=checkbox]").prop('disabled', true)
+  $("#checkTypesAll").prop('disabled', true)
+  $(".checkType").prop('disabled', true)
+  $("#checkCategoriesAll").prop('disabled', true)
+  $(".checkCategory").prop('disabled', true)
+
+  $("#checkFilterByTypes").on('change', function(e) {
+    $("#checkTypesAll").prop('disabled', !$(this).is(":checked"))
+    $(".checkType").prop('disabled', !$(this).is(":checked"))
+  })
+  $("#checkFilterByCategories").on('change', function(e) {
+    $("#checkCategoriesAll").prop('disabled', !$(this).is(":checked"))
+    $(".checkCategory").prop('disabled', !$(this).is(":checked"))
+  })
+  $("#checkTypesAll").on('change', function(e) {
+    $(".checkType").prop('checked', $(this).is(":checked"))
+  })
+  $(".checkType").on('change', function(e) {
+    $("#checkTypesAll").prop('checked', $(".checkType").toArray().every(function(checkbox) { return checkbox.checked }))
+  })
+  $("#checkCategoriesAll").on('change', function(e) {
+    $(".checkCategory").prop('checked', $(this).is(":checked"))
+  })
+  $(".checkCategory").on('change', function(e) {
+    $("#checkCategoriesAll").prop('checked', $(".checkCategory").toArray().every(function(checkbox) { return checkbox.checked }))
+  })
+
+  $("#filterState").css('color', 'grey')
+  // $(".btnSaveFilters").on('click', function(e) {
+  //   if ($("#checkFilterByTypes").is(":checked") || $("#checkFilterByCategories").is(":checked")) {
+  //     $("#filterState").text("(active)")
+  //     $("#filterState").css('color', 'green')
+  //   } else {
+  //     $("#filterState").text("(inactive)")
+  //     $("#filterState").css('color', 'grey')
+  //   }
+  //   TODO: complete
+  //   $(".providerCard").show()
+  //   $(".providerCard").each(function(i, providerCard) {
+  //     for (type of $(".checkType:not(:checked)").toArray()) {
+  //       if ($(providerCard).find(".providerType[data-id=" + $(type).data("id") + "]").length) {
+  //         $(providerCard).hide()
+  //         return;
+  //       }
+  //     }
+  //     if ($("#checkTypesAll").is(":checked")) return;
+  //     for (category of $(".checkCategory:checked").toArray()) {
+  //       if (!$(providerCard).find(".providerCategory[data-id=" + $(category).data("id") + "]").length) {
+  //         $(providerCard).hide()
+  //         return;
+  //       }
+  //     }
+  //   })
+  // })
+
   $("#searchFavourites").on('keyup', function(e) {
     var inputed = $(this).val().toLowerCase()
     var items = $(".favouriteProvider")
