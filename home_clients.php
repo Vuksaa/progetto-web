@@ -195,10 +195,6 @@
             <input type="checkbox" class="custom-control-input" id="checkFilterByTypes">
             <label class="custom-control-label" for="checkFilterByTypes"><h5>Types</h5></label>
           </div>
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="checkTypesAll">
-            <label class="custom-control-label" for="checkTypesAll">All</label>
-          </div>
           <?php
             if ($types = $conn->query(
               "SELECT type_id, type_name FROM type"
@@ -208,7 +204,7 @@
                 $typeName = $type['type_name'];
                 ?>
                 <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input checkType" id="type<?php echo $typeId; ?>" data-id="<?php echo $typeId; ?>">
+                  <input type="radio" name="radioTypes" class="custom-control-input checkType" id="type<?php echo $typeId; ?>" data-id="<?php echo $typeId; ?>">
                   <label class="custom-control-label" for="type<?php echo $typeId; ?>"><?php echo $typeName; ?></label>
                 </div>
                 <?php
@@ -222,10 +218,7 @@
             <input type="checkbox" class="custom-control-input" id="checkFilterByCategories">
             <label class="custom-control-label" for="checkFilterByCategories"><h5>Categories</h5></label>
           </div>
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="checkCategoriesAll">
-            <label class="custom-control-label" for="checkCategoriesAll">All</label>
-          </div>
+          <button type="button" class="btn btn-secondary m-0 mb-1 p-1 pl-2 pr-2" id="clearCategories">Clear categories</button>
           <?php
             if ($categories = $conn->query(
               "SELECT category_id, category_name FROM category"
@@ -256,60 +249,55 @@
 
 <script type="text/javascript">
 $(function() {
-  // $("input[type=checkbox]").prop('disabled', true)
-  $("#checkTypesAll").prop('disabled', true)
   $(".checkType").prop('disabled', true)
-  $("#checkCategoriesAll").prop('disabled', true)
+  $("#clearCategories").prop('disabled', true)
   $(".checkCategory").prop('disabled', true)
 
   $("#checkFilterByTypes").on('change', function(e) {
-    $("#checkTypesAll").prop('disabled', !$(this).is(":checked"))
-    $(".checkType").prop('disabled', !$(this).is(":checked"))
+    $(".checkType").prop('disabled', !this.checked)
   })
   $("#checkFilterByCategories").on('change', function(e) {
-    $("#checkCategoriesAll").prop('disabled', !$(this).is(":checked"))
-    $(".checkCategory").prop('disabled', !$(this).is(":checked"))
+    $("#clearCategories").prop('disabled', !this.checked)
+    $(".checkCategory").prop('disabled', !this.checked)
   })
-  $("#checkTypesAll").on('change', function(e) {
-    $(".checkType").prop('checked', $(this).is(":checked"))
-  })
-  $(".checkType").on('change', function(e) {
-    $("#checkTypesAll").prop('checked', $(".checkType").toArray().every(function(checkbox) { return checkbox.checked }))
-  })
-  $("#checkCategoriesAll").on('change', function(e) {
-    $(".checkCategory").prop('checked', $(this).is(":checked"))
-  })
-  $(".checkCategory").on('change', function(e) {
-    $("#checkCategoriesAll").prop('checked', $(".checkCategory").toArray().every(function(checkbox) { return checkbox.checked }))
+  $("#clearCategories").on('click', function(e) {
+    $(".checkCategory").prop('checked', false)
   })
 
   $("#filterState").css('color', 'grey')
-  // $(".btnSaveFilters").on('click', function(e) {
-  //   if ($("#checkFilterByTypes").is(":checked") || $("#checkFilterByCategories").is(":checked")) {
-  //     $("#filterState").text("(active)")
-  //     $("#filterState").css('color', 'green')
-  //   } else {
-  //     $("#filterState").text("(inactive)")
-  //     $("#filterState").css('color', 'grey')
-  //   }
-  //   TODO: complete
-  //   $(".providerCard").show()
-  //   $(".providerCard").each(function(i, providerCard) {
-  //     for (type of $(".checkType:not(:checked)").toArray()) {
-  //       if ($(providerCard).find(".providerType[data-id=" + $(type).data("id") + "]").length) {
-  //         $(providerCard).hide()
-  //         return;
-  //       }
-  //     }
-  //     if ($("#checkTypesAll").is(":checked")) return;
-  //     for (category of $(".checkCategory:checked").toArray()) {
-  //       if (!$(providerCard).find(".providerCategory[data-id=" + $(category).data("id") + "]").length) {
-  //         $(providerCard).hide()
-  //         return;
-  //       }
-  //     }
-  //   })
-  // })
+  $(".btnSaveFilters").on('click', function(e) {
+    var filterByTypes = $("#checkFilterByTypes").is(":checked")
+    var filterByCategories = $("#checkFilterByCategories").is(":checked")
+    if (filterByTypes || filterByCategories) {
+      $("#filterState").text("(active)")
+      $("#filterState").css('color', 'green')
+    } else {
+      $("#filterState").text("(inactive)")
+      $("#filterState").css('color', 'grey')
+    }
+    $(".providerCard").show()
+    if (!filterByTypes && !filterByCategories) {
+      return;
+    }
+    $(".providerCard").each(function(i, providerCard) {
+      if (filterByTypes) {
+        for (type of $(".checkType:checked").toArray()) {
+          if (!$(providerCard).find(".providerType[data-id=" + $(type).data("id") + "]").length) {
+            $(providerCard).hide()
+            return;
+          }
+        }
+      }
+      if (filterByCategories) {
+        for (category of $(".checkCategory:checked").toArray()) {
+          if (!$(providerCard).find(".providerCategory[data-id=" + $(category).data("id") + "]").length) {
+            $(providerCard).hide()
+            return;
+          }
+        }
+      }
+    })
+  })
 
   $("#searchFavourites").on('keyup', function(e) {
     var inputed = $(this).val().toLowerCase()
