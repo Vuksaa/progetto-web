@@ -14,13 +14,13 @@
 <body>
   <?php include("fragments/navbar.php"); ?>
   <div class="container mt-4 mb-4">
-    <h3 class="pb-2">Provider list</h3>
+    <h4 class="display-4 pb-2">Provider list</h4>
     <button type="button" class="btn btn-outline-info col-2" data-toggle="modal" data-target="#modalFilters">Filters <span id="filterState">(inactive)</span></button>
     <div class="container accordion mt-4 mb-4" id="mainAccordion">
       <div class="card main-card">
         <h1 class="mb-0">
           <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseFavouriteRestaurants" aria-expanded="true" aria-controls="collapseFavouriteRestaurants">
-            Your Favourite Restaurants
+            Your Favourite Providers
           </button>
         </h1>
         <div id="collapseFavouriteRestaurants" class="collapse show" aria-labelledby="headingFavouriteRestaurants" data-parent="#mainAccordion">
@@ -37,16 +37,13 @@
                   ON cp.provider_id = p.provider_id
                   LEFT JOIN type t
                   ON p.type_id = t.type_id
-                  WHERE cp.client_id = '".$_SESSION['user_id']."'"
+                  WHERE cp.client_id = '".$_SESSION['user_id']."'
+                  ORDER BY p.provider_name"
                 )) {
                   while ($providerRow = $favProviders->fetch_assoc()) {
               ?>
-              <div class="card col-sm-3 providerCard favouriteProvider" data-provider-id="<?php echo $providerRow['provider_id']; ?>">
+              <div class="card providerCard favouriteProvider col-3" data-provider-id="<?php echo $providerRow['provider_id']; ?>">
                 <div class="card-body">
-                  <div class="float-right">
-                    <button name="addFavourite" class="btn btn-link"><i class="far fa-star"></i></button>
-                    <button name="removeFavourite" class="btn btn-link"><i class="fas fa-star"></i></button>
-                  </div>
                   <h5 class="card-title"><?php echo $providerRow['provider_name'] ?></h5>
                   <h6 class="card-subtitle mb-2 text-muted providerType" data-id="<?php echo $providerRow['type_id']; ?>"><?php echo $providerRow['type_name'] ?></h6>
                   <p class="card-text">
@@ -68,6 +65,7 @@
                   <div class="btn-group btn-group-justified">
                     <button class="btn btn-primary inline" data-toggle="modal" data-target="#peekOnProvider">Peek</button>
                     <button class="btn btn-primary inline btn-place-order">Order</button>
+                    <button class="btn btn-primary inline" name="removeFavourite"><i class="far fa-star"></i></button>
                   </div>
                 </div>
               </div>
@@ -85,7 +83,7 @@
       <div class="card main-card">
         <h1 class="mb-0">
           <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseAllRestaurants" aria-expanded="false" aria-controls="collapseAllRestaurants">
-            Restaurants
+            Providers
           </button>
         </h1>
         <div id="collapseAllRestaurants" class="collapse" aria-labelledby="headingRestaurants" data-parent="#mainAccordion">
@@ -107,16 +105,13 @@
                     JOIN provider p
                     ON cp.provider_id = p.provider_id
                     WHERE cp.client_id = '".$_SESSION['user_id']."'
-                  )"
+                  )
+                  ORDER BY p.provider_name"
                 )) {
                   while ($providerRow = $allProviders->fetch_assoc()) {
               ?>
-              <div class="card col-sm-3 providerCard listedProvider" data-provider-id="<?php echo $providerRow['provider_id']; ?>">
+              <div class="card providerCard listedProvider col-3" data-provider-id="<?php echo $providerRow['provider_id']; ?>">
                 <div class="card-body">
-                  <div class="float-right">
-                    <button name="addFavourite" class="btn btn-link"><i class="far fa-star"></i></button>
-                    <button name="removeFavourite" class="btn btn-link"><i class="fas fa-star"></i></button>
-                  </div>
                   <h5 class="card-title"><?php echo $providerRow['provider_name'] ?></h5>
                   <h6 class="card-subtitle mb-2 text-muted providerType" data-id="<?php echo $providerRow['type_id']; ?>"><?php echo $providerRow['type_name'] ?></h6>
                   <p class="card-text">
@@ -128,7 +123,8 @@
                         ON p.provider_id = pc.provider_id
                         LEFT JOIN category c
                         ON c.category_id = pc.category_id
-                        WHERE p.provider_id = '".$providerRow['provider_id']."'"
+                        WHERE p.provider_id = '".$providerRow['provider_id']."'
+                        ORDER BY c.category_name"
                       )) {
                         while ($categoryRow = $providerCategories->fetch_assoc()) {
                           echo "<span class='badge badge-pill badge-info providerCategory' data-id='".$categoryRow['category_id']."'>".$categoryRow['category_name']."</span>";
@@ -140,6 +136,7 @@
                   <div class="btn-group btn-group-justified">
                     <button class="btn btn-primary inline" data-toggle="modal" data-target="#peekOnProvider">Peek</button>
                     <button class="btn btn-primary inline btn-place-order">Order</button>
+                    <button class="btn btn-primary inline" name="addFavourite"><i class="fas fa-star"></i></button>
                   </div>
                 </div>
               </div>
@@ -341,53 +338,53 @@ $(function() {
     window.location.href = "place_order.php?provider=" + $(this).parent().parent().parent().data("provider-id")
   })
   /* Set navbar voice active with respective screen reader functionality */
-  var element = $("nav div ul li a:contains('Home')");
-  var parent = element.parent();
-  element.append( "<span class='sr-only'>(current)</span>" );
-  parent.addClass("active");
+  var homeLink = $("nav div ul li a:contains('Home')");
+  homeLink.append( "<span class='sr-only'>(current)</span>" );
+  homeLink.parent().addClass("active");
 
-  $("#favouriteProviders button[name='addFavourite']").hide()
-  $("#listedProviders button[name='removeFavourite']").hide()
-
-  $("button[name='addFavourite']").on('click', function() {
-    var providerCard = $(this).parent().parent().parent()
-    var thisButton = $(this)
-    $.post("ajax/add_favourite_provider.php", {
-      providerId: providerCard.data("provider-id")
-    }).done(function(response) {
-      if (response == "SUCCESS") {
-        providerCard.find("button[name='removeFavourite']").show()
-        thisButton.hide()
-        providerCard.fadeOut(250, function() {
-          providerCard.detach().appendTo("#favouriteProviders")
-          providerCard.show()
-          // if (providerCard.find(".card-title").text().toLowerCase().indexOf($("#favouriteProviders").val().toLowerCase()) == -1) {
-          //   providerCard.show()
-          // }
-        })
-      }
-    })
-  })
-  $("button[name='removeFavourite']").on('click', function() {
-    var providerCard = $(this).parent().parent().parent()
-    var thisButton = $(this)
-    $.post("ajax/remove_favourite_provider.php", {
-      providerId: providerCard.data("provider-id")
-    }).done(function(response) {
-      if (response == "SUCCESS") {
-        providerCard.find("button[name='addFavourite']").show()
-        thisButton.hide()
-        providerCard.fadeOut(250, function() {
-          providerCard.detach().appendTo("#listedProviders")
-          providerCard.show()
-          // if (providerCard.find(".card-title").text().toLowerCase().indexOf($("#listedProviders").val().toLowerCase()) == -1) {
-          //   providerCard.show()
-          // }
-        })
-      }
-    })
-  })
+  $("button[name='addFavourite']").on('click', addFavourite)
+  $("button[name='removeFavourite']").on('click', removeFavourite)
 })
+function addFavourite() {
+  var providerCard = $(this).parent().parent().parent()
+  var thisButton = $(this)
+  $.post("ajax/add_favourite_provider.php", {
+    providerId: providerCard.data("provider-id")
+  }).done(function(response) {
+    if (response == "SUCCESS") {
+      providerCard.fadeOut(250, function() {
+        var newButton = $('<button class="btn btn-primary inline" name="removeFavourite"><i class="far fa-star"></i></button>')
+        newButton.on('click', removeFavourite)
+        thisButton.replaceWith(newButton)
+        providerCard.detach().appendTo("#favouriteProviders")
+        providerCard.show()
+        // if (providerCard.find(".card-title").text().toLowerCase().indexOf($("#favouriteProviders").val().toLowerCase()) == -1) {
+        //   providerCard.show()
+        // }
+      })
+    }
+  })
+}
+function removeFavourite() {
+  var providerCard = $(this).parent().parent().parent()
+  var thisButton = $(this)
+  $.post("ajax/remove_favourite_provider.php", {
+    providerId: providerCard.data("provider-id")
+  }).done(function(response) {
+    if (response == "SUCCESS") {
+      providerCard.fadeOut(250, function() {
+        var newButton = $('<button class="btn btn-primary inline" name="addFavourite"><i class="fas fa-star"></i></button>')
+        newButton.on('click', addFavourite)
+        thisButton.replaceWith(newButton)
+        providerCard.detach().appendTo("#listedProviders")
+        providerCard.show()
+        // if (providerCard.find(".card-title").text().toLowerCase().indexOf($("#listedProviders").val().toLowerCase()) == -1) {
+        //   providerCard.show()
+        // }
+      })
+    }
+  })
+}
 </script>
 <?php include("fragments/connection-end.php"); ?>
 </html>

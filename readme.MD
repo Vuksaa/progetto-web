@@ -9,7 +9,6 @@
 ## Missing/incomplete features
 * Remove small "x" in searchbars when text is entered
 * **profile_providers.php** Redesign/reformat
-* **home_clients.php** Filter providers by category/type
 * **orders_clients.php** Fix the query, maybe move to profile_clients
 * **profile_clients.php** Smaller "Add" buttons (?)
 * **profile_clients.php** Remove "General" tab (?)
@@ -25,6 +24,7 @@
 * Consider allowing providers to select a number of their products, in order to show them for a quick peek when deciding where to order? We would need to add something to the database for this
 * Consider adding tutorials/explanations for when a client/provider first uses a certain function? Eg. when first ordering, creating a product, etc.. a modal is shown that explains everything
 ## DONE
+* **home_clients.php** Filter providers by category/type
 * **home_clients.php** Implement searchbar (already implemented in place_orders)
 * Make footers stay at the bottom of the pages
 * Load a limited amount of providers, products, etc at a time and use [infinite scrolling](https://stackoverflow.com/questions/5059526/infinite-scroll-jquery-plugin/5059561#5059561) to load more when necessary
