@@ -39,33 +39,70 @@
       <input type="password" class="form-control" name="password" placeholder="Password.." required id="signPassword" />
       <label for="signConfirmPassword" class="sr-only">Confirm Password:</label>
       <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm password.." required id="signConfirmPassword" />
+      <div class="form-check form-check-inline">
+        <label for="signClient" class="form-check-label">
+          <input type="radio" class="form-check-input" name="userType" value="client" checked id="signClient" />Client
+        </label>
+        <div class="form-check form-check-inline">
+          <label for="signProvider" class="form-check-label">
+            <input type="radio" class="form-check-input" name="userType" value="provider" id="signProvider" />Provider
+          </label>
+        </div>
+      </div>
       <label for="signName" class="sr-only">Name:</label>
       <input type="text" class="form-control" name="name" autocomplete="on" placeholder="client Name.." required id="signName" />
       <label for="signSurname" class="sr-only">Surname:</label>
       <input type="text" class="form-control" name="surname" autocomplete="on" placeholder="client Surname.." required id="signSurname" />
       <label for="signPName" class="sr-only">PName:</label>
-      <input type="text" class="form-control" name="pname" autocomplete="on" placeholder="provider name.." required id="signPName" />
+      <input type="text" class="form-control" name="pname" autocomplete="on" placeholder="provider name.." required id="signPName" hidden />
       <label for="signPAddress" class="sr-only">PAddress:</label>
-      <input type="text" class="form-control" name="paddress" autocomplete="on" placeholder="provider address.." required id="signPAddress" />
+      <input type="text" class="form-control" name="paddress" autocomplete="on" placeholder="provider address.." required id="signPAddress" hidden />
       <label for="signPType" class="sr-only">PType:</label>
-      <input type="number" class="form-control" name="typeId" autocomplete="on" placeholder="provider type id.." required id="signPType" />
-      <div class="form-check form-check-inline">
-        <label for="signClient" class="form-check-label">
-          <input type="radio" class="form-check-input" name="userType" value="client" checked id="signClient" />Client
-        </label>
-      </div>
-      <div class="form-check form-check-inline">
-        <label for="signProvider" class="form-check-label">
-          <input type="radio" class="form-check-input" name="userType" value="provider" id="signProvider" />Provider
-        </label>
-      </div>
+      <input type="number" class="form-control" name="typeId" autocomplete="on" placeholder="provider type id.." required id="signPType" hidden />
+
       <button type="submit" class="btn btn-primary btn-lg btn-block" value="userSignup">
         Signup
       </button>
     </fieldset>
   </form>
-
   <?php include("fragments/footer.php"); ?>
 </body>
+<script type="text/javascript">
+  $(function() {
+    // Shows/hides form inputs depending on user type selected
+    $('[type=radio][name=userType]').change(function() {
+      var cName = $("#signName");
+      var cSurname = $("#signSurname");
+      var pName = $("#signPName");
+      var pAddress = $("#signPAddress");
+      var pType = $("#signPType");
+      if (this.value === 'client') {
+        cName.prop("hidden", false);
+        cSurname.prop("hidden", false);
+        pName.prop("hidden", true);
+        pAddress.prop("hidden", true);
+        pType.prop("hidden", true);
+        cName.prop("required", true);
+        cSurname.prop("required", true);
+        pName.prop("required", false);
+        pAddress.prop("required", false);
+        pType.prop("required", false);
+
+      } else if (this.value === 'provider') {
+        cName.prop("hidden", true);
+        cSurname.prop("hidden", true);
+        pName.prop("hidden", false);
+        pAddress.prop("hidden", false);
+        pType.prop("hidden", false);
+        cName.prop("required", false);
+        cSurname.prop("required", false);
+        pName.prop("required", true);
+        pAddress.prop("required", true);
+        pType.prop("required", true);
+      }
+    });
+  })
+</script>
+<?php include("fragments/connection-end.php"); ?>
 
 </html>
