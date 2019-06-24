@@ -7,50 +7,100 @@
 
 <body>
   <?php include("fragments/navbar-empty.php"); ?>
-  <form class="form-signin container pt-5" method="post" novalidate>
+  <form class="form-signin container pt-5 needs-validation" novalidate>
     <fieldset>
       <legend class="form-signin-heading">Signup</legend>
       <div class="form-group">
         <label for="signEmail" class="sr-only">Email:</label>
-        <input type="email" class="form-control" name="email" autocomplete="username" placeholder="Email.." required id="signEmail" />
+        <input type="email" class="form-control" name="email" autocomplete="username" placeholder="Email.." required autofocus id="signEmail" />
+        <div class="valid-feedback">
+          Valid Email!
+        </div>
+        <div class="invalid-feedback">
+          Please provide a valid Email! (example@example.exm)
+        </div>
       </div>
       <div class="form-group">
         <label for="signPassword" class="sr-only">Password:</label>
         <input type="password" class="form-control" name="password" autocomplete="new-password" placeholder="Password.." required id="signPassword" />
+        <div class="valid-feedback">
+          Valid Password!
+        </div>
+        <div class="invalid-feedback">
+          Please provide a valid Password!
+        </div>
       </div>
       <div class="form-group">
         <label for="signConfirmPassword" class="sr-only">Confirm Password:</label>
         <input type="password" class="form-control" name="confirmPassword" autocomplete="new-password" placeholder="Confirm password.." required id="signConfirmPassword" />
+        <div class="valid-feedback">
+          Valid Confirmation Password!
+        </div>
+        <div class="invalid-feedback">
+          Please type the Password again correctly!
+        </div>
       </div>
-      <div class="form-check form-check-inline">
-        <label for="signClient" class="form-check-label">
-          <input type="radio" class="form-check-input" name="userType" value="client" checked id="signClient" />Client
-        </label>
+      <div class="form-group">
         <div class="form-check form-check-inline">
-          <label for="signProvider" class="form-check-label">
-            <input type="radio" class="form-check-input" name="userType" value="provider" id="signProvider" />Provider
+          <label for="signClient" class="form-check-label">
+            <input type="radio" class="form-check-input" name="userType" value="client" checked id="signClient" />Client
           </label>
+          <div class="form-check form-check-inline">
+            <label for="signProvider" class="form-check-label">
+              <input type="radio" class="form-check-input" name="userType" value="provider" id="signProvider" />Provider
+            </label>
+          </div>
         </div>
       </div>
       <div class="form-group">
         <label for="signName" class="sr-only">Client Name:</label>
         <input type="text" class="form-control" name="name" autocomplete="on" placeholder="Name.." required id="signName" />
+        <div class="valid-feedback">
+          Valid Name!
+        </div>
+        <div class="invalid-feedback">
+          Please provide a name!
+        </div>
       </div>
       <div class="form-group">
         <label for="signSurname" class="sr-only">Client Surname:</label>
         <input type="text" class="form-control" name="surname" autocomplete="on" placeholder="Surname.." required id="signSurname" />
+        <div class="valid-feedback">
+          Valid Surname!
+        </div>
+        <div class="invalid-feedback">
+          Please provide a Surname!
+        </div>
       </div>
       <div class="form-group">
         <label for="signPName" class="sr-only">Provider Name:</label>
-        <input type="text" class="form-control" name="pname" autocomplete="on" placeholder="Name.." required id="signPName" hidden />
+        <input type="text" class="form-control" name="pname" autocomplete="on" placeholder="Name.." id="signPName" hidden />
+        <div class="valid-feedback">
+          Valid Name!
+        </div>
+        <div class="invalid-feedback">
+          Please provide a Name!
+        </div>
       </div>
       <div class="form-group">
         <label for="signPAddress" class="sr-only">Provider Address:</label>
-        <input type="text" class="form-control" name="paddress" autocomplete="on" placeholder="Address.." required id="signPAddress" hidden />
+        <input type="text" class="form-control" name="paddress" autocomplete="on" placeholder="Address.." id="signPAddress" hidden />
+        <div class="valid-feedback">
+          Valid Address!
+        </div>
+        <div class="invalid-feedback">
+          Please provide an Address!
+        </div>
       </div>
       <div class="form-group">
         <label for="signPType" class="sr-only">Provider Type:</label>
-        <input type="number" class="form-control" name="typeId" autocomplete="on" placeholder="Type id.." required id="signPType" hidden />
+        <input type="number" class="form-control" name="typeId" autocomplete="on" placeholder="Type id.." id="signPType" hidden />
+        <div class="valid-feedback">
+          Valid Type!
+        </div>
+        <div class="invalid-feedback">
+          Please choose a Type!
+        </div>
       </div>
       <button type="submit" class="btn btn-primary btn-lg btn-block" value="Signup">
         Signup
@@ -73,49 +123,55 @@
     // Hides the alert
     $(".alert").hide();
     $("#alertDiv").removeClass("d-none");
-    //  Calls the signup_submitted scripts and sets the alert
-    $("form").on('submit', function(e) {
-      // prevent the submit button from refreshing the page
-      e.preventDefault();
-      var vemail = $("#signEmail").val();
-      var vpassword = $("#signPassword").val();
-      var vuserType = $("[type=radio][name=userType]").val();
-      var vcName = $("#signName");
-      var vcSurname = $("#signSurname");
-      var vpName = $("#signPName");
-      var vpAddress = $("#signPAddress");
-      var vpTypeId = $("#signPType");
-      vcName = vcName.prop("hidden") ? "" : vcName.val();
-      vcSurname = vcSurname.prop("hidden") ? "" : vcSurname.val();
-      vpName = vpName.prop("hidden") ? "" : vpName.val();
-      vpAddress = vpAddress.prop("hidden") ? "" : vpAddress.val();
-      vpTypeId = vpTypeId.prop("hidden") ? "" : vpTypeId.val();
-      var data = {
-        email: vemail,
-        password: vpassword,
-        userType: vuserType,
-        cName: vcName,
-        cSurname: vcSurname,
-        pName: vpName,
-        pAddress: vpAddress,
-        pTypeId: vpTypeId
-      };
-      $.post("ajax/signup_submitted.php", data).done(function(response) {
-        if (response.indexOf("SIGNUP_SUCCESS") != -1) {
-          $("input.submit").prop('disabled', true);
-          $(".alert.alert-danger").fadeOut();
-          $(".alert.alert-success").fadeOut();
-          $(".alert.alert-success").fadeIn();
-          setTimeout(function() {
-            window.location.href = "login.php"
-          }, 2500)
-        } else {
-          $(".alert.alert-success").fadeOut();
-          $(".alert.alert-danger").fadeOut();
-          $(".alert.alert-danger").text(response);
-          $(".alert.alert-danger").fadeIn();
-        }
-      });
+    'use strict';
+    var form = $("form");
+    form.on('submit', function(event) {
+      if (form[0].checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+      } else {
+        //  Calls the signup_submitted script and sets the alert
+        var vemail = $("#signEmail").val();
+        var vpassword = $("#signPassword").val();
+        var vuserType = $("[type=radio][name=userType]").val();
+        var vcName = $("#signName");
+        var vcSurname = $("#signSurname");
+        var vpName = $("#signPName");
+        var vpAddress = $("#signPAddress");
+        var vpTypeId = $("#signPType");
+        vcName = vcName.prop("hidden") ? "" : vcName.val();
+        vcSurname = vcSurname.prop("hidden") ? "" : vcSurname.val();
+        vpName = vpName.prop("hidden") ? "" : vpName.val();
+        vpAddress = vpAddress.prop("hidden") ? "" : vpAddress.val();
+        vpTypeId = vpTypeId.prop("hidden") ? "" : vpTypeId.val();
+        var data = {
+          email: vemail,
+          password: vpassword,
+          userType: vuserType,
+          cName: vcName,
+          cSurname: vcSurname,
+          pName: vpName,
+          pAddress: vpAddress,
+          pTypeId: vpTypeId
+        };
+        $.post("ajax/signup_submitted.php", data).done(function(response) {
+          if (response.indexOf("SIGNUP_SUCCESS") != -1) {
+            $("input.submit").prop('disabled', true);
+            $(".alert.alert-danger").fadeOut();
+            $(".alert.alert-success").fadeOut();
+            $(".alert.alert-success").fadeIn();
+            setTimeout(function() {
+              window.location.href = "login.php"
+            }, 2500)
+          } else {
+            $(".alert.alert-success").fadeOut();
+            $(".alert.alert-danger").fadeOut();
+            $(".alert.alert-danger").text(response);
+            $(".alert.alert-danger").fadeIn();
+          }
+        });
+      }
+      form.addClass('was-validated');
     });
     // Shows/hides form inputs depending on user type selected
     $('[type=radio][name=userType]').change(function() {
@@ -148,6 +204,7 @@
         pType.prop("required", true);
       }
     });
+
   });
 </script>
 <?php include("fragments/connection-end.php"); ?>
