@@ -1,20 +1,29 @@
 <script type="text/javascript">
 $(function() {
-  $("#buttonCreateToast").on('click', function() {
-    var toast = $(`<div class="toast" role="alert" aria-live="assertive" aria-atomic="false" data-autohide="false" style="min-width: 230px; max-width: 450px">
-      <div class="toast-header">
-        <strong class="mr-auto pr-2">Toast title</strong>
-        <small class="pl-2">Small text</small>
-        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="toast-body">
-        This is a client notification!
-      </div>
-    </div>`)
-    $("#notificationArea").append(toast)
-    toast.toast('show')
-  })
+  setTimeout(fetchOrderUpdates, 1000)
 })
+function fetchOrderUpdates() {
+  $.post("ajax/fetch_order_updates.php")
+  .done(function(response) {
+    if (response.indexOf("ERROR") != -1) {
+      console.log(response)
+    } else {
+    if (response !== 'EMPTY') {
+        var responseArray = JSON.parse(response)
+        $.each(responseArray,
+          function(index, it) {
+            createToast(
+              it.status_name,
+              it.last_status_update,
+              "Il tuo ordine per " + it.order_address + " ha cambiato stato."
+            )
+          }
+        )
+      }
+    }
+  })
+  .always(function() {
+    setTimeout(fetchOrderUpdates, 1000)
+  })
+}
 </script>
