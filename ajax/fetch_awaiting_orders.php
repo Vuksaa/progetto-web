@@ -19,7 +19,7 @@ if ($awaitingOrders = $conn->query(
   ON co.client_id = c.client_id
   WHERE p.provider_id = '".$_SESSION['user_id']."'
   AND o.status_id = 4
-  AND '".$timestamp."' < o.creation_timestamp"
+  AND '".$timestamp."' < o.last_status_update"
 )) {
   $array = array();
   while ($row = $awaitingOrders->fetch_assoc()) {

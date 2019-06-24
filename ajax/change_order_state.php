@@ -8,7 +8,7 @@ if (!isset($_POST['order_id']) || !isset($_POST['new_state'])) {
 }
 if ($statement = $conn->prepare(
   "UPDATE `order`
-  SET `status_id` = ?
+  SET `status_id` = ?, `last_status_update` = NOW()
   WHERE `order_id` = ?;")) {
   $statement->bind_param("ii", $_POST['new_state'], $_POST['order_id']);
   $statement->execute();
