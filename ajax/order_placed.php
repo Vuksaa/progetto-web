@@ -26,7 +26,7 @@ if (isset($order["enteredAddress"])) {
 
 // create the order record
 if ($statement=$conn->prepare(
-  "INSERT INTO `order` (order_address, creation_timestamp)
+  "INSERT INTO `order` (order_address, last_status_update)
   VALUES (?, NOW());"
 )) {
   $statement->bind_param('s', $order_address);

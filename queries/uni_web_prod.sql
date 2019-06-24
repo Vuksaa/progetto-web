@@ -169,7 +169,7 @@ CREATE TABLE `client_order` (
 
 LOCK TABLES `client_order` WRITE;
 /*!40000 ALTER TABLE `client_order` DISABLE KEYS */;
-INSERT INTO `client_order` VALUES (10,5),(10,6),(10,8),(10,9),(10,10),(10,11),(10,12),(10,13),(10,14),(10,15),(10,16),(10,17),(10,18),(10,19),(10,20),(10,21),(10,22);
+INSERT INTO `client_order` VALUES (10,5),(10,6),(10,8),(10,9),(10,10),(10,11),(10,12),(10,13),(10,14),(10,15),(10,16),(10,17),(10,18),(10,19),(10,20),(10,21),(10,22),(10,23);
 /*!40000 ALTER TABLE `client_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -256,7 +256,7 @@ CREATE TABLE `order` (
   PRIMARY KEY (`order_id`),
   KEY `status_id_idx` (`status_id`),
   CONSTRAINT `status_id` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -265,7 +265,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (5,'Via Romeo Galli 50',2,'2019-05-24 12:19:46'),(6,'Via Domenico Martoni 21',1,'2019-05-24 12:22:48'),(8,'Via Domenico Martoni 21',3,'2019-05-25 12:21:25'),(9,'Corso della Repubblica 3',4,'2019-05-25 12:22:17'),(10,'Via Romeo Galli 50',4,'2019-06-18 16:48:42'),(11,'Via Romeo Galli 50',4,'2019-06-18 16:53:36'),(12,'Via Romeo Galli 50',4,'2019-06-18 16:54:26'),(13,'Via Romeo Galli 50',4,'2019-06-18 16:54:26'),(14,'Via Romeo Galli 50',4,'2019-06-18 16:54:26'),(15,'Via Romeo Galli 50',4,'2019-06-18 16:54:27'),(16,'Via Romeo Galli 50',4,'2019-06-18 16:56:03'),(17,'Via Romeo Galli 50',4,'2019-06-18 17:03:31'),(18,'Via Romeo Galli 50',4,'2019-06-18 17:04:18'),(19,'Via Romeo Galli 50',4,'2019-06-18 17:04:38'),(20,'Via Romeo Galli 50',4,'2019-06-18 17:04:47'),(21,'Via Romeo Galli 50',4,'2019-06-18 17:04:58'),(22,'Via Domenico Martoni 21',4,'2019-06-18 17:05:27');
+INSERT INTO `order` VALUES (5,'Via Romeo Galli 50',2,'2019-05-24 12:19:46'),(6,'Via Domenico Martoni 21',1,'2019-05-24 12:22:48'),(8,'Via Domenico Martoni 21',3,'2019-05-25 12:21:25'),(9,'Corso della Repubblica 3',4,'2019-05-25 12:22:17'),(10,'Via Romeo Galli 50',4,'2019-06-18 16:48:42'),(11,'Via Romeo Galli 50',4,'2019-06-18 16:53:36'),(12,'Via Romeo Galli 50',4,'2019-06-18 16:54:26'),(13,'Via Romeo Galli 50',4,'2019-06-18 16:54:26'),(14,'Via Romeo Galli 50',4,'2019-06-18 16:54:26'),(15,'Via Romeo Galli 50',4,'2019-06-18 16:54:27'),(16,'Via Romeo Galli 50',4,'2019-06-18 16:56:03'),(17,'Via Romeo Galli 50',4,'2019-06-18 17:03:31'),(18,'Via Romeo Galli 50',4,'2019-06-18 17:04:18'),(19,'Via Romeo Galli 50',4,'2019-06-18 17:04:38'),(20,'Via Romeo Galli 50',4,'2019-06-18 17:04:47'),(21,'Via Romeo Galli 50',4,'2019-06-18 17:04:58'),(22,'Via Domenico Martoni 21',4,'2019-06-18 17:05:27'),(23,'Via Romeo Galli 50',3,'2019-06-24 20:29:15');
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -366,7 +366,7 @@ CREATE TABLE `product_order` (
 
 LOCK TABLES `product_order` WRITE;
 /*!40000 ALTER TABLE `product_order` DISABLE KEYS */;
-INSERT INTO `product_order` VALUES (2,10,'',1),(2,11,'',1),(2,12,'',1),(2,13,'',1),(2,14,'',1),(2,15,'',1),(42,5,'23141234',5),(42,16,'',1),(42,17,'',1),(42,18,'',1),(42,19,'',1),(42,20,'',1),(43,5,'CRUDO',2),(43,21,'',1),(43,22,'',1),(44,6,'SPAGHETTIIIIII',2),(45,22,'',1),(46,9,'',1),(47,8,'wow',3),(48,9,'caff?â?¿',2);
+INSERT INTO `product_order` VALUES (2,10,'',1),(2,11,'',1),(2,12,'',1),(2,13,'',1),(2,14,'',1),(2,15,'',1),(42,5,'23141234',5),(42,16,'',1),(42,17,'',1),(42,18,'',1),(42,19,'',1),(42,20,'',1),(42,23,'testtest',11),(43,5,'CRUDO',2),(43,21,'',1),(43,22,'',1),(44,6,'SPAGHETTIIIIII',2),(45,22,'',1),(46,9,'',1),(47,8,'wow',3),(48,9,'caffe',2);
 /*!40000 ALTER TABLE `product_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -557,4 +557,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-24 18:42:43
+-- Dump completed on 2019-06-24 20:30:52

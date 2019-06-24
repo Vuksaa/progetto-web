@@ -58,7 +58,7 @@
 <?php
 if (!isset($_SESSION['statement_fetch_awaiting_orders'])) {
   $_SESSION['statement_fetch_awaiting_orders'] = $conn->prepare(
-    "SELECT o.order_id, o.order_address, p.product_name, s.status_name, s.status_id, po.notes, o.creation_timestamp
+    "SELECT o.order_id, o.order_address, p.product_name, s.status_name, s.status_id, po.notes, o.last_status_update
     FROM uni_web_prod.order o
     JOIN product_order po
     ON o.order_id = po.order_id
@@ -68,7 +68,7 @@ if (!isset($_SESSION['statement_fetch_awaiting_orders'])) {
     ON o.status_id = s.status_id
     WHERE p.provider_id = '".$_SESSION['user_id']."'
     AND o.status_id = 4
-    ORDER BY o.creation_timestamp ASC, o.order_id ASC"
+    ORDER BY o.last_status_update ASC, o.order_id ASC"
   );
 }
 ?>
@@ -95,7 +95,7 @@ function fetchAwaitingOrders() {
           orders.push({
             order_id: it.order_id,
             client_name: it.client_name,
-            creation_timestamp: it.creation_timestamp,
+            last_status_update: it.last_status_update,
             order_address: it.order_address,
             status_id: it.status_id,
             products: []
@@ -112,13 +112,13 @@ function fetchAwaitingOrders() {
         })
       })
       // order by date
-      orders.sort(function(a, b) { return Date.parse(b.creation_timestamp) - Date.parse(a.creation_timestamp) })
+      orders.sort(function(a, b) { return Date.parse(b.last_status_update) - Date.parse(a.last_status_update) })
       $.each(orders, function(index, it) {
         var element = `
         <div class="card orderCard mb-3" data-orderId="` + it.order_id + `">
           <div class="card-body">
             <div class="card-title">
-              <h7 class="text-muted float-right">` + it.creation_timestamp + `</h7>
+              <h7 class="text-muted float-right">` + it.last_status_update + `</h7>
               <h5>` + (it.status_id != 2 ? it.client_name + `'s order` : `<strike>` + it.client_name + `'s order</strike>`) + `</h5>
             </div>
             <h5 class="card-title"></h5>
@@ -170,15 +170,10 @@ $(function() {
   element.append( "<span class='sr-only'>(current)</span>" );
   parent.addClass("active");
   // fetch all orders and place them in their section.
-  $.post({
-    url: "ajax/fetch_recent_orders.php",
-    data: {
-      order_recency: "ALL"
-    }
-  })
+  $.post("ajax/fetch_recent_orders.php")
   .done(function(response) {
-    if (response === 'ERROR') {
-      alert("ERROR");
+    if (response.indexOf('ERROR') != -1) {
+      console.log(response);
     } else {
       var responseArray = JSON.parse(response)
       // take all elements with a distinct order_id and create an "order" element for each order
@@ -192,7 +187,7 @@ $(function() {
           allOrders.push({
             order_id: it.order_id,
             client_name: it.client_name,
-            creation_timestamp: it.creation_timestamp,
+            last_status_update: it.last_status_update,
             order_address: it.order_address,
             status_id: it.status_id,
             products: []
@@ -209,14 +204,14 @@ $(function() {
         })
       })
       // order by date
-      allOrders.sort(function(a, b) { return Date.parse(b.creation_timestamp) - Date.parse(a.creation_timestamp) })
+      allOrders.sort(function(a, b) { return Date.parse(b.last_status_update) - Date.parse(a.last_status_update) })
       // put each order in its section
       $.each(allOrders, function(index, it) {
         var element = `
         <div class="card orderCard mb-3" data-orderId="` + it.order_id + `">
           <div class="card-body">
             <div class="card-title">
-              <h7 class="text-muted float-right">` + it.creation_timestamp + `</h7>
+              <h7 class="text-muted float-right">` + it.last_status_update + `</h7>
               <h5>` + (it.status_id != 2 ? it.client_name + `'s order` : `<strike>` + it.client_name + `'s order</strike>`) + `</h5>
             </div>
             <h5 class="card-title"></h5>
