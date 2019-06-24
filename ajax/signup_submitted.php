@@ -18,33 +18,33 @@ if(!($statement->execute())){
 $statement->store_result();
 if(!($statement->num_rows>0)){
   if($userType==="client") {
-    $name = $_POST['name'];
-    $surname = $_POST['surname'];
+    $cName = $_POST['cName'];
+    $cSurname = $_POST['cSurname'];
     $statement=$conn->prepare("CALL client_add(?,?,?,?)");
-    if(!($statement->bind_param('ssss',$email,$password,$name,$surname))) {
+    if(!($statement->bind_param('ssss',$email,$password,$cName,$cSurname))) {
       echo "ERROR Bind failed.";
     }
     if(!($statement->execute())){
       echo "ERROR Execution failed: ".$statement->error;
     }
-    echo "OK";
+    echo "SIGNUP_SUCCESS";
     $statement->close();
   } else if($userType==="provider") {
-    $name = $_POST['pname'];
-    $address = $_POST['paddress'];
-    $typeId = $_POST['typeId'];
+    $pName = $_POST['pName'];
+    $pAddress = $_POST['pAddress'];
+    $pTypeId = $_POST['pTypeId'];
     $statement=$conn->prepare("CALL provider_add(?,?,?,?,?)");
-    if(!($statement->bind_param('ssssi',$name,$address,$email,$password,$typeId))) {
+    if(!($statement->bind_param('ssssi',$pName,$pAddress,$email,$password,$pTypeId))) {
       echo "ERROR Bind failed.";
     }
     if(!($statement->execute())){
       echo "ERROR Execution failed: ".$statement->error;
     }
-    echo "OK";
+    echo "SIGNUP_SUCCESS";
     $statement->close();
   }
 } else {
-  echo "email already in use";
+  echo "Signup failed. Email already in use.";
 }
 $statement->close();
 include("../fragments/connection-end.php");

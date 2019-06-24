@@ -13,11 +13,11 @@
       <legend class="form-signin-heading">Login</legend>
       <div class="form-group">
         <label for="logEmail" class="sr-only">Email:</label>
-        <input type="email" class="form-control" autocomplete="on" placeholder="Email.." required autofocus id="loginEmail" />
+        <input type="email" class="form-control" autocomplete="username" placeholder="Email.." required autofocus id="loginEmail" />
       </div>
       <div class="form-group">
         <label for="logPassword" class="sr-only">Password:</label>
-        <input type="password" class="form-control" placeholder="Password.." required id="loginPassword" />
+        <input type="password" class="form-control" autocomplete="current-password" placeholder="Password.." required id="loginPassword" />
       </div>
       <button type="submit" class="btn btn-primary btn-lg btn-block" value="Login">
         Login
@@ -38,11 +38,13 @@
 </body>
 <script type="text/javascript">
   $(function() {
-    $(".alert").hide()
-    $("#alertDiv").removeClass("d-none")
+    // Hides the alert
+    $(".alert").hide();
+    $("#alertDiv").removeClass("d-none");
+    // Calls the login_submitted script and sets the alert
     $("form").on('submit', function(e) {
       // prevent the submit button from refreshing the page
-      e.preventDefault()
+      e.preventDefault();
       $.post("ajax/login_submitted.php", {
         email: $("#loginEmail").val(),
         password: $("#loginPassword").val()
@@ -62,10 +64,10 @@
             }, 2500)
           }
         } else {
-          $(".alert.alert-success").fadeOut()
-          $(".alert.alert-danger").fadeOut()
-          $(".alert.alert-danger").text(response)
-          $(".alert.alert-danger").fadeIn()
+          $(".alert-success").fadeOut();
+          $(".alert.alert-danger").fadeOut();
+          $(".alert.alert-danger").text(response);
+          $(".alert.alert-danger").fadeIn();
         }
       })
     })
