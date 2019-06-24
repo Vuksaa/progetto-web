@@ -64,7 +64,7 @@
             }, 2500)
           }
         } else {
-          $(".alert-success").fadeOut();
+          $(".alert.alert-success").fadeOut();
           $(".alert.alert-danger").fadeOut();
           $(".alert.alert-danger").text(response);
           $(".alert.alert-danger").fadeIn();
