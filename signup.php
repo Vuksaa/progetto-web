@@ -35,23 +35,23 @@
       </div>
       <div class="form-group">
         <label for="signName" class="sr-only">Name:</label>
-        <input type="text" class="form-control" name="name" autocomplete="on" placeholder="client Name.." required id="signName" />
+        <input type="text" class="form-control" name="name" autocomplete="on" placeholder="Name.." required id="signName" />
       </div>
       <div class="form-group">
         <label for="signSurname" class="sr-only">Surname:</label>
-        <input type="text" class="form-control" name="surname" autocomplete="on" placeholder="client Surname.." required id="signSurname" />
+        <input type="text" class="form-control" name="surname" autocomplete="on" placeholder="Surname.." required id="signSurname" />
       </div>
       <div class="form-group">
         <label for="signPName" class="sr-only">PName:</label>
-        <input type="text" class="form-control" name="pname" autocomplete="on" placeholder="provider name.." required id="signPName" hidden />
+        <input type="text" class="form-control" name="pname" autocomplete="on" placeholder="Name.." required id="signPName" hidden />
       </div>
       <div class="form-group">
         <label for="signPAddress" class="sr-only">PAddress:</label>
-        <input type="text" class="form-control" name="paddress" autocomplete="on" placeholder="provider address.." required id="signPAddress" hidden />
+        <input type="text" class="form-control" name="paddress" autocomplete="on" placeholder="Address.." required id="signPAddress" hidden />
       </div>
       <div class="form-group">
         <label for="signPType" class="sr-only">PType:</label>
-        <input type="number" class="form-control" name="typeId" autocomplete="on" placeholder="provider type id.." required id="signPType" hidden />
+        <input type="number" class="form-control" name="typeId" autocomplete="on" placeholder="Type id.." required id="signPType" hidden />
       </div>
       <button type="submit" class="btn btn-primary btn-lg btn-block" value="userSignup">
         Signup
