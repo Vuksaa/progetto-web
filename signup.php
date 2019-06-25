@@ -52,7 +52,7 @@
           </div>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" id="clientName">
         <label for="signName" class="sr-only">Client Name:</label>
         <input type="text" class="form-control" name="name" autocomplete="on" placeholder="Name.." required id="signName" />
         <div class="valid-feedback">
@@ -62,7 +62,7 @@
           Please provide a name!
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" id="clientSurname">
         <label for="signSurname" class="sr-only">Client Surname:</label>
         <input type="text" class="form-control" name="surname" autocomplete="on" placeholder="Surname.." required id="signSurname" />
         <div class="valid-feedback">
@@ -72,19 +72,19 @@
           Please provide a Surname!
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" hidden id="providerName">
         <label for="signPName" class="sr-only">Provider Name:</label>
-        <input type="text" class="form-control" name="pname" autocomplete="on" placeholder="Name.." id="signPName" hidden />
-        <div class="valid-feedback">
+        <input type="text" class="form-control" name="pname" autocomplete="on" placeholder="Name.." id="signPName"  />
+        <div class="valid-feedback" >
           Valid Name!
         </div>
-        <div class="invalid-feedback">
+        <div class="invalid-feedback" >
           Please provide a Name!
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" hidden id="providerAddress">
         <label for="signPAddress" class="sr-only">Provider Address:</label>
-        <input type="text" class="form-control" name="paddress" autocomplete="on" placeholder="Address.." id="signPAddress" hidden />
+        <input type="text" class="form-control" name="paddress" autocomplete="on" placeholder="Address.." id="signPAddress"  />
         <div class="valid-feedback">
           Valid Address!
         </div>
@@ -92,9 +92,9 @@
           Please provide an Address!
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" hidden id="providerType">
         <label for="signPType" class="sr-only">Provider Type:</label>
-        <input type="number" class="form-control" name="typeId" autocomplete="on" placeholder="Type id.." id="signPType" hidden />
+        <input type="number" class="form-control" name="typeId" autocomplete="on" placeholder="Type id.." id="signPType"  />
         <div class="valid-feedback">
           Valid Type!
         </div>
@@ -126,6 +126,7 @@
     'use strict';
     var form = $("form");
     form.on('submit', function(event) {
+      // Checks form's validity
       if (form[0].checkValidity() === false) {
         event.preventDefault();
         event.stopPropagation();
@@ -134,16 +135,16 @@
         var vemail = $("#signEmail").val();
         var vpassword = $("#signPassword").val();
         var vuserType = $("[type=radio][name=userType]").val();
-        var vcName = $("#signName");
-        var vcSurname = $("#signSurname");
-        var vpName = $("#signPName");
-        var vpAddress = $("#signPAddress");
-        var vpTypeId = $("#signPType");
-        vcName = vcName.prop("hidden") ? "" : vcName.val();
+        var vcName = $("#signName").val();
+        var vcSurname = $("#signSurname").val();
+        var vpName = $("#signPName").val();
+        var vpAddress = $("#signPAddress").val();
+        var vpTypeId = $("#signPType").val();
+      /* vcName = vcName.prop("hidden") ? "" : vcName.val();
         vcSurname = vcSurname.prop("hidden") ? "" : vcSurname.val();
         vpName = vpName.prop("hidden") ? "" : vpName.val();
         vpAddress = vpAddress.prop("hidden") ? "" : vpAddress.val();
-        vpTypeId = vpTypeId.prop("hidden") ? "" : vpTypeId.val();
+        vpTypeId = vpTypeId.prop("hidden") ? "" : vpTypeId.val();*/
         var data = {
           email: vemail,
           password: vpassword,
@@ -175,33 +176,38 @@
     });
     // Shows/hides form inputs depending on user type selected
     $('[type=radio][name=userType]').change(function() {
-      var cName = $("#signName");
-      var cSurname = $("#signSurname");
-      var pName = $("#signPName");
-      var pAddress = $("#signPAddress");
-      var pType = $("#signPType");
+      var cName = $("#clientName");
+      var cSurname = $("#clientSurname");
+      var pName = $("#providerName");
+      var pAddress = $("#providerAddress");
+      var pType = $("#providerType");
+      var icName = $("#signName");
+      var icSurname = $("#signSurname");
+      var ipName = $("#signPName");
+      var ipAddress = $("#signPAddress");
+      var ipType = $("#signPType");
       if (this.value === 'client') {
         cName.prop("hidden", false);
         cSurname.prop("hidden", false);
         pName.prop("hidden", true);
         pAddress.prop("hidden", true);
         pType.prop("hidden", true);
-        cName.prop("required", true);
-        cSurname.prop("required", true);
-        pName.prop("required", false);
-        pAddress.prop("required", false);
-        pType.prop("required", false);
+        icName.prop("required", true);
+        icSurname.prop("required", true);
+        ipName.prop("required", false);
+        ipAddress.prop("required", false);
+        ipType.prop("required", false);
       } else if (this.value === 'provider') {
         cName.prop("hidden", true);
         cSurname.prop("hidden", true);
         pName.prop("hidden", false);
         pAddress.prop("hidden", false);
         pType.prop("hidden", false);
-        cName.prop("required", false);
-        cSurname.prop("required", false);
-        pName.prop("required", true);
-        pAddress.prop("required", true);
-        pType.prop("required", true);
+        icName.prop("required", false);
+        icSurname.prop("required", false);
+        ipName.prop("required", true);
+        ipAddress.prop("required", true);
+        ipType.prop("required", true);
       }
     });
 
