@@ -21,7 +21,7 @@ if (!ISSET($_SESSION['last_awaiting_orders_fetch_timestamp'])) {
     ON co.client_id = c.client_id
     WHERE p.provider_id = '".$_SESSION['user_id']."'
     AND o.status_id = 4
-    AND '".$_SESSION['last_awaiting_orders_fetch_timestamp']."' < o.creation_timestamp"
+    AND '".$_SESSION['last_awaiting_orders_fetch_timestamp']."' <= o.creation_timestamp"
   )) {
     $_SESSION['last_awaiting_orders_fetch_timestamp'] = date("Y-m-d H:i:s", mktime());
     $array = array();

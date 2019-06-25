@@ -135,7 +135,7 @@ function fetchAwaitingOrders() {
     }
   })
   .always(function() {
-    setTimeout(fetchAwaitingOrders, 1000)
+    setTimeout(fetchAwaitingOrders, 1100)
     lastOrderFetch = $.now()
   })
 }
@@ -289,9 +289,9 @@ $(function() {
     }
   })
   .always(function() {
-      setTimeout(fetchAwaitingOrders, 1000)
-      lastOrderFetch = $.now()
-    })
+    setTimeout(fetchAwaitingOrders, 1100)
+    lastOrderFetch = $.now()
+  })
 })
 
 function btnAcceptClick(e) {

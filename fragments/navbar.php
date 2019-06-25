@@ -39,9 +39,6 @@
   </nav>
   <div aria-live="polite" aria-atomic="true" style="position: relative;">
     <div class="pr-3 pt-3" id="notificationArea" style="position: absolute; top: 0; right: 0;">
-      <button type="button" id="notificationTest" class="btn btn-primary">
-        Notification
-      </button>
     </div>
   </div>
 </div>
@@ -60,7 +57,6 @@ function createToast(title, subtitle, body, icon) {
     </div>
   </div>`)
   $("#notificationArea").append(toast)
-  toast.toast('show')
   var array = []
   array['element'] = toast
   array['title'] = toast.find(".toast-title")
