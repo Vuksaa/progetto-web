@@ -12,11 +12,13 @@ function fetchOrderUpdates() {
         var responseArray = JSON.parse(response)
         $.each(responseArray,
           function(index, it) {
-            createToast(
-              it.status_name,
-              it.last_status_update,
-              "Il tuo ordine per " + it.order_address + " ha cambiato stato."
-            )
+            if (it.status_id != 4) {
+              createToast(
+                it.status_name,
+                it.last_status_update,
+                "Il tuo ordine per " + it.order_address + " ha cambiato stato."
+              )
+            }
           }
         )
       }
