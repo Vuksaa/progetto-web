@@ -126,18 +126,17 @@
     $("#alertDiv").removeClass("d-none");
     var form = $("form");
     form.on('submit', function(event) {
+      event.preventDefault();
       // Checks form's validity
       var vconfPassword = $("#signConfirmPassword");
       var vpassword = $("#signPassword").val();
       if(vconfPassword.val()!==vpassword){
-        event.preventDefault();
         event.stopPropagation();
         vconfPassword[0].setCustomValidity("Passwords don't match!");
       } else {
         vconfPassword[0].setCustomValidity("");
       }
       if (form[0].checkValidity() === false) {
-        event.preventDefault();
         event.stopPropagation();
       } else {
         //  Calls the signup_submitted script and sets the alert
