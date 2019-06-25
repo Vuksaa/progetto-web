@@ -120,31 +120,34 @@
 </body>
 <script type="text/javascript">
   $(function() {
+    'use strict';
     // Hides the alert
     $(".alert").hide();
     $("#alertDiv").removeClass("d-none");
-    'use strict';
     var form = $("form");
     form.on('submit', function(event) {
       // Checks form's validity
+      var vconfPassword = $("#signConfirmPassword");
+      var vpassword = $("#signPassword").val();
+      if(vconfPassword.val()!==vpassword){
+        event.preventDefault();
+        event.stopPropagation();
+        vconfPassword[0].setCustomValidity("Passwords don't match!");
+      } else {
+        vconfPassword[0].setCustomValidity("");
+      }
       if (form[0].checkValidity() === false) {
         event.preventDefault();
         event.stopPropagation();
       } else {
         //  Calls the signup_submitted script and sets the alert
         var vemail = $("#signEmail").val();
-        var vpassword = $("#signPassword").val();
         var vuserType = $("[type=radio][name=userType]").val();
         var vcName = $("#signName").val();
         var vcSurname = $("#signSurname").val();
         var vpName = $("#signPName").val();
         var vpAddress = $("#signPAddress").val();
         var vpTypeId = $("#signPType").val();
-      /* vcName = vcName.prop("hidden") ? "" : vcName.val();
-        vcSurname = vcSurname.prop("hidden") ? "" : vcSurname.val();
-        vpName = vpName.prop("hidden") ? "" : vpName.val();
-        vpAddress = vpAddress.prop("hidden") ? "" : vpAddress.val();
-        vpTypeId = vpTypeId.prop("hidden") ? "" : vpTypeId.val();*/
         var data = {
           email: vemail,
           password: vpassword,
@@ -210,7 +213,6 @@
         ipType.prop("required", true);
       }
     });
-
   });
 </script>
 <?php include("fragments/connection-end.php"); ?>
