@@ -32,5 +32,5 @@
 # To dump a database
 * Navigate to your Xampp directory.
 * Go to mysql\bin
-* Run the following command: `mysqldump -u root -p uni_web_prod > filename.sql`
+* Run the following command: `mysqldump -u root -p uni_web_prod > uni_web_prod.sql`
 * Password is (should be) blank
