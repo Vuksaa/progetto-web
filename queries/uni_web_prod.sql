@@ -169,7 +169,7 @@ CREATE TABLE `client_order` (
 
 LOCK TABLES `client_order` WRITE;
 /*!40000 ALTER TABLE `client_order` DISABLE KEYS */;
-INSERT INTO `client_order` VALUES (10,5),(10,6),(10,8),(10,9),(10,10),(10,11),(10,12),(10,13),(10,14),(10,15),(10,16),(10,17),(10,18),(10,19),(10,20),(10,21),(10,22),(10,23);
+INSERT INTO `client_order` VALUES (10,5),(10,6),(10,8),(10,9),(10,10),(10,11),(10,12),(10,13),(10,14),(10,15),(10,16),(10,17),(10,18),(10,19),(10,20),(10,21),(10,22),(10,23),(10,24),(10,25),(10,26),(10,27),(10,28),(10,29);
 /*!40000 ALTER TABLE `client_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -254,10 +254,11 @@ CREATE TABLE `order` (
   `status_id` int(11) NOT NULL DEFAULT '4',
   `last_status_update` datetime NOT NULL,
   `creation_timestamp` datetime NOT NULL,
+  `rejection_reason` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`order_id`),
   KEY `status_id_idx` (`status_id`),
   CONSTRAINT `status_id` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -266,7 +267,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (5,'Via Romeo Galli 50',2,'2019-05-24 12:19:46','2019-05-24 12:19:46'),(6,'Via Domenico Martoni 21',1,'2019-05-24 12:22:48','2019-05-24 12:22:48'),(8,'Via Domenico Martoni 21',3,'2019-05-25 12:21:25','2019-05-25 12:21:25'),(9,'Corso della Repubblica 3',2,'2019-06-24 20:42:16','2019-06-24 20:42:16'),(10,'Via Romeo Galli 50',4,'2019-06-18 16:48:42','2019-06-18 16:48:42'),(11,'Via Romeo Galli 50',4,'2019-06-18 16:53:36','2019-06-18 16:53:36'),(12,'Via Romeo Galli 50',4,'2019-06-18 16:54:26','2019-06-18 16:54:26'),(13,'Via Romeo Galli 50',4,'2019-06-18 16:54:26','2019-06-18 16:54:26'),(14,'Via Romeo Galli 50',4,'2019-06-18 16:54:26','2019-06-18 16:54:26'),(15,'Via Romeo Galli 50',4,'2019-06-18 16:54:27','2019-06-18 16:54:27'),(16,'Via Romeo Galli 50',2,'2019-06-24 20:43:33','2019-06-24 20:43:33'),(17,'Via Romeo Galli 50',1,'2019-06-24 20:43:36','2019-06-24 20:43:36'),(18,'Via Romeo Galli 50',4,'2019-06-18 17:04:18','2019-06-18 17:04:18'),(19,'Via Romeo Galli 50',4,'2019-06-18 17:04:38','2019-06-18 17:04:38'),(20,'Via Romeo Galli 50',4,'2019-06-18 17:04:47','2019-06-18 17:04:47'),(21,'Via Romeo Galli 50',4,'2019-06-18 17:04:58','2019-06-18 17:04:58'),(22,'Via Domenico Martoni 21',4,'2019-06-18 17:05:27','2019-06-18 17:05:27'),(23,'Via Romeo Galli 50',3,'2019-06-24 20:29:15','2019-06-24 20:29:15');
+INSERT INTO `order` VALUES (5,'Via Romeo Galli 50',2,'2019-05-24 12:19:46','2019-05-24 12:19:46',NULL),(6,'Via Domenico Martoni 21',1,'2019-05-24 12:22:48','2019-05-24 12:22:48',NULL),(8,'Via Domenico Martoni 21',3,'2019-05-25 12:21:25','2019-05-25 12:21:25',NULL),(9,'Corso della Repubblica 3',2,'2019-06-24 20:42:16','2019-06-24 20:42:16',NULL),(10,'Via Romeo Galli 50',4,'2019-06-18 16:48:42','2019-06-18 16:48:42',NULL),(11,'Via Romeo Galli 50',4,'2019-06-18 16:53:36','2019-06-18 16:53:36',NULL),(12,'Via Romeo Galli 50',4,'2019-06-18 16:54:26','2019-06-18 16:54:26',NULL),(13,'Via Romeo Galli 50',4,'2019-06-18 16:54:26','2019-06-18 16:54:26',NULL),(14,'Via Romeo Galli 50',4,'2019-06-18 16:54:26','2019-06-18 16:54:26',NULL),(15,'Via Romeo Galli 50',4,'2019-06-18 16:54:27','2019-06-18 16:54:27',NULL),(16,'Via Romeo Galli 50',2,'2019-06-24 20:43:33','2019-06-24 20:43:33',NULL),(17,'Via Romeo Galli 50',1,'2019-06-24 20:43:36','2019-06-24 20:43:36',NULL),(18,'Via Romeo Galli 50',1,'2019-06-25 21:26:07','2019-06-18 17:04:18',NULL),(19,'Via Romeo Galli 50',1,'2019-06-25 21:26:08','2019-06-18 17:04:38',NULL),(20,'Via Romeo Galli 50',1,'2019-06-25 21:26:10','2019-06-18 17:04:47',NULL),(21,'Via Romeo Galli 50',1,'2019-06-25 21:26:11','2019-06-18 17:04:58',NULL),(22,'Via Domenico Martoni 21',2,'2019-06-25 21:42:23','2019-06-18 17:05:27','1234'),(23,'Via Romeo Galli 50',3,'2019-06-24 20:29:15','2019-06-24 20:29:15',NULL),(24,'Via Romeo Galli 50',2,'2019-06-25 21:45:48','2019-06-25 21:37:22','PROVA'),(25,'Via Romeo Galli 50',2,'2019-06-25 21:46:00','2019-06-25 21:37:24',''),(26,'Via Domenico Martoni 21',2,'2019-06-25 21:46:56','2019-06-25 21:45:35','oggi non mangi'),(27,'Via Domenico Martoni 21',1,'2019-06-25 21:46:46','2019-06-25 21:45:35',NULL),(28,'Via Domenico Martoni 21',1,'2019-06-25 21:51:26','2019-06-25 21:45:36',NULL),(29,'Via Romeo Galli 50',2,'2019-06-25 21:51:39','2019-06-25 21:47:18','gfhgfhfhgfhgf');
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -367,7 +368,7 @@ CREATE TABLE `product_order` (
 
 LOCK TABLES `product_order` WRITE;
 /*!40000 ALTER TABLE `product_order` DISABLE KEYS */;
-INSERT INTO `product_order` VALUES (2,10,'',1),(2,11,'',1),(2,12,'',1),(2,13,'',1),(2,14,'',1),(2,15,'',1),(42,5,'23141234',5),(42,16,'',1),(42,17,'',1),(42,18,'',1),(42,19,'',1),(42,20,'',1),(42,23,'testtest',11),(43,5,'CRUDO',2),(43,21,'',1),(43,22,'',1),(44,6,'SPAGHETTIIIIII',2),(45,22,'',1),(46,9,'',1),(47,8,'wow',3),(48,9,'caffe',2);
+INSERT INTO `product_order` VALUES (2,10,'',1),(2,11,'',1),(2,12,'',1),(2,13,'',1),(2,14,'',1),(2,15,'',1),(42,5,'23141234',5),(42,16,'',1),(42,17,'',1),(42,18,'',1),(42,19,'',1),(42,20,'',1),(42,23,'testtest',11),(42,24,'',1),(42,25,'',1),(42,26,'',1),(42,27,'',1),(42,28,'',1),(43,5,'CRUDO',2),(43,21,'',1),(43,22,'',1),(44,6,'SPAGHETTIIIIII',2),(45,22,'',1),(45,29,'',1),(46,9,'',1),(47,8,'wow',3),(48,9,'caffe',2);
 /*!40000 ALTER TABLE `product_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -558,4 +559,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-25 15:57:17
+-- Dump completed on 2019-06-25 21:54:20

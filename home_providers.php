@@ -52,9 +52,33 @@
   </div>
 </div>
 
+
+<div class="modal fade" id="modalReject" tabindex="-1" role="dialog" aria-labelledby="modalLabelReject" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title ml-2 mr-2" id="modalLabelReject">Reject order</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body ml-2 mr-2">
+        <label id="rejectLabel">Reason</label>
+        <textarea maxlength="200" class="form-control" aria-labelledby="rejectReason" id="rejectNotes"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btnRejectConfirm" onclick="btnRejectConfirmClick(this)" data-dismiss="modal">
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <?php include("fragments/footer.php"); ?>
 </body>
 <script type="text/javascript">
+var orderToReject = []
 function fetchAwaitingOrders() {
   $.post("ajax/fetch_awaiting_orders.php")
   .done(function(response) {
@@ -68,7 +92,6 @@ function fetchAwaitingOrders() {
           (t) => (t.order_id === arr.order_id))
         ),
         function(index, it) {
-          console.log("ORDER")
           orders.push({
             order_id: it.order_id,
             client_name: it.client_name,
@@ -126,7 +149,7 @@ function fetchAwaitingOrders() {
         element += `
             <div class="btn-group btn-group-justified pt-2">
               <button class="btn btn-primary inline btnAccept" onclick="btnAcceptClick(this)">Accept</button>
-              <button class="btn btn-primary inline btnReject" onclick="btnRejectClick(this)">Reject</button>
+              <button class="btn btn-primary inline btnReject" onclick="btnRejectClick(this)" data-toggle="modal" data-target="#modalReject">Reject</button>
             </div>
           </div>
         </div>`
@@ -219,7 +242,7 @@ $(function() {
           element += `
               <div class="btn-group btn-group-justified pt-2">
                 <button class="btn btn-primary inline btnAccept" onclick="btnAcceptClick(this)">Accept</button>
-                <button class="btn btn-primary inline btnReject" onclick="btnRejectClick(this)">Reject</button>
+                <button class="btn btn-primary inline btnReject" onclick="btnRejectClick(this)" data-toggle="modal" data-target="#modalReject">Reject</button>
               </div>
             </div>
           </div>`
@@ -314,13 +337,19 @@ function btnAcceptClick(e) {
 }
 
 function btnRejectClick(e) {
-  var orderId = $(e).parent().parent().parent().data('orderid')
+  $("#rejectNotes").val("")
+  orderToReject['orderId'] = $(e).parent().parent().parent().data('orderid')
+  orderToReject['buttonBar'] = $(e).parent()
+}
+
+function btnRejectConfirmClick(e) {
   $.post("ajax/change_order_state.php", {
-    order_id: orderId,
+    order_id: orderToReject['orderId'],
+    reason: $("#rejectNotes").val(),
     new_state: 2
   }).done(function(result) {
     if (result === "SUCCESS") {
-      var buttonBar = $(e).parent()
+      var buttonBar = orderToReject['buttonBar']
       var orderCard = buttonBar.parent().parent()
       orderCard.slideUp(400, function() {
         orderCard.detach().appendTo("#ordersCompleted")

@@ -16,7 +16,8 @@ function fetchOrderUpdates() {
               var toast = createToast(
                 "Ordine " + it.status_name.toLowerCase(),
                 it.last_status_update,
-                "Il tuo ordine per " + it.order_address + " delle " + it.creation_time + " ha cambiato stato",
+                "Il tuo ordine per " + it.order_address + " delle " + it.creation_time + " ha cambiato stato" +
+                (it.status_id == 2 ? it.rejection_reason == "" ? ". Motivo non specificato" : ". Motivo: " + it.rejection_reason : ""),
                 "far fa-" + (it.status_id == 2 ? "times" : "check") + "-circle"
               )
               toast['header'].css('background-color', it.status_id == 2 ? '#b72a00' : '#1a8400')

@@ -7,7 +7,7 @@ if (!ISSET($_SESSION['last_order_update_timestamp'])) {
 } else {
   $now = date("Y-m-d H:i:s", mktime());
   if ($orderUpdate = $conn->query(
-    "SELECT co.client_id, o.order_id, o.last_status_update, o.order_address, o.status_id, s.status_name, DATE_FORMAT(o.creation_timestamp, '%H:%i') AS 'creation_time'
+    "SELECT co.client_id, o.order_id, o.last_status_update, o.order_address, o.status_id, s.status_name, DATE_FORMAT(o.creation_timestamp, '%H:%i') AS 'creation_time', o.rejection_reason
     FROM `order` o
     LEFT JOIN `client_order` co
     ON o.order_id = co.order_id
