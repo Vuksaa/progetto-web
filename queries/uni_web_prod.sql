@@ -106,7 +106,7 @@ CREATE TABLE `client` (
   `client_surname` varchar(45) NOT NULL,
   PRIMARY KEY (`client_id`),
   UNIQUE KEY `client_email` (`client_email`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -253,6 +253,7 @@ CREATE TABLE `order` (
   `order_address` varchar(90) NOT NULL,
   `status_id` int(11) NOT NULL DEFAULT '4',
   `last_status_update` datetime NOT NULL,
+  `creation_timestamp` datetime NOT NULL,
   PRIMARY KEY (`order_id`),
   KEY `status_id_idx` (`status_id`),
   CONSTRAINT `status_id` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -265,7 +266,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (5,'Via Romeo Galli 50',2,'2019-05-24 12:19:46'),(6,'Via Domenico Martoni 21',1,'2019-05-24 12:22:48'),(8,'Via Domenico Martoni 21',3,'2019-05-25 12:21:25'),(9,'Corso della Repubblica 3',4,'2019-05-25 12:22:17'),(10,'Via Romeo Galli 50',4,'2019-06-18 16:48:42'),(11,'Via Romeo Galli 50',4,'2019-06-18 16:53:36'),(12,'Via Romeo Galli 50',4,'2019-06-18 16:54:26'),(13,'Via Romeo Galli 50',4,'2019-06-18 16:54:26'),(14,'Via Romeo Galli 50',4,'2019-06-18 16:54:26'),(15,'Via Romeo Galli 50',4,'2019-06-18 16:54:27'),(16,'Via Romeo Galli 50',4,'2019-06-18 16:56:03'),(17,'Via Romeo Galli 50',4,'2019-06-18 17:03:31'),(18,'Via Romeo Galli 50',4,'2019-06-18 17:04:18'),(19,'Via Romeo Galli 50',4,'2019-06-18 17:04:38'),(20,'Via Romeo Galli 50',4,'2019-06-18 17:04:47'),(21,'Via Romeo Galli 50',4,'2019-06-18 17:04:58'),(22,'Via Domenico Martoni 21',4,'2019-06-18 17:05:27'),(23,'Via Romeo Galli 50',3,'2019-06-24 20:29:15');
+INSERT INTO `order` VALUES (5,'Via Romeo Galli 50',2,'2019-05-24 12:19:46','2019-05-24 12:19:46'),(6,'Via Domenico Martoni 21',1,'2019-05-24 12:22:48','2019-05-24 12:22:48'),(8,'Via Domenico Martoni 21',3,'2019-05-25 12:21:25','2019-05-25 12:21:25'),(9,'Corso della Repubblica 3',2,'2019-06-24 20:42:16','2019-06-24 20:42:16'),(10,'Via Romeo Galli 50',4,'2019-06-18 16:48:42','2019-06-18 16:48:42'),(11,'Via Romeo Galli 50',4,'2019-06-18 16:53:36','2019-06-18 16:53:36'),(12,'Via Romeo Galli 50',4,'2019-06-18 16:54:26','2019-06-18 16:54:26'),(13,'Via Romeo Galli 50',4,'2019-06-18 16:54:26','2019-06-18 16:54:26'),(14,'Via Romeo Galli 50',4,'2019-06-18 16:54:26','2019-06-18 16:54:26'),(15,'Via Romeo Galli 50',4,'2019-06-18 16:54:27','2019-06-18 16:54:27'),(16,'Via Romeo Galli 50',2,'2019-06-24 20:43:33','2019-06-24 20:43:33'),(17,'Via Romeo Galli 50',1,'2019-06-24 20:43:36','2019-06-24 20:43:36'),(18,'Via Romeo Galli 50',4,'2019-06-18 17:04:18','2019-06-18 17:04:18'),(19,'Via Romeo Galli 50',4,'2019-06-18 17:04:38','2019-06-18 17:04:38'),(20,'Via Romeo Galli 50',4,'2019-06-18 17:04:47','2019-06-18 17:04:47'),(21,'Via Romeo Galli 50',4,'2019-06-18 17:04:58','2019-06-18 17:04:58'),(22,'Via Domenico Martoni 21',4,'2019-06-18 17:05:27','2019-06-18 17:05:27'),(23,'Via Romeo Galli 50',3,'2019-06-24 20:29:15','2019-06-24 20:29:15');
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -557,4 +558,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-24 20:30:52
+-- Dump completed on 2019-06-25 15:57:17

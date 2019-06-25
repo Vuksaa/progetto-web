@@ -3,7 +3,7 @@ include("../fragments/connection-begin.php");
 session_start();
 // only select the orders that were created in the last week
 if ($allOrders = $conn->query(
-  "SELECT o.order_id, c.client_name, o.order_address, p.product_name, s.status_name, s.status_id, po.notes, po.quantity, o.last_status_update
+  "SELECT o.order_id, c.client_name, o.order_address, p.product_name, s.status_name, s.status_id, po.notes, po.quantity, o.creation_timestamp
   FROM uni_web_prod.order o
   JOIN product_order po
   ON o.order_id = po.order_id
