@@ -5,7 +5,7 @@ if (!ISSET($_SESSION['last_awaiting_orders_fetch_timestamp'])) {
   $_SESSION['last_awaiting_orders_fetch_timestamp'] = date("Y-m-d H:i:s", mktime());
   echo "EMPTY";
 } else {
-  // only select the orders that were created in the last week
+  $now = date("Y-m-d H:i:s", mktime());
   if ($awaitingOrders = $conn->query(
     "SELECT o.order_id, c.client_name, o.order_address, p.product_name, s.status_name, s.status_id, po.notes, po.quantity, o.creation_timestamp
     FROM uni_web_prod.order o
@@ -21,9 +21,10 @@ if (!ISSET($_SESSION['last_awaiting_orders_fetch_timestamp'])) {
     ON co.client_id = c.client_id
     WHERE p.provider_id = '".$_SESSION['user_id']."'
     AND o.status_id = 4
-    AND '".$_SESSION['last_awaiting_orders_fetch_timestamp']."' <= o.creation_timestamp"
+    AND '".$_SESSION['last_awaiting_orders_fetch_timestamp']."' <= o.creation_timestamp
+    AND o.creation_timestamp < '".$now."';"
   )) {
-    $_SESSION['last_awaiting_orders_fetch_timestamp'] = date("Y-m-d H:i:s", mktime());
+    $_SESSION['last_awaiting_orders_fetch_timestamp'] = $now;
     $array = array();
     while ($row = $awaitingOrders->fetch_assoc()) {
       $array[] = $row;

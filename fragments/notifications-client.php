@@ -8,7 +8,7 @@ function fetchOrderUpdates() {
     if (response.indexOf("ERROR") != -1) {
       console.log(response)
     } else {
-    if (response !== 'EMPTY') {
+      if (response !== "EMPTY") {
         var responseArray = JSON.parse(response)
         $.each(responseArray,
           function(index, it) {
@@ -29,8 +29,7 @@ function fetchOrderUpdates() {
     }
   })
   .always(function() {
-    // the timeout must be atleast 1 second, so that notifications are never displayed more than once
-    setTimeout(fetchOrderUpdates, 1100)
+    setTimeout(fetchOrderUpdates, 1000)
   })
 }
 </script>

@@ -55,7 +55,6 @@
 <?php include("fragments/footer.php"); ?>
 </body>
 <script type="text/javascript">
-var lastOrderFetch = 0;
 function fetchAwaitingOrders() {
   $.post("ajax/fetch_awaiting_orders.php")
   .done(function(response) {
@@ -69,6 +68,7 @@ function fetchAwaitingOrders() {
           (t) => (t.order_id === arr.order_id))
         ),
         function(index, it) {
+          console.log("ORDER")
           orders.push({
             order_id: it.order_id,
             client_name: it.client_name,
@@ -135,8 +135,7 @@ function fetchAwaitingOrders() {
     }
   })
   .always(function() {
-    setTimeout(fetchAwaitingOrders, 1100)
-    lastOrderFetch = $.now()
+    setTimeout(fetchAwaitingOrders, 1000)
   })
 }
 
@@ -289,8 +288,7 @@ $(function() {
     }
   })
   .always(function() {
-    setTimeout(fetchAwaitingOrders, 1100)
-    lastOrderFetch = $.now()
+    setTimeout(fetchAwaitingOrders, 1000)
   })
 })
 
