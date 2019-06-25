@@ -1,5 +1,5 @@
 <!-- The navbar fragment also contains functions and HTML elements used for toast notifications -->
-<?php include("fragments/".$_SESSION['user_type']."-notifications.php"); ?>
+<?php include("fragments/notifications-".$_SESSION['user_type'].".php"); ?>
 <div class="sticky-top">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" <?php echo ($_SESSION['user_type'] == 'client') ? 'href="home_clients.php"' : 'href="home_providers.php"'; ?>>
@@ -39,24 +39,35 @@
   </nav>
   <div aria-live="polite" aria-atomic="true" style="position: relative;">
     <div class="pr-3 pt-3" id="notificationArea" style="position: absolute; top: 0; right: 0;">
+      <button type="button" id="notificationTest" class="btn btn-primary">
+        Notification
+      </button>
     </div>
   </div>
 </div>
 <script type="text/javascript">
-function createToast(title, subtitle, description) {
+function createToast(title, subtitle, body, icon) {
   var toast = $(`<div class="toast" role="alert" aria-live="assertive" aria-atomic="false" data-autohide="false" style="min-width: 230px; max-width: 450px">
     <div class="toast-header">
-      <strong class="mr-auto pr-2">` + title + `</strong>
-      <small class="pl-2">` + subtitle + `</small>
+      <strong class="mr-auto pr-2 toast-title"><i class="mr-1 toast-icon ` + icon + `"></i>` + title + `</strong>
+      <small class="pl-2 toast-subtitle">` + subtitle + `</small>
       <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="toast-body">
-      ` + description + `
+      ` + body + `
     </div>
   </div>`)
   $("#notificationArea").append(toast)
   toast.toast('show')
+  var array = []
+  array['element'] = toast
+  array['title'] = toast.find(".toast-title")
+  array['header'] = toast.find(".toast-header")
+  array['subtitle'] = toast.find(".toast-subtitle")
+  array['body'] = toast.find(".toast-body")
+  array['icon'] = toast.find(".toast-icon")
+  return array
 }
 </script>

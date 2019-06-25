@@ -13,11 +13,14 @@ function fetchOrderUpdates() {
         $.each(responseArray,
           function(index, it) {
             if (it.status_id != 4) {
-              createToast(
+              var toast = createToast(
                 it.status_name,
                 it.last_status_update,
-                "Il tuo ordine per " + it.order_address + " ha cambiato stato."
+                "Il tuo ordine per " + it.address + " ha cambiato stato",
+                "far fa-" + (it.status_id == 2 ? "times" : "check") + "-circle"
               )
+              toast['header'].css('background-color', it.status_id == 2 ? '#b72a00' : '#1a8400')
+              toast['header'].css('color', 'white')
             }
           }
         )
