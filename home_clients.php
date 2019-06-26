@@ -20,7 +20,7 @@
 
   <div class="container mt-4 mb-4">
     <h4 class="display-4 pb-2">Provider list</h4>
-    <button type="button" class="btn btn-outline-info col-sm-2 col-m-2" id="btnFilters" data-toggle="modal" data-target="#modalFilters" aria-label="Click to open filter menu modal">
+    <button type="button" class="btn btn-outline-info col-sm col-md-3 col-lg-2" id="btnFilters" data-toggle="modal" data-target="#modalFilters" aria-label="Click to open filter menu modal">
       Filters <span id="filterState" style="color: black;">(no filters)</span>
     </button>
     <div class="container accordion mt-4 mb-4" id="mainAccordion">
