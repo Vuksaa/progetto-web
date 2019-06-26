@@ -20,7 +20,7 @@
 
   <div class="container mt-4 mb-4">
     <h4 class="display-4 pb-2">Provider list</h4>
-    <button type="button" class="btn btn-outline-info col-sm-2" id="btnFilters" data-toggle="modal" data-target="#modalFilters" aria-label="Click to open filter menu modal">
+    <button type="button" class="btn btn-outline-info col-sm-2 col-m-2" id="btnFilters" data-toggle="modal" data-target="#modalFilters" aria-label="Click to open filter menu modal">
       Filters <span id="filterState" style="color: black;">(no filters)</span>
     </button>
     <div class="container accordion mt-4 mb-4" id="mainAccordion">
@@ -63,17 +63,18 @@
                                               ON p.provider_id = pc.provider_id
                                               LEFT JOIN category c
                                               ON c.category_id = pc.category_id
-                                              WHERE p.provider_id = '".$providerRow['provider_id']."'")) {
+                                              WHERE p.provider_id = '".$providerRow['provider_id']."'
+                                              ORDER BY c.category_name")) {
                           while ($categoryRow = $providerCategories->fetch_assoc()) {
-                            echo "<span class='badge badge-pill badge-info providerCategory' data-id='".$categoryRow['category_id']."'>".$categoryRow['category_name']."</span>";
+                            echo "<span class='badge badge-pill badge-info providerCategory mr-1' data-id='".$categoryRow['category_id']."'>".$categoryRow['category_name']."</span>";
                           }
                           $providerCategories->close();
                         }
                       ?>
                     </p>
-                    <div class="btn-group mt-auto">
-                      <button class="btn btn-primary inline btn-place-order">Order</button>
-                      <button class="btn btn-primary inline" name="removeFavourite"><span class="sr-only">Remove Favourite</span><i class="fas fa-star" aria-hidden="true"></i></button>
+                    <div class="btn-group mt-auto" role="group" aria-labelledby="Provider-related actions">
+                      <button class="btn btn-primary inline btn-place-order border-right">Order</button>
+                      <button class="btn btn-primary inline border-left" name="removeFavourite"><span class="sr-only">Remove Favourite</span><i class="fas fa-star" aria-hidden="true"></i></button>
                     </div>
                   </div>
                 </div>
@@ -138,15 +139,15 @@
                           ORDER BY c.category_name"
                         )) {
                           while ($categoryRow = $providerCategories->fetch_assoc()) {
-                            echo "<span class='badge badge-pill badge-info providerCategory' data-id='".$categoryRow['category_id']."'>".$categoryRow['category_name']."</span>";
+                            echo "<span class='badge badge-pill badge-info providerCategory mr-1' data-id='".$categoryRow['category_id']."'>".$categoryRow['category_name']."</span>";
                           }
                           $providerCategories->close();
                         }
                       ?>
                     </p>
-                    <div class="btn-group mt-auto">
-                      <button class="btn btn-primary inline btn-place-order">Order</button>
-                      <button class="btn btn-primary inline" name="addFavourite"><span class="sr-only">Add Favourite</span><i class="far fa-star" aria-hidden="true"></i></button>
+                    <div class="btn-group mt-auto" role="group" aria-labelledby="Provider-related actions">
+                      <button class="btn btn-primary inline btn-place-order border-right">Order</button>
+                      <button class="btn btn-primary inline border-left" name="addFavourite"><span class="sr-only">Add Favourite</span><i class="far fa-star" aria-hidden="true"></i></button>
                     </div>
                   </div>
                 </div>
@@ -283,7 +284,7 @@
         $("#filterState").text("(active)");
         $("#filterState").css('color', 'green');
       } else {
-        $("#filterState").text("(inactive)");
+        $("#filterState").text("(no filters)");
         $("#filterState").css('color', 'black');
       }
       $(".provider").show();
@@ -368,7 +369,7 @@
     }).done(function(response) {
       if (response === "SUCCESS") {
         provider.fadeOut(250, function() {
-          var newButton = $('<button class="btn btn-primary inline" name="removeFavourite"><i class="far fa-star"></i></button>')
+          var newButton = $('<button class="btn btn-primary inline border-left" name="removeFavourite"><i class="far fa-star"></i></button>')
           newButton.on('click', removeFavourite);
           thisButton.replaceWith(newButton);
           provider.detach().appendTo("#favouriteProviders");
@@ -386,7 +387,7 @@
     }).done(function(response) {
       if (response === "SUCCESS") {
         provider.fadeOut(250, function() {
-          var newButton = $('<button class="btn btn-primary inline" name="addFavourite"><i class="fas fa-star"></i></button>');
+          var newButton = $('<button class="btn btn-primary inline border-left" name="addFavourite"><i class="fas fa-star"></i></button>');
           newButton.on('click', addFavourite);
           thisButton.replaceWith(newButton);
           provider.detach().appendTo("#listedProviders");

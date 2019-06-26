@@ -34,7 +34,7 @@ include("fragments/connection-begin.php");
             <div id="listedProducts">
               <?php
               // temporary value for testing purposes
-              $productGroupSize = 2;
+              $productGroupSize = 5;
               if ($listedProducts = $conn->query("
               SELECT *
               FROM product_by_provider
@@ -45,7 +45,7 @@ include("fragments/connection-begin.php");
                   ?>
                   <div class="card mt-2 productCard d-none" data-product-group="<?php echo (int)($productNumber / $productGroupSize); ?>" data-product-id="<?php echo $product['product_id']; ?>">
                     <div class="card-body">
-                      <h6 class="card-title"><?php echo $product['product_name']; ?></h5>
+                      <h5 class="card-title"><?php echo $product['product_name']; ?></h5>
                       <p class="card-text font-weight-light pb-3">
                         <?php
                         if ($ingredients = $conn->query("
