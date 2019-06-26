@@ -114,46 +114,7 @@ function fetchAwaitingOrders() {
       // order by date
       orders.sort(function(a, b) { return Date.parse(b.creation_timestamp) - Date.parse(a.creation_timestamp) })
       $.each(orders, function(index, it) {
-        var element = `
-        <div class="card orderCard mb-3" data-orderId="` + it.order_id + `">
-          <div class="card-body">
-            <div class="card-title">
-              <h7 class="text-muted float-right">` + it.creation_timestamp + `</h7>
-              <h5>` + (it.status_id != 2 ? it.client_name + `'s order` : `<strike>` + it.client_name + `'s order</strike>`) + `</h5>
-            </div>
-            <h5 class="card-title"></h5>
-            <h6 class="card-subtitle mb-2 text-muted">` + it.order_address + `</h6>`
-        $.each(it.products, function(index, orderedProduct) {
-          element += `
-          <div class="card-text">
-            <div class="border-top border-bottom p-2">
-              <div class="row">
-                <label class="col-sm-2 col-form-label border-right">Product</label>
-                <label class="col col-form-label">` + orderedProduct.product_name + `</label>
-              </div>
-              <div class="row">
-                <label class="col-sm-2 col-form-label border-right">Quantity</label>
-                <label class="col col-form-label">` + orderedProduct.quantity + `</label>
-              </div>`
-          if (orderedProduct.notes != "") {
-            element += `
-            <div class="row">
-              <label class="col-sm-2 col-form-label border-right">Notes</label>
-              <label class="col col-form-label">` + orderedProduct.notes + `</label>
-            </div>`
-          }
-          element += `
-              </div>
-            </div>`
-        })
-        element += `
-            <div class="btn-group btn-group-justified pt-2">
-              <button class="btn btn-primary inline btnAccept" onclick="btnAcceptClick(this)">Accept</button>
-              <button class="btn btn-primary inline btnReject" onclick="btnRejectClick(this)" data-toggle="modal" data-target="#modalReject">Reject</button>
-            </div>
-          </div>
-        </div>`
-        $("#ordersIncoming").append(element)
+        createOrderCard(it)
       })
     }
   })
@@ -206,107 +167,7 @@ $(function() {
       allOrders.sort(function(a, b) { return Date.parse(b.creation_timestamp) - Date.parse(a.creation_timestamp) })
       // put each order in its section
       $.each(allOrders, function(index, it) {
-        var element = `
-        <div class="card orderCard mb-3" data-orderId="` + it.order_id + `">
-          <div class="card-body">
-            <div class="card-title">
-              <h7 class="text-muted float-right">` + it.creation_timestamp + `</h7>
-              <h5>` + (it.status_id != 2 ? it.client_name + `'s order` : `<strike>` + it.client_name + `'s order</strike>`) + `</h5>
-            </div>
-            <h5 class="card-title"></h5>
-            <h6 class="card-subtitle mb-2 text-muted">` + it.order_address + `</h6>`
-        if (it.status_id == 4) {
-          $.each(it.products, function(index, orderedProduct) {
-            element += `
-            <div class="card-text">
-              <div class="border-top border-bottom p-2">
-                <div class="row">
-                  <label class="col-sm-2 col-form-label border-right">Product</label>
-                  <label class="col col-form-label">` + orderedProduct.product_name + `</label>
-                </div>
-                <div class="row">
-                  <label class="col-sm-2 col-form-label border-right">Quantity</label>
-                  <label class="col col-form-label">` + orderedProduct.quantity + `</label>
-                </div>`
-            if (orderedProduct.notes != "") {
-              element += `
-              <div class="row">
-                <label class="col-sm-2 col-form-label border-right">Notes</label>
-                <label class="col col-form-label">` + orderedProduct.notes + `</label>
-              </div>`
-            }
-            element += `
-                </div>
-              </div>`
-          })
-          element += `
-              <div class="btn-group btn-group-justified pt-2">
-                <button class="btn btn-primary inline btnAccept" onclick="btnAcceptClick(this)">Accept</button>
-                <button class="btn btn-primary inline btnReject" onclick="btnRejectClick(this)" data-toggle="modal" data-target="#modalReject">Reject</button>
-              </div>
-            </div>
-          </div>`
-          $("#ordersIncoming").prepend(element)
-        } else if (it.status_id == 1) {
-          $.each(it.products, function(index, orderedProduct) {
-            element += `
-            <div class="card-text">
-              <div class="border-top border-bottom p-2">
-                <div class="row">
-                  <label class="col-sm-2 col-form-label border-right">Product</label>
-                  <label class="col col-form-label">` + orderedProduct.product_name + `</label>
-                </div>
-                <div class="row">
-                  <label class="col-sm-2 col-form-label border-right">Quantity</label>
-                  <label class="col col-form-label">` + orderedProduct.quantity + `</label>
-                </div>`
-            if (orderedProduct.notes != "") {
-              element += `
-              <div class="row">
-                <label class="col-sm-2 col-form-label border-right">Notes</label>
-                <label class="col col-form-label">` + orderedProduct.notes + `</label>
-              </div>`
-            }
-            element += `
-                </div>
-              </div>`
-          })
-          element += `
-              <div class="btn-group btn-group-justified pt-2">
-                <button class="btn btn-primary inline" onclick="btnCompleteClick(this)">Complete</button>
-              </div>
-            </div>
-          </div>`
-          $("#ordersAccepted").prepend(element)
-        } else {
-          $.each(it.products, function(index, orderedProduct) {
-            element += `
-            <div class="card-text">
-              <div class="border-top border-bottom p-2">
-                <div class="row">
-                  <label class="col-sm-2 col-form-label border-right">Product</label>
-                  <label class="col col-form-label">` + orderedProduct.product_name + `</label>
-                </div>
-                <div class="row">
-                  <label class="col-sm-2 col-form-label border-right">Quantity</label>
-                  <label class="col col-form-label">` + orderedProduct.quantity + `</label>
-                </div>`
-            if (orderedProduct.notes != "") {
-              element += `
-              <div class="row">
-                <label class="col-sm-2 col-form-label border-right">Notes</label>
-                <label class="col col-form-label">` + orderedProduct.notes + `</label>
-              </div>`
-            }
-            element += `
-                </div>
-              </div>`
-          })
-          element += `
-            </div>
-          </div>`
-          $("#ordersCompleted").prepend(element)
-        }
+        createOrderCard(it)
       })
     }
   })
@@ -376,14 +237,74 @@ function btnCompleteClick(e) {
       var orderCard = buttonBar.parent().parent()
       orderCard.slideUp(400, function() {
         orderCard.detach().appendTo("#ordersCompleted")
-        buttonBar.children().remove()
-        buttonBar.append('<button class="btn btn-primary inline" onclick="btnCompleteClick(this)">Complete</button>')
+        buttonBar.remove()
         orderCard.show()
       })
     } else {
       console.log(result)
     }
   })
+}
+
+function createOrderCard(o) {
+  var element = `
+  <div class="card orderCard mb-3" data-orderId="` + o.order_id + `">
+    <div class="card-body">
+      <div class="card-title">
+        <h7 class="text-muted float-right">` + o.creation_timestamp + `</h7>
+        <h5>` + (o.status_id != 2 ? o.client_name + `'s order` : `<strike>` + o.client_name + `'s order</strike>`) + `</h5>
+      </div>
+      <h5 class="card-title"></h5>
+      <h6 class="card-subtitle mb-2 text-muted">` + o.order_address + `</h6>`
+  $.each(o.products, function(index, orderedProduct) {
+    element += `
+    <div class="card-text">
+      <div class="border-top border-bottom p-2">
+        <div class="row">
+          <label class="col-4 col-sm-3 col-lg-2 col-form-label border-right">Product</label>
+          <label class="col col-form-label">` + orderedProduct.product_name + `</label>
+        </div>
+        <div class="row">
+          <label class="col-4 col-sm-3 col-lg-2 col-form-label border-right">Quantity</label>
+          <label class="col col-form-label">` + orderedProduct.quantity + `</label>
+        </div>`
+    if (orderedProduct.notes != "") {
+      element += `
+      <div class="row">
+        <label class="col-4 col-sm-3 col-lg-2 col-form-label border-right">Notes</label>
+        <label class="col col-form-label">` + orderedProduct.notes + `</label>
+      </div>`
+    }
+    element += `
+        </div>
+      </div>`
+  })
+  switch (o.status_id) {
+    case "4":
+      element += `
+          <div class="btn-group pt-2 col-sm col-md-4" role="group" aria-labelledby="Order action">
+            <button class="btn btn-primary inline btnAccept border-right" onclick="btnAcceptClick(this)">Accept</button>
+            <button class="btn btn-primary inline btnReject border-left" onclick="btnRejectClick(this)" data-toggle="modal" data-target="#modalReject">Reject</button>
+          </div>
+        </div>
+      </div>`
+      $("#ordersIncoming").prepend(element)
+    break;
+    case "1":
+      element += `
+          <div class="btn-group pt-2 col-sm col-md-4">
+            <button class="btn btn-primary inline" onclick="btnCompleteClick(this)">Complete</button>
+          </div>
+        </div>
+      </div>`
+      $("#ordersAccepted").prepend(element)
+    break;
+    default:
+      element += `
+        </div>
+      </div>`
+      $("#ordersCompleted").prepend(element)
+  }
 }
 
 </script>
