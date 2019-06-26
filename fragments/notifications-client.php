@@ -13,11 +13,14 @@ function fetchOrderUpdates() {
         $.each(responseArray,
           function(index, it) {
             if (it.status_id != 4) {
+              //(1,'Accettato'),(2,'Rifiutato'),(3,'Concluso'),(4,'In attesa')
+              var orderStateChange = (it.status_id == 1 ? "accettato" : it.status_id == 2 ? "rifiutato" : "spedito")
+              var subtitle = "Il tuo ordine per " + it.order_address + " delle " + it.creation_time + " è stato " + orderStateChange + ". "
+              var rejection = (it.status_id == 2 ? it.rejection_reason == "" ? "Motivo non specificato" : "Motivo: " + it.rejection_reason : "")
               var toast = createToast(
-                "Ordine " + it.status_name.toLowerCase(),
+                "Ordine " + orderStateChange,
                 it.last_status_update,
-                "Il tuo ordine per " + it.order_address + " delle " + it.creation_time + " ha cambiato stato" +
-                (it.status_id == 2 ? it.rejection_reason == "" ? ". Motivo non specificato" : ". Motivo: " + it.rejection_reason : ""),
+                subtitle + rejection,
                 "far fa-" + (it.status_id == 2 ? "times" : "check") + "-circle"
               )
               toast['header'].css('background-color', it.status_id == 2 ? '#b72a00' : '#1a8400')
