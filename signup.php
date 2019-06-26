@@ -41,15 +41,13 @@
         </div>
       </div>
       <div class="form-group">
-        <div class="form-check form-check-inline">
-          <label for="signClient" class="form-check-label">
-            <input type="radio" class="form-check-input" name="userType" value="client" checked id="signClient" />Client
-          </label>
-          <div class="form-check form-check-inline">
-            <label for="signProvider" class="form-check-label">
-              <input type="radio" class="form-check-input" name="userType" value="provider" id="signProvider" />Provider
-            </label>
-          </div>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input type="radio" class="custom-control-input" name="userType" value="client" checked id="signClient" />
+          <label for="signClient" class="custom-control-label">Client</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input type="radio" class="custom-control-input" name="userType" value="provider" id="signProvider" />
+          <label for="signProvider" class="custom-control-label">Provider</label>
         </div>
       </div>
       <div class="form-group" id="clientName">
@@ -74,17 +72,17 @@
       </div>
       <div class="form-group" hidden id="providerName">
         <label for="signPName" class="sr-only">Provider Name:</label>
-        <input type="text" class="form-control" name="pname" autocomplete="on" placeholder="Name.." id="signPName"  />
-        <div class="valid-feedback" >
+        <input type="text" class="form-control" name="pname" autocomplete="on" placeholder="Name.." id="signPName" />
+        <div class="valid-feedback">
           Valid Name!
         </div>
-        <div class="invalid-feedback" >
+        <div class="invalid-feedback">
           Please provide a Name!
         </div>
       </div>
       <div class="form-group" hidden id="providerAddress">
         <label for="signPAddress" class="sr-only">Provider Address:</label>
-        <input type="text" class="form-control" name="paddress" autocomplete="on" placeholder="Address.." id="signPAddress"  />
+        <input type="text" class="form-control" name="paddress" autocomplete="on" placeholder="Address.." id="signPAddress" />
         <div class="valid-feedback">
           Valid Address!
         </div>
@@ -94,7 +92,7 @@
       </div>
       <div class="form-group" hidden id="providerType">
         <label for="signPType" class="sr-only">Provider Type:</label>
-        <input type="number" class="form-control" name="typeId" autocomplete="on" placeholder="Type id.." id="signPType"  />
+        <input type="number" class="form-control" name="typeId" autocomplete="on" placeholder="Type id.." id="signPType" />
         <div class="valid-feedback">
           Valid Type!
         </div>
@@ -130,7 +128,7 @@
       // Checks form's validity
       var vconfPassword = $("#signConfirmPassword");
       var vpassword = $("#signPassword").val();
-      if(vconfPassword.val()!==vpassword){
+      if (vconfPassword.val() !== vpassword) {
         event.stopPropagation();
         vconfPassword[0].setCustomValidity("Passwords don't match!");
       } else {
