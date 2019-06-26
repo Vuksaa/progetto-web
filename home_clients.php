@@ -364,7 +364,7 @@
     var provider = $(this).parent().parent().parent().parent();
     var thisButton = $(this);
     $.post("ajax/add_favourite_provider.php", {
-      providerId: provider.data("provider-id");
+      providerId: provider.data("provider-id")
     }).done(function(response) {
       if (response === "SUCCESS") {
         provider.fadeOut(250, function() {
