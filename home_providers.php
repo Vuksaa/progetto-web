@@ -1,6 +1,6 @@
 <?php include("fragments/logged-check.php"); ?>
 <?php
-  if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] == "client") {
+  if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] === "client") {
     header('Location: home_clients.php');
     exit();
   }
