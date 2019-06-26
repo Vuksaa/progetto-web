@@ -10,12 +10,16 @@
 <html lang="en">
 <head>
   <?php include("fragments/head-contents.php"); ?>
+  <link rel="stylesheet" type="text/css" href="styles/fluid-grids.css">
+  <link rel="stylesheet" type="text/css" href="styles/base.css">
 </head>
 <body>
   <?php include("fragments/navbar.php"); ?>
+
+
   <div class="container mt-4 mb-4">
     <h4 class="display-4 pb-2">Provider list</h4>
-    <button type="button" class="btn btn-outline-info col-2" data-toggle="modal" data-target="#modalFilters">Filters <span id="filterState">(inactive)</span></button>
+    <button type="button" class="btn btn-outline-info col-sm-2" id="btnFilters" data-toggle="modal" data-target="#modalFilters">Filters <span id="filterState" style="color: black;">(inactive)</span></button>
     <div class="container accordion mt-4 mb-4" id="mainAccordion">
       <div class="card main-card">
         <h1 class="mb-0">
@@ -25,7 +29,7 @@
         </h1>
         <div id="collapseFavouriteRestaurants" class="collapse show" aria-labelledby="headingFavouriteRestaurants" data-parent="#mainAccordion">
           <div class="card-body">
-            <div class="card-searchbar col-5">
+            <div class="card-searchbar">
               <input class="form-control mr-sm-2" id="searchFavourites" type="search" placeholder="Search" aria-label="Search Favourites">
             </div>
             <div class="row" id="favouriteProviders">
@@ -42,30 +46,31 @@
                 )) {
                   while ($providerRow = $favProviders->fetch_assoc()) {
               ?>
-              <div class="card providerCard favouriteProvider col-3" data-provider-id="<?php echo $providerRow['provider_id']; ?>">
-                <div class="card-body">
-                  <h5 class="card-title"><?php echo $providerRow['provider_name'] ?></h5>
-                  <h6 class="card-subtitle mb-2 text-muted providerType" data-id="<?php echo $providerRow['type_id']; ?>"><?php echo $providerRow['type_name'] ?></h6>
-                  <p class="card-text">
-                    <?php
-                      if ($providerCategories = $conn->query("SELECT c.category_id, c.category_name
-                                            FROM provider p
-                                            LEFT JOIN provider_category pc
-                                            ON p.provider_id = pc.provider_id
-                                            LEFT JOIN category c
-                                            ON c.category_id = pc.category_id
-                                            WHERE p.provider_id = '".$providerRow['provider_id']."'")) {
-                        while ($categoryRow = $providerCategories->fetch_assoc()) {
-                          echo "<span class='badge badge-pill badge-info providerCategory' data-id='".$categoryRow['category_id']."'>".$categoryRow['category_name']."</span>";
+              <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 pb-2 provider favouriteProvider" data-provider-id="<?php echo $providerRow['provider_id']; ?>">
+                <div class="card">
+                  <div class="card-body d-flex flex-column">
+                    <h5 class="card-title"><?php echo $providerRow['provider_name'] ?></h5>
+                    <h6 class="card-subtitle mb-2 text-muted providerType" data-id="<?php echo $providerRow['type_id']; ?>"><?php echo $providerRow['type_name'] ?></h6>
+                    <p class="card-text">
+                      <?php
+                        if ($providerCategories = $conn->query("SELECT c.category_id, c.category_name
+                                              FROM provider p
+                                              LEFT JOIN provider_category pc
+                                              ON p.provider_id = pc.provider_id
+                                              LEFT JOIN category c
+                                              ON c.category_id = pc.category_id
+                                              WHERE p.provider_id = '".$providerRow['provider_id']."'")) {
+                          while ($categoryRow = $providerCategories->fetch_assoc()) {
+                            echo "<span class='badge badge-pill badge-info providerCategory' data-id='".$categoryRow['category_id']."'>".$categoryRow['category_name']."</span>";
+                          }
+                          $providerCategories->close();
                         }
-                        $providerCategories->close();
-                      }
-                    ?>
-                  </p>
-                  <div class="btn-group btn-group-justified">
-                    <button class="btn btn-primary inline" data-toggle="modal" data-target="#peekOnProvider">Peek</button>
-                    <button class="btn btn-primary inline btn-place-order">Order</button>
-                    <button class="btn btn-primary inline" name="removeFavourite"><i class="far fa-star"></i></button>
+                      ?>
+                    </p>
+                    <div class="btn-group mt-auto">
+                      <button class="btn btn-primary inline btn-place-order">Order</button>
+                      <button class="btn btn-primary inline" name="removeFavourite"><i class="far fa-star"></i></button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -88,7 +93,7 @@
         </h1>
         <div id="collapseAllRestaurants" class="collapse" aria-labelledby="headingRestaurants" data-parent="#mainAccordion">
           <div class="card-body">
-            <div class="card-searchbar col-5">
+            <div class="card-searchbar">
               <input class="form-control mr-sm-2" id="searchListed" type="search" placeholder="Search" aria-label="Search Listed">
             </div>
             <div class="row" id="listedProviders">
@@ -110,33 +115,34 @@
                 )) {
                   while ($providerRow = $allProviders->fetch_assoc()) {
               ?>
-              <div class="card providerCard listedProvider col-3" data-provider-id="<?php echo $providerRow['provider_id']; ?>">
-                <div class="card-body">
-                  <h5 class="card-title"><?php echo $providerRow['provider_name'] ?></h5>
-                  <h6 class="card-subtitle mb-2 text-muted providerType" data-id="<?php echo $providerRow['type_id']; ?>"><?php echo $providerRow['type_name'] ?></h6>
-                  <p class="card-text">
-                    <?php
-                      if ($providerCategories = $conn->query(
-                        "SELECT c.category_id, c.category_name
-                        FROM provider p
-                        LEFT JOIN provider_category pc
-                        ON p.provider_id = pc.provider_id
-                        LEFT JOIN category c
-                        ON c.category_id = pc.category_id
-                        WHERE p.provider_id = '".$providerRow['provider_id']."'
-                        ORDER BY c.category_name"
-                      )) {
-                        while ($categoryRow = $providerCategories->fetch_assoc()) {
-                          echo "<span class='badge badge-pill badge-info providerCategory' data-id='".$categoryRow['category_id']."'>".$categoryRow['category_name']."</span>";
+              <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 pb-2 provider listedProvider" data-provider-id="<?php echo $providerRow['provider_id']; ?>">
+                <div class="card">
+                  <div class="card-body d-flex flex-column">
+                    <h5 class="card-title"><?php echo $providerRow['provider_name'] ?></h5>
+                    <h6 class="card-subtitle mb-2 text-muted providerType" data-id="<?php echo $providerRow['type_id']; ?>"><?php echo $providerRow['type_name'] ?></h6>
+                    <p class="card-text">
+                      <?php
+                        if ($providerCategories = $conn->query(
+                          "SELECT c.category_id, c.category_name
+                          FROM provider p
+                          LEFT JOIN provider_category pc
+                          ON p.provider_id = pc.provider_id
+                          LEFT JOIN category c
+                          ON c.category_id = pc.category_id
+                          WHERE p.provider_id = '".$providerRow['provider_id']."'
+                          ORDER BY c.category_name"
+                        )) {
+                          while ($categoryRow = $providerCategories->fetch_assoc()) {
+                            echo "<span class='badge badge-pill badge-info providerCategory' data-id='".$categoryRow['category_id']."'>".$categoryRow['category_name']."</span>";
+                          }
+                          $providerCategories->close();
                         }
-                        $providerCategories->close();
-                      }
-                    ?>
-                  </p>
-                  <div class="btn-group btn-group-justified">
-                    <button class="btn btn-primary inline" data-toggle="modal" data-target="#peekOnProvider">Peek</button>
-                    <button class="btn btn-primary inline btn-place-order">Order</button>
-                    <button class="btn btn-primary inline" name="addFavourite"><i class="fas fa-star"></i></button>
+                      ?>
+                    </p>
+                    <div class="btn-group mt-auto">
+                      <button class="btn btn-primary inline btn-place-order">Order</button>
+                      <button class="btn btn-primary inline" name="addFavourite"><i class="fas fa-star"></i></button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -261,7 +267,6 @@ $(function() {
     $(".checkCategory").prop('checked', false)
   })
 
-  $("#filterState").css('color', 'grey')
   $(".btnSaveFilters").on('click', function(e) {
     var filterByTypes = $("#checkFilterByTypes").is(":checked")
     var filterByCategories = $("#checkFilterByCategories").is(":checked")
@@ -270,25 +275,25 @@ $(function() {
       $("#filterState").css('color', 'green')
     } else {
       $("#filterState").text("(inactive)")
-      $("#filterState").css('color', 'grey')
+      $("#filterState").css('color', 'black')
     }
-    $(".providerCard").show()
+    $(".provider").show()
     if (!filterByTypes && !filterByCategories) {
       return;
     }
-    $(".providerCard").each(function(i, providerCard) {
+    $(".provider").each(function(i, provider) {
       if (filterByTypes) {
         for (type of $(".checkType:checked").toArray()) {
-          if (!$(providerCard).find(".providerType[data-id=" + $(type).data("id") + "]").length) {
-            $(providerCard).hide()
+          if (!$(provider).find(".providerType[data-id=" + $(type).data("id") + "]").length) {
+            $(provider).hide()
             return;
           }
         }
       }
       if (filterByCategories) {
         for (category of $(".checkCategory:checked").toArray()) {
-          if (!$(providerCard).find(".providerCategory[data-id=" + $(category).data("id") + "]").length) {
-            $(providerCard).hide()
+          if (!$(provider).find(".providerCategory[data-id=" + $(category).data("id") + "]").length) {
+            $(provider).hide()
             return;
           }
         }
@@ -335,7 +340,7 @@ $(function() {
 
 
   $(".btn-place-order").click(function() {
-    window.location.href = "place_order.php?provider=" + $(this).parent().parent().parent().data("provider-id")
+    window.location.href = "place_order.php?provider=" + $(this).parent().parent().parent().parent().data("provider-id")
   })
   /* Set navbar voice active with respective screen reader functionality */
   var homeLink = $("nav div ul li a:contains('Home')");
@@ -346,41 +351,35 @@ $(function() {
   $("button[name='removeFavourite']").on('click', removeFavourite)
 })
 function addFavourite() {
-  var providerCard = $(this).parent().parent().parent()
+  var provider = $(this).parent().parent().parent().parent()
   var thisButton = $(this)
   $.post("ajax/add_favourite_provider.php", {
-    providerId: providerCard.data("provider-id")
+    providerId: provider.data("provider-id")
   }).done(function(response) {
     if (response == "SUCCESS") {
-      providerCard.fadeOut(250, function() {
+      provider.fadeOut(250, function() {
         var newButton = $('<button class="btn btn-primary inline" name="removeFavourite"><i class="far fa-star"></i></button>')
         newButton.on('click', removeFavourite)
         thisButton.replaceWith(newButton)
-        providerCard.detach().appendTo("#favouriteProviders")
-        providerCard.show()
-        // if (providerCard.find(".card-title").text().toLowerCase().indexOf($("#favouriteProviders").val().toLowerCase()) == -1) {
-        //   providerCard.show()
-        // }
+        provider.detach().appendTo("#favouriteProviders")
+        provider.show()
       })
     }
   })
 }
 function removeFavourite() {
-  var providerCard = $(this).parent().parent().parent()
+  var provider = $(this).parent().parent().parent().parent()
   var thisButton = $(this)
   $.post("ajax/remove_favourite_provider.php", {
-    providerId: providerCard.data("provider-id")
+    providerId: provider.data("provider-id")
   }).done(function(response) {
     if (response == "SUCCESS") {
-      providerCard.fadeOut(250, function() {
+      provider.fadeOut(250, function() {
         var newButton = $('<button class="btn btn-primary inline" name="addFavourite"><i class="fas fa-star"></i></button>')
         newButton.on('click', addFavourite)
         thisButton.replaceWith(newButton)
-        providerCard.detach().appendTo("#listedProviders")
-        providerCard.show()
-        // if (providerCard.find(".card-title").text().toLowerCase().indexOf($("#listedProviders").val().toLowerCase()) == -1) {
-        //   providerCard.show()
-        // }
+        provider.detach().appendTo("#listedProviders")
+        provider.show()
       })
     }
   })

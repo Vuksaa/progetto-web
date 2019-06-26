@@ -7,13 +7,19 @@ include("fragments/connection-begin.php");
 
 <head>
   <?php include("fragments/head-contents.php"); ?>
+  <link rel="stylesheet" type="text/css" href="styles/base.css">
+  <style>
+  .form-inline .col-form-label {
+    text-align: left;
+  }
+  </style>
 </head>
 
 <body>
   <!-- The provider's ID should be in $_GET['provider'] -->
   <?php include("fragments/navbar.php"); ?>
   <div class="container mt-4 mb-4">
-    <h3 class="pb-2">Place order</h3>
+    <h4 class="display-4 pb-2">Place order</h4>
 
     <div class="container accordion mt-4 mb-4" id="mainAccordion">
       <div class="card main-card">
@@ -22,7 +28,7 @@ include("fragments/connection-begin.php");
         </button>
         <div id="collapseMenu" class="collapse show" aria-labelledby="headingMenu" data-parent="#mainAccordion">
           <div class="card-body">
-            <div class="card-searchbar col-5">
+            <div class="card-searchbar">
               <input class="form-control" id="searchProducts" type="search" placeholder="Search" aria-label="Search">
             </div>
             <div id="listedProducts">
@@ -40,7 +46,7 @@ include("fragments/connection-begin.php");
                   <div class="card mt-2 productCard d-none" data-product-group="<?php echo (int)($productNumber / $productGroupSize); ?>" data-product-id="<?php echo $product['product_id']; ?>">
                     <div class="card-body">
                       <h6 class="card-title"><?php echo $product['product_name']; ?></h5>
-                      <p class="card-text font-weight-light">
+                      <p class="card-text font-weight-light pb-3">
                         <?php
                         if ($ingredients = $conn->query("
                         SELECT *
@@ -55,22 +61,22 @@ include("fragments/connection-begin.php");
                         }
                         ?>
                       </p>
-                      <form class="form-group row">
-                        <label class="col-sm-2 col-form-label">Price</label>
-                        <label class="col-sm-1 col-form-label"><?php echo $product['product_price']." €"; ?></label>
+                      <form class="form-group form-inline">
+                        <label class="col-form-label col-4 col-sm-3 col-md-2 justify-content-start" for="product<?php echo $product['product_id']; ?>Price">Price</label>
+                        <label class="col-form-label" id="product<?php echo $product['product_id']; ?>Price"><?php echo $product['product_price']." €"; ?></label>
                       </form>
-                      <form class="form-group row">
-                        <label for="product<?php echo $product['product_id']; ?>Quantity" class="col-sm-2 col-form-label">Quantity</label>
-                        <input type="number" class="form-control col-sm-1 productQuantity" id="product<?php echo $product['product_id']; ?>Quantity" placeholder="Quantity" value="1" required>
+                      <form class="form-group form-inline">
+                        <label class="col-form-label col-4 col-sm-3 col-md-2 justify-content-start" for="product<?php echo $product['product_id']; ?>Quantity">Quantity</label>
+                        <input class="form-control col-2 col-md-1 productQuantity" type="number" id="product<?php echo $product['product_id']; ?>Quantity" placeholder="Quantity" value="1" required>
                       </form>
-                      <form class="form-group row">
-                        <label for="product<?php echo $product['product_id']; ?>Notes" class="col-sm-2 col-form-label">Notes</label>
-                        <textarea class="form-control col-sm-5 productNotes" id="product<?php echo $product['product_id']; ?>Notes"></textarea>
+                      <form class="form-group form-inline">
+                        <label class="col-form-label col-4 col-sm-3 col-md-2 justify-content-start" for="product<?php echo $product['product_id']; ?>Notes">Notes</label>
+                        <textarea class="form-control col-sm-6 productNotes" id="product<?php echo $product['product_id']; ?>Notes"></textarea>
                       </form>
-                      <button class="btn btn-primary btnAddProduct">
+                      <button class="btn btn-primary btnAddProduct col col-sm-2 col-md-1">
                         <i class="far fa-plus-square"></i>
                       </button>
-                      <button class="btn btn-primary btnRemoveProduct">
+                      <button class="btn btn-primary btnRemoveProduct col col-sm-2 col-md-1">
                         <i class="far fa-minus-square"></i>
                       </button>
                     </div>
@@ -81,7 +87,7 @@ include("fragments/connection-begin.php");
               }
               ?>
             </div>
-            <button class="btn btn-primary btn-sm btn-block active col-2 mt-2" id="productsShowMore">
+            <button class="btn btn-primary btn-sm col col-sm-2 mt-2" id="productsShowMore">
               Show more
             </button>
         </div>
