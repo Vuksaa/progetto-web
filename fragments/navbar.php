@@ -2,8 +2,8 @@
 <?php include("fragments/notifications-".$_SESSION['user_type'].".php"); ?>
 <div class="sticky-top">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" <?php echo ($_SESSION['user_type'] === 'client') ? 'href="home_clients.php"' : 'href="home_providers.php"'; ?>>
-      <img src="res/logo.png" width="30" height="30" class="d-inline-block align-top" alt="Go to homepage">
+    <a class="navbar-brand align-bottom" <?php echo ($_SESSION['user_type'] === 'client') ? 'href="home_clients.php"' : 'href="home_providers.php"'; ?>>
+      <img src="res/logo.png" width="50" height="50" class="d-inline-block" alt="Go to homepage" style="background-color: #ff2e17;">
       GoodFood
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
