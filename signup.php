@@ -13,32 +13,32 @@
       <legend class="form-signin-heading">Registrazione</legend>
       <div class="form-group">
         <label for="signEmail" class="sr-only">Email:</label>
-        <input type="email" class="form-control" name="email" autocomplete="username" placeholder="Email.." required autofocus id="signEmail" />
+        <input type="email" class="form-control" name="email" autocomplete="username" placeholder="Email.." required autofocus id="signEmail" maxlength="20" />
         <div class="valid-feedback">
           Email valida!
         </div>
         <div class="invalid-feedback">
-          Fornire un email valida! (esempio@esempio.es)
+          Fornire un'email valida! (esempio@esempio.es) [massimo 20 caratteri]
         </div>
       </div>
       <div class="form-group">
         <label for="signPassword" class="sr-only">Password:</label>
-        <input type="password" class="form-control" name="password" autocomplete="new-password" placeholder="Password.." required id="signPassword" />
+        <input type="password" class="form-control" name="password" autocomplete="new-password" placeholder="Password.." required id="signPassword" maxlength="20" />
         <div class="valid-feedback">
           Password valida!
         </div>
         <div class="invalid-feedback">
-          Fornire una password valida!
+          Fornire una password valida! [massimo 20 caratteri]
         </div>
       </div>
       <div class="form-group">
         <label for="signConfirmPassword" class="sr-only">Ripeti Password:</label>
-        <input type="password" class="form-control" name="confirmPassword" autocomplete="new-password" placeholder="Ripeti password.." required id="signConfirmPassword" />
+        <input type="password" class="form-control" name="confirmPassword" autocomplete="new-password" placeholder="Ripeti password.." required id="signConfirmPassword" maxlength="20"/>
         <div class="valid-feedback">
           Password ripetuta correttamente!
         </div>
         <div class="invalid-feedback">
-          Riscrivire la password correttamente!
+          Ripetere la password correttamente!
         </div>
       </div>
       <div class="form-group">
@@ -53,42 +53,42 @@
         </div>
         <div class="form-group" id="clientName">
           <label for="signName" class="sr-only">Nome cliente:</label>
-          <input type="text" class="form-control" name="name" autocomplete="on" placeholder="Nome.." required id="signName" />
+          <input type="text" class="form-control" name="name" autocomplete="on" placeholder="Nome.." required id="signName" maxlength="20"/>
           <div class="valid-feedback">
             Nome valido!
           </div>
           <div class="invalid-feedback">
-            Fornire un nome!
+            Fornire un nome! [massimo 20 caratteri]
           </div>
         </div>
         <div class="form-group" id="clientSurname">
           <label for="signSurname" class="sr-only">Cognome cliente:</label>
-          <input type="text" class="form-control" name="surname" autocomplete="on" placeholder="Cognome.." required id="signSurname" />
+          <input type="text" class="form-control" name="surname" autocomplete="on" placeholder="Cognome.." required id="signSurname" maxlength="20"/>
           <div class="valid-feedback">
             Cognome valido!
           </div>
           <div class="invalid-feedback">
-            Fornire un cognome!
+            Fornire un cognome! [massimo 20 caratteri]
           </div>
         </div>
         <div class="form-group" hidden id="providerName">
           <label for="signPName" class="sr-only">Nome fornitore:</label>
-          <input type="text" class="form-control" name="pname" autocomplete="on" placeholder="Nome.." id="signPName" />
+          <input type="text" class="form-control" name="pname" autocomplete="on" placeholder="Nome.." id="signPName" maxlength="20"/>
           <div class="valid-feedback">
             Nome valido!
           </div>
           <div class="invalid-feedback">
-            Fornire un nome!
+            Fornire un nome! [massimo 20 caratteri]
           </div>
         </div>
         <div class="form-group" hidden id="providerAddress">
           <label for="signPAddress" class="sr-only">Indirizzo fornitore:</label>
-          <input type="text" class="form-control" name="paddress" autocomplete="on" placeholder="Indirizzo.." id="signPAddress" />
+          <input type="text" class="form-control" name="paddress" autocomplete="on" placeholder="Indirizzo.." id="signPAddress" maxlength="20" />
           <div class="valid-feedback">
             Indirizzo valido!
           </div>
           <div class="invalid-feedback">
-            Fornire un indirizzo valido!
+            Fornire un indirizzo valido! [massimo 20 caratteri]
           </div>
         </div>
         <div class="form-group" hidden id="providerType">
@@ -115,10 +115,10 @@
           Registrati
         </button>
     </fieldset>
-    <p class="text-muted small mt-1">Hai gia un account? Accedi <a href="login.php">qui</a></p>
+    <p class="text-muted small mt-1">Hai gi&agrave; un account? Accedi <a href="login.php">qui</a></p>
     <div class="mt-3 d-none" id="alertDiv">
       <div class="alert alert-success" role="alert">
-        Registrazione avvenuta con successo. Verrai reindirizzato a breve al login...
+        Registrazione avvenuta con successo. Verrai reindirizzato a breve all'accesso...
       </div>
       <div class="alert alert-danger" role="alert">
 
