@@ -8,43 +8,46 @@
 <body>
   <?php include("fragments/navbar-empty.php"); ?>
 
-  <form class="form-signin container pt-5 needs-validation" novalidate>
-    <fieldset>
-      <legend class="form-signin-heading display-4 pb-4">Accedi</legend>
-      <div class="form-group">
-        <label for="logEmail" class="sr-only">Email:</label>
-        <input type="email" class="form-control" autocomplete="username" placeholder="Email.." required autofocus id="loginEmail" maxlength="20" />
-        <div class="valid-feedback">
-          Email valida!
+  <div class="container pt-5 text-center">
+    <img src="res/logo_l.png" class="logo" width="300" height="300" alt="Logo">
+    <form class="form-signin needs-validation" novalidate>
+      <fieldset>
+        <legend class="form-signin-heading display-4 pb-4">Accedi</legend>
+        <div class="form-group">
+          <label for="logEmail" class="sr-only">Email:</label>
+          <input type="email" class="form-control" autocomplete="username" placeholder="Email.." required autofocus id="loginEmail" maxlength="20" />
+          <div class="valid-feedback">
+            Email valida!
+          </div>
+          <div class="invalid-feedback">
+            Fornire un'email valida! (esempio@esempio.es) [massimo 20 caratteri]
+          </div>
         </div>
-        <div class="invalid-feedback">
-          Fornire un'email valida! (esempio@esempio.es) [massimo 20 caratteri]
+        <div class="form-group">
+          <label for="logPassword" class="sr-only">Password:</label>
+          <input type="password" class="form-control" autocomplete="current-password" placeholder="Password.." required id="loginPassword" maxlength="20" />
+          <div class="valid-feedback">
+            Password valida!
+          </div>
+          <div class="invalid-feedback">
+            Fornire una password valida! [massimo 20 caratteri]
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="logPassword" class="sr-only">Password:</label>
-        <input type="password" class="form-control" autocomplete="current-password" placeholder="Password.." required id="loginPassword" maxlength="20" />
-        <div class="valid-feedback">
-          Password valida!
+        <button type="submit" class="btn btn-primary btn-lg btn-block" value="Login">
+          Accedi
+        </button>
+      </fieldset>
+      <p class="text-muted small mt-1">Non hai un account? Registrati <a href="signup.php">qui</a></p>
+      <div class="mt-3 d-none" id="alertDiv">
+        <div class="alert alert-success" role="alert">
+          Accesso avvenuto con successo. Verrai reindirizzato a breve...
         </div>
-        <div class="invalid-feedback">
-          Fornire una password valida! [massimo 20 caratteri]
-        </div>
-      </div>
-      <button type="submit" class="btn btn-primary btn-lg btn-block" value="Login">
-        Accedi
-      </button>
-    </fieldset>
-    <p class="text-muted small mt-1">Non hai un account? Registrati <a href="signup.php">qui</a></p>
-    <div class="mt-3 d-none" id="alertDiv">
-      <div class="alert alert-success" role="alert">
-        Accesso avvenuto con successo. Verrai reindirizzato a breve...
-      </div>
-      <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger" role="alert">
 
+        </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 
   <?php include("fragments/footer.php"); ?>
 </body>

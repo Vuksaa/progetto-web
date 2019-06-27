@@ -8,123 +8,126 @@
 
 <body>
   <?php include("fragments/navbar-empty.php"); ?>
-  <form class="form-signin container pt-5 needs-validation" novalidate>
-    <fieldset>
-      <legend class="form-signin-heading display-4 pb-4">Registrazione</legend>
-      <div class="form-group">
-        <label for="signEmail" class="sr-only">Email:</label>
-        <input type="email" class="form-control" name="email" autocomplete="username" placeholder="Email.." required autofocus id="signEmail" maxlength="20" />
-        <div class="valid-feedback">
-          Email valida!
-        </div>
-        <div class="invalid-feedback">
-          Fornire un'email valida! (esempio@esempio.es) [massimo 20 caratteri]
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="signPassword" class="sr-only">Password:</label>
-        <input type="password" class="form-control" name="password" autocomplete="new-password" placeholder="Password.." required id="signPassword" maxlength="20" />
-        <div class="valid-feedback">
-          Password valida!
-        </div>
-        <div class="invalid-feedback">
-          Fornire una password valida! [massimo 20 caratteri]
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="signConfirmPassword" class="sr-only">Ripeti Password:</label>
-        <input type="password" class="form-control" name="confirmPassword" autocomplete="new-password" placeholder="Ripeti password.." required id="signConfirmPassword" maxlength="20"/>
-        <div class="valid-feedback">
-          Password ripetuta correttamente!
-        </div>
-        <div class="invalid-feedback">
-          Ripetere la password correttamente!
-        </div>
-      </div>
-      <div class="form-group">
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" class="custom-control-input" name="userType" value="client" checked id="signClient" />
-            <label for="signClient" class="custom-control-label">Cliente</label>
-          </div>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" class="custom-control-input" name="userType" value="provider" id="signProvider" />
-            <label for="signProvider" class="custom-control-label">Fornitore</label>
-          </div>
-        </div>
-        <div class="form-group" id="clientName">
-          <label for="signName" class="sr-only">Nome cliente:</label>
-          <input type="text" class="form-control" name="name" autocomplete="on" placeholder="Nome.." required id="signName" maxlength="20"/>
+  <div class="container pt-5 text-center">
+    <img src="res/logo_l.png" class="logo" width="300" height="300" alt="Logo">
+    <form class="form-signin needs-validation" novalidate>
+      <fieldset>
+        <legend class="form-signin-heading display-4 pb-4">Registrazione</legend>
+        <div class="form-group">
+          <label for="signEmail" class="sr-only">Email:</label>
+          <input type="email" class="form-control" name="email" autocomplete="username" placeholder="Email.." required autofocus id="signEmail" maxlength="20" />
           <div class="valid-feedback">
-            Nome valido!
+            Email valida!
           </div>
           <div class="invalid-feedback">
-            Fornire un nome! [massimo 20 caratteri]
+            Fornire un'email valida! (esempio@esempio.es) [massimo 20 caratteri]
           </div>
         </div>
-        <div class="form-group" id="clientSurname">
-          <label for="signSurname" class="sr-only">Cognome cliente:</label>
-          <input type="text" class="form-control" name="surname" autocomplete="on" placeholder="Cognome.." required id="signSurname" maxlength="20"/>
+        <div class="form-group">
+          <label for="signPassword" class="sr-only">Password:</label>
+          <input type="password" class="form-control" name="password" autocomplete="new-password" placeholder="Password.." required id="signPassword" maxlength="20" />
           <div class="valid-feedback">
-            Cognome valido!
+            Password valida!
           </div>
           <div class="invalid-feedback">
-            Fornire un cognome! [massimo 20 caratteri]
+            Fornire una password valida! [massimo 20 caratteri]
           </div>
         </div>
-        <div class="form-group" hidden id="providerName">
-          <label for="signPName" class="sr-only">Nome fornitore:</label>
-          <input type="text" class="form-control" name="pname" autocomplete="on" placeholder="Nome.." id="signPName" maxlength="20"/>
+        <div class="form-group">
+          <label for="signConfirmPassword" class="sr-only">Ripeti Password:</label>
+          <input type="password" class="form-control" name="confirmPassword" autocomplete="new-password" placeholder="Ripeti password.." required id="signConfirmPassword" maxlength="20"/>
           <div class="valid-feedback">
-            Nome valido!
+            Password ripetuta correttamente!
           </div>
           <div class="invalid-feedback">
-            Fornire un nome! [massimo 20 caratteri]
+            Ripetere la password correttamente!
           </div>
         </div>
-        <div class="form-group" hidden id="providerAddress">
-          <label for="signPAddress" class="sr-only">Indirizzo fornitore:</label>
-          <input type="text" class="form-control" name="paddress" autocomplete="on" placeholder="Indirizzo.." id="signPAddress" maxlength="20" />
-          <div class="valid-feedback">
-            Indirizzo valido!
+        <div class="form-group">
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input" name="userType" value="client" checked id="signClient" />
+              <label for="signClient" class="custom-control-label">Cliente</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input" name="userType" value="provider" id="signProvider" />
+              <label for="signProvider" class="custom-control-label">Fornitore</label>
+            </div>
           </div>
-          <div class="invalid-feedback">
-            Fornire un indirizzo valido! [massimo 20 caratteri]
+          <div class="form-group" id="clientName">
+            <label for="signName" class="sr-only">Nome cliente:</label>
+            <input type="text" class="form-control" name="name" autocomplete="on" placeholder="Nome.." required id="signName" maxlength="20"/>
+            <div class="valid-feedback">
+              Nome valido!
+            </div>
+            <div class="invalid-feedback">
+              Fornire un nome! [massimo 20 caratteri]
+            </div>
           </div>
-        </div>
-        <div class="form-group" hidden id="providerType">
-          <select class="custom-select">
-            <?php
-            if ($provTypes = $conn->query("
-            SELECT t.type_id,t.type_name
-            FROM type t
-            ")) {
-            while ($provType = $provTypes->fetch_assoc()) {
-              echo '<option value="'.$provType['type_id'].'">'.$provType['type_name'].'</option>';
+          <div class="form-group" id="clientSurname">
+            <label for="signSurname" class="sr-only">Cognome cliente:</label>
+            <input type="text" class="form-control" name="surname" autocomplete="on" placeholder="Cognome.." required id="signSurname" maxlength="20"/>
+            <div class="valid-feedback">
+              Cognome valido!
+            </div>
+            <div class="invalid-feedback">
+              Fornire un cognome! [massimo 20 caratteri]
+            </div>
+          </div>
+          <div class="form-group" hidden id="providerName">
+            <label for="signPName" class="sr-only">Nome fornitore:</label>
+            <input type="text" class="form-control" name="pname" autocomplete="on" placeholder="Nome.." id="signPName" maxlength="20"/>
+            <div class="valid-feedback">
+              Nome valido!
+            </div>
+            <div class="invalid-feedback">
+              Fornire un nome! [massimo 20 caratteri]
+            </div>
+          </div>
+          <div class="form-group" hidden id="providerAddress">
+            <label for="signPAddress" class="sr-only">Indirizzo fornitore:</label>
+            <input type="text" class="form-control" name="paddress" autocomplete="on" placeholder="Indirizzo.." id="signPAddress" maxlength="20" />
+            <div class="valid-feedback">
+              Indirizzo valido!
+            </div>
+            <div class="invalid-feedback">
+              Fornire un indirizzo valido! [massimo 20 caratteri]
+            </div>
+          </div>
+          <div class="form-group" hidden id="providerType">
+            <select class="custom-select">
+              <?php
+              if ($provTypes = $conn->query("
+              SELECT t.type_id,t.type_name
+              FROM type t
+              ")) {
+              while ($provType = $provTypes->fetch_assoc()) {
+                echo '<option value="'.$provType['type_id'].'">'.$provType['type_name'].'</option>';
+              }
             }
-          }
-          ?>
-          </select>
-          <div class="valid-feedback">
-            Tipo valido!
+            ?>
+            </select>
+            <div class="valid-feedback">
+              Tipo valido!
+            </div>
+            <div class="invalid-feedback">
+              Seleziona un tipo!
+            </div>
           </div>
-          <div class="invalid-feedback">
-            Seleziona un tipo!
-          </div>
+          <button type="submit" class="btn btn-primary btn-lg btn-block" value="Signup">
+            Registrati
+          </button>
+      </fieldset>
+      <p class="text-muted small mt-1">Hai gi&agrave; un account? Accedi <a href="login.php">qui</a></p>
+      <div class="mt-3 d-none" id="alertDiv">
+        <div class="alert alert-success" role="alert">
+          Registrazione avvenuta con successo. Verrai reindirizzato a breve all'accesso...
         </div>
-        <button type="submit" class="btn btn-primary btn-lg btn-block" value="Signup">
-          Registrati
-        </button>
-    </fieldset>
-    <p class="text-muted small mt-1">Hai gi&agrave; un account? Accedi <a href="login.php">qui</a></p>
-    <div class="mt-3 d-none" id="alertDiv">
-      <div class="alert alert-success" role="alert">
-        Registrazione avvenuta con successo. Verrai reindirizzato a breve all'accesso...
-      </div>
-      <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger" role="alert">
 
+        </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
   <?php include("fragments/footer.php"); ?>
 </body>
 <script type="text/javascript">
