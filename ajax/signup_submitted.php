@@ -44,7 +44,7 @@ if(!($statement->num_rows>0)){
     $statement->close();
   }
 } else {
-  echo "Signup failed. Email already in use.";
+  echo "Registrazione fallita. Email gia in uso.";
 }
 $statement->close();
 include("../fragments/connection-end.php");
