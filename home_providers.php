@@ -17,12 +17,12 @@
   <?php include("fragments/navbar.php"); ?>
 
   <div class="container mt-4 mb-4">
-    <h4 class="display-4 pb-2">Order list</h4>
+    <h4 class="display-4 pb-2">Lista ordini</h4>
     <div class="container accordion mt-4 mb-4" id="mainAccordion">
       <div class="card main-card">
         <h1 class="mb-0">
           <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseIncomingOrders" aria-expanded="true" aria-controls="collapseIncomingOrders">
-            Incoming Orders
+            Ordini in arrivo
           </button>
         </h1>
         <div id="collapseIncomingOrders" class="collapse show" aria-labelledby="headingIncomingOrders" data-parent="#mainAccordion">
@@ -31,7 +31,7 @@
       <div class="card main-card">
         <h1 class="mb-0">
           <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapsePreparedOrders" aria-expanded="false" aria-controls="collapsePreparedOrders">
-            Accepted Orders
+            Ordini accettati
           </button>
         </h1>
         <div id="collapsePreparedOrders" class="collapse" aria-labelledby="headingPreparedOrders" data-parent="#mainAccordion">
@@ -41,7 +41,7 @@
       <div class="card main-card">
         <h1 class="mb-0">
           <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseCompletedOrders" aria-expanded="false" aria-controls="collapseCompletedOrders">
-            Completed Orders
+            Ordini conclusi
           </button>
         </h1>
         <div id="collapseCompletedOrders" class="collapse" aria-labelledby="headingCompletedOrders" data-parent="#mainAccordion">
@@ -57,18 +57,18 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title ml-2 mr-2" id="modalLabelReject">Reject order</h5>
+        <h4 class="modal-title ml-2 mr-2" id="modalLabelReject">Rifiuta ordine</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body ml-2 mr-2">
-        <label id="rejectLabel">Reason</label>
+        <label id="rejectLabel">Motivo</label>
         <textarea maxlength="200" class="form-control" aria-labelledby="rejectReason" id="rejectNotes"></textarea>
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary btnRejectConfirm" onclick="btnRejectConfirmClick(this)" data-dismiss="modal">
-          Confirm
+          Conferma
         </button>
       </div>
     </div>
@@ -252,7 +252,7 @@ function createOrderCard(o) {
     <div class="card-body">
       <div class="card-title">
         <h7 class="text-muted float-right">` + o.creation_timestamp + `</h7>
-        <h5>` + (o.status_id != 2 ? o.client_name + `'s order` : `<strike>` + o.client_name + `'s order</strike>`) + `</h5>
+        <h5>` + o.client_name + (o.status_id != 2 ? `` : `<span style="color: red;"> (rifiutato)</span>`) + `</h5>
       </div>
       <h5 class="card-title"></h5>
       <h6 class="card-subtitle mb-2 text-muted">` + o.order_address + `</h6>`
@@ -261,17 +261,17 @@ function createOrderCard(o) {
     <div class="card-text">
       <div class="border-top border-bottom p-2">
         <div class="row">
-          <label class="col-4 col-sm-3 col-lg-2 col-form-label border-right">Product</label>
+          <label class="col-4 col-sm-3 col-lg-2 col-form-label border-right">Prodotto</label>
           <label class="col col-form-label">` + orderedProduct.product_name + `</label>
         </div>
         <div class="row">
-          <label class="col-4 col-sm-3 col-lg-2 col-form-label border-right">Quantity</label>
+          <label class="col-4 col-sm-3 col-lg-2 col-form-label border-right">Quantità</label>
           <label class="col col-form-label">` + orderedProduct.quantity + `</label>
         </div>`
     if (orderedProduct.notes != "") {
       element += `
       <div class="row">
-        <label class="col-4 col-sm-3 col-lg-2 col-form-label border-right">Notes</label>
+        <label class="col-4 col-sm-3 col-lg-2 col-form-label border-right">Note</label>
         <label class="col col-form-label">` + orderedProduct.notes + `</label>
       </div>`
     }
@@ -283,8 +283,8 @@ function createOrderCard(o) {
     case "4":
       element += `
           <div class="btn-group pt-2 col-sm col-md-4" role="group" aria-labelledby="Order action">
-            <button class="btn btn-primary inline btnAccept border-right" onclick="btnAcceptClick(this)">Accept</button>
-            <button class="btn btn-primary inline btnReject border-left" onclick="btnRejectClick(this)" data-toggle="modal" data-target="#modalReject">Reject</button>
+            <button class="btn btn-primary inline btnAccept border-right" onclick="btnAcceptClick(this)">Accetta</button>
+            <button class="btn btn-primary inline btnReject border-left" onclick="btnRejectClick(this)" data-toggle="modal" data-target="#modalReject">Rifiuta</button>
           </div>
         </div>
       </div>`
@@ -293,7 +293,7 @@ function createOrderCard(o) {
     case "1":
       element += `
           <div class="btn-group pt-2 col-sm col-md-4">
-            <button class="btn btn-primary inline" onclick="btnCompleteClick(this)">Complete</button>
+            <button class="btn btn-primary inline" onclick="btnCompleteClick(this)">Completa</button>
           </div>
         </div>
       </div>`
