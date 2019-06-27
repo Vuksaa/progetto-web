@@ -8,16 +8,28 @@
 <body>
   <?php include("fragments/navbar-empty.php"); ?>
 
-  <form class="form-signin container pt-5">
+  <form class="form-signin container pt-5 needs-validation" novalidate>
     <fieldset>
       <legend class="form-signin-heading">Accedi</legend>
       <div class="form-group">
         <label for="logEmail" class="sr-only">Email:</label>
-        <input type="email" class="form-control" autocomplete="username" placeholder="Email.." required autofocus id="loginEmail" />
+        <input type="email" class="form-control" autocomplete="username" placeholder="Email.." required autofocus id="loginEmail" maxlength="20" />
+        <div class="valid-feedback">
+          Email valida!
+        </div>
+        <div class="invalid-feedback">
+          Fornire un'email valida! (esempio@esempio.es) [massimo 20 caratteri]
+        </div>
       </div>
       <div class="form-group">
         <label for="logPassword" class="sr-only">Password:</label>
-        <input type="password" class="form-control" autocomplete="current-password" placeholder="Password.." required id="loginPassword" />
+        <input type="password" class="form-control" autocomplete="current-password" placeholder="Password.." required id="loginPassword" maxlength="20" />
+        <div class="valid-feedback">
+          Password valida!
+        </div>
+        <div class="invalid-feedback">
+          Fornire una password valida! [massimo 20 caratteri]
+        </div>
       </div>
       <button type="submit" class="btn btn-primary btn-lg btn-block" value="Login">
         Accedi
@@ -41,35 +53,41 @@
     // Hides the alert
     $(".alert").hide();
     $("#alertDiv").removeClass("d-none");
-    // Calls the login_submitted script and sets the alert
-    $("form").on('submit', function(e) {
+    var form = $("form");
+    form.on('submit', function(event) {
       // prevent the submit button from refreshing the page
-      e.preventDefault();
-      $.post("ajax/login_submitted.php", {
-        email: $("#loginEmail").val(),
-        password: $("#loginPassword").val()
-      }).done(function(response) {
-        if (response.indexOf("LOGIN_SUCCESS") != -1) {
-          $("input.submit").prop('disabled', true);
-          $(".alert.alert-danger").fadeOut();
-          $(".alert.alert-success").fadeOut();
-          $(".alert.alert-success").fadeIn();
-          if (response === "LOGIN_SUCCESS_CLIENT") {
-            setTimeout(function() {
-              window.location.href = "home_clients.php";
-            }, 2500)
-          } else if (response === "LOGIN_SUCCESS_PROVIDER") {
-            setTimeout(function() {
-              window.location.href = "home_providers.php";
-            }, 2500)
+      event.preventDefault();
+      if (form[0].checkValidity() === false) {
+        event.stopPropagation();
+      } else {
+        //  Calls the login_submitted script and sets the alert
+        $.post("ajax/login_submitted.php", {
+          email: $("#loginEmail").val(),
+          password: $("#loginPassword").val()
+        }).done(function(response) {
+          if (response.indexOf("LOGIN_SUCCESS") != -1) {
+            $("input.submit").prop('disabled', true);
+            $(".alert.alert-danger").fadeOut();
+            $(".alert.alert-success").fadeOut();
+            $(".alert.alert-success").fadeIn();
+            if (response === "LOGIN_SUCCESS_CLIENT") {
+              setTimeout(function() {
+                window.location.href = "home_clients.php";
+              }, 2500)
+            } else if (response === "LOGIN_SUCCESS_PROVIDER") {
+              setTimeout(function() {
+                window.location.href = "home_providers.php";
+              }, 2500)
+            }
+          } else {
+            $(".alert.alert-success").fadeOut();
+            $(".alert.alert-danger").fadeOut();
+            $(".alert.alert-danger").text(response);
+            $(".alert.alert-danger").fadeIn();
           }
-        } else {
-          $(".alert.alert-success").fadeOut();
-          $(".alert.alert-danger").fadeOut();
-          $(".alert.alert-danger").text(response);
-          $(".alert.alert-danger").fadeIn();
-        }
-      });
+        });
+      }
+      form.addClass('was-validated');
     });
   });
 </script>
