@@ -15,60 +15,17 @@
 
 <body>
   <?php include("fragments/navbar.php"); ?>
-
   <div class="container mt-4 mb-4">
-    <h3 class="pb-2">Order History</h3>
-    <div class="card main-card">
-      <h1 class="mb-0">
-        <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseOrderHistory" aria-expanded="true" aria-controls="collapseOrderHistory">
-          Your Orders
-        </button>
-      </h1>
-      <div id="collapseOrderHistory" class="collapse show" aria-labelledby="headingOrderHistory">
-        <div class="card-body">
-          <form class="form-inline card-searchbar">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
-          <div class="row">
-            <?php
-              if ($allOrders = $conn->query("SELECT o.order_id,o.order_address,p.product_name,s.status_name,s.status_id,po.notes
-                                          FROM uni_web_prod.order o
-                                          JOIN product_order po
-                                          ON o.order_id = po.order_id
-                                          JOIN product p
-                                          ON po.product_id = p.product_id
-                                          JOIN order_status os
-                                          ON os.order_id = o.order_id
-                                          LEFT JOIN status s
-                                          ON os.status_id = s.status_id
-                                          JOIN client_order co
-                                          ON co.order_id = o.order_id
-                                          WHERE co.client_id = '".$_SESSION['user_id']."'")) {
-                while ($orderRow = $allOrders->fetch_assoc()) {
-            ?>
-            <div class="card col-sm-3">
-              <div class="card-body">
-                <h5 class="card-title"><?php echo $orderRow['product_name'] ?></h5>
-                <h6 class="card-subtitle mb-2 text-muted"><?php echo $orderRow['order_address'] ?></h6>
-                <p class="card-text"><?php echo $orderRow['notes'] ?></p>
-                <div class="btn-group btn-group-justified">
-                  <a href="#" class="btn btn-primary inline">Details</a>
-                </div>
-              </div>
-            </div>
-            <?php
-              }
-              } else {
-                  echo "Query failed";
-                }
-            ?>
-          </div>
-        </div>
-      </div>
+    <div id="openOrders" class="d-none">
+      <h4 class="display-4 pb-2">Ordini aperti</h4>
     </div>
+    <div id="closedOrders" class="d-none">
+      <h4 class="display-4 pb-2">Ordini chiusi</h4>
+    </div>
+    <button class="btn btn-primary btn-sm col col-sm-2 mt-2" id="showMore">
+      Mostra altri
+    </button>
   </div>
-
   <?php include("fragments/footer.php"); ?>
 </body>
 <script type="text/javascript">
@@ -78,7 +35,156 @@ $(function() {
   var parent = element.parent();
   element.append( "<span class='sr-only'>(current)</span>" );
   parent.addClass("active");
+
+  var nextHiddenOrderGroup = 0
+  function showNextOrders() {
+    $("#closedOrders .orderCard").filter(function() {
+      return ($(this).data("order-group") == nextHiddenOrderGroup)
+    }).removeClass("d-none")
+    nextHiddenOrderGroup++
+  }
+  $("#showMore").on('click', showNextOrders)
+
+  // fetch all orders and place them in their section.
+  $.post("ajax/fetch_client_closed_orders.php")
+  .done(function(response) {
+    if (response.indexOf('ERROR') != -1 || response == 'EMPTY') {
+      console.log(response)
+    } else {
+      $("#closedOrders").removeClass('d-none')
+      var responseArray = JSON.parse(response)
+      // take all elements with a distinct order_id and create an "order" element for each order
+      // distinct filter taken from https://stackoverflow.com/a/47313334
+      var orders = []
+      $.each(responseArray.filter(
+        (arr, index, self) => index === self.findIndex(
+          (t) => (t.order_id === arr.order_id))
+        ),
+        function(index, it) {
+          orders.push({
+            provider_id: it.provider_id,
+            order_id: it.order_id,
+            provider_name: it.provider_name,
+            creation_timestamp: it.creation_timestamp,
+            order_address: it.order_address,
+            status_name: it.status_name,
+            rejection_reason: it.rejection_reason,
+            products: []
+          })
+        }
+      )
+      // fill the orders with their respective products
+      $.each(responseArray, function(index, it) {
+        orders.filter(self => self.order_id === it.order_id)[0].products.push({
+        // orders[it.order_id].products.push({
+          product_name: it.product_name,
+          quantity: it.quantity,
+          notes: it.notes
+        })
+      })
+      // order by date
+      orders.sort(function(a, b) { return Date.parse(b.creation_timestamp) - Date.parse(a.creation_timestamp) })
+      // create the order cards
+      var orderNumber = 0;
+      var orderGroupSize = 5;
+      $.each(orders, function(index, it) {
+        var card = createOrderCard(it)
+        card.addClass('d-none')
+        card.data('order-group', parseInt(orderNumber++ / orderGroupSize))
+        card.appendTo($("#closedOrders"))
+      })
+      showNextOrders()
+    }
+  })
+  $.post("ajax/fetch_client_open_orders.php")
+  .done(function(response) {
+    if (response.indexOf('ERROR') != -1 || response == 'EMPTY') {
+      console.log(response)
+    } else {
+      $("#openOrders").removeClass('d-none')
+      var responseArray = JSON.parse(response)
+      // take all elements with a distinct order_id and create an "order" element for each order
+      // distinct filter taken from https://stackoverflow.com/a/47313334
+      var orders = []
+      $.each(responseArray.filter(
+        (arr, index, self) => index === self.findIndex(
+          (t) => (t.order_id === arr.order_id))
+        ),
+        function(index, it) {
+          orders.push({
+            provider_id: it.provider_id,
+            order_id: it.order_id,
+            provider_name: it.provider_name,
+            creation_timestamp: it.creation_timestamp,
+            order_address: it.order_address,
+            status_name: it.status_name,
+            rejection_reason: it.rejection_reason,
+            products: []
+          })
+        }
+      )
+      // fill the orders with their respective products
+      $.each(responseArray, function(index, it) {
+        orders.filter(self => self.order_id === it.order_id)[0].products.push({
+        // orders[it.order_id].products.push({
+          product_name: it.product_name,
+          quantity: it.quantity,
+          notes: it.notes
+        })
+      })
+      // order by date
+      orders.sort(function(a, b) { return Date.parse(b.creation_timestamp) - Date.parse(a.creation_timestamp) })
+      // create the order cards
+      var orderNumber = 0;
+      var orderGroupSize = 5;
+      $.each(orders, function(index, it) {
+        var card = createOrderCard(it)
+        card.appendTo($("#openOrders"))
+      })
+    }
+  })
 })
+
+function createOrderCard(o) {
+  var element = `
+  <div class="card orderCard mb-3">
+    <div class="card-body">
+      <div class="card-title">
+        <p>` + o.status_name + (o.rejection_reason == null ? '' : `. Motivo: ` + o.rejection_reason) + `</p>
+        <h7 class="text-muted float-right">` + o.creation_timestamp + `</h7>
+        <a class="h5" href="place_order.php?provider=` + o.provider_id + `">` + o.provider_name + `</a>
+      </div>
+      <h5 class="card-title"></h5>
+      <h6 class="card-subtitle mb-2 text-muted">` + o.order_address + `</h6>`
+  $.each(o.products, function(index, orderedProduct) {
+    element += `
+    <div class="card-text">
+      <hr>
+      <div class="p-2">
+        <div class="row">
+          <label class="col-4 col-sm-3 col-lg-2 col-form-label border-right">Prodotto</label>
+          <label class="col col-form-label">` + orderedProduct.product_name + `</label>
+        </div>
+        <div class="row">
+          <label class="col-4 col-sm-3 col-lg-2 col-form-label border-right">Quantit&agrave;</label>
+          <label class="col col-form-label">` + orderedProduct.quantity + `</label>
+        </div>`
+    if (orderedProduct.notes != "") {
+      element += `
+      <div class="row">
+        <label class="col-4 col-sm-3 col-lg-2 col-form-label border-right">Note</label>
+        <label class="col col-form-label">` + orderedProduct.notes + `</label>
+      </div>`
+    }
+    element += `
+        </div>
+      </div>`
+  })
+  element += `
+    </div>
+  </div>`
+  return $(element)
+}
 </script>
 <?php include("fragments/connection-end.php"); ?>
 </html>
