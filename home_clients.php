@@ -19,22 +19,22 @@
   <?php include("fragments/navbar.php"); ?>
 
   <div class="container mt-4 mb-4">
-    <h4 class="display-4 pb-2">Provider list</h4>
+    <h4 class="display-4 pb-2">Fornitori</h4>
     <button type="button" class="btn btn-outline-info col-sm col-md-3 col-lg-2" id="btnFilters" data-toggle="modal" data-target="#modalFilters" aria-label="Click to open filter menu modal">
-      Filters <span id="filterState" style="color: black;">(no filters)</span>
+      Filtri <span id="filterState" style="color: black;">(nessun filtro)</span>
     </button>
     <div class="container accordion mt-4 mb-4" id="mainAccordion">
       <div class="card main-card">
         <h1 class="mb-0" id="headingFavouriteProviders">
           <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseFavouriteProviders" aria-expanded="true" aria-controls="collapseFavouriteProviders">
-            Your Favourite Providers
+            Preferiti
           </button>
         </h1>
         <div id="collapseFavouriteProviders" class="collapse show" aria-labelledby="headingFavouriteProviders" data-parent="#mainAccordion">
           <div class="card-body">
             <div class="card-searchbar">
-              <label for="searchFavourites" class="sr-only">Search in favourite providers:</label>
-              <input class="form-control mr-sm-2" id="searchFavourites" type="search" placeholder="Search">
+              <label for="searchFavourites" class="sr-only">Cerca fornitori preferiti</label>
+              <input class="form-control mr-sm-2" id="searchFavourites" type="search" placeholder="Cerca">
             </div>
             <div class="row" id="favouriteProviders">
               <?php
@@ -73,8 +73,8 @@
                       ?>
                     </p>
                     <div class="btn-group mt-auto" role="group" aria-labelledby="Provider-related actions">
-                      <button class="btn btn-primary inline btn-place-order border-right">Order</button>
-                      <button class="btn btn-primary inline border-left" name="removeFavourite"><span class="sr-only">Remove Favourite</span><i class="fas fa-star" aria-hidden="true"></i></button>
+                      <button class="btn btn-primary inline btn-place-order border-right">Ordina</button>
+                      <button class="btn btn-primary inline border-left" name="removeFavourite"><span class="sr-only">Rimuovi preferito</span><i class="fas fa-star" aria-hidden="true"></i></button>
                     </div>
                   </div>
                 </div>
@@ -93,14 +93,14 @@
       <div class="card main-card">
         <h1 class="mb-0" id="headingProviders">
           <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseAllProviders" aria-expanded="false" aria-controls="collapseAllProviders">
-            Providers
+            Tutti
           </button>
         </h1>
         <div id="collapseAllProviders" class="collapse" aria-labelledby="headingProviders" data-parent="#mainAccordion">
           <div class="card-body">
             <div class="card-searchbar">
-              <label for="searchListed" class="sr-only">Search in listed providers:</label>
-              <input class="form-control mr-sm-2" id="searchListed" type="search" placeholder="Search">
+              <label for="searchListed" class="sr-only">Cerca in tutti i fornitori:</label>
+              <input class="form-control mr-sm-2" id="searchListed" type="search" placeholder="Cerca">
             </div>
             <div class="row" id="listedProviders">
               <?php
@@ -146,8 +146,8 @@
                       ?>
                     </p>
                     <div class="btn-group mt-auto" role="group" aria-labelledby="Provider-related actions">
-                      <button class="btn btn-primary inline btn-place-order border-right">Order</button>
-                      <button class="btn btn-primary inline border-left" name="addFavourite"><span class="sr-only">Add Favourite</span><i class="far fa-star" aria-hidden="true"></i></button>
+                      <button class="btn btn-primary inline btn-place-order border-right">Ordina</button>
+                      <button class="btn btn-primary inline border-left" name="addFavourite"><span class="sr-only">Aggiungi preferito</span><i class="far fa-star" aria-hidden="true"></i></button>
                     </div>
                   </div>
                 </div>
@@ -168,32 +168,12 @@
   <?php include("fragments/footer.php"); ?>
 </body>
 
-<!-- modal for peeking on a provider's main dishes/products, without entering in their profile page or in a "place order" page -->
-<div id="peekOnProvider" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title place-order-header">Presented dishes</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p>List of dishes/products (with their price) chosen by the provider goes here. "Dish"/"Product" flavour according to provider type?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- Modal for filters -->
 <div class="modal fade" id="modalFilters" tabindex="-1" role="dialog" aria-labelledby="modalLabelFilters" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title ml-2 mr-2" id="modalLabelFilters">Filters</h4>
+        <h4 class="modal-title ml-2 mr-2" id="modalLabelFilters">Filtri</h4>
         <button type="button" class="close btnSaveFilters" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -203,7 +183,7 @@
           <div class="pb-2 pt-2 custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="checkFilterByTypes">
             <label class="custom-control-label" for="checkFilterByTypes">
-              <h5>Types</h5>
+              <h5>Tipi</h5>
             </label>
           </div>
           <?php
@@ -228,10 +208,10 @@
           <div class="pb-2 pt-2 custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="checkFilterByCategories">
             <label class="custom-control-label" for="checkFilterByCategories">
-              <h5>Categories</h5>
+              <h5>Categorie</h5>
             </label>
           </div>
-          <button type="button" class="btn btn-secondary m-0 mb-1 p-1 pl-2 pr-2" id="clearCategories">Clear categories</button>
+          <button type="button" class="btn btn-secondary m-0 mb-1 p-1 pl-2 pr-2" id="clearCategories">Azzera categorie</button>
           <?php
             if ($categories = $conn->query(
               "SELECT category_id, category_name FROM category"
@@ -253,7 +233,7 @@
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary col-2 ml-2 btnSaveFilters" data-dismiss="modal">
-          Close
+          Salva
         </button>
       </div>
     </div>
@@ -281,10 +261,10 @@
       var filterByTypes = $("#checkFilterByTypes").is(":checked");
       var filterByCategories = $("#checkFilterByCategories").is(":checked");
       if (filterByTypes || filterByCategories) {
-        $("#filterState").text("(active)");
+        $("#filterState").text("(attivi)");
         $("#filterState").css('color', 'green');
       } else {
-        $("#filterState").text("(no filters)");
+        $("#filterState").text("(nessun filtro)");
         $("#filterState").css('color', 'black');
       }
       $(".provider").show();

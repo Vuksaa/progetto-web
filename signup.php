@@ -10,7 +10,7 @@
   <?php include("fragments/navbar-empty.php"); ?>
   <form class="form-signin container pt-5 needs-validation" novalidate>
     <fieldset>
-      <legend class="form-signin-heading">Registrazione</legend>
+      <legend class="form-signin-heading display-4 pb-4">Registrazione</legend>
       <div class="form-group">
         <label for="signEmail" class="sr-only">Email:</label>
         <input type="email" class="form-control" name="email" autocomplete="username" placeholder="Email.." required autofocus id="signEmail" maxlength="20" />
