@@ -10,7 +10,7 @@
 
   <form class="form-signin container pt-5">
     <fieldset>
-      <legend class="form-signin-heading">Login</legend>
+      <legend class="form-signin-heading display-4 pb-4">Login</legend>
       <div class="form-group">
         <label for="logEmail" class="sr-only">Email:</label>
         <input type="email" class="form-control" autocomplete="username" placeholder="Email.." required autofocus id="loginEmail" />

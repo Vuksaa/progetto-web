@@ -17,7 +17,7 @@
   <?php include("fragments/navbar.php"); ?>
 
   <div class="container mt-4 mb-4">
-    <h3 class="pb-2">Order list</h3>
+    <h4 class="display-4 pb-2">Order list</h4>
     <div class="container accordion mt-4 mb-4" id="mainAccordion">
       <div class="card main-card">
         <h1 class="mb-0">
