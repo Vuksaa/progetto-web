@@ -50,38 +50,33 @@
   ?>
   <?php include("fragments/navbar.php"); ?>
 
-  <nav class="sticky-top">
-    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-      <a class="nav-item nav-link active" id="nav-allergen-tab" data-toggle="tab" href="#nav-allergen" role="tab" aria-controls="nav-profile" aria-selected="false">Allergens</a>
-      <a class="nav-item nav-link" id="nav-address-tab" data-toggle="tab" href="#nav-address" role="tab" aria-controls="nav-profile" aria-selected="false">Addresses</a>
-    </div>
-  </nav>
-  <div class="tab-content" id="nav-tabContent">
-
-    <div class="tab-pane fade show active" id="nav-allergen" role="tabpanel" aria-labelledby="nav-allergen-tab">
-      <div class="container p-3">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-9 col-sm-6 col-md-5 col-lg-4 pt-4">
+        <h4 class="pb-2">Allergens</h4>
         <ul class="list-group" id="allergens">
-          <button type="button" class="list-group-item list-group-item-action text-center col-3 m-0" data-toggle="modal" data-target="#modalAddAllergen">
+          <button type="button" class="list-group-item list-group-item-action bg-primary text-center text-white m-0" data-toggle="modal" data-target="#modalAddAllergen">
             <i class="far fa-plus-square"></i>
+            <span class="sr-only">Add Allergen</span>
           </button>
           <?php
             while ($allergens->fetch()) {
-              echo '<button type="button" class="btnRemoveAllergen list-group-item list-group-item-action col-3 m-0" data-allergenId="'.$allergenId.'">'.$allergenName.'</button>';
+              echo '<button type="button" class="btnRemoveAllergen list-group-item list-group-item-action text-center m-0" data-allergenId="'.$allergenId.'">'.$allergenName.'</button>';
             }
             $allergens->close();
           ?>
         </ul>
       </div>
-    </div>
-    <div class="tab-pane fade" id="nav-address" role="tabpanel" aria-labelledby="nav-address-tab">
-      <div class="container pt-3">
+      <div class="col-9 col-sm-6 col-md-5 col-lg-4 pt-4">
+        <h4 class="pb-2">Addresses</h4>
         <ul class="list-group" id="addresses">
-          <button type="button" class="list-group-item list-group-item-action text-center col-5 m-0" id="btnAddressModal" data-toggle="modal" data-target="#modalAddAddress">
+          <button type="button" class="list-group-item list-group-item-action bg-primary text-center text-white m-0" id="btnAddressModal" data-toggle="modal" data-target="#modalAddAddress">
             <i class="far fa-plus-square"></i>
+            <span class="sr-only">Add Address</span>
           </button>
           <?php
             while ($addresses->fetch()) {
-              echo '<button type="button" class="btnRemoveAddress list-group-item list-group-item-action col-5 m-0" data-addressid="'.$addressId.'">'.$addressName.', '.$addressInfo.'</button>';
+              echo '<button type="button" class="btnRemoveAddress list-group-item list-group-item-action text-center m-0" data-addressid="'.$addressId.'">'.$addressName.', '.$addressInfo.'</button>';
             }
             $addresses->close();
           ?>
@@ -164,7 +159,7 @@ $(function() {
       allergen: allergenId
     }).done(function(response) {
       if (response.indexOf("ERROR") == -1) {
-        var newAllergen = '<button type="button" class="btnRemoveAllergen list-group-item list-group-item-action col-3 m-0" data-allergenId="' + allergenId + '">' + allergenName + '</button>'
+        var newAllergen = '<button type="button" class="btnRemoveAllergen list-group-item list-group-item-action text-center m-0" data-allergenId="' + allergenId + '">' + allergenName + '</button>'
         $(newAllergen).hide()
         $(newAllergen).appendTo("#allergens").on('click', removeAllergen)
         $(newAllergen).slideDown(200)
@@ -179,7 +174,7 @@ $(function() {
       info: addressInfo.val()
     }).done(function(response) {
       if (response.indexOf("ERROR") == -1) {
-        var newAddress = '<button type="button" class="btnRemoveAddress list-group-item list-group-item-action col-5 m-0" data-addressid="' + response + '">' + addressName.val() + ', ' + addressInfo.val() + '</button>'
+        var newAddress = '<button type="button" class="btnRemoveAddress list-group-item list-group-item-action text-center m-0" data-addressid="' + response + '">' + addressName.val() + ', ' + addressInfo.val() + '</button>'
         $(newAddress).hide()
         $(newAddress).appendTo("#addresses").on('click', removeAddress)
         $(addressName).val("")
