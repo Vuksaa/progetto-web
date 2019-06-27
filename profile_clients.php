@@ -53,11 +53,11 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-9 col-sm-6 col-md-5 col-lg-4 pt-4">
-        <h4 class="pb-2">Allergens</h4>
+        <h4 class="pb-2">Allergeni</h4>
         <ul class="list-group" id="allergens">
           <button type="button" class="list-group-item list-group-item-action bg-primary text-center text-white m-0" data-toggle="modal" data-target="#modalAddAllergen">
             <i class="far fa-plus-square"></i>
-            <span class="sr-only">Add Allergen</span>
+            <span class="sr-only">Aggiungi allergene</span>
           </button>
           <?php
             while ($allergens->fetch()) {
@@ -68,11 +68,11 @@
         </ul>
       </div>
       <div class="col-9 col-sm-6 col-md-5 col-lg-4 pt-4">
-        <h4 class="pb-2">Addresses</h4>
+        <h4 class="pb-2">Indirizzi</h4>
         <ul class="list-group" id="addresses">
           <button type="button" class="list-group-item list-group-item-action bg-primary text-center text-white m-0" id="btnAddressModal" data-toggle="modal" data-target="#modalAddAddress">
             <i class="far fa-plus-square"></i>
-            <span class="sr-only">Add Address</span>
+            <span class="sr-only">Aggiungi indirizzo</span>
           </button>
           <?php
             while ($addresses->fetch()) {
@@ -90,13 +90,13 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalLabelAddAllergen">Add Allergen</h5>
+          <h5 class="modal-title" id="modalLabelAddAllergen">Aggiungi allergene</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <label for="selectAllergenId" class="sr-only">Select Allergen</label>
+          <label for="selectAllergenId" class="sr-only">Seleziona allergene</label>
           <select class="form-control" name="selectAllergenId" id="selectedAllergenId">
             <?php
               $query = $conn->query("SELECT * FROM allergen");
@@ -109,8 +109,8 @@
           </select>
         </div>
         <div class="modal-footer">
-          <button type="submit" id="btnAddAllergen" class="btn btn-primary col-2 ml-2" value="clientAllergenAdd" data-dismiss="modal">
-            Add
+          <button type="submit" id="btnAddAllergen" class="btn btn-primary ml-2" value="clientAllergenAdd" data-dismiss="modal">
+            Aggiungi
           </button>
         </div>
       </div>
@@ -120,22 +120,22 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalLabelAddAddress">Add Address</h5>
+          <h5 class="modal-title" id="modalLabelAddAddress">Aggiungi indirizzo</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="clientAddressName" class="sr-only">Address Name</label>
-            <input type="text" class="form-control mb-2" name="addressName" autocomplete="on" placeholder="Address Name.." required autofocus id="addressName" />
-            <label for="clientAddressInfo" class="sr-only">Address Street Info</label>
-            <input type="text" class="form-control" name="addressInfo" autocomplete="on" placeholder="Address Street Info.." required autofocus id="addressInfo" />
+            <label for="clientAddressName" class="sr-only">Nome indirizzo</label>
+            <input type="text" class="form-control mb-2" name="addressName" autocomplete="on" placeholder="Nome indirizzo" required autofocus id="addressName" />
+            <label for="clientAddressInfo" class="sr-only">Via e civico</label>
+            <input type="text" class="form-control" name="addressInfo" autocomplete="on" placeholder="Via e civico" required autofocus id="addressInfo" />
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" id="btnAddAddress" class="btn btn-primary col-2 ml-2" value="clientAddressAdd" data-dismiss="modal">
-            Add
+          <button type="submit" id="btnAddAddress" class="btn btn-primary ml-2" value="clientAddressAdd" data-dismiss="modal">
+            Aggiungi
           </button>
         </div>
       </div>
