@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 
 <head>
   <?php include("fragments/head-contents.php"); ?>
@@ -10,7 +10,7 @@
 
   <form class="form-signin container pt-5">
     <fieldset>
-      <legend class="form-signin-heading">Login</legend>
+      <legend class="form-signin-heading">Accedi</legend>
       <div class="form-group">
         <label for="logEmail" class="sr-only">Email:</label>
         <input type="email" class="form-control" autocomplete="username" placeholder="Email.." required autofocus id="loginEmail" />
@@ -20,13 +20,13 @@
         <input type="password" class="form-control" autocomplete="current-password" placeholder="Password.." required id="loginPassword" />
       </div>
       <button type="submit" class="btn btn-primary btn-lg btn-block" value="Login">
-        Login
+        Accedi
       </button>
     </fieldset>
-    <p class="text-muted small mt-1">Don't have an account? Sign in <a href="signup.php">here</a></p>
+    <p class="text-muted small mt-1">Non hai un account? Registrati <a href="signup.php">qui</a></p>
     <div class="mt-3 d-none" id="alertDiv">
       <div class="alert alert-success" role="alert">
-        Login successful. Redirecting shortly...
+        Accesso avvenuto con successo. Verrai reindirizzato a breve...
       </div>
       <div class="alert alert-danger" role="alert">
 
@@ -50,17 +50,17 @@
         password: $("#loginPassword").val()
       }).done(function(response) {
         if (response.indexOf("LOGIN_SUCCESS") != -1) {
-          $("input.submit").prop('disabled', true)
-          $(".alert.alert-danger").fadeOut()
-          $(".alert.alert-success").fadeOut()
-          $(".alert.alert-success").fadeIn()
+          $("input.submit").prop('disabled', true);
+          $(".alert.alert-danger").fadeOut();
+          $(".alert.alert-success").fadeOut();
+          $(".alert.alert-success").fadeIn();
           if (response === "LOGIN_SUCCESS_CLIENT") {
             setTimeout(function() {
-              window.location.href = "home_clients.php"
+              window.location.href = "home_clients.php";
             }, 2500)
           } else if (response === "LOGIN_SUCCESS_PROVIDER") {
             setTimeout(function() {
-              window.location.href = "home_providers.php"
+              window.location.href = "home_providers.php";
             }, 2500)
           }
         } else {
@@ -69,9 +69,9 @@
           $(".alert.alert-danger").text(response);
           $(".alert.alert-danger").fadeIn();
         }
-      })
-    })
-  })
+      });
+    });
+  });
 </script>
 <?php include("fragments/connection-end.php"); ?>
 

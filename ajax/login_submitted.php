@@ -46,7 +46,7 @@ if ($statement->num_rows > 0) {
         echo "LOGIN_SUCCESS_PROVIDER";
     }
   } else {
-    echo "Login failed. Invalid credentials.";
+    echo "Accesso fallito. Credenziali non valide.";
   }
 }
 include("../fragments/connection-end.php");
