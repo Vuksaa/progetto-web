@@ -7,15 +7,11 @@
 ## Accessibility
 * **Check everything**
 ## Missing/incomplete features
+* Switch place_order address form style to bootstrap's custom one
 * Remove small "x" in searchbars when text is entered
 * **profile_providers.php** Redesign/reformat
-* **orders_clients.php** Fix the query, maybe move to profile_clients
-* **profile_clients.php** Smaller "Add" buttons (?)
-* **profile_clients.php** Remove "General" tab (?)
-* **profile_providers.php** Remove "General tab (?)
 ## Mobile
 * [Checklist](https://docs.google.com/spreadsheets/d/18Ro4jAbf_LOkBPr_DmGApGaRwqbGOY-PE3fro7E6BCI/edit#gid=2075892174)
-* **home_providers.php** Order details are not formatted properly
 ## Code improvements
 * Create fragments for cards (eg. provider cards in home_clients.php)
 * Explore LESS? https://stackoverflow.com/questions/1065435/can-a-css-class-inherit-one-or-more-other-classes
