@@ -19,12 +19,12 @@ include("fragments/connection-begin.php");
   <!-- The provider's ID should be in $_GET['provider'] -->
   <?php include("fragments/navbar.php"); ?>
   <div class="container mt-4 mb-4">
-    <h4 class="display-4 pb-2">Place order</h4>
+    <h4 class="display-4 pb-2">Crea ordine</h4>
 
     <div class="container accordion mt-4 mb-4" id="mainAccordion">
       <div class="card main-card">
         <button class="btn btn-secondary btn-lg btn-block active" id="headingMenu" data-toggle="collapse" data-target="#collapseMenu" aria-expanded="true" aria-controls="collapseMenu">
-          Menu
+          Men&ugrave;
         </button>
         <div id="collapseMenu" class="collapse show" aria-labelledby="headingMenu" data-parent="#mainAccordion">
           <div class="card-body">
@@ -88,14 +88,14 @@ include("fragments/connection-begin.php");
               ?>
             </div>
             <button class="btn btn-primary btn-sm col col-sm-2 mt-2" id="productsShowMore">
-              Show more
+              Mostra altri
             </button>
         </div>
       </div>
     </div>
     <div class="card main-card">
       <button class="btn btn-secondary btn-lg btn-block active" id="headingOrder" data-toggle="collapse" data-target="#collapseOrder" aria-expanded="false" aria-controls="collapseOrder">
-        Order
+        Ordine
       </button>
         <div id="collapseOrder" class="collapse" aria-labelledby="headingOrder" data-parent="#mainAccordion">
           <div class="card-body">
@@ -106,7 +106,7 @@ include("fragments/connection-begin.php");
         </div>
         <div class="card main-card">
           <button class="btn btn-secondary btn-lg btn-block active" id="headingConfirmation" data-toggle="collapse" data-target="#collapseConfirmation" aria-expanded="false" aria-controls="collapseConfirmation">
-            Address &amp; Confirmation
+            Indirizzo e conferma
           </button>
           <div id="collapseConfirmation" class="collapse" aria-labelledby="headingConfirmation" data-parent="#mainAccordion">
             <div class="card-body">
@@ -114,15 +114,15 @@ include("fragments/connection-begin.php");
                 <div class="form-group">
                   <div class="form-check custom-radio">
                     <input class="form-check-input" type="radio" id="radioSelectAddress" name="addressRadio" checked>
-                    <label class="form-check-label" for="radioSelectAddress">Select address</label>
+                    <label class="form-check-label" for="radioSelectAddress">Indirizzo salvato</label>
                   </div>
                   <div class="form-check custom-radio">
                     <input class="form-check-input" type="radio" id="radioEnterAddress" name="addressRadio">
-                    <label class="form-check-label" for="radioEnterAddress">Enter address</label>
+                    <label class="form-check-label" for="radioEnterAddress">Indirizzo nuovo</label>
                   </div>
                 </div>
                 <div class="form-group pt-2" id="formSelectAddress">
-                  <select class="custom-select col-sm-3" id="selectedAddress" required>
+                  <select class="custom-select col-6 col-sm-5 col-md-4" id="selectedAddress" required>
                     <?php
                     if ($addresses = $conn->query("
                       SELECT a.address_name, a.address_info
@@ -131,38 +131,56 @@ include("fragments/connection-begin.php");
                       ON a.client_id = c.client_id
                       WHERE a.client_id = '".$_SESSION['user_id']."'
                       ")) {
-                      echo '<option value="">Select address</option>';
+                      echo '<option value="">Seleziona indirizzo</option>';
                       while ($address = $addresses->fetch_assoc()) {
                         echo '<option value="'.$address['address_info'].'">'.$address['address_info'].'</option>';
                       }
                     } else {
-                      echo '<option value="">No addresses set</option>';
+                      echo '<option value="">Nessun indirizzo salvato</option>';
                     }
                     ?>
                   </select>
                 </div>
                 <div class="form-group pt-2" id="formEnterAddress">
                   <div class="form-group row">
-                    <label for="enteredAddress" class="col-form-label col-sm-auto">Address</label>
-                    <input type="text" class="form-control col-sm-4" id="enteredAddress" placeholder="Address" required>
+                    <label for="enteredAddress" class="col-form-label col-sm-auto">Indirizzo</label>
+                    <input type="text" class="form-control col-sm-4" id="enteredAddress" placeholder="Via e nr. civico" required>
                   </div>
                   <div class="form-check">
                     <input type="checkbox" class="custom-control-input" value="" id="checkSaveAddress">
-                    <label class="custom-control-label" for="checkSaveAddress">Save this address</label>
+                    <label class="custom-control-label" for="checkSaveAddress">Salva indirizzo</label>
                   </div>
                   <div class="form-group row pt-1" id="formEnterAddressName">
-                    <label for="enteredAddressName" class="col-form-label col-sm-auto">Name</label>
-                    <input type="text" class="form-control col-sm-2" id="enteredAddressName" placeholder="Name">
+                    <label for="enteredAddressName" class="col-form-label col-sm-auto">Nome</label>
+                    <input type="text" class="form-control col-sm-2" id="enteredAddressName" placeholder="Nome">
                   </div>
                 </div>
-              <button type="button" id="btnComplete" class="btn btn-primary mt-4">Pay and order</button>
+              <button type="button" id="btnComplete" class="btn btn-primary mt-4">Paga e ordina</button>
               <div class="alert alert-danger mt-2" role="alert">
-              </div>
-              <div class="alert alert-success mt-2" role="alert">
               </div>
             </form>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modalOrderPlaced" tabindex="-1" role="dialog" aria-labelledby="modalLabelOrderPlaced" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabelOrderPlaced">Ordine creato</h5>
+          <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>L'ordine è stato spedito al fornitore!</p>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary ml-2" data-dismiss="modal">
+            Ok
+          </button>
         </div>
       </div>
     </div>
@@ -174,8 +192,10 @@ include("fragments/connection-begin.php");
 
 <script type="text/javascript">
 $(function() {
+  $('#modalOrderPlaced').on('hide.bs.modal', function (e) {
+    window.location.href = "home_clients.php"
+  })
   $(".alert").hide()
-
   // Hide "enter address" form, and add event handlers for hiding the appropriate form on the radiobuttons
   $("#formEnterAddress").hide()
   $("#radioEnterAddress").on('change', function(e) {
@@ -252,13 +272,13 @@ $(function() {
 
   $("#btnComplete").on('click', function(e) {
     if ($("#listedProducts .productCard").length == 0) {
-      $(".alert.alert-danger").text("Must select at least 1 product.")
+      $(".alert.alert-danger").text("È necessario selezionare almeno un prodotto.")
       $(".alert.alert-danger").fadeOut()
       $(".alert.alert-danger").fadeIn()
       return
     }
     if ($("#selectedAddress").val() === '' && $("#enteredAddress").val() === '') {
-      $(".alert.alert-danger").text("Must select or enter an address.")
+      $(".alert.alert-danger").text("È necessario inserire o selezionare un indirizzo.")
       $(".alert.alert-danger").fadeOut()
       $(".alert.alert-danger").fadeIn()
       return
@@ -286,15 +306,11 @@ $(function() {
       data: JSON.stringify(order)
     }).done(function(response) {
       if (response.indexOf("SUCCESS") != -1) {
-        $(".alert.alert-danger").fadeOut(function() {
-          $(".alert.alert-success").text(response + " TODO: open modal and redirect to home?")
-          $(".alert.alert-success").fadeIn()
-        })
+        $("#modalOrderPlaced").modal('show')
       } else {
-        $(".alert.alert-success").fadeOut(function() {
-          $(".alert.alert-danger").text(response)
-          $(".alert.alert-danger").fadeIn()
-        })
+        console.log(response)
+        $(".alert.alert-danger").text("Errore.")
+        $(".alert.alert-danger").fadeIn()
       }
     })
   })
