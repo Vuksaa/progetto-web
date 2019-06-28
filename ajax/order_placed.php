@@ -43,14 +43,15 @@ if ($statement=$conn->prepare(
     $statement->close();
     // create the ordered products' records
     if ($statement=$conn->prepare(
-      "INSERT INTO product_order (product_id, order_id, notes, quantity)
-      VALUES (?, ?, ?, ?);"
+      "INSERT INTO product_order (product_id, order_id, notes, quantity, ordered_price)
+      VALUES (?, ?, ?, ?, ?);"
     )) {
-      $statement->bind_param('iisi', $orderedProduct_id, $order_id, $orderedProduct_notes, $orderedProduct_quantity);
+      $statement->bind_param('iisid', $orderedProduct_id, $order_id, $orderedProduct_notes, $orderedProduct_quantity, $orderedProduct_price);
       foreach ($order["products"] as $product) {
         $orderedProduct_id = $product["id"];
         $orderedProduct_notes = $product["notes"];
         $orderedProduct_quantity = $product["quantity"];
+        $orderedProduct_price = $product["price"];
         $statement->execute();
       }
       echo "ORDER_SUCCESS";

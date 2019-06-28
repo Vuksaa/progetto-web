@@ -15,9 +15,7 @@ if ($allOrders = $conn->query(
   ON o.order_id = co.order_id
   JOIN client c
   ON co.client_id = c.client_id
-  WHERE p.provider_id = '".$_SESSION['user_id']."'
-  -- uncomment this line to filter by date
-  -- AND DATE_SUB(NOW(), INTERVAL 7 DAY) < o.creation_timestamp"
+  WHERE p.provider_id = '".$_SESSION['user_id']."'"
 )) {
   $array = array();
   while ($row = $allOrders->fetch_assoc()) {

@@ -99,7 +99,7 @@ function fetchAwaitingOrders() {
         })
       })
       // order by date
-      orders.sort(function(a, b) { return Date.parse(b.creation_timestamp) - Date.parse(a.creation_timestamp) })
+      orders.sort(function(a, b) { return Date.parse(a.creation_timestamp) - Date.parse(b.creation_timestamp) })
       $.each(orders, function(index, it) {
         createOrderCard(it)
       })
@@ -151,7 +151,7 @@ $(function() {
         })
       })
       // order by date
-      allOrders.sort(function(a, b) { return Date.parse(b.creation_timestamp) - Date.parse(a.creation_timestamp) })
+      allOrders.sort(function(a, b) { return Date.parse(a.creation_timestamp) - Date.parse(b.creation_timestamp) })
       // put each order in its section
       $.each(allOrders, function(index, it) {
         createOrderCard(it)
@@ -275,7 +275,7 @@ function createOrderCard(o) {
           </div>
         </div>
       </div>`
-      $("#ordersIncoming").prepend(element)
+      $("#ordersIncoming").append(element)
     break;
     case "1":
       element += `
@@ -284,13 +284,13 @@ function createOrderCard(o) {
           </div>
         </div>
       </div>`
-      $("#ordersAccepted").prepend(element)
+      $("#ordersAccepted").append(element)
     break;
     default:
       element += `
         </div>
       </div>`
-      $("#ordersCompleted").prepend(element)
+      $("#ordersCompleted").append(element)
   }
 }
 

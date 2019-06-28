@@ -7,12 +7,11 @@
 </head>
 
 <body>
-  <?php include("fragments/navbar-empty.php"); ?>
   <div class="container pt-5 text-center">
-    <img src="res/logo_l.png" class="logo-l" width="300" height="300" alt="Logo">
     <form class="form-signin col" novalidate>
       <fieldset>
-        <legend class="form-signin-heading display-4 pb-4">Registrazione</legend>
+        <legend class="form-signin-heading display-4">GoodFood</legend>
+        <img src="res/logo_l.png" class="logo-l mb-4" width="300" height="300" alt="Logo">
         <div class="form-group">
           <label for="signEmail" class="sr-only">Email:</label>
           <input type="email" class="form-control" name="email" autocomplete="username" placeholder="Email.." required autofocus id="signEmail" maxlength="40" />

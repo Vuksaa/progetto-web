@@ -42,12 +42,12 @@ include("fragments/connection-begin.php");
   ?>
   <?php include("fragments/navbar.php"); ?>
   <div class="container mt-4 mb-4">
-    <h4 class="display-4 pb-2">Crea ordine</h4>
+    <h4 class="display-4 mb-4 text-center text-sm-left">Crea ordine</h4>
     <div class="container accordion mt-4 mb-4" id="mainAccordion">
       <button class="btn btn-secondary btn-lg btn-block active mb-1" id="headingMenu" data-toggle="collapse" data-target="#collapseMenu" aria-expanded="true" aria-controls="collapseMenu">
         Men&ugrave;
       </button>
-      <div id="collapseMenu" class="collapse show mb-4" aria-labelledby="headingMenu" data-parent="#mainAccordion">
+      <div id="collapseMenu" class="collapse mb-4" aria-labelledby="headingMenu" data-parent="#mainAccordion">
         <div class="searchbar mt-3 mb-2">
           <input class="form-control" id="searchProducts" type="search" placeholder="Search" aria-label="Search">
         </div>
@@ -95,7 +95,7 @@ include("fragments/connection-begin.php");
                   </p>
                   <form class="form-group form-inline">
                     <label class="col-form-label col-5 col-sm-3 col-md-2 justify-content-start" for="product<?php echo $product['product_id']; ?>Price">Prezzo</label>
-                    <label class="col-form-label" id="product<?php echo $product['product_id']; ?>Price"><?php echo $product['product_price']." €"; ?></label>
+                    <label class="col-form-label productPrice" id="product<?php echo $product['product_id']; ?>Price" data-price="<?php echo $product['product_price'];?>"><?php echo $product['product_price']." €"; ?></label>
                   </form>
                   <form class="form-group form-inline">
                     <label class="col-form-label col-5 col-sm-3 col-md-2 justify-content-start" for="product<?php echo $product['product_id']; ?>Quantity">Quantità</label>
@@ -156,7 +156,7 @@ include("fragments/connection-begin.php");
         <button class="btn btn-secondary btn-lg btn-block active mb-1" id="headingConfirmation" data-toggle="collapse" data-target="#collapseConfirmation" aria-expanded="false" aria-controls="collapseConfirmation">
           Indirizzo e conferma
         </button>
-        <div id="collapseConfirmation" class="collapse" aria-labelledby="headingConfirmation" data-parent="#mainAccordion">
+        <div id="collapseConfirmation" class="collapse show" aria-labelledby="headingConfirmation" data-parent="#mainAccordion">
           <form class="pt-2">
             <div class="form-group">
               <div class="custom-control custom-radio">
@@ -169,7 +169,7 @@ include("fragments/connection-begin.php");
               </div>
             </div>
             <div class="form-group pt-2" id="formSelectAddress">
-              <select class="custom-select col-6 col-sm-5 col-md-4" id="selectedAddress" required>
+              <select class="custom-select col col-sm-6 col-md-5 col-lg-4" id="selectedAddress" required>
                 <?php
                   if ($addresses = $conn->query("
                     SELECT a.address_name, a.address_info
@@ -188,21 +188,21 @@ include("fragments/connection-begin.php");
                 ?>
               </select>
             </div>
-            <div class="form-group pt-2" id="formEnterAddress">
+            <div class="form-group pt-2 col" id="formEnterAddress">
               <div class="form-group row">
-                <label for="enteredAddress" class="col-form-label col-sm-auto">Indirizzo</label>
-                <input type="text" class="form-control col-sm-4" id="enteredAddress" placeholder="Via e nr. civico" required>
+                <label for="enteredAddress" class="col-form-label col-3">Indirizzo</label>
+                <input type="text" class="form-control col col-sm-5" id="enteredAddress" placeholder="Via e nr. civico" required>
               </div>
               <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" value="" id="checkSaveAddress">
-                <label class="custom-control-label" for="checkSaveAddress">Salva indirizzo</label>
+                <label class="custom-control-label col" for="checkSaveAddress">Salva indirizzo</label>
               </div>
-              <div class="form-group row pt-1" id="formEnterAddressName">
-                <label for="enteredAddressName" class="col-form-label col-sm-auto">Nome</label>
-                <input type="text" class="form-control col-sm-2" id="enteredAddressName" placeholder="Nome">
+              <div class="form-group row pt-2" id="formEnterAddressName">
+                <label for="enteredAddressName" class="col-form-label col-3">Nome</label>
+                <input type="text" class="form-control col col-sm-5" id="enteredAddressName" placeholder="Nome">
               </div>
             </div>
-            <button type="button" id="btnComplete" class="btn btn-primary mt-4">Paga e ordina</button>
+            <button type="button" id="btnComplete" class="btn btn-primary mt-4 col col-sm-5 col-md-4 col-lg-3">Paga e ordina</button>
             <div class="alert alert-danger mt-2" role="alert">
             </div>
           </form>
@@ -345,11 +345,13 @@ $(function() {
       product["id"] = $(this).data("product-id")
       product["quantity"] = $(this).find(".productQuantity").val()
       product["notes"] = $(this).find(".productNotes").val()
+      product["price"] = $(this).find(".productPrice").data('price')
       order["products"].push(product)
     })
     $.post("ajax/order_placed.php", {
       data: JSON.stringify(order)
     }).done(function(response) {
+      console.log(response)
       if (response.indexOf("SUCCESS") != -1) {
         $("#modalOrderPlaced").modal('show')
       } else {
