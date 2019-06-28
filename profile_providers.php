@@ -19,7 +19,8 @@
                             FROM category c
                             INNER JOIN provider_category pc
                             ON c.category_id = pc.category_id
-                            WHERE pc.provider_id=?;"))) {
+                            WHERE pc.provider_id=?
+                            ORDER BY c.category_name;"))) {
       echo "Prepare failed.";
     }
     if(!($categories->bind_param('i',$_SESSION['user_id']))) {
@@ -75,6 +76,38 @@
       </div>
     </div>
   </div>
+  <!-- Modals -->
+  <div class="modal fade" id="modalAddCategory" tabindex="-1" role="dialog" aria-labelledby="modalLabelAddCategory" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabelAddCategory">Aggiungi categoria</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label for="selectCategoryId" class="sr-only">Seleziona categoria</label>
+          <select class="form-control" name="selectCategoryId" id="selectedCategoryId">
+            <?php
+              $query = $conn->query("SELECT * FROM category ORDER BY category_name");
+              while ($row = mysqli_fetch_array($query)){
+                $id=$row['category_id'];
+                $name=$row['category_name'];
+                echo "<option data-categoryId='".$id."' data-categoryName='".$name."'>".$name."</option>" ;
+              }
+              $query->close();
+            ?>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" id="btnAddCategory" class="btn btn-primary ml-2" value="clientCategoryAdd" data-dismiss="modal">
+            Aggiungi
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <?php include("fragments/footer.php"); ?>
 </body>
@@ -115,7 +148,37 @@ $(function() {
       })
     }
   })
+
+  $("#btnAddCategory").on('click', function(e) {
+    var category = $("#selectedCategoryId :selected")
+    var categoryId = $(category).data("categoryid")
+    var categoryName = $(category).data("categoryname")
+    $.post("ajax/add_category.php", {
+      category: categoryId
+    }).done(function(response) {
+      if (response.indexOf("ERROR") == -1) {
+        var newCategory = '<button type="button" class="btnRemoveCategory list-group-item list-group-item-action text-center m-0" data-categoryId="' + categoryId + '">' + categoryName + '</button>'
+        $(newCategory).hide()
+        $(newCategory).appendTo("#categories").on('click', removeCategory)
+        $(newCategory).slideDown(200)
+      } else console.log(response)
+    })
+  })
+  $(".btnRemoveCategory").on('click', removeCategory)
 })
+
+function removeCategory() {
+  self = $(this)
+  $.post("ajax/remove_category.php", {
+    category: $(self).data("categoryid")
+  }).done(function(response) {
+    if (response.indexOf("ERROR") == -1) {
+      $(self).slideUp(200, function() {
+        $(self).remove()
+      })
+    } else console.log(response)
+  })
+}
 </script>
 <?php include("fragments/connection-end.php"); ?>
 </html>

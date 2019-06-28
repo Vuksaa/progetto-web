@@ -99,12 +99,13 @@
           <label for="selectAllergenId" class="sr-only">Seleziona allergene</label>
           <select class="form-control" name="selectAllergenId" id="selectedAllergenId">
             <?php
-              $query = $conn->query("SELECT * FROM allergen");
+              $query = $conn->query("SELECT * FROM allergen ORDER BY allergen_name");
               while ($row = mysqli_fetch_array($query)){
                 $id=$row['allergen_id'];
                 $name=$row['allergen_name'];
                 echo "<option data-allergenId='".$id."' data-allergenName='".$name."'>".$name."</option>" ;
               }
+              $query->close();
             ?>
           </select>
         </div>
