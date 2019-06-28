@@ -15,12 +15,12 @@
         <legend class="form-signin-heading display-4 pb-4">Accedi</legend>
         <div class="form-group">
           <label for="logEmail" class="sr-only">Email:</label>
-          <input type="email" class="form-control" autocomplete="username" placeholder="Email.." required autofocus id="loginEmail" maxlength="20" />
+          <input type="email" class="form-control" autocomplete="username" placeholder="Email.." required autofocus id="loginEmail" maxlength="40" />
           <div class="valid-feedback">
             Email valida!
           </div>
           <div class="invalid-feedback">
-            Fornire un'email valida! (esempio@esempio.es) [massimo 20 caratteri]
+            Fornire un'email valida! (esempio@esempio.es) [massimo 40 caratteri]
           </div>
         </div>
         <div class="form-group">
