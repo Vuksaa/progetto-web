@@ -12,16 +12,22 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" <?php echo ($_SESSION['user_type'] === 'client') ? 'href="home_clients.php"' : 'href="home_providers.php"'; ?>><i aria-hidden="true" class="fas fa-home"></i> Home</a>
+          <a class="nav-link" id="navbarHome" <?php echo ($_SESSION['user_type'] === 'client') ? 'href="home_clients.php"' : 'href="home_providers.php"'; ?>><i aria-hidden="true" class="fas fa-home"></i> Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" <?php echo ($_SESSION['user_type'] === 'client') ? 'href="profile_clients.php"' : 'href="profile_providers.php"'; ?>><i aria-hidden="true" class="fas fa-user"></i> Profilo</a>
+          <a class="nav-link" id="navbarProfile" <?php echo ($_SESSION['user_type'] === 'client') ? 'href="profile_clients.php"' : 'href="profile_providers.php"'; ?>><i aria-hidden="true" class="fas fa-user"></i> Profilo</a>
         </li>
         <?php
         if ($_SESSION['user_type'] === 'client') {
           echo '
           <li class="nav-item">
-            <a class="nav-link" href="orders_clients.php"><i aria-hidden="true" class="fas fa-book"></i> Ordini</a>
+            <a class="nav-link" id="navbarOrders" href="orders_clients.php"><i aria-hidden="true" class="fas fa-book"></i> Ordini</a>
+          </li>
+          ';
+        } else {
+          echo '
+          <li class="nav-item">
+            <a class="nav-link" id="navbarProducts" href="products_providers.php"><i aria-hidden="true" class="fas fa-utensils"></i> Prodotti</a>
           </li>
           ';
         }

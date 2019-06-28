@@ -31,7 +31,7 @@
 <script type="text/javascript">
 $(function() {
   /* Set navbar voice active with respective screen reader functionality */
-  var element = $("nav div ul li a:contains('Orders')");
+  var element = $("#navbarOrders");
   var parent = element.parent();
   element.append( "<span class='sr-only'>(current)</span>" );
   parent.addClass("active");
