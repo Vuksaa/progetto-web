@@ -7,7 +7,6 @@
 ## Accessibility
 * **Check everything**
 ## Missing/incomplete features
-* Switch place_order address form style to bootstrap's custom one
 * Remove small "x" in searchbars when text is entered
 * **profile_providers.php** Redesign/reformat
 ## Mobile
@@ -24,6 +23,7 @@
 * **home_clients.php** Implement searchbar (already implemented in place_orders)
 * Make footers stay at the bottom of the pages
 * Load a limited amount of providers, products, etc at a time and use [infinite scrolling](https://stackoverflow.com/questions/5059526/infinite-scroll-jquery-plugin/5059561#5059561) to load more when necessary
+* Switch place_order address form style to bootstrap's custom one
 
 # To dump a database
 * Navigate to your Xampp directory.

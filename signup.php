@@ -10,7 +10,7 @@
   <?php include("fragments/navbar-empty.php"); ?>
   <div class="container pt-5 text-center">
     <img src="res/logo_l.png" class="logo" width="300" height="300" alt="Logo">
-    <form class="form-signin needs-validation" novalidate>
+    <form class="form-signin" novalidate>
       <fieldset>
         <legend class="form-signin-heading display-4 pb-4">Registrazione</legend>
         <div class="form-group">
