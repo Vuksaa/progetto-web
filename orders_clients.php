@@ -7,7 +7,7 @@
 ?>
 <?php include("fragments/connection-begin.php"); ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 
 <head>
   <?php include("fragments/head-contents.php"); ?>
