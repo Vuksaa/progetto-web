@@ -150,7 +150,7 @@ function createOrderCard(o) {
   <div class="card orderCard mb-3">
     <div class="card-body">
       <div class="card-title">
-        <p>` + o.status_name + (o.rejection_reason == null ? '' : `. Motivo: ` + o.rejection_reason) + `</p>
+        <p>` + o.status_name + (o.rejection_reason == null || o.rejection_reason == '' ? '' : `. Motivo: ` + o.rejection_reason) + `</p>
         <h7 class="text-muted float-right">` + o.creation_timestamp + `</h7>
         <a class="h5" href="place_order.php?provider=` + o.provider_id + `">` + o.provider_name + `</a>
       </div>

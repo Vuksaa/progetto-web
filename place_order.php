@@ -17,6 +17,29 @@ include("fragments/connection-begin.php");
 
 <body>
   <!-- The provider's ID should be in $_GET['provider'] -->
+  <?php
+    if(!($result=$conn->prepare("SELECT a.allergen_id,a.allergen_name
+                            FROM allergen a JOIN client_allergen ca
+                            ON a.allergen_id=ca.allergen_id
+                            WHERE ca.client_id=?"))) {
+      echo "Prepare failed.";
+    }
+    if(!($result->bind_param('i',$_SESSION['user_id']))) {
+      echo "Bind failed";
+    }
+    if(!($result->execute()))  {
+      echo "Execute failed.";
+    }
+    $result->store_result();
+    $allergenName="";
+    $allergenId=0;
+    $result->bind_result($allergenId,$allergenName);
+    $allergenIds = array();
+    while ($result->fetch()) {
+      $allergenIds[] = $allergenId;
+    }
+    $result->close();
+  ?>
   <?php include("fragments/navbar.php"); ?>
   <div class="container mt-4 mb-4">
     <h4 class="display-4 pb-2">Crea ordine</h4>
@@ -48,6 +71,8 @@ include("fragments/connection-begin.php");
                       <h5 class="card-title"><?php echo $product['product_name']; ?></h5>
                       <p class="card-text font-weight-light pb-3">
                         <?php
+                        $allergensInProductIds = array();
+                        $allergensInProductNames = array();
                         if ($ingredients = $conn->query("
                         SELECT *
                         FROM ingredient_by_product
@@ -55,10 +80,19 @@ include("fragments/connection-begin.php");
                         ")) {
                           $ingredient = $ingredients->fetch_assoc();
                           echo $ingredient['ingredient_name'];
+                          if ($ingredient['allergen_id'] != null) {
+                            $allergensInProductIds[] = $ingredient['allergen_id'];
+                            $allergensInProductNames[] = $ingredient['allergen_name'];
+                          }
                           while ($ingredient = $ingredients->fetch_assoc()) {
                             echo ", ".$ingredient['ingredient_name'];
+                            if ($ingredient['allergen_id'] != null) {
+                              $allergensInProductIds[] = $ingredient['allergen_id'];
+                              $allergensInProductNames[] = $ingredient['allergen_name'];
+                            }
                           }
                         }
+                        $ingredients->close();
                         ?>
                       </p>
                       <form class="form-group form-inline">
@@ -73,6 +107,29 @@ include("fragments/connection-begin.php");
                         <label class="col-form-label col-4 col-sm-3 col-md-2 justify-content-start" for="product<?php echo $product['product_id']; ?>Notes">Notes</label>
                         <textarea class="form-control col-sm-6 productNotes" id="product<?php echo $product['product_id']; ?>Notes"></textarea>
                       </form>
+                      <?php
+                        if (!empty($allergensInProductIds)) {
+                          echo '
+                          <form class="form-group form-inline">
+                            <label class="col-form-label col-4 col-sm-3 col-md-2 justify-content-start" for="product'.$product['product_id'].'Allergens">Allergeni</label>
+                            <label class="col-form-label" id="product'.$product['product_id'].'Allergens">';
+                            if (in_array($allergensInProductIds[0], $allergenIds)) {
+                              echo '<span style="color: red;"><span class="sr-only">Dangerous allergen </span>'.$allergensInProductNames[0].'</span>';
+                            } else {
+                              echo '<span>'.$allergensInProductNames[0].'</span>';
+                            }
+                            for ($i = 1; $i < sizeof($allergensInProductIds); $i++) {
+                              if (in_array($allergensInProductIds[$i], $allergenIds)) {
+                                echo '<span style="color: red;"><span class="sr-only">Allergene segnalato </span>'.$allergensInProductNames[$i].'</span>';
+                              } else {
+                                echo '<span>'.$allergensInProductNames[$i].'</span>';
+                              }
+                            }
+                          echo '
+                            </label>
+                          </form>';
+                        }
+                      ?>
                       <button class="btn btn-primary btnAddProduct col col-sm-2 col-md-1">
                         <i class="far fa-plus-square"></i>
                       </button>
