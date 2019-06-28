@@ -11,8 +11,8 @@
 
 <head>
   <?php include("fragments/head-contents.php"); ?>
-  <link rel="stylesheet" type="text/css" href="styles/fluid-grids.css">
   <link rel="stylesheet" type="text/css" href="styles/base.css">
+  <link rel="stylesheet" type="text/css" href="styles/fluid-grids.css">
 </head>
 
 <body>
@@ -39,7 +39,13 @@
             <div class="row" id="favouriteProviders">
               <?php
                 if ($favProviders = $conn->query(
-                  "SELECT p.provider_id, p.provider_name, t.type_id, t.type_name
+                  "SELECT p.provider_id,
+                    p.provider_name,
+                    t.type_id,
+                    t.type_name,
+                    TIME_FORMAT(p.opening_hours, '%H:%s') AS 'opening_hours',
+                    TIME_FORMAT(p.closing_hours, '%H:%s') AS 'closing_hours',
+                    p.opening_hours < TIME(NOW()) AND p.closing_hours > TIME(NOW()) AS 'now_open'
                   FROM client_provider cp
                   JOIN provider p
                   ON cp.provider_id = p.provider_id
@@ -50,7 +56,7 @@
                 )) {
                   while ($providerRow = $favProviders->fetch_assoc()) {
               ?>
-              <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 pb-2 provider favouriteProvider" data-provider-id="<?php echo $providerRow['provider_id']; ?>">
+              <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 pb-2 provider favouriteProvider" data-open="<?php echo $providerRow['now_open']; ?>" data-provider-id="<?php echo $providerRow['provider_id']; ?>">
                 <div class="card">
                   <div class="card-body d-flex flex-column">
                     <h5 class="card-title"><?php echo $providerRow['provider_name'] ?></h5>
@@ -71,9 +77,10 @@
                           $providerCategories->close();
                         }
                       ?>
+                      <p class="text-muted"><?php echo $providerRow['opening_hours']."-".$providerRow['closing_hours']; ?></p>
                     </p>
                     <div class="btn-group mt-auto" role="group" aria-labelledby="Provider-related actions">
-                      <button class="btn btn-primary inline btn-place-order border-right">Ordina</button>
+                      <button class="btn btn-primary inline btn-place-order border-right" <?php if (!$providerRow['now_open']) echo "disabled"; ?>>Ordina</button>
                       <button class="btn btn-primary inline border-left" name="removeFavourite"><span class="sr-only">Rimuovi preferito</span><i class="fas fa-star" aria-hidden="true"></i></button>
                     </div>
                   </div>
@@ -104,9 +111,14 @@
             </div>
             <div class="row" id="listedProviders">
               <?php
-                // TODO: use one query and separate favourite and non-favourite restaurants in php?
                 if ($allProviders = $conn->query(
-                  "SELECT p.provider_id, p.provider_name, t.type_id, t.type_name
+                  "SELECT p.provider_id,
+                    p.provider_name,
+                    t.type_id,
+                    t.type_name,
+                    TIME_FORMAT(p.opening_hours, '%H:%s') AS 'opening_hours',
+                    TIME_FORMAT(p.closing_hours, '%H:%s') AS 'closing_hours',
+                    p.opening_hours < TIME(NOW()) AND p.closing_hours > TIME(NOW()) AS 'now_open'
                   FROM provider p
                   LEFT JOIN type t
                   ON p.type_id = t.type_id
@@ -121,7 +133,7 @@
                 )) {
                   while ($providerRow = $allProviders->fetch_assoc()) {
               ?>
-              <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 pb-2 provider listedProvider" data-provider-id="<?php echo $providerRow['provider_id']; ?>">
+              <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 pb-2 provider listedProvider" data-open="<?php echo $providerRow['now_open']; ?>" data-provider-id="<?php echo $providerRow['provider_id']; ?>">
                 <div class="card">
                   <div class="card-body d-flex flex-column">
                     <h5 class="card-title"><?php echo $providerRow['provider_name'] ?></h5>
@@ -144,9 +156,10 @@
                           $providerCategories->close();
                         }
                       ?>
+                      <p class="text-muted"><?php echo $providerRow['opening_hours']."-".$providerRow['closing_hours']; ?></p>
                     </p>
                     <div class="btn-group mt-auto" role="group" aria-labelledby="Provider-related actions">
-                      <button class="btn btn-primary inline btn-place-order border-right">Ordina</button>
+                      <button class="btn btn-primary inline btn-place-order border-right" <?php if (!$providerRow['now_open']) echo "disabled"; ?>>Ordina</button>
                       <button class="btn btn-primary inline border-left" name="addFavourite"><span class="sr-only">Aggiungi preferito</span><i class="far fa-star" aria-hidden="true"></i></button>
                     </div>
                   </div>
@@ -179,7 +192,26 @@
         </button>
       </div>
       <div class="modal-body ml-2 mr-2">
-        <div class="pb-2 mb-3 border-bottom">
+        <div class="pb-2 mb-3">
+          <div class="pb-2 pt-2 custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="checkFilterByHours">
+            <label class="custom-control-label" for="checkFilterByHours">
+              <h5>Apertura</h5>
+            </label>
+          </div>
+          <div>
+            <div class="custom-control custom-checkbox">
+              <input type="radio" name="radioHours" class="custom-control-input checkHours" id="hoursOpen" data-open="1">
+              <label class="custom-control-label" for="hoursOpen">Aperto</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input type="radio" name="radioHours" class="custom-control-input checkHours" id="hoursChiuso" data-open="0">
+              <label class="custom-control-label" for="hoursChiuso">Chiuso</label>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="pb-2">
           <div class="pb-2 pt-2 custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="checkFilterByTypes">
             <label class="custom-control-label" for="checkFilterByTypes">
@@ -204,6 +236,7 @@
             }
           ?>
         </div>
+        <hr>
         <div class="pb-2">
           <div class="pb-2 pt-2 custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="checkFilterByCategories">
@@ -242,6 +275,11 @@
 
 <script type="text/javascript">
   $(function() {
+    $(".checkHours").prop('disabled', true)
+    $("#checkFilterByHours").on('change', function(e) {
+      $(".checkHours").prop('disabled', !this.checked);
+    });
+
     $(".checkType").prop('disabled', true);
     $("#clearCategories").prop('disabled', true);
     $(".checkCategory").prop('disabled', true);
@@ -260,7 +298,8 @@
     $(".btnSaveFilters").on('click', function(e) {
       var filterByTypes = $("#checkFilterByTypes").is(":checked");
       var filterByCategories = $("#checkFilterByCategories").is(":checked");
-      if (filterByTypes || filterByCategories) {
+      var filterByHours = $("#checkFilterByHours").is(":checked");
+      if (filterByTypes || filterByCategories || filterByHours) {
         $("#filterState").text("(attivi)");
         $("#filterState").css('color', 'green');
       } else {
@@ -268,10 +307,14 @@
         $("#filterState").css('color', 'black');
       }
       $(".provider").show();
-      if (!filterByTypes && !filterByCategories) {
+      if (!filterByTypes && !filterByCategories && !filterByHours) {
         return;
       }
       $(".provider").each(function(i, provider) {
+        if (filterByHours) {
+          $(".provider[data-open=" + ($(".checkHours:checked").data("open") ? 0 : 1) + "]").hide()
+          return
+        }
         if (filterByTypes) {
           for (type of $(".checkType:checked").toArray()) {
             if (!$(provider).find(".providerType[data-id=" + $(type).data("id") + "]").length) {
