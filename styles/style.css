@@ -36,7 +36,12 @@ body {
 	line-height: 60px; /* Vertically center the text there */
 }
 
+.logo-l {
+  border-radius: 30%;
+}
+
 .logo {
   border-radius: 30%;
-  background-color: #ff2e17;
+  background-color: rgba(255,46,23,1);
+  background: rgba(255,46,23,1);
 }

@@ -19,61 +19,48 @@
   <div class="container mt-4 mb-4">
     <h4 class="display-4 pb-2">Lista ordini</h4>
     <div class="container accordion mt-4 mb-4" id="mainAccordion">
-      <div class="card main-card">
-        <h1 class="mb-0">
-          <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseIncomingOrders" aria-expanded="true" aria-controls="collapseIncomingOrders">
-            Ordini in arrivo
-          </button>
-        </h1>
-        <div id="collapseIncomingOrders" class="collapse show" aria-labelledby="headingIncomingOrders" data-parent="#mainAccordion">
-          <div class="card-body" id="ordersIncoming"></div>
-        </div>
-      <div class="card main-card">
-        <h1 class="mb-0">
-          <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapsePreparedOrders" aria-expanded="false" aria-controls="collapsePreparedOrders">
-            Ordini accettati
-          </button>
-        </h1>
-        <div id="collapsePreparedOrders" class="collapse" aria-labelledby="headingPreparedOrders" data-parent="#mainAccordion">
-          <div class="card-body" id="ordersAccepted"></div>
-        </div>
+      <button class="btn btn-secondary btn-lg btn-block active mb-1" data-toggle="collapse" data-target="#collapseIncomingOrders" aria-expanded="true" aria-controls="collapseIncomingOrders">
+        Ordini in arrivo
+      </button>
+      <div id="collapseIncomingOrders" class="collapse show mb-4" aria-labelledby="headingIncomingOrders" data-parent="#mainAccordion">
+        <div id="ordersIncoming" class="mt-3"></div>
       </div>
-      <div class="card main-card">
-        <h1 class="mb-0">
-          <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseCompletedOrders" aria-expanded="false" aria-controls="collapseCompletedOrders">
-            Ordini conclusi
+      <button class="btn btn-secondary btn-lg btn-block mb-1" data-toggle="collapse" data-target="#collapsePreparedOrders" aria-expanded="false" aria-controls="collapsePreparedOrders">
+        Ordini accettati
+      </button>
+      <div id="collapsePreparedOrders" class="collapse mb-4" aria-labelledby="headingPreparedOrders" data-parent="#mainAccordion">
+        <div id="ordersAccepted" class="mt-3"></div>
+      </div>
+      <button class="btn btn-secondary btn-lg btn-block mb-1" data-toggle="collapse" data-target="#collapseCompletedOrders" aria-expanded="false" aria-controls="collapseCompletedOrders">
+        Ordini conclusi
+      </button>
+      <div id="collapseCompletedOrders" class="collapse mb-4" aria-labelledby="headingCompletedOrders" data-parent="#mainAccordion">
+        <div id="ordersCompleted" class="mt-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalReject" tabindex="-1" role="dialog" aria-labelledby="modalLabelReject" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title ml-2 mr-2" id="modalLabelReject">Rifiuta ordine</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
           </button>
-        </h1>
-        <div id="collapseCompletedOrders" class="collapse" aria-labelledby="headingCompletedOrders" data-parent="#mainAccordion">
-          <div class="card-body" id="ordersCompleted"></div>
+        </div>
+        <div class="modal-body ml-2 mr-2">
+          <label id="rejectLabel">Motivo</label>
+          <textarea maxlength="200" class="form-control" aria-labelledby="rejectReason" id="rejectNotes"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary btnRejectConfirm" onclick="btnRejectConfirmClick(this)" data-dismiss="modal">
+            Conferma
+          </button>
         </div>
       </div>
     </div>
   </div>
-</div>
-
-
-<div class="modal fade" id="modalReject" tabindex="-1" role="dialog" aria-labelledby="modalLabelReject" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title ml-2 mr-2" id="modalLabelReject">Rifiuta ordine</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body ml-2 mr-2">
-        <label id="rejectLabel">Motivo</label>
-        <textarea maxlength="200" class="form-control" aria-labelledby="rejectReason" id="rejectNotes"></textarea>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary btnRejectConfirm" onclick="btnRejectConfirmClick(this)" data-dismiss="modal">
-          Conferma
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <?php include("fragments/footer.php"); ?>
 </body>

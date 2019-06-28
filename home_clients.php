@@ -24,162 +24,154 @@
       Filtri <span id="filterState" style="color: black;">(nessun filtro)</span>
     </button>
     <div class="container accordion mt-4 mb-4" id="mainAccordion">
-      <div class="card main-card">
-        <h1 class="mb-0" id="headingFavouriteProviders">
-          <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseFavouriteProviders" aria-expanded="true" aria-controls="collapseFavouriteProviders">
-            Preferiti
-          </button>
-        </h1>
-        <div id="collapseFavouriteProviders" class="collapse show" aria-labelledby="headingFavouriteProviders" data-parent="#mainAccordion">
-          <div class="card-body">
-            <div class="card-searchbar">
-              <label for="searchFavourites" class="sr-only">Cerca fornitori preferiti</label>
-              <input class="form-control mr-sm-2" id="searchFavourites" type="search" placeholder="Cerca">
-            </div>
-            <div class="row" id="favouriteProviders">
-              <?php
-                if ($favProviders = $conn->query(
-                  "SELECT p.provider_id,
-                    p.provider_name,
-                    t.type_id,
-                    t.type_name,
-                    TIME_FORMAT(p.opening_hours, '%H:%i') AS 'opening_hours',
-                    TIME_FORMAT(p.closing_hours, '%H:%i') AS 'closing_hours',
-                    CASE WHEN p.opening_hours < p.closing_hours THEN p.opening_hours < TIME(NOW()) AND p.closing_hours > TIME(NOW())
-                       WHEN p.opening_hours > p.closing_hours THEN p.opening_hours < TIME(NOW()) or p.closing_hours > TIME(NOW())
-                       WHEN p.opening_hours = p.closing_hours THEN TRUE
-                  	END AS 'now_open'
-                  FROM client_provider cp
-                  JOIN provider p
-                  ON cp.provider_id = p.provider_id
-                  LEFT JOIN type t
-                  ON p.type_id = t.type_id
-                  WHERE cp.client_id = '".$_SESSION['user_id']."'
-                  ORDER BY p.provider_name"
-                )) {
-                  while ($providerRow = $favProviders->fetch_assoc()) {
-              ?>
-              <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 pb-2 provider favouriteProvider" data-open="<?php echo $providerRow['now_open']; ?>" data-provider-id="<?php echo $providerRow['provider_id']; ?>">
-                <div class="card">
-                  <div class="card-body d-flex flex-column">
-                    <h5 class="card-title"><?php echo $providerRow['provider_name'] ?></h5>
-                    <h6 class="card-subtitle mb-2 text-muted providerType" data-id="<?php echo $providerRow['type_id']; ?>"><?php echo $providerRow['type_name'] ?></h6>
-                    <p class="card-text">
-                      <?php
-                        if ($providerCategories = $conn->query("SELECT c.category_id, c.category_name
-                                              FROM provider p
-                                              LEFT JOIN provider_category pc
-                                              ON p.provider_id = pc.provider_id
-                                              LEFT JOIN category c
-                                              ON c.category_id = pc.category_id
-                                              WHERE p.provider_id = '".$providerRow['provider_id']."'
-                                              ORDER BY c.category_name")) {
-                          while ($categoryRow = $providerCategories->fetch_assoc()) {
-                            echo "<span class='badge badge-pill badge-info providerCategory mr-1' data-id='".$categoryRow['category_id']."'>".$categoryRow['category_name']."</span>";
-                          }
-                          $providerCategories->close();
-                        }
-                      ?>
-                      <p class="text-muted"><?php echo $providerRow['opening_hours']."-".$providerRow['closing_hours']; ?></p>
-                    </p>
-                    <div class="btn-group mt-auto" role="group" aria-labelledby="Provider-related actions">
-                      <button class="btn btn-primary inline btn-place-order border-right" <?php if (!$providerRow['now_open']) echo "disabled"; ?>>Ordina</button>
-                      <button class="btn btn-primary inline border-left" name="removeFavourite"><span class="sr-only">Rimuovi preferito</span><i class="fas fa-star" aria-hidden="true"></i></button>
-                    </div>
-                  </div>
+      <h1 class="mb-0" id="headingFavouriteProviders">
+        <button class="btn btn-secondary btn-lg btn-block active mb-1" data-toggle="collapse" data-target="#collapseFavouriteProviders" aria-expanded="true" aria-controls="collapseFavouriteProviders">
+          Preferiti
+        </button>
+      </h1>
+      <div id="collapseFavouriteProviders" class="collapse show mb-4" aria-labelledby="headingFavouriteProviders" data-parent="#mainAccordion">
+        <div class="searchbar mt-3 mb-2">
+          <label for="searchFavourites" class="sr-only">Cerca fornitori preferiti</label>
+          <input class="form-control mr-sm-2" id="searchFavourites" type="search" placeholder="Cerca">
+        </div>
+        <div class="row" id="favouriteProviders">
+          <?php
+            if ($favProviders = $conn->query(
+              "SELECT p.provider_id,
+                p.provider_name,
+                t.type_id,
+                t.type_name,
+                TIME_FORMAT(p.opening_hours, '%H:%i') AS 'opening_hours',
+                TIME_FORMAT(p.closing_hours, '%H:%i') AS 'closing_hours',
+                CASE WHEN p.opening_hours < p.closing_hours THEN p.opening_hours < TIME(NOW()) AND p.closing_hours > TIME(NOW())
+                   WHEN p.opening_hours > p.closing_hours THEN p.opening_hours < TIME(NOW()) or p.closing_hours > TIME(NOW())
+                   WHEN p.opening_hours = p.closing_hours THEN TRUE
+              	END AS 'now_open'
+              FROM client_provider cp
+              JOIN provider p
+              ON cp.provider_id = p.provider_id
+              LEFT JOIN type t
+              ON p.type_id = t.type_id
+              WHERE cp.client_id = '".$_SESSION['user_id']."'
+              ORDER BY p.provider_name"
+            )) {
+              while ($providerRow = $favProviders->fetch_assoc()) {
+          ?>
+          <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 pb-2 provider favouriteProvider" data-open="<?php echo $providerRow['now_open']; ?>" data-provider-id="<?php echo $providerRow['provider_id']; ?>">
+            <div class="card">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title"><?php echo $providerRow['provider_name'] ?></h5>
+                <h6 class="card-subtitle mb-2 text-muted providerType" data-id="<?php echo $providerRow['type_id']; ?>"><?php echo $providerRow['type_name'] ?></h6>
+                <p class="card-text">
+                  <?php
+                    if ($providerCategories = $conn->query("SELECT c.category_id, c.category_name
+                                          FROM provider p
+                                          LEFT JOIN provider_category pc
+                                          ON p.provider_id = pc.provider_id
+                                          LEFT JOIN category c
+                                          ON c.category_id = pc.category_id
+                                          WHERE p.provider_id = '".$providerRow['provider_id']."'
+                                          ORDER BY c.category_name")) {
+                      while ($categoryRow = $providerCategories->fetch_assoc()) {
+                        echo "<span class='badge badge-pill badge-info providerCategory mr-1' data-id='".$categoryRow['category_id']."'>".$categoryRow['category_name']."</span>";
+                      }
+                      $providerCategories->close();
+                    }
+                  ?>
+                  <p class="text-muted"><?php echo $providerRow['opening_hours']."-".$providerRow['closing_hours']; ?></p>
+                </p>
+                <div class="btn-group mt-auto" role="group" aria-labelledby="Provider-related actions">
+                  <button class="btn btn-primary inline btn-place-order border-right" <?php if (!$providerRow['now_open']) echo "disabled"; ?>>Ordina</button>
+                  <button class="btn btn-primary inline border-left" name="removeFavourite"><span class="sr-only">Rimuovi preferito</span><i class="fas fa-star" aria-hidden="true"></i></button>
                 </div>
               </div>
-              <?php
-                  }
-                  $favProviders->close();
-                } else {
-                  echo "Query failed";
-                }
-               ?>
             </div>
           </div>
+          <?php
+              }
+              $favProviders->close();
+            } else {
+              echo "Query failed";
+            }
+           ?>
+          </div>
         </div>
-      </div>
-      <div class="card main-card">
         <h1 class="mb-0" id="headingProviders">
-          <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseAllProviders" aria-expanded="false" aria-controls="collapseAllProviders">
+          <button class="btn btn-secondary btn-lg btn-block active mb-1" data-toggle="collapse" data-target="#collapseAllProviders" aria-expanded="false" aria-controls="collapseAllProviders">
             Tutti
           </button>
         </h1>
-        <div id="collapseAllProviders" class="collapse" aria-labelledby="headingProviders" data-parent="#mainAccordion">
-          <div class="card-body">
-            <div class="card-searchbar">
-              <label for="searchListed" class="sr-only">Cerca in tutti i fornitori:</label>
-              <input class="form-control mr-sm-2" id="searchListed" type="search" placeholder="Cerca">
-            </div>
-            <div class="row" id="listedProviders">
-              <?php
-                if ($allProviders = $conn->query(
-                  "SELECT p.provider_id,
-                    p.provider_name,
-                    t.type_id,
-                    t.type_name,
-                    TIME_FORMAT(p.opening_hours, '%H:%i') AS 'opening_hours',
-                    TIME_FORMAT(p.closing_hours, '%H:%i') AS 'closing_hours',
-                    CASE WHEN p.opening_hours < p.closing_hours THEN p.opening_hours < TIME(NOW()) AND p.closing_hours > TIME(NOW())
-                       WHEN p.opening_hours > p.closing_hours THEN p.opening_hours < TIME(NOW()) or p.closing_hours > TIME(NOW())
-                       WHEN p.opening_hours = p.closing_hours THEN TRUE
-                  	END AS 'now_open'
-                  FROM provider p
-                  LEFT JOIN type t
-                  ON p.type_id = t.type_id
-                  WHERE p.provider_id NOT IN (
-                    SELECT p.provider_id
-                    FROM client_provider cp
-                    JOIN provider p
-                    ON cp.provider_id = p.provider_id
-                    WHERE cp.client_id = '".$_SESSION['user_id']."'
-                  )
-                  ORDER BY p.provider_name"
-                )) {
-                  while ($providerRow = $allProviders->fetch_assoc()) {
-              ?>
-              <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 pb-2 provider listedProvider" data-open="<?php echo $providerRow['now_open']; ?>" data-provider-id="<?php echo $providerRow['provider_id']; ?>">
-                <div class="card">
-                  <div class="card-body d-flex flex-column">
-                    <h5 class="card-title"><?php echo $providerRow['provider_name'] ?></h5>
-                    <h6 class="card-subtitle mb-2 text-muted providerType" data-id="<?php echo $providerRow['type_id']; ?>"><?php echo $providerRow['type_name'] ?></h6>
-                    <p class="card-text">
-                      <?php
-                        if ($providerCategories = $conn->query(
-                          "SELECT c.category_id, c.category_name
-                          FROM provider p
-                          LEFT JOIN provider_category pc
-                          ON p.provider_id = pc.provider_id
-                          LEFT JOIN category c
-                          ON c.category_id = pc.category_id
-                          WHERE p.provider_id = '".$providerRow['provider_id']."'
-                          ORDER BY c.category_name"
-                        )) {
-                          while ($categoryRow = $providerCategories->fetch_assoc()) {
-                            echo "<span class='badge badge-pill badge-info providerCategory mr-1' data-id='".$categoryRow['category_id']."'>".$categoryRow['category_name']."</span>";
-                          }
-                          $providerCategories->close();
-                        }
-                      ?>
-                      <p class="text-muted"><?php echo $providerRow['opening_hours']."-".$providerRow['closing_hours']; ?></p>
-                    </p>
-                    <div class="btn-group mt-auto" role="group" aria-labelledby="Provider-related actions">
-                      <button class="btn btn-primary inline btn-place-order border-right" <?php if (!$providerRow['now_open']) echo "disabled"; ?>>Ordina</button>
-                      <button class="btn btn-primary inline border-left" name="addFavourite"><span class="sr-only">Aggiungi preferito</span><i class="far fa-star" aria-hidden="true"></i></button>
-                    </div>
-                  </div>
+        <div id="collapseAllProviders" class="collapse mb-4" aria-labelledby="headingProviders" data-parent="#mainAccordion">
+          <div class="searchbar mt-3 mb-2">
+            <label for="searchListed" class="sr-only">Cerca in tutti i fornitori:</label>
+            <input class="form-control mr-sm-2" id="searchListed" type="search" placeholder="Cerca">
+          </div>
+          <div class="row" id="listedProviders">
+            <?php
+              if ($allProviders = $conn->query(
+                "SELECT p.provider_id,
+                  p.provider_name,
+                  t.type_id,
+                  t.type_name,
+                  TIME_FORMAT(p.opening_hours, '%H:%i') AS 'opening_hours',
+                  TIME_FORMAT(p.closing_hours, '%H:%i') AS 'closing_hours',
+                  CASE WHEN p.opening_hours < p.closing_hours THEN p.opening_hours < TIME(NOW()) AND p.closing_hours > TIME(NOW())
+                     WHEN p.opening_hours > p.closing_hours THEN p.opening_hours < TIME(NOW()) or p.closing_hours > TIME(NOW())
+                     WHEN p.opening_hours = p.closing_hours THEN TRUE
+                	END AS 'now_open'
+                FROM provider p
+                LEFT JOIN type t
+                ON p.type_id = t.type_id
+                WHERE p.provider_id NOT IN (
+                  SELECT p.provider_id
+                  FROM client_provider cp
+                  JOIN provider p
+                  ON cp.provider_id = p.provider_id
+                  WHERE cp.client_id = '".$_SESSION['user_id']."'
+                )
+                ORDER BY p.provider_name"
+              )) {
+                while ($providerRow = $allProviders->fetch_assoc()) {
+            ?>
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 pb-2 provider listedProvider" data-open="<?php echo $providerRow['now_open']; ?>" data-provider-id="<?php echo $providerRow['provider_id']; ?>">
+              <div class="card">
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title"><?php echo $providerRow['provider_name'] ?></h5>
+                  <h6 class="card-subtitle mb-2 text-muted providerType" data-id="<?php echo $providerRow['type_id']; ?>"><?php echo $providerRow['type_name'] ?></h6>
+                  <p class="card-text">
+                  <?php
+                    if ($providerCategories = $conn->query(
+                      "SELECT c.category_id, c.category_name
+                      FROM provider p
+                      LEFT JOIN provider_category pc
+                      ON p.provider_id = pc.provider_id
+                      LEFT JOIN category c
+                      ON c.category_id = pc.category_id
+                      WHERE p.provider_id = '".$providerRow['provider_id']."'
+                      ORDER BY c.category_name"
+                    )) {
+                      while ($categoryRow = $providerCategories->fetch_assoc()) {
+                        echo "<span class='badge badge-pill badge-info providerCategory mr-1' data-id='".$categoryRow['category_id']."'>".$categoryRow['category_name']."</span>";
+                      }
+                      $providerCategories->close();
+                    }
+                  ?>
+                  <p class="text-muted"><?php echo $providerRow['opening_hours']."-".$providerRow['closing_hours']; ?></p>
+                </p>
+                <div class="btn-group mt-auto" role="group" aria-labelledby="Provider-related actions">
+                  <button class="btn btn-primary inline btn-place-order border-right" <?php if (!$providerRow['now_open']) echo "disabled"; ?>>Ordina</button>
+                  <button class="btn btn-primary inline border-left" name="addFavourite"><span class="sr-only">Aggiungi preferito</span><i class="far fa-star" aria-hidden="true"></i></button>
                 </div>
               </div>
-              <?php
-                  }
-                  $allProviders->close();
-                } else {
-                  echo "Query failed";
-                }
-               ?>
             </div>
           </div>
+          <?php
+              }
+              $allProviders->close();
+            } else {
+              echo "Query failed";
+            }
+           ?>
         </div>
       </div>
     </div>

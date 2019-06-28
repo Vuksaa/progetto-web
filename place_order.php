@@ -43,181 +43,168 @@ include("fragments/connection-begin.php");
   <?php include("fragments/navbar.php"); ?>
   <div class="container mt-4 mb-4">
     <h4 class="display-4 pb-2">Crea ordine</h4>
-
     <div class="container accordion mt-4 mb-4" id="mainAccordion">
-      <div class="card main-card">
-        <button class="btn btn-secondary btn-lg btn-block active" id="headingMenu" data-toggle="collapse" data-target="#collapseMenu" aria-expanded="true" aria-controls="collapseMenu">
-          Men&ugrave;
-        </button>
-        <div id="collapseMenu" class="collapse show" aria-labelledby="headingMenu" data-parent="#mainAccordion">
-          <div class="card-body">
-            <div class="card-searchbar">
-              <input class="form-control" id="searchProducts" type="search" placeholder="Search" aria-label="Search">
-            </div>
-            <div id="listedProducts">
-              <?php
-              // temporary value for testing purposes
-              $productGroupSize = 5;
-              if ($listedProducts = $conn->query("
-              SELECT *
-              FROM product_by_provider
-              WHERE provider_id ='".$_GET['provider']."'
-              ")) {
-                $productNumber = 0;
-                while ($product = $listedProducts->fetch_assoc()) {
-                  ?>
-                  <div class="card mt-2 productCard d-none" data-product-group="<?php echo (int)($productNumber / $productGroupSize); ?>" data-product-id="<?php echo $product['product_id']; ?>">
-                    <div class="card-body">
-                      <h5 class="card-title"><?php echo $product['product_name']; ?></h5>
-                      <p class="card-text font-weight-light pb-3">
-                        <?php
-                        $allergensInProductIds = array();
-                        $allergensInProductNames = array();
-                        if ($ingredients = $conn->query("
-                        SELECT *
-                        FROM ingredient_by_product
-                        WHERE product_id = '".$product['product_id']."'
-                        ")) {
-                          $ingredient = $ingredients->fetch_assoc();
-                          echo $ingredient['ingredient_name'];
-                          if ($ingredient['allergen_id'] != null) {
-                            $allergensInProductIds[] = $ingredient['allergen_id'];
-                            $allergensInProductNames[] = $ingredient['allergen_name'];
-                          }
-                          while ($ingredient = $ingredients->fetch_assoc()) {
-                            echo ", ".$ingredient['ingredient_name'];
-                            if ($ingredient['allergen_id'] != null) {
-                              $allergensInProductIds[] = $ingredient['allergen_id'];
-                              $allergensInProductNames[] = $ingredient['allergen_name'];
-                            }
-                          }
-                        }
-                        $ingredients->close();
-                        ?>
-                      </p>
-                      <form class="form-group form-inline">
-                        <label class="col-form-label col-4 col-sm-3 col-md-2 justify-content-start" for="product<?php echo $product['product_id']; ?>Price">Prezzo</label>
-                        <label class="col-form-label" id="product<?php echo $product['product_id']; ?>Price"><?php echo $product['product_price']." €"; ?></label>
-                      </form>
-                      <form class="form-group form-inline">
-                        <label class="col-form-label col-4 col-sm-3 col-md-2 justify-content-start" for="product<?php echo $product['product_id']; ?>Quantity">Quantità</label>
-                        <input class="form-control col-2 col-md-1 productQuantity" type="number" id="product<?php echo $product['product_id']; ?>Quantity" placeholder="Quantità" value="1" required>
-                      </form>
-                      <form class="form-group form-inline">
-                        <label class="col-form-label col-4 col-sm-3 col-md-2 justify-content-start" for="product<?php echo $product['product_id']; ?>Notes">Note</label>
-                        <textarea class="form-control col-sm-6 productNotes" id="product<?php echo $product['product_id']; ?>Notes"></textarea>
-                      </form>
-                      <?php
-                        if (!empty($allergensInProductIds)) {
-                          echo '
-                          <form class="form-group form-inline">
-                            <label class="col-form-label col-4 col-sm-3 col-md-2 justify-content-start" for="product'.$product['product_id'].'Allergens">Allergeni</label>
-                            <label class="col-form-label" id="product'.$product['product_id'].'Allergens">';
-                            if (in_array($allergensInProductIds[0], $allergenIds)) {
-                              echo '<span style="color: red;"><span class="sr-only">Dangerous allergen </span>'.$allergensInProductNames[0].'</span>';
-                            } else {
-                              echo '<span>'.$allergensInProductNames[0].'</span>';
-                            }
-                            for ($i = 1; $i < sizeof($allergensInProductIds); $i++) {
-                              if (in_array($allergensInProductIds[$i], $allergenIds)) {
-                                echo '<span style="color: red;"><span class="sr-only">Allergene segnalato </span>'.$allergensInProductNames[$i].'</span>';
-                              } else {
-                                echo '<span>'.$allergensInProductNames[$i].'</span>';
-                              }
-                            }
-                          echo '
-                            </label>
-                          </form>';
-                        }
-                      ?>
-                      <button class="btn btn-primary btnAddProduct col col-sm-2 col-md-1">
-                        <i class="far fa-plus-square"></i>
-                      </button>
-                      <button class="btn btn-primary btnRemoveProduct col col-sm-2 col-md-1">
-                        <i class="far fa-minus-square"></i>
-                      </button>
-                    </div>
-                  </div>
-                  <?php
-                  $productNumber = $productNumber + 1;
-                }
-              }
-              ?>
-            </div>
-            <button class="btn btn-primary btn-sm col col-sm-2 mt-2" id="productsShowMore">
-              Mostra altri
-            </button>
+      <button class="btn btn-secondary btn-lg btn-block active mb-1" id="headingMenu" data-toggle="collapse" data-target="#collapseMenu" aria-expanded="true" aria-controls="collapseMenu">
+        Men&ugrave;
+      </button>
+      <div id="collapseMenu" class="collapse show mb-4" aria-labelledby="headingMenu" data-parent="#mainAccordion">
+        <div class="searchbar mt-3 mb-2">
+          <input class="form-control" id="searchProducts" type="search" placeholder="Search" aria-label="Search">
         </div>
+        <div id="listedProducts">
+          <?php
+          // temporary value for testing purposes
+          $productGroupSize = 5;
+          if ($listedProducts = $conn->query("
+          SELECT *
+          FROM product_by_provider
+          WHERE provider_id ='".$_GET['provider']."'
+          ")) {
+            $productNumber = 0;
+            while ($product = $listedProducts->fetch_assoc()) {
+              ?>
+              <div class="card mt-2 productCard d-none" data-product-group="<?php echo (int)($productNumber / $productGroupSize); ?>" data-product-id="<?php echo $product['product_id']; ?>">
+                <div class="card-body">
+                  <h5 class="card-title"><?php echo $product['product_name']; ?></h5>
+                  <p class="card-text font-weight-light pb-3">
+                    <?php
+                    $allergensInProductIds = array();
+                    $allergensInProductNames = array();
+                    if ($ingredients = $conn->query("
+                    SELECT *
+                    FROM ingredient_by_product
+                    WHERE product_id = '".$product['product_id']."'
+                    ")) {
+                      $ingredient = $ingredients->fetch_assoc();
+                      echo $ingredient['ingredient_name'];
+                      if ($ingredient['allergen_id'] != null) {
+                        $allergensInProductIds[] = $ingredient['allergen_id'];
+                        $allergensInProductNames[] = $ingredient['allergen_name'];
+                      }
+                      while ($ingredient = $ingredients->fetch_assoc()) {
+                        echo ", ".$ingredient['ingredient_name'];
+                        if ($ingredient['allergen_id'] != null) {
+                          $allergensInProductIds[] = $ingredient['allergen_id'];
+                          $allergensInProductNames[] = $ingredient['allergen_name'];
+                        }
+                      }
+                    }
+                    $ingredients->close();
+                    ?>
+                  </p>
+                  <form class="form-group form-inline">
+                    <label class="col-form-label col-5 col-sm-3 col-md-2 justify-content-start" for="product<?php echo $product['product_id']; ?>Price">Prezzo</label>
+                    <label class="col-form-label" id="product<?php echo $product['product_id']; ?>Price"><?php echo $product['product_price']." €"; ?></label>
+                  </form>
+                  <form class="form-group form-inline">
+                    <label class="col-form-label col-5 col-sm-3 col-md-2 justify-content-start" for="product<?php echo $product['product_id']; ?>Quantity">Quantità</label>
+                    <input class="form-control col-2 col-md-1 productQuantity" type="number" id="product<?php echo $product['product_id']; ?>Quantity" placeholder="Quantità" value="1" required>
+                  </form>
+                  <form class="form-group form-inline">
+                    <label class="col-form-label col-5 col-sm-3 col-md-2 justify-content-start" for="product<?php echo $product['product_id']; ?>Notes">Note</label>
+                    <textarea class="form-control col-sm-6 productNotes" id="product<?php echo $product['product_id']; ?>Notes"></textarea>
+                  </form>
+                  <?php
+                    if (!empty($allergensInProductIds)) {
+                      echo '
+                      <form class="form-group form-inline">
+                        <label class="col-form-label col-5 col-sm-3 col-md-2 justify-content-start" for="product'.$product['product_id'].'Allergens">Allergeni</label>
+                        <label class="col-form-label" id="product'.$product['product_id'].'Allergens">';
+                        if (in_array($allergensInProductIds[0], $allergenIds)) {
+                          echo '<span style="color: red;"><span class="sr-only">Dangerous allergen </span>'.$allergensInProductNames[0].'</span>';
+                        } else {
+                          echo '<span>'.$allergensInProductNames[0].'</span>';
+                        }
+                        for ($i = 1; $i < sizeof($allergensInProductIds); $i++) {
+                          if (in_array($allergensInProductIds[$i], $allergenIds)) {
+                            echo '<span style="color: red;"><span class="sr-only">Allergene segnalato </span>'.$allergensInProductNames[$i].'</span>';
+                          } else {
+                            echo '<span>'.$allergensInProductNames[$i].'</span>';
+                          }
+                        }
+                      echo '
+                        </label>
+                      </form>';
+                    }
+                  ?>
+                  <button class="btn btn-primary btnAddProduct col col-sm-2 col-md-1">
+                    <i class="far fa-plus-square"></i>
+                  </button>
+                  <button class="btn btn-primary btnRemoveProduct col col-sm-2 col-md-1">
+                    <i class="far fa-minus-square"></i>
+                  </button>
+                </div>
+              </div>
+              <?php
+              $productNumber = $productNumber + 1;
+            }
+          }
+          ?>
+        </div>
+        <button class="btn btn-primary btn-sm col col-sm-2 mt-2" id="productsShowMore">
+          Mostra altri
+        </button>
       </div>
-    </div>
-    <div class="card main-card">
-      <button class="btn btn-secondary btn-lg btn-block active" id="headingOrder" data-toggle="collapse" data-target="#collapseOrder" aria-expanded="false" aria-controls="collapseOrder">
+      <button class="btn btn-secondary btn-lg btn-block active mb-1" id="headingOrder" data-toggle="collapse" data-target="#collapseOrder" aria-expanded="false" aria-controls="collapseOrder">
         Ordine
       </button>
-        <div id="collapseOrder" class="collapse" aria-labelledby="headingOrder" data-parent="#mainAccordion">
-          <div class="card-body">
-            <div id="toOrderProducts">
-            </div>
+        <div id="collapseOrder" class="collapse mb-4" aria-labelledby="headingOrder" data-parent="#mainAccordion">
+          <div id="toOrderProducts">
           </div>
         </div>
-        </div>
-        <div class="card main-card">
-          <button class="btn btn-secondary btn-lg btn-block active" id="headingConfirmation" data-toggle="collapse" data-target="#collapseConfirmation" aria-expanded="false" aria-controls="collapseConfirmation">
-            Indirizzo e conferma
-          </button>
-          <div id="collapseConfirmation" class="collapse" aria-labelledby="headingConfirmation" data-parent="#mainAccordion">
-            <div class="card-body">
-              <form class="pt-2">
-                <div class="form-group">
-                  <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="radioSelectAddress" name="addressRadio" checked>
-                    <label class="custom-control-label" for="radioSelectAddress">Indirizzo salvato</label>
-                  </div>
-                  <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="radioEnterAddress" name="addressRadio">
-                    <label class="custom-control-label" for="radioEnterAddress">Indirizzo nuovo</label>
-                  </div>
-                </div>
-                <div class="form-group pt-2" id="formSelectAddress">
-                  <select class="custom-select col-6 col-sm-5 col-md-4" id="selectedAddress" required>
-                    <?php
-                    if ($addresses = $conn->query("
-                      SELECT a.address_name, a.address_info
-                      FROM client c
-                      JOIN address a
-                      ON a.client_id = c.client_id
-                      WHERE a.client_id = '".$_SESSION['user_id']."'
-                      ")) {
-                      echo '<option value="">Seleziona indirizzo</option>';
-                      while ($address = $addresses->fetch_assoc()) {
-                        echo '<option value="'.$address['address_info'].'">'.$address['address_info'].'</option>';
-                      }
-                    } else {
-                      echo '<option value="">Nessun indirizzo salvato</option>';
-                    }
-                    ?>
-                  </select>
-                </div>
-                <div class="form-group pt-2" id="formEnterAddress">
-                  <div class="form-group row">
-                    <label for="enteredAddress" class="col-form-label col-sm-auto">Indirizzo</label>
-                    <input type="text" class="form-control col-sm-4" id="enteredAddress" placeholder="Via e nr. civico" required>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" value="" id="checkSaveAddress">
-                    <label class="custom-control-label" for="checkSaveAddress">Salva indirizzo</label>
-                  </div>
-                  <div class="form-group row pt-1" id="formEnterAddressName">
-                    <label for="enteredAddressName" class="col-form-label col-sm-auto">Nome</label>
-                    <input type="text" class="form-control col-sm-2" id="enteredAddressName" placeholder="Nome">
-                  </div>
-                </div>
-              <button type="button" id="btnComplete" class="btn btn-primary mt-4">Paga e ordina</button>
-              <div class="alert alert-danger mt-2" role="alert">
+        <button class="btn btn-secondary btn-lg btn-block active mb-1" id="headingConfirmation" data-toggle="collapse" data-target="#collapseConfirmation" aria-expanded="false" aria-controls="collapseConfirmation">
+          Indirizzo e conferma
+        </button>
+        <div id="collapseConfirmation" class="collapse" aria-labelledby="headingConfirmation" data-parent="#mainAccordion">
+          <form class="pt-2">
+            <div class="form-group">
+              <div class="custom-control custom-radio">
+                <input class="custom-control-input" type="radio" id="radioSelectAddress" name="addressRadio" checked>
+                <label class="custom-control-label" for="radioSelectAddress">Indirizzo salvato</label>
               </div>
-            </form>
+              <div class="custom-control custom-radio">
+                <input class="custom-control-input" type="radio" id="radioEnterAddress" name="addressRadio">
+                <label class="custom-control-label" for="radioEnterAddress">Indirizzo nuovo</label>
+              </div>
             </div>
-          </div>
+            <div class="form-group pt-2" id="formSelectAddress">
+              <select class="custom-select col-6 col-sm-5 col-md-4" id="selectedAddress" required>
+                <?php
+                  if ($addresses = $conn->query("
+                    SELECT a.address_name, a.address_info
+                    FROM client c
+                    JOIN address a
+                    ON a.client_id = c.client_id
+                    WHERE a.client_id = '".$_SESSION['user_id']."'
+                    ")) {
+                    echo '<option value="">Seleziona indirizzo</option>';
+                    while ($address = $addresses->fetch_assoc()) {
+                      echo '<option value="'.$address['address_info'].'">'.$address['address_info'].'</option>';
+                    }
+                  } else {
+                    echo '<option value="">Nessun indirizzo salvato</option>';
+                  }
+                ?>
+              </select>
+            </div>
+            <div class="form-group pt-2" id="formEnterAddress">
+              <div class="form-group row">
+                <label for="enteredAddress" class="col-form-label col-sm-auto">Indirizzo</label>
+                <input type="text" class="form-control col-sm-4" id="enteredAddress" placeholder="Via e nr. civico" required>
+              </div>
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" value="" id="checkSaveAddress">
+                <label class="custom-control-label" for="checkSaveAddress">Salva indirizzo</label>
+              </div>
+              <div class="form-group row pt-1" id="formEnterAddressName">
+                <label for="enteredAddressName" class="col-form-label col-sm-auto">Nome</label>
+                <input type="text" class="form-control col-sm-2" id="enteredAddressName" placeholder="Nome">
+              </div>
+            </div>
+            <button type="button" id="btnComplete" class="btn btn-primary mt-4">Paga e ordina</button>
+            <div class="alert alert-danger mt-2" role="alert">
+            </div>
+          </form>
         </div>
       </div>
     </div>
