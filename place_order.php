@@ -96,15 +96,15 @@ include("fragments/connection-begin.php");
                         ?>
                       </p>
                       <form class="form-group form-inline">
-                        <label class="col-form-label col-4 col-sm-3 col-md-2 justify-content-start" for="product<?php echo $product['product_id']; ?>Price">Price</label>
+                        <label class="col-form-label col-4 col-sm-3 col-md-2 justify-content-start" for="product<?php echo $product['product_id']; ?>Price">Prezzo</label>
                         <label class="col-form-label" id="product<?php echo $product['product_id']; ?>Price"><?php echo $product['product_price']." €"; ?></label>
                       </form>
                       <form class="form-group form-inline">
-                        <label class="col-form-label col-4 col-sm-3 col-md-2 justify-content-start" for="product<?php echo $product['product_id']; ?>Quantity">Quantity</label>
-                        <input class="form-control col-2 col-md-1 productQuantity" type="number" id="product<?php echo $product['product_id']; ?>Quantity" placeholder="Quantity" value="1" required>
+                        <label class="col-form-label col-4 col-sm-3 col-md-2 justify-content-start" for="product<?php echo $product['product_id']; ?>Quantity">Quantità</label>
+                        <input class="form-control col-2 col-md-1 productQuantity" type="number" id="product<?php echo $product['product_id']; ?>Quantity" placeholder="Quantità" value="1" required>
                       </form>
                       <form class="form-group form-inline">
-                        <label class="col-form-label col-4 col-sm-3 col-md-2 justify-content-start" for="product<?php echo $product['product_id']; ?>Notes">Notes</label>
+                        <label class="col-form-label col-4 col-sm-3 col-md-2 justify-content-start" for="product<?php echo $product['product_id']; ?>Notes">Note</label>
                         <textarea class="form-control col-sm-6 productNotes" id="product<?php echo $product['product_id']; ?>Notes"></textarea>
                       </form>
                       <?php
