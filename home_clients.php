@@ -45,7 +45,10 @@
                     t.type_name,
                     TIME_FORMAT(p.opening_hours, '%H:%i') AS 'opening_hours',
                     TIME_FORMAT(p.closing_hours, '%H:%i') AS 'closing_hours',
-                    p.opening_hours < TIME(NOW()) AND p.closing_hours > TIME(NOW()) AS 'now_open'
+                    CASE p.opening_hours < p.closing_hours
+                       WHEN TRUE THEN p.opening_hours < TIME(NOW()) AND p.closing_hours > TIME(NOW())
+                       ELSE p.opening_hours < TIME(NOW()) or p.closing_hours > TIME(NOW())
+                  	END AS 'now_open'
                   FROM client_provider cp
                   JOIN provider p
                   ON cp.provider_id = p.provider_id
@@ -118,7 +121,10 @@
                     t.type_name,
                     TIME_FORMAT(p.opening_hours, '%H:%i') AS 'opening_hours',
                     TIME_FORMAT(p.closing_hours, '%H:%i') AS 'closing_hours',
-                    p.opening_hours < TIME(NOW()) AND p.closing_hours > TIME(NOW()) AS 'now_open'
+                    CASE p.opening_hours < p.closing_hours
+                       WHEN TRUE THEN p.opening_hours < TIME(NOW()) AND p.closing_hours > TIME(NOW())
+                       ELSE p.opening_hours < TIME(NOW()) or p.closing_hours > TIME(NOW())
+                  	END AS 'now_open'
                   FROM provider p
                   LEFT JOIN type t
                   ON p.type_id = t.type_id
