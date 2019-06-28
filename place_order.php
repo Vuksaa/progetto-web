@@ -112,13 +112,13 @@ include("fragments/connection-begin.php");
             <div class="card-body">
               <form class="pt-2">
                 <div class="form-group">
-                  <div class="form-check custom-radio">
-                    <input class="form-check-input" type="radio" id="radioSelectAddress" name="addressRadio" checked>
-                    <label class="form-check-label" for="radioSelectAddress">Indirizzo salvato</label>
+                  <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="radioSelectAddress" name="addressRadio" checked>
+                    <label class="custom-control-label" for="radioSelectAddress">Indirizzo salvato</label>
                   </div>
-                  <div class="form-check custom-radio">
-                    <input class="form-check-input" type="radio" id="radioEnterAddress" name="addressRadio">
-                    <label class="form-check-label" for="radioEnterAddress">Indirizzo nuovo</label>
+                  <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="radioEnterAddress" name="addressRadio">
+                    <label class="custom-control-label" for="radioEnterAddress">Indirizzo nuovo</label>
                   </div>
                 </div>
                 <div class="form-group pt-2" id="formSelectAddress">
@@ -146,7 +146,7 @@ include("fragments/connection-begin.php");
                     <label for="enteredAddress" class="col-form-label col-sm-auto">Indirizzo</label>
                     <input type="text" class="form-control col-sm-4" id="enteredAddress" placeholder="Via e nr. civico" required>
                   </div>
-                  <div class="form-check">
+                  <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" value="" id="checkSaveAddress">
                     <label class="custom-control-label" for="checkSaveAddress">Salva indirizzo</label>
                   </div>
