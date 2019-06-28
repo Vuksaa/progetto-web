@@ -14,160 +14,110 @@
 </head>
 
 <body>
-  <?php
-    if(isset($_POST['btnProductAdd'])){
-      if($_POST['btnProductAdd']=="productAdd") {
-          if(!($statement=$conn->prepare("CALL product_add(?,?,?,?)"))){
-            echo "Prepare failed.";
-          }
-          if(!($statement->bind_param('ssdi',$_POST['productName'],$_POST['productDescription'],$_POST['productPrice'],$_SESSION['user_id']))) {
-            echo "Bind failed.";
-          }
-          if(!($statement->execute())){
-            echo "Execution failed: ".$statement->error;
-          }
-          $statement->close();
-      } else if($_POST['btnProductAdd']=="productModify") {
-          if(!($statement=$conn->prepare("CALL product_modify(?,?,?,?)"))){
-            echo "Prepare failed.";
-          }
-          if(!($statement->bind_param('issd',$_POST['productId'],$_POST['productName'],$_POST['productDescription'],$_POST['productPrice']))) {
-            echo "Bind failed.";
-          }
-          if(!($statement->execute())){
-            echo "Execution failed: ".$statement->error;
-          }
-          $statement->close();
-        }
-      } else if(isset($_POST['btnProductRemove'])){
-        if(!($statement=$conn->prepare("CALL product_remove(?)"))){
-          echo "Prepare failed.";
-        }
-        if(!($statement->bind_param('i',$_POST['productId']))) {
-          echo "Bind failed.";
-        }
-        if(!($statement->execute())){
-          echo "Execution failed: ".$statement->error;
-        }
-        $statement->close();
-      }
-    ?>
   <?php include("fragments/navbar.php"); ?>
-  <div class="container">
-    <div class="card main-card">
-      <h1 class="mb-0 form-group form-inline">
-        <button class="btn btn-secondary btn-lg btn-block active" data-toggle="collapse" data-target="#collapseProduct" aria-expanded="true" aria-controls="collapseProducts">
-          I tuoi prodotti
+  <?php
+    if(!($products=$conn->prepare(
+      "SELECT product_id, product_name, product_price
+      FROM product_by_provider
+      WHERE provider_id ='".$_SESSION['user_id']."'
+      AND product_active = 1
+      ORDER BY product_name;"
+    ))) {
+      echo "Prepare failed.";
+    }
+    if(!($products->execute()))  {
+      echo "Execute failed.";
+    }
+    $products->store_result();
+    $name="";
+    $id=0;
+    $price=0;
+    $products->bind_result($id, $name, $price);
+    if(!($ingredients=$conn->prepare(
+      "SELECT ingredient_name
+      FROM uni_web_prod.ingredient_by_product
+      WHERE product_id = ?;"
+    ))) {
+      echo "Prepare failed.";
+    }
+   ?>
+  <div class="container mt-4 mb-4">
+    <h4 class="display-4 mb-4 text-center text-sm-left">Prodotti</h4>
+    <button type="button" class="btn btn-primary mb-3 col col-sm-auto">Nuovo prodotto</button>
+    <?php
+      while ($products->fetch()) {
+    ?>
+    <div class="card orderCard mb-3" data-productid="<?php echo $id;?>">
+      <div class="card-body">
+        <button type="button" class="close float-right btnDeleteProduct" data-toggle="popover" data-placement="left" data-html="true" data-trigger="focus" data-content="<a href='#' class='btn btn-danger btnConfirmDeletion'><span class='d-none productIdContainer'><?php echo $id;?></span>Elimina</a>" aria-label="Elimina">
+          <span aria-hidden="true" style="color: red;">&times;</span>
         </button>
-      </h1>
-      <div id="collapseProduct" class="collapse show" aria-labelledby="headingFavouriteRestaurants">
-        <div class="card-body">
-          <form class="form-inline card-searchbar">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
-          <button type="button" class="btn btn-primary" value="productAdd" data-toggle="modal" data-target="#productAddModal">Aggiungi prodotto</button>
-          <div class="row">
+        <h5 class="card-title"><?php echo $name; ?></h5>
+        <div class="card-text">
+          <hr>
+          <div class="p-2">
             <?php
-            if ($products = $conn->query("SELECT product_id, product_name, product_price, product_description
-                                        FROM product
-                                        WHERE provider_id = '".$_SESSION['user_id']."'")) {
-            while ($productRow = $products->fetch_assoc()) {
-          ?>
-            <div class="card col-sm-3">
-              <div class="card-body">
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="product_remove_form">
-                  <?php echo "<input type='number' name='productId' value='".$productRow['product_id']."' hidden>" ; ?>
-                  <h5 class="card-title"><?php echo $productRow['product_name'] ?> </h5>
-                  <p class="card-text"><?php echo $productRow['product_description'] ?></p>
-                  <div class="btn-group btn-group-justified">
-                    <button type="button" class="btn btn-primary inline" name="btnProductModify" value="productModify" data-toggle="modal" data-target="#productAddModal" data-id="<?php echo $productRow['product_id']?>"
-                      data-name="<?php echo $productRow['product_name']?>" data-description="<?php echo $productRow['product_description']?>"
-                       data-price="<?php echo $productRow['product_price']?>">
-                      Modifica
-                    </button>
-                    <button type="submit" name="btnProductRemove" class="btn btn-primary" value="productRemove">Rimuovi</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-            <?php
+              if(!($ingredients->bind_param('i', $id))) {
+                echo "Bind failed";
               }
-              $products->close();
-            } else {
-              echo "Query failed";
-            }
-           ?>
+              if(!($ingredients->execute()))  {
+                echo "Execute failed.";
+              }
+              $ingredients->store_result();
+              $ingredient="";
+              $ingredients->bind_result($ingredient);
+              if ($ingredients->fetch()) {
+                ?>
+                <div class="row">
+                  <label class="col-4 col-sm-3 col-lg-2 col-form-label border-right">Ingredienti</label>
+                  <label class="col col-form-label">
+                    <?php
+                      echo $ingredient;
+                      while ($ingredients->fetch()) {
+                        echo ", ".$ingredient;
+                      }
+                    ?>
+                  </label>
+                </div>
+                <?php
+              }
+            ?>
+            <div class="row">
+              <label class="col-4 col-sm-3 col-lg-2 col-form-label border-right">Prezzo</label>
+              <label class="col col-form-label"><?php echo $price; ?> €</label>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <?php
+    }
+    $products->close();
+    $ingredients->close();
+    ?>
   </div>
-
-  <div class="modal fade" id="productAddModal" tabindex="-1" role="dialog" aria-labelledby="productAddModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="productAddModalLabel">Aggiungi un prodotto</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="product_add_form">
-          <div class="modal-body">
-            <input type="number" name="productId" value="" id="productId" hidden>
-            <div class="form-group">
-              <label for="productName" class="col-form-label">Nome:</label>
-              <input type="text" class="form-control" name="productName" id="productName" required>
-            </div>
-            <div class="form-group">
-              <label for="message-text" class="col-form-label">Descrizione:</label>
-              <textarea class="form-control" name="productDescription" id="productDescription"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="productPrice" class="col-form-label">Prezzo:</label>
-              <input type="number" step="any" class="form-control" name="productPrice" id="productPrice" required></input>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
-            <button type="submit" name="btnProductAdd" value="productAdd" class="btn btn-primary" id="btnProductAdd">Aggiungi prodotto</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
   <?php include("fragments/footer.php"); ?>
 </body>
 
 <script>
-//TODO REDO with ajax?
-//Autocompletes Modify product modal
-  $('#productAddModal').on('show.bs.modal', function(event) {
-    var button = $(event.relatedTarget);
-    var productId = button.data('id');
-    var productName = button.data('name');
-    var productDescription = button.data('description');
-    var productPrice = button.data('price');
-    var modal = $(this);
-    modal.find('#productId').val(productId);
-    if(button.val()=="productModify"){
-      modal.find('.modal-title').text("Modifica il prodotto");
-      modal.find('#productName').val(productName);
-      modal.find('#productDescription').val(productDescription);
-      modal.find('#productPrice').val(productPrice);
-      modal.find('#btnProductAdd').text("Modifica");
-      modal.find('#btnProductAdd').val("productModify");
-    } else {
-      modal.find('.modal-title').text("Aggiungi un prodotto");
-    }
-  });
-  /* Set navbar voice active with respective screen reader functionality */
-  var element = $("#navbarProducts");
-  var parent = element.parent();
-  element.append( "<span class='sr-only'>(current)</span>" );
-  parent.addClass("active");
+  $(function() {
+    $('body').on('click','.btnConfirmDeletion', function(e) {
+      var productId = $(e.currentTarget.outerHTML).find('.productIdContainer').text()
+      $.post("ajax/disable_product.php", {
+        product: productId
+      }).done(function(response) {
+        if (response.indexOf("SUCCESS") != -1) {
+          $(".orderCard[data-productid=" + productId + "]").slideUp()
+        }
+      })
+    })
+    $(".btnDeleteProduct").popover()
+    /* Set navbar voice active with respective screen reader functionality */
+    var element = $("#navbarProducts");
+    var parent = element.parent();
+    element.append( "<span class='sr-only'>(current)</span>" );
+    parent.addClass("active");
+  })
 </script>
 <?php include("fragments/connection-end.php"); ?>
 </html>

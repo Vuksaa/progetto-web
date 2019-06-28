@@ -17,7 +17,7 @@
   <?php include("fragments/navbar.php"); ?>
 
   <div class="container mt-4 mb-4">
-    <h4 class="display-4 pb-2">Lista ordini</h4>
+    <h4 class="display-4 mb-4 text-center text-sm-left">Lista ordini</h4>
     <div class="container accordion mt-4 mb-4" id="mainAccordion">
       <button class="btn btn-secondary btn-lg btn-block active mb-1" data-toggle="collapse" data-target="#collapseIncomingOrders" aria-expanded="true" aria-controls="collapseIncomingOrders">
         Ordini in arrivo

@@ -19,7 +19,7 @@
   <?php include("fragments/navbar.php"); ?>
 
   <div class="container mt-4 mb-4">
-    <h4 class="display-4 pb-2">Fornitori</h4>
+    <h4 class="display-4 mb-4 text-center text-sm-left">Fornitori</h4>
     <button type="button" class="btn btn-outline-info col-sm col-md-3 col-lg-2" id="btnFilters" data-toggle="modal" data-target="#modalFilters" aria-label="Click to open filter menu modal">
       Filtri <span id="filterState" style="color: black;">(nessun filtro)</span>
     </button>

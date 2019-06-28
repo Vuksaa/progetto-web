@@ -59,6 +59,7 @@ include("fragments/connection-begin.php");
           SELECT *
           FROM product_by_provider
           WHERE provider_id ='".$_GET['provider']."'
+          AND product_active = 1;
           ")) {
             $productNumber = 0;
             while ($product = $listedProducts->fetch_assoc()) {
