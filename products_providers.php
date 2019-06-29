@@ -196,6 +196,7 @@
         $("#modalAddProduct").modal('hide')
         cleanModalAddProduct()
       })
+      window.location.reload(false);
     })
     $("#selectedIngredient").on('change', function(e) {
       $("#addIngredient").prop(
@@ -257,6 +258,7 @@
         button.fadeOut(200, function() { button.remove() })
       }
     })
+    window.location.reload(false);
   }
 </script>
 <?php include("fragments/connection-end.php"); ?>
