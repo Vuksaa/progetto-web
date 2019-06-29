@@ -1,4 +1,8 @@
 <?php
+if (!isset($_GET['provider'])) {
+  header('Location: home_clients.php');
+  exit();
+}
 include("fragments/logged-check.php");
 include("fragments/connection-begin.php");
 ?>
