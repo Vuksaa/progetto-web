@@ -142,7 +142,7 @@ CREATE TABLE `client_allergen` (
 
 LOCK TABLES `client_allergen` WRITE;
 /*!40000 ALTER TABLE `client_allergen` DISABLE KEYS */;
-INSERT INTO `client_allergen` VALUES (1,4),(1,5),(10,1),(10,4),(10,9),(10,14),(10,16),(10,17);
+INSERT INTO `client_allergen` VALUES (1,4),(1,5),(10,1),(10,3),(10,4),(10,7),(10,9),(10,14),(10,16),(10,17);
 /*!40000 ALTER TABLE `client_allergen` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -169,7 +169,7 @@ CREATE TABLE `client_order` (
 
 LOCK TABLES `client_order` WRITE;
 /*!40000 ALTER TABLE `client_order` DISABLE KEYS */;
-INSERT INTO `client_order` VALUES (10,5),(10,6),(10,8),(10,9),(10,10),(10,11),(10,12),(10,13),(10,14),(10,15),(10,16),(10,17),(10,18),(10,19),(10,20),(10,21),(10,22),(10,23),(10,24),(10,25),(10,26),(10,27),(10,28),(10,29),(10,30),(10,31),(10,32),(10,33),(10,34),(10,35),(10,36),(10,37),(10,38),(10,39),(10,40),(10,41),(10,42),(10,43),(10,44),(10,45),(10,46),(10,47),(10,48),(10,49),(10,50),(10,51),(10,52),(10,53),(10,54),(10,55),(10,56);
+INSERT INTO `client_order` VALUES (10,5),(10,6),(10,8),(10,9),(10,10),(10,11),(10,12),(10,13),(10,14),(10,15),(10,16),(10,17),(10,18),(10,19),(10,20),(10,21),(10,22),(10,23),(10,24),(10,25),(10,26),(10,27),(10,28),(10,29),(10,30),(10,31),(10,32),(10,33),(10,34),(10,35),(10,36),(10,37),(10,38),(10,39),(10,40),(10,41),(10,42),(10,43),(10,44),(10,45),(10,46),(10,47),(10,48),(10,49),(10,50),(10,51),(10,52),(10,53),(10,54),(10,55),(10,56),(10,57),(10,58);
 /*!40000 ALTER TABLE `client_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -223,7 +223,7 @@ CREATE TABLE `ingredient` (
 
 LOCK TABLES `ingredient` WRITE;
 /*!40000 ALTER TABLE `ingredient` DISABLE KEYS */;
-INSERT INTO `ingredient` VALUES (1,'Alcol',NULL),(2,'Ammoniaca per dolci',NULL),(3,'Coloranti alimentari',NULL),(4,'Caff?¿',NULL),(5,'Cinghiale',NULL),(6,'Fegato',NULL),(7,'Filetto',NULL),(8,'Manzo',NULL),(9,'Petto di pollo',NULL),(10,'Tacchino',NULL),(11,'Vitello',NULL),(12,'Avena',NULL),(13,'Farro',NULL),(14,'Orzo',NULL),(15,'Quinoia',NULL),(16,'Riso',NULL),(17,'Astice',3),(18,'Capesante',3),(19,'Cozze',3),(20,'Cicale di mare',3),(21,'Gamberoni',3),(22,'Polpo',3),(23,'Seppia',3),(24,'Frutti di mare',3),(25,'Miele',NULL),(26,'Caramello',NULL),(27,'Zucchero',NULL),(28,'Zucchero di canna',NULL),(29,'Alloro',NULL),(30,'Erba cipollina',NULL),(31,'Basilico',NULL),(32,'Maggiorana',NULL),(33,'Menta',NULL),(34,'Prezzemolo',NULL),(35,'Origano',NULL),(36,'Rosmarino',NULL),(37,'Timo',NULL),(38,'Farina 0',8),(39,'Farina 00',8),(40,'Farina di canapa',NULL),(41,'Farina di farro',NULL),(42,'Farina di mais',NULL),(43,'Farina integrale',NULL),(44,'Farina di riso',NULL),(45,'Semola',NULL),(46,'Caciocavallo',4),(47,'Caprino',4),(48,'Feta',4),(49,'Cheddar',4),(50,'Emmental',4),(51,'Philadelphia',4),(52,'Gruviera',4),(53,'Grana',4),(54,'Gorgonzola',4),(55,'Parmigiano',4),(56,'Pecorino',4),(57,'Provolone',4),(58,'Arance',NULL),(59,'Banane',NULL),(60,'Fichi',NULL),(61,'Ciliegie',NULL),(62,'Kiwi',NULL),(63,'Limone',NULL),(64,'Frutti di bosco',NULL),(65,'Pesche',19),(66,'More',NULL),(67,'Mirtilli',NULL),(68,'Cocco',NULL),(69,'Papaya',NULL),(70,'Lime',NULL),(71,'Mango',NULL),(72,'Anacardi',7),(73,'Arachidi',7),(74,'Bacche di Goji',7),(75,'Mandorle',7),(76,'Pinoli',7),(77,'Noci',7),(78,'Nocciole',7),(79,'Carote',NULL),(80,'Funghi',NULL),(81,'Funghi porcini',NULL),(82,'Daikon',NULL),(83,'Patate',NULL),(84,'Ravanelli',NULL),(85,'Tartufo',NULL),(86,'Burro',NULL),(87,'Besciamella',NULL),(88,'Latte',NULL),(89,'Latte di mandorla',NULL),(90,'Mozzarella',NULL),(91,'Ricotta',NULL),(92,'Fagiolini',NULL),(93,'Fave',NULL),(94,'Piselli',NULL),(95,'Lenticchie',NULL),(96,'Fagioli',NULL),(97,'Aceto balsamico',NULL),(98,'Ketchup',NULL),(99,'Salsa tartara',NULL),(100,'Maionese',2),(101,'Olio di oliva',NULL),(102,'Tabasco',NULL),(103,'Salsa barbecue',NULL),(104,'Wasabi',NULL),(105,'Salsa di soia',NULL),(106,'Asparagi',NULL),(107,'Cavolfiore',NULL),(108,'Cetrioli',NULL),(109,'Cipolle',NULL),(110,'Aglio',NULL),(111,'Peperoni',NULL),(112,'Zucchine',NULL),(113,'Lasagne',NULL),(114,'Spaghetti',NULL),(115,'Penne',NULL),(116,'Acciughe',3),(117,'Orata',3),(118,'Pesce spada',3),(119,'Pesce persico',3),(120,'Salmone',3),(121,'Tonno',3),(122,'Spigola',3),(123,'Sgombro',3),(124,'Bacon',NULL),(125,'Cotechino',NULL),(126,'Guanciale',NULL),(127,'Salame',NULL),(128,'Pancetta',NULL),(129,'Prosciutto crudo',NULL),(130,'Prosciutto cotto',NULL),(131,'Uova',2),(132,'Curry',NULL),(133,'Paprica',NULL),(134,'Zenzero',NULL),(135,'Wurstel',NULL),(136,'Hamburger',NULL),(137,'Lattuga',NULL),(138,'Pomodoro',NULL),(139,'Pollo',NULL),(140,'Cornflakes',NULL),(141,'Birra',NULL),(143,'Formaggi',NULL),(144,'Mais',NULL),(145,'Avocado',NULL),(146,'Salsa Fuego',NULL),(147,'Tequila',NULL),(148,'Tortilla',NULL);
+INSERT INTO `ingredient` VALUES (1,'Alcol',NULL),(2,'Ammoniaca per dolci',NULL),(3,'Coloranti alimentari',NULL),(4,'Caffe\'',NULL),(5,'Cinghiale',NULL),(6,'Fegato',NULL),(7,'Filetto',NULL),(8,'Manzo',NULL),(9,'Petto di pollo',NULL),(10,'Tacchino',NULL),(11,'Vitello',NULL),(12,'Avena',NULL),(13,'Farro',NULL),(14,'Orzo',NULL),(15,'Quinoia',NULL),(16,'Riso',NULL),(17,'Astice',3),(18,'Capesante',3),(19,'Cozze',3),(20,'Cicale di mare',3),(21,'Gamberoni',3),(22,'Polpo',3),(23,'Seppia',3),(24,'Frutti di mare',3),(25,'Miele',NULL),(26,'Caramello',NULL),(27,'Zucchero',NULL),(28,'Zucchero di canna',NULL),(29,'Alloro',NULL),(30,'Erba cipollina',NULL),(31,'Basilico',NULL),(32,'Maggiorana',NULL),(33,'Menta',NULL),(34,'Prezzemolo',NULL),(35,'Origano',NULL),(36,'Rosmarino',NULL),(37,'Timo',NULL),(38,'Farina 0',8),(39,'Farina 00',8),(40,'Farina di canapa',NULL),(41,'Farina di farro',NULL),(42,'Farina di mais',NULL),(43,'Farina integrale',NULL),(44,'Farina di riso',NULL),(45,'Semola',NULL),(46,'Caciocavallo',4),(47,'Caprino',4),(48,'Feta',4),(49,'Cheddar',4),(50,'Emmental',4),(51,'Philadelphia',4),(52,'Gruviera',4),(53,'Grana',4),(54,'Gorgonzola',4),(55,'Parmigiano',4),(56,'Pecorino',4),(57,'Provolone',4),(58,'Arance',NULL),(59,'Banane',NULL),(60,'Fichi',NULL),(61,'Ciliegie',NULL),(62,'Kiwi',NULL),(63,'Limone',NULL),(64,'Frutti di bosco',NULL),(65,'Pesche',19),(66,'More',NULL),(67,'Mirtilli',NULL),(68,'Cocco',NULL),(69,'Papaya',NULL),(70,'Lime',NULL),(71,'Mango',NULL),(72,'Anacardi',7),(73,'Arachidi',7),(74,'Bacche di Goji',7),(75,'Mandorle',7),(76,'Pinoli',7),(77,'Noci',7),(78,'Nocciole',7),(79,'Carote',NULL),(80,'Funghi',NULL),(81,'Funghi porcini',NULL),(82,'Daikon',NULL),(83,'Patate',NULL),(84,'Ravanelli',NULL),(85,'Tartufo',NULL),(86,'Burro',NULL),(87,'Besciamella',NULL),(88,'Latte',NULL),(89,'Latte di mandorla',NULL),(90,'Mozzarella',NULL),(91,'Ricotta',NULL),(92,'Fagiolini',NULL),(93,'Fave',NULL),(94,'Piselli',NULL),(95,'Lenticchie',NULL),(96,'Fagioli',NULL),(97,'Aceto balsamico',NULL),(98,'Ketchup',NULL),(99,'Salsa tartara',NULL),(100,'Maionese',2),(101,'Olio di oliva',NULL),(102,'Tabasco',NULL),(103,'Salsa barbecue',NULL),(104,'Wasabi',NULL),(105,'Salsa di soia',NULL),(106,'Asparagi',NULL),(107,'Cavolfiore',NULL),(108,'Cetrioli',NULL),(109,'Cipolle',NULL),(110,'Aglio',NULL),(111,'Peperoni',NULL),(112,'Zucchine',NULL),(113,'Lasagne',NULL),(114,'Spaghetti',NULL),(115,'Penne',NULL),(116,'Acciughe',3),(117,'Orata',3),(118,'Pesce spada',3),(119,'Pesce persico',3),(120,'Salmone',3),(121,'Tonno',3),(122,'Spigola',3),(123,'Sgombro',3),(124,'Bacon',NULL),(125,'Cotechino',NULL),(126,'Guanciale',NULL),(127,'Salame',NULL),(128,'Pancetta',NULL),(129,'Prosciutto crudo',NULL),(130,'Prosciutto cotto',NULL),(131,'Uova',2),(132,'Curry',NULL),(133,'Paprica',NULL),(134,'Zenzero',NULL),(135,'Wurstel',NULL),(136,'Hamburger',NULL),(137,'Lattuga',NULL),(138,'Pomodoro',NULL),(139,'Pollo',NULL),(140,'Cornflakes',NULL),(141,'Birra',NULL),(143,'Formaggi',NULL),(144,'Mais',NULL),(145,'Avocado',NULL),(146,'Salsa Fuego',NULL),(147,'Tequila',NULL),(148,'Tortilla',NULL);
 /*!40000 ALTER TABLE `ingredient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,7 +260,7 @@ CREATE TABLE `order` (
   PRIMARY KEY (`order_id`),
   KEY `status_id_idx` (`status_id`),
   CONSTRAINT `status_id` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -269,7 +269,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (5,'Via Romeo Galli 50',2,'2019-05-24 12:19:46','2019-05-24 12:19:46',NULL),(6,'Via Domenico Martoni 21',3,'2019-06-26 21:34:36','2019-05-24 12:22:48',NULL),(8,'Via Domenico Martoni 21',3,'2019-05-25 12:21:25','2019-05-25 12:21:25',NULL),(9,'Corso della Repubblica 3',2,'2019-06-24 20:42:16','2019-06-24 20:42:16',NULL),(10,'Via Romeo Galli 50',2,'2019-06-26 21:41:50','2019-06-18 16:48:42','aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'),(11,'Via Romeo Galli 50',3,'2019-06-26 21:42:05','2019-06-18 16:53:36',NULL),(12,'Via Romeo Galli 50',2,'2019-06-26 21:42:00','2019-06-18 16:54:26',''),(13,'Via Romeo Galli 50',2,'2019-06-26 21:41:58','2019-06-18 16:54:26',''),(14,'Via Romeo Galli 50',3,'2019-06-26 21:42:05','2019-06-18 16:54:26',NULL),(15,'Via Romeo Galli 50',2,'2019-06-26 21:42:03','2019-06-18 16:54:27',''),(16,'Via Romeo Galli 50',2,'2019-06-24 20:43:33','2019-06-24 20:43:33',NULL),(17,'Via Romeo Galli 50',3,'2019-06-26 21:35:07','2019-06-24 20:43:36',NULL),(18,'Via Romeo Galli 50',3,'2019-06-26 21:35:22','2019-06-18 17:04:18',NULL),(19,'Via Romeo Galli 50',3,'2019-06-26 21:40:29','2019-06-18 17:04:38',NULL),(20,'Via Romeo Galli 50',3,'2019-06-26 21:40:40','2019-06-18 17:04:47',NULL),(21,'Via Romeo Galli 50',3,'2019-06-26 21:40:45','2019-06-18 17:04:58',NULL),(22,'Via Domenico Martoni 21',2,'2019-06-25 21:42:23','2019-06-18 17:05:27','1234'),(23,'Via Romeo Galli 50',3,'2019-06-24 20:29:15','2019-06-24 20:29:15',NULL),(24,'Via Romeo Galli 50',2,'2019-06-25 21:45:48','2019-06-25 21:37:22','PROVA'),(25,'Via Romeo Galli 50',2,'2019-06-25 21:46:00','2019-06-25 21:37:24',''),(26,'Via Domenico Martoni 21',2,'2019-06-25 21:46:56','2019-06-25 21:45:35','oggi non mangi'),(27,'Via Domenico Martoni 21',3,'2019-06-26 21:49:28','2019-06-25 21:45:35',NULL),(28,'Via Domenico Martoni 21',3,'2019-06-26 21:50:06','2019-06-25 21:45:36',NULL),(29,'Via Romeo Galli 50',2,'2019-06-25 21:51:39','2019-06-25 21:47:18','gfhgfhfhgfhgf'),(30,'Via Romeo Galli 50',3,'2019-06-26 21:31:25','2019-06-26 21:05:46',NULL),(31,'Via Domenico Martoni 21',3,'2019-06-26 21:50:52','2019-06-26 21:05:48',NULL),(32,'1234',3,'2019-06-27 18:32:55','2019-06-26 21:09:45',NULL),(33,'Via Romeo Galli 50',2,'2019-06-26 21:49:23','2019-06-26 21:41:17','NOPE NOPE'),(34,'Piazza saffi',2,'2019-06-26 21:42:46','2019-06-26 21:42:32','test'),(35,'Piazza saffi',3,'2019-06-26 21:42:55','2019-06-26 21:42:49',NULL),(36,'Via Romeo Galli 50',2,'2019-06-26 21:50:41','2019-06-26 21:50:28','aaaa'),(37,'Via Romeo Galli 50',3,'2019-06-27 18:32:56','2019-06-26 21:50:47',NULL),(38,'Via Romeo Galli 50',4,'0000-00-00 00:00:00','2019-06-27 23:24:48',NULL),(39,'Via Romeo Galli 50',4,'0000-00-00 00:00:00','2019-06-27 23:24:52',NULL),(40,'Via Domenico Martoni 21',3,'2019-06-28 22:05:16','2019-06-27 23:26:00',NULL),(41,'Via Romeo Galli 50',4,'0000-00-00 00:00:00','2019-06-27 23:26:53',NULL),(42,'Via Domenico Martoni 21',2,'2019-06-28 23:31:03','2019-06-28 22:06:09',''),(43,'Via Romeo Galli 50',1,'2019-06-28 23:30:58','2019-06-28 22:06:27',NULL),(44,'Via Domenico Martoni 21',4,'0000-00-00 00:00:00','2019-06-28 22:06:36',NULL),(45,'Via Domenico Martoni 21',4,'0000-00-00 00:00:00','2019-06-28 23:28:31',NULL),(46,'Via Domenico Martoni 21',4,'0000-00-00 00:00:00','2019-06-28 23:30:47',NULL),(47,'Via Romeo Galli 50',4,'0000-00-00 00:00:00','2019-06-28 23:31:53',NULL),(48,'Via Domenico Martoni 21',4,'0000-00-00 00:00:00','2019-06-28 23:32:04',NULL),(49,'Via Domenico Martoni 21',4,'0000-00-00 00:00:00','2019-06-28 23:32:20',NULL),(50,'Via Domenico Martoni 21',4,'0000-00-00 00:00:00','2019-06-28 23:33:08',NULL),(51,'Via Romeo Galli 50',4,'0000-00-00 00:00:00','2019-06-28 23:33:32',NULL),(52,'Via Domenico Martoni 21',4,'0000-00-00 00:00:00','2019-06-28 23:35:07',NULL),(53,'Via Romeo Galli 50',4,'0000-00-00 00:00:00','2019-06-28 23:35:57',NULL),(54,'Via Domenico Martoni 21',4,'0000-00-00 00:00:00','2019-06-28 23:36:44',NULL),(55,'Via Domenico Martoni 21',4,'0000-00-00 00:00:00','2019-06-28 23:41:00',NULL),(56,'Via Domenico Martoni 21',4,'0000-00-00 00:00:00','2019-06-28 23:42:24',NULL);
+INSERT INTO `order` VALUES (5,'Via Romeo Galli 50',2,'2019-05-24 12:19:46','2019-05-24 12:19:46',NULL),(6,'Via Domenico Martoni 21',3,'2019-06-26 21:34:36','2019-05-24 12:22:48',NULL),(8,'Via Domenico Martoni 21',3,'2019-05-25 12:21:25','2019-05-25 12:21:25',NULL),(9,'Corso della Repubblica 3',2,'2019-06-24 20:42:16','2019-06-24 20:42:16',NULL),(10,'Via Romeo Galli 50',2,'2019-06-26 21:41:50','2019-06-18 16:48:42','aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'),(11,'Via Romeo Galli 50',3,'2019-06-26 21:42:05','2019-06-18 16:53:36',NULL),(12,'Via Romeo Galli 50',2,'2019-06-26 21:42:00','2019-06-18 16:54:26',''),(13,'Via Romeo Galli 50',2,'2019-06-26 21:41:58','2019-06-18 16:54:26',''),(14,'Via Romeo Galli 50',3,'2019-06-26 21:42:05','2019-06-18 16:54:26',NULL),(15,'Via Romeo Galli 50',2,'2019-06-26 21:42:03','2019-06-18 16:54:27',''),(16,'Via Romeo Galli 50',2,'2019-06-24 20:43:33','2019-06-24 20:43:33',NULL),(17,'Via Romeo Galli 50',3,'2019-06-26 21:35:07','2019-06-24 20:43:36',NULL),(18,'Via Romeo Galli 50',3,'2019-06-26 21:35:22','2019-06-18 17:04:18',NULL),(19,'Via Romeo Galli 50',3,'2019-06-26 21:40:29','2019-06-18 17:04:38',NULL),(20,'Via Romeo Galli 50',3,'2019-06-26 21:40:40','2019-06-18 17:04:47',NULL),(21,'Via Romeo Galli 50',3,'2019-06-26 21:40:45','2019-06-18 17:04:58',NULL),(22,'Via Domenico Martoni 21',2,'2019-06-25 21:42:23','2019-06-18 17:05:27','1234'),(23,'Via Romeo Galli 50',3,'2019-06-24 20:29:15','2019-06-24 20:29:15',NULL),(24,'Via Romeo Galli 50',2,'2019-06-25 21:45:48','2019-06-25 21:37:22','PROVA'),(25,'Via Romeo Galli 50',2,'2019-06-25 21:46:00','2019-06-25 21:37:24',''),(26,'Via Domenico Martoni 21',2,'2019-06-25 21:46:56','2019-06-25 21:45:35','oggi non mangi'),(27,'Via Domenico Martoni 21',3,'2019-06-26 21:49:28','2019-06-25 21:45:35',NULL),(28,'Via Domenico Martoni 21',3,'2019-06-26 21:50:06','2019-06-25 21:45:36',NULL),(29,'Via Romeo Galli 50',2,'2019-06-25 21:51:39','2019-06-25 21:47:18','gfhgfhfhgfhgf'),(30,'Via Romeo Galli 50',3,'2019-06-26 21:31:25','2019-06-26 21:05:46',NULL),(31,'Via Domenico Martoni 21',3,'2019-06-26 21:50:52','2019-06-26 21:05:48',NULL),(32,'1234',3,'2019-06-27 18:32:55','2019-06-26 21:09:45',NULL),(33,'Via Romeo Galli 50',2,'2019-06-26 21:49:23','2019-06-26 21:41:17','NOPE NOPE'),(34,'Piazza saffi',2,'2019-06-26 21:42:46','2019-06-26 21:42:32','test'),(35,'Piazza saffi',3,'2019-06-26 21:42:55','2019-06-26 21:42:49',NULL),(36,'Via Romeo Galli 50',2,'2019-06-26 21:50:41','2019-06-26 21:50:28','aaaa'),(37,'Via Romeo Galli 50',3,'2019-06-27 18:32:56','2019-06-26 21:50:47',NULL),(38,'Via Romeo Galli 50',4,'0000-00-00 00:00:00','2019-06-27 23:24:48',NULL),(39,'Via Romeo Galli 50',4,'0000-00-00 00:00:00','2019-06-27 23:24:52',NULL),(40,'Via Domenico Martoni 21',3,'2019-06-28 22:05:16','2019-06-27 23:26:00',NULL),(41,'Via Romeo Galli 50',4,'0000-00-00 00:00:00','2019-06-27 23:26:53',NULL),(42,'Via Domenico Martoni 21',2,'2019-06-28 23:31:03','2019-06-28 22:06:09',''),(43,'Via Romeo Galli 50',1,'2019-06-28 23:30:58','2019-06-28 22:06:27',NULL),(44,'Via Domenico Martoni 21',4,'0000-00-00 00:00:00','2019-06-28 22:06:36',NULL),(45,'Via Domenico Martoni 21',4,'0000-00-00 00:00:00','2019-06-28 23:28:31',NULL),(46,'Via Domenico Martoni 21',4,'0000-00-00 00:00:00','2019-06-28 23:30:47',NULL),(47,'Via Romeo Galli 50',4,'0000-00-00 00:00:00','2019-06-28 23:31:53',NULL),(48,'Via Domenico Martoni 21',4,'0000-00-00 00:00:00','2019-06-28 23:32:04',NULL),(49,'Via Domenico Martoni 21',4,'0000-00-00 00:00:00','2019-06-28 23:32:20',NULL),(50,'Via Domenico Martoni 21',4,'0000-00-00 00:00:00','2019-06-28 23:33:08',NULL),(51,'Via Romeo Galli 50',4,'0000-00-00 00:00:00','2019-06-28 23:33:32',NULL),(52,'Via Domenico Martoni 21',4,'0000-00-00 00:00:00','2019-06-28 23:35:07',NULL),(53,'Via Romeo Galli 50',4,'0000-00-00 00:00:00','2019-06-28 23:35:57',NULL),(54,'Via Domenico Martoni 21',4,'0000-00-00 00:00:00','2019-06-28 23:36:44',NULL),(55,'Via Domenico Martoni 21',4,'0000-00-00 00:00:00','2019-06-28 23:41:00',NULL),(56,'Via Domenico Martoni 21',4,'0000-00-00 00:00:00','2019-06-28 23:42:24',NULL),(57,'Via Domenico Martoni 21',4,'0000-00-00 00:00:00','2019-06-29 10:23:41',NULL),(58,'Nuovo indirizzo di prova',4,'0000-00-00 00:00:00','2019-06-29 11:09:18',NULL);
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -290,7 +290,7 @@ CREATE TABLE `product` (
   PRIMARY KEY (`product_id`),
   KEY `provider_id_idx` (`provider_id`),
   CONSTRAINT `provider_id` FOREIGN KEY (`provider_id`) REFERENCES `provider` (`provider_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -299,7 +299,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'Confettura di albicocche 200g',NULL,2.5,2,1),(2,'Bacon Cheeseburger',NULL,10,1,1),(3,'Chicken nuggets',NULL,5,1,1),(4,'Onion rings',NULL,5,1,1),(5,'Nachos Chips Cheese',NULL,4,1,1),(6,'New York Dog',NULL,8,1,1),(7,'Vegan Fajitas',NULL,7,1,1),(8,'Acqua 0.5L',NULL,0.33,2,1),(9,'Biscotti 100g',NULL,1,2,1),(10,'Latte 1L',NULL,1,2,1),(11,'Baguette',NULL,0.7,2,1),(12,'Carne macinata di tacchino 300g',NULL,2.5,2,1),(13,'Involtini di primavera',NULL,0.8,3,1),(14,'Pollo alle mandorle',NULL,4,3,1),(15,'Riso alla cantonese',NULL,2,3,1),(16,'Wanton fritti',NULL,1,3,1),(17,'Granchio',NULL,5,3,1),(18,'Pollo al curry',NULL,3.5,3,1),(19,'Cacio e pepe',NULL,11,4,1),(20,'Parmigiana di Melanzane',NULL,6,4,1),(21,'Burg di pollo',NULL,10.5,4,1),(22,'Contadino',NULL,12,4,1),(23,'Vagabondo',NULL,11.5,4,1),(24,'Vegetariano',NULL,9.5,4,1),(25,'Piadina cotto e fontina',NULL,4,5,1),(26,'Piadina crudo squacquerone e rucola',NULL,5,5,1),(27,'Crescione erbe grigliate',NULL,4,5,1),(28,'Crescione erbe e salsiccia',NULL,3.5,5,1),(29,'Crescione zucca e patate',NULL,3,5,1),(30,'Alici gratinate',NULL,11,6,1),(31,'Il nostro fritto',NULL,19,6,1),(32,'Gnocchi di zucca',NULL,13,6,1),(33,'Strozzapreti',NULL,16,6,1),(34,'Seppia scottata',NULL,13,6,1),(35,'Serra croccante',NULL,13,6,1),(36,'Tataki di ricciola',NULL,14,6,1),(37,'Antipasto dello Chef secondo stagione',NULL,7,7,1),(38,'Antipasti del giorno senza glutine',NULL,7,7,1),(39,'Passatelli asciutti di farro con gambuccio di',NULL,9,7,1),(40,'Mezze lune al baccal?í e patate saltate con g',NULL,12,7,1),(41,'Sacher vegan con farro e panna fresca vegetal',NULL,5,7,1),(42,'Mooncake',NULL,1.89,8,1),(43,'Prosciutto crudo',NULL,1.49,8,1),(44,'Spaghetti biologici',NULL,0.55,8,1),(45,'Insalata di tonno',NULL,0.99,8,1),(46,'Olio extra vergine di oliva',NULL,2.79,8,1),(47,'Bruschette',NULL,0.75,8,1),(48,'Lavazza Suerte Caffe\'','',4.89,8,1);
+INSERT INTO `product` VALUES (1,'Confettura di albicocche 200g',NULL,2.5,2,1),(2,'Bacon Cheeseburger',NULL,10,1,1),(3,'Chicken nuggets',NULL,5,1,1),(4,'Onion rings',NULL,5,1,1),(5,'Nachos Chips Cheese',NULL,4,1,1),(6,'New York Dog',NULL,8,1,1),(7,'Vegan Fajitas',NULL,7,1,1),(8,'Acqua 0.5L',NULL,0.33,2,1),(9,'Biscotti 100g',NULL,1,2,1),(10,'Latte 1L',NULL,1,2,1),(11,'Baguette',NULL,0.7,2,1),(12,'Carne macinata di tacchino 300g',NULL,2.5,2,1),(13,'Involtini di primavera',NULL,0.8,3,1),(14,'Pollo alle mandorle',NULL,4,3,1),(15,'Riso alla cantonese',NULL,2,3,1),(16,'Wanton fritti',NULL,1,3,1),(17,'Granchio',NULL,5,3,1),(18,'Pollo al curry',NULL,3.5,3,1),(19,'Cacio e pepe',NULL,11,4,1),(20,'Parmigiana di Melanzane',NULL,6,4,1),(21,'Burg di pollo',NULL,10.5,4,1),(22,'Contadino',NULL,12,4,1),(23,'Vagabondo',NULL,11.5,4,1),(24,'Vegetariano',NULL,9.5,4,1),(25,'Piadina cotto e fontina',NULL,4,5,1),(26,'Piadina crudo squacquerone e rucola',NULL,5,5,1),(27,'Crescione erbe grigliate',NULL,4,5,1),(28,'Crescione erbe e salsiccia',NULL,3.5,5,1),(29,'Crescione zucca e patate',NULL,3,5,1),(30,'Alici gratinate',NULL,11,6,1),(31,'Il nostro fritto',NULL,19,6,1),(32,'Gnocchi di zucca',NULL,13,6,1),(33,'Strozzapreti',NULL,16,6,1),(34,'Seppia scottata',NULL,13,6,1),(35,'Serra croccante',NULL,13,6,1),(36,'Tataki di ricciola',NULL,14,6,1),(37,'Antipasto dello Chef secondo stagione',NULL,7,7,1),(38,'Antipasti del giorno senza glutine',NULL,7,7,1),(39,'Passatelli asciutti di farro con gambuccio di',NULL,9,7,1),(40,'Mezze lune al baccal?í e patate saltate con g',NULL,12,7,1),(41,'Sacher vegan con farro e panna fresca vegetal',NULL,5,7,1),(42,'Mooncake',NULL,1.89,8,1),(43,'Prosciutto crudo',NULL,1.49,8,1),(44,'Spaghetti biologici',NULL,0.55,8,1),(45,'Insalata di tonno',NULL,0.99,8,1),(46,'Olio extra vergine di oliva',NULL,2.79,8,1),(47,'Bruschette',NULL,0.75,8,1),(48,'Lavazza Suerte Caffe\'','',4.89,8,1),(49,'PROVA','',123,1,1),(50,'PROVA2','',345,1,1),(51,'234','',3,1,1);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -343,7 +343,7 @@ CREATE TABLE `product_ingredient` (
 
 LOCK TABLES `product_ingredient` WRITE;
 /*!40000 ALTER TABLE `product_ingredient` DISABLE KEYS */;
-INSERT INTO `product_ingredient` VALUES (2,49),(2,109),(2,124),(2,136),(2,137),(2,138),(3,139),(3,140),(4,109),(4,141),(5,30),(5,42),(5,143),(6,49),(6,108),(6,111),(6,135),(7,30),(7,80),(7,96),(7,109),(7,111),(7,138),(7,144),(7,145),(7,146),(7,147),(7,148);
+INSERT INTO `product_ingredient` VALUES (2,49),(2,109),(2,124),(2,136),(2,137),(2,138),(3,139),(3,140),(4,109),(4,141),(5,30),(5,42),(5,143),(6,49),(6,108),(6,111),(6,135),(7,30),(7,80),(7,96),(7,109),(7,111),(7,138),(7,144),(7,145),(7,146),(7,147),(7,148),(49,74),(49,116),(50,135),(50,141),(51,46);
 /*!40000 ALTER TABLE `product_ingredient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -373,7 +373,7 @@ CREATE TABLE `product_order` (
 
 LOCK TABLES `product_order` WRITE;
 /*!40000 ALTER TABLE `product_order` DISABLE KEYS */;
-INSERT INTO `product_order` VALUES (2,10,'',1,10),(2,11,'',1,10),(2,12,'',1,10),(2,13,'',1,10),(2,14,'',1,10),(2,15,'',1,10),(2,34,'no pomodoro',1,10),(2,35,'no pomodoro',1,10),(2,41,'',1,10),(6,38,'',1,8),(6,39,'',1,8),(42,5,'23141234',5,1.89),(42,16,'',1,1.89),(42,17,'',1,1.89),(42,18,'',1,1.89),(42,19,'',1,1.89),(42,20,'',1,1.89),(42,23,'testtest',11,1.89),(42,24,'',1,1.89),(42,25,'',1,1.89),(42,26,'',1,1.89),(42,27,'',1,1.89),(42,28,'',1,1.89),(42,32,'test notes',1,1.89),(42,33,'AAAAAA',1,1.89),(42,36,'1234',1,1.89),(42,37,'1234',1,1.89),(42,40,'',1,1.89),(42,42,'',1,1.89),(42,54,'TEST PRODUCT PRICE',1,1.89),(43,5,'CRUDO',2,1.49),(43,21,'',1,1.49),(43,22,'',1,1.49),(43,30,'',1,1.49),(43,31,'',1,1.49),(43,32,'',1,1.49),(43,43,'',1,1.49),(43,55,'Crudo',1,1.49),(43,56,'Qqqqq',1,1.49),(44,6,'SPAGHETTIIIIII',2,0.55),(44,43,'',1,0.55),(44,44,'',1,0.55),(45,22,'',1,0.99),(45,29,'',1,0.99),(45,30,'',1,0.99),(45,31,'',1,0.99),(46,9,'',1,2.79),(47,8,'wow',3,0.75),(47,30,'',1,0.75),(47,31,'',1,0.75),(48,9,'caffe',2,4.89),(48,44,'',1,4.89);
+INSERT INTO `product_order` VALUES (2,10,'',1,10),(2,11,'',1,10),(2,12,'',1,10),(2,13,'',1,10),(2,14,'',1,10),(2,15,'',1,10),(2,34,'no pomodoro',1,10),(2,35,'no pomodoro',1,10),(2,41,'',1,10),(2,58,'',1,10),(4,58,'',1,5),(6,38,'',1,8),(6,39,'',1,8),(42,5,'23141234',5,1.89),(42,16,'',1,1.89),(42,17,'',1,1.89),(42,18,'',1,1.89),(42,19,'',1,1.89),(42,20,'',1,1.89),(42,23,'testtest',11,1.89),(42,24,'',1,1.89),(42,25,'',1,1.89),(42,26,'',1,1.89),(42,27,'',1,1.89),(42,28,'',1,1.89),(42,32,'test notes',1,1.89),(42,33,'AAAAAA',1,1.89),(42,36,'1234',1,1.89),(42,37,'1234',1,1.89),(42,40,'',1,1.89),(42,42,'',1,1.89),(42,54,'TEST PRODUCT PRICE',1,1.89),(43,5,'CRUDO',2,1.49),(43,21,'',1,1.49),(43,22,'',1,1.49),(43,30,'',1,1.49),(43,31,'',1,1.49),(43,32,'',1,1.49),(43,43,'',1,1.49),(43,55,'Crudo',1,1.49),(43,56,'Qqqqq',1,1.49),(44,6,'SPAGHETTIIIIII',2,0.55),(44,43,'',1,0.55),(44,44,'',1,0.55),(45,22,'',1,0.99),(45,29,'',1,0.99),(45,30,'',1,0.99),(45,31,'',1,0.99),(46,9,'',1,2.79),(47,8,'wow',3,0.75),(47,30,'',1,0.75),(47,31,'',1,0.75),(48,9,'caffe',2,4.89),(48,44,'',1,4.89),(49,57,'',1,123);
 /*!40000 ALTER TABLE `product_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -499,6 +499,728 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
+-- Dumping routines for database 'uni_web_prod'
+--
+/*!50003 DROP PROCEDURE IF EXISTS `address_add` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `address_add`(IN p_address VARCHAR (90), IN p_info VARCHAR (90), IN p_clientId INT(11), OUT insertedAddressId INT(11))
+BEGIN
+    INSERT INTO address (address.address_name, address.address_info, address.client_id) VALUES (p_address, p_info, p_clientId);
+    SELECT LAST_INSERT_ID() AS 'insertedAddressId';
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `address_remove` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `address_remove`(IN p_id INT(11))
+BEGIN
+    DELETE FROM address WHERE address.address_id = p_id;
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `allergen_add` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `allergen_add`(IN p_allergen VARCHAR (45))
+BEGIN
+    INSERT INTO allergen (allergen.allergen_name) VALUES (p_allergen);
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `allergen_remove` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `allergen_remove`(IN p_id INT(11))
+BEGIN
+    DELETE FROM allergen WHERE allergen.allergen_id = p_id;
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `category_add` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `category_add`(IN p_name VARCHAR (45))
+BEGIN
+    INSERT INTO category (category.category_name) VALUES (p_name);
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `category_remove` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `category_remove`(IN p_id INT(11))
+BEGIN
+    DELETE FROM category WHERE category.category_id = p_id;
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `client_add` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_add`(IN p_email VARCHAR (45),IN p_password VARCHAR (255),IN p_name VARCHAR (45),IN p_surname VARCHAR (45))
+BEGIN
+    INSERT INTO client (client.client_email,client.client_password,client.client_name,client.client_surname) VALUES (p_email,p_password,p_name,p_surname);
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `client_allergen_add` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_allergen_add`(IN p_clientId INT (11),IN p_allergenId INT (11))
+BEGIN
+    INSERT INTO client_allergen (client_allergen.client_id,client_allergen.allergen_id) VALUES (p_clientId,p_allergenId);
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `client_allergen_remove` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_allergen_remove`(IN p_clientId INT(11),IN p_allergenId INT(11))
+BEGIN
+    DELETE FROM client_allergen WHERE client_allergen.client_id = p_clientId AND client_allergen.allergen_id = p_allergenId;
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `client_order_add` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_order_add`(IN p_clientId INT (11),IN p_orderId INT (11))
+BEGIN
+    INSERT INTO client_order (client_order.client_id,client_order.order_id) VALUES (p_clientId,p_orderId);
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `client_order_remove` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_order_remove`(IN p_clientId INT(11),IN p_orderId INT(11))
+BEGIN
+    DELETE FROM client_order WHERE client_order.client_id = p_clientId AND client_order.order_id = p_orderId;
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `client_remove` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_remove`(IN p_id INT(11))
+BEGIN
+    DELETE FROM client WHERE client.client_id = p_id;
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `ingredient_add` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ingredient_add`(IN p_name VARCHAR (45),IN p_allergenId INT (11))
+BEGIN
+    INSERT INTO ingredient (ingredient.ingredient_name,ingredient.allergen_id) VALUES (p_name,p_allergenId);
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `ingredient_remove` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ingredient_remove`(IN p_id INT(11))
+BEGIN
+    DELETE FROM ingredient WHERE ingredient.ingredient_id = p_id;
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `order_add` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `order_add`(IN p_address VARCHAR (90))
+BEGIN
+    INSERT INTO `order` (order.order_address) VALUES (p_address);
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `order_remove` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `order_remove`(IN p_id INT(11))
+BEGIN
+    DELETE FROM `order` WHERE order.order_id = p_id;
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `order_status_add` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `order_status_add`(IN p_orderId INT(11),IN p_statusId INT(11))
+BEGIN
+    INSERT INTO order_status (order_status.order_id,order_status.status_id) VALUES (p_orderId,p_statusId);
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `order_status_remove` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `order_status_remove`(IN p_orderId INT (11),IN p_statusId INT (11))
+BEGIN
+    DELETE FROM order_status WHERE order_status.order_id = p_orderId AND order_status.status_id = p_statusId;
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `product_add` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `product_add`(IN p_name VARCHAR(45), IN p_description VARCHAR(200), IN p_price FLOAT, IN p_providerId INT(11), OUT insertedProductId INT(11))
+BEGIN
+    INSERT INTO product (product.product_name,product.product_description,product.product_price,product.provider_id) VALUES (p_name,p_description,p_price,p_providerId);
+    SELECT LAST_INSERT_ID() AS 'insertedProductId';
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `product_disable` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `product_disable`(IN p_id INT(11))
+BEGIN
+    UPDATE product
+    SET product.product_active = 0
+    WHERE product.product_id = p_id;
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `product_ingredient_add` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `product_ingredient_add`(IN p_productId INT(11), p_ingredientId INT(11))
+BEGIN
+    INSERT INTO product_ingredient (product_ingredient.product_id,product_ingredient.ingredient_id) VALUES (p_productId,p_ingredientId);
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `product_ingredient_remove` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `product_ingredient_remove`(IN p_productId INT(11), p_ingredientId INT(11))
+BEGIN
+    DELETE FROM product_ingredient WHERE product_ingredient.product_id = p_productId AND product_ingredient.ingredient_id= p_ingredientId;
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `product_modify` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `product_modify`(IN p_id INT (11), IN p_name VARCHAR(45), IN p_description VARCHAR(200), IN p_price FLOAT)
+BEGIN
+    UPDATE product
+    SET product.product_name=p_name,
+    product.product_description=p_description,
+    product.product_price=p_price
+    WHERE product.product_id=p_id;
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `product_order_add` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `product_order_add`(IN p_productId INT(11), p_orderId INT(11), IN p_notes VARCHAR(180))
+BEGIN
+    INSERT INTO product_order (product_order.product_id,product_order.order_id,product_order.notes) VALUES (p_productId,p_orderId,p_notes);
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `product_order_remove` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `product_order_remove`(IN p_productId INT(11),p_orderId INT(11))
+BEGIN
+    DELETE FROM product_order WHERE product_order.product_id = p_productId AND product_order.order_id= p_orderId;
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `product_remove` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `product_remove`(IN p_id INT(11))
+BEGIN
+    DELETE FROM product WHERE product.product_id = p_id;
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `provider_add` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_add`(IN p_name VARCHAR (90),IN p_address VARCHAR (90),IN p_email VARCHAR (45),IN p_password VARCHAR (255),p_typeId INT(11))
+BEGIN
+    INSERT INTO provider (provider.provider_name,provider.provider_address,provider.provider_email,provider.provider_password,provider.type_id) VALUES (p_name,p_address,p_email,p_password,p_typeId);
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `provider_category_add` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_category_add`(IN p_providerId INT(11), p_categoryId INT(11))
+BEGIN
+    INSERT INTO provider_category (provider_category.provider_id,provider_category.category_id) VALUES (p_providerId,p_categoryId);
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `provider_category_remove` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_category_remove`(IN p_providerId INT(11),p_categoryId INT(11))
+BEGIN
+    DELETE FROM provider_category WHERE provider_category.provider_id = p_providerId AND provider_category.category_id= p_categoryId;
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `provider_remove` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_remove`(IN p_id INT(11))
+BEGIN
+    DELETE FROM provider WHERE provider.provider_id = p_id;
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `status_add` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `status_add`(IN p_name VARCHAR (45))
+BEGIN
+    INSERT INTO status (status.status_name) VALUES (p_name);
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `status_remove` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `status_remove`(IN p_id INT(11))
+BEGIN
+    DELETE FROM status WHERE status.status_id = p_id;
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `type_add` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `type_add`(IN p_name VARCHAR (45))
+BEGIN
+    INSERT INTO type (type.type_name) VALUES (p_name);
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+/*!50003 DROP PROCEDURE IF EXISTS `type_remove` */;
+ALTER DATABASE `uni_web_prod` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `type_remove`(IN p_id INT(11))
+BEGIN
+    DELETE FROM type WHERE type.type_id = p_id;
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `uni_web_prod` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+
+--
 -- Final view structure for view `ingredient_by_product`
 --
 
@@ -564,4 +1286,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-28 23:57:13
+-- Dump completed on 2019-06-29 11:32:25
