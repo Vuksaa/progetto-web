@@ -45,11 +45,11 @@
         <div class="border p-3">
           <div class="form-group">
             <label for="openingHours" class="sr-only">Apertura (es. 08:00)</label>
-            <input type="text" class="form-control" placeholder="Apertura (es. 08:00)" id="openingHours" value="<?php echo $_SESSION['opening_hours']; ?>"/>
+            <input type="time" class="form-control" placeholder="Apertura (es. 08:00)" id="openingHours" value="<?php echo $_SESSION['opening_hours']; ?>" />
           </div>
           <div class="form-group">
             <label for="closingHours" class="sr-only">Chiusura (es. 18:00)</label>
-            <input type="text" class="form-control" placeholder="Chiusura (es. 18:00)" id="closingHours" value="<?php echo $_SESSION['closing_hours']; ?>"/>
+            <input type="time" class="form-control" placeholder="Chiusura (es. 18:00)" id="closingHours" value="<?php echo $_SESSION['closing_hours']; ?>" />
           </div>
           <div class="alert alert-success col d-none" role="alert">
             Aggiornamento salvato
@@ -122,7 +122,7 @@ $(function() {
   parent.addClass("active");
 
   $("#btnSaveHours").on('click', function() {
-    if ($("#openingHours").val() == '' || $("#closingHours").val() == '') {
+    if (!$("#openingHours")[0].checkValidity() || !$("#closingHours")[0].checkValidity()) {
       $(".alert-danger").hide()
       $(".alert-danger").removeClass("d-none")
       $(".alert-danger").fadeIn()
