@@ -253,12 +253,14 @@ include("fragments/connection-begin.php");
 $(function() {
 
   $("#collapseConfirmation").on('show.bs.collapse', function() {
-    $("#totalPrice").val(
-      $("#toOrderProducts .productCard").length == 1 ? parseFloat($("#toOrderProducts .productCard").find(".productPrice").data("price")) * parseInt($("#toOrderProducts .productCard").find(".productQuantity").val())
-        : $("#toOrderProducts .productCard").toArray().reduce(function(p1, p2) {
-        return parseFloat($(p1).find(".productPrice").data("price")) * parseInt($(p1).find(".productQuantity").val()) +
-          parseFloat($(p2).find(".productPrice").data("price")) * parseInt($(p2).find(".productQuantity").val());
-        }))
+    if($("#toOrderProducts .productCard").length >0){
+      $("#totalPrice").val(
+        $("#toOrderProducts .productCard").length == 1 ? parseFloat($("#toOrderProducts .productCard").find(".productPrice").data("price")) * parseInt($("#toOrderProducts .productCard").find(".productQuantity").val())
+          : $("#toOrderProducts .productCard").toArray().reduce(function(p1, p2) {
+          return parseFloat($(p1).find(".productPrice").data("price")) * parseInt($(p1).find(".productQuantity").val()) +
+            parseFloat($(p2).find(".productPrice").data("price")) * parseInt($(p2).find(".productQuantity").val());
+          }))
+      }
   })
   $('#modalOrderPlaced').on('hide.bs.modal', function (e) {
     window.location.href = "home_clients.php"
