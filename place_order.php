@@ -188,18 +188,28 @@ include("fragments/connection-begin.php");
                 ?>
               </select>
             </div>
-            <div class="form-group pt-2 col" id="formEnterAddress">
-              <div class="form-group row">
+            <div class="form-group pt-2 col border" id="formEnterAddress">
+              <div class="form-group row pr-2">
                 <label for="enteredAddress" class="col-form-label col-3">Indirizzo</label>
-                <input type="text" class="form-control col col-sm-5" id="enteredAddress" placeholder="Via e nr. civico" required>
+                <input type="text" class="form-control col col-sm-8 col-md-6 col-lg-5 col-xl-4" id="enteredAddress" placeholder="Via e nr. civico" required>
               </div>
-              <div class="custom-control custom-checkbox">
+              <div class="custom-control custom-checkbox pb-2">
                 <input type="checkbox" class="custom-control-input" value="" id="checkSaveAddress">
                 <label class="custom-control-label col" for="checkSaveAddress">Salva indirizzo</label>
               </div>
-              <div class="form-group row pt-2" id="formEnterAddressName">
+              <div class="form-group row pt-2 pr-2" id="formEnterAddressName">
                 <label for="enteredAddressName" class="col-form-label col-3">Nome</label>
-                <input type="text" class="form-control col col-sm-5" id="enteredAddressName" placeholder="Nome">
+                <input type="text" class="form-control col col-sm-8 col-md-6 col-lg-5 col-xl-4" id="enteredAddressName" placeholder="Nome">
+              </div>
+            </div>
+            <hr>
+            <div class="form-group row">
+              <label class="col-form-label col-4" for="totalPrice">Prezzo totale</label>
+              <div class="input-group col">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">€</span>
+                </div>
+                <input type="number" disabled step="0.01" min="0" id="totalPrice" class="form-control col col-sm-6" value="0">
               </div>
             </div>
             <button type="button" id="btnComplete" class="btn btn-primary mt-4 col col-sm-5 col-md-4 col-lg-3">Paga e ordina</button>
@@ -237,6 +247,13 @@ include("fragments/connection-begin.php");
 
 <script type="text/javascript">
 $(function() {
+
+  $("#collapseConfirmation").on('show.bs.collapse', function() {
+    $("#totalPrice").val($("#toOrderProducts .productCard").toArray().reduce(function(p1, p2) {
+      return parseFloat($(p1).find(".productPrice").data("price")) * parseInt($(p1).find(".productQuantity").val()) +
+        parseFloat($(p2).find(".productPrice").data("price")) * parseInt($(p2).find(".productQuantity").val());
+    }))
+  })
   $('#modalOrderPlaced').on('hide.bs.modal', function (e) {
     window.location.href = "home_clients.php"
   })
