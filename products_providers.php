@@ -120,7 +120,7 @@
         <div class="modal-body">
           <div class="form-inline">
             <label class="col-4 col-sm-3 col-form-label sr-only" for="newProductName">Nome</label>
-            <input type="text" class="form-control col" id="newProductName" placeholder="Nome">
+            <input type="text" class="form-control col" id="newProductName" placeholder="Nome" required>
           </div>
           <div class="form-inline pt-2">
             <label class="col-4 col-sm-3 col-form-label sr-only" for="newProductPrice">Prezzo</label>
@@ -128,7 +128,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">€</span>
               </div>
-              <input type="number" step="0.01" min="0" class="form-control" id="newProductPrice" placeholder="Prezzo">
+              <input type="number" step="0.01" min="0" class="form-control" id="newProductPrice" placeholder="Prezzo" required>
             </div>
           </div>
           <hr>
@@ -187,6 +187,9 @@
       var ingredients = $.map($(".addedIngredient"), function(ingredient, index) {
         return $(ingredient).data("ingredient-id")
       })
+      if(price<0||!name){
+        return
+      }
       $.post("ajax/add_product.php", {
         name: name,
         price: price,
@@ -250,6 +253,9 @@
     var price = $(this).parent().find(".existingProductPrice").val()
     var id = $(this).parent().find(".existingProductPrice").data("product-id")
     var button = $(this)
+    if(price<0) {
+      return
+    }
     $.post("ajax/update_product_price.php", {
       price: price,
       id: id
