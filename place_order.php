@@ -103,7 +103,7 @@ include("fragments/connection-begin.php");
                   </form>
                   <form class="form-group form-inline">
                     <label class="col-form-label col-5 col-sm-3 col-md-2 justify-content-start" for="product<?php echo $product['product_id']; ?>Quantity">Quantità</label>
-                    <input class="form-control col-2 col-md-1 productQuantity" type="number" id="product<?php echo $product['product_id']; ?>Quantity" placeholder="Quantità" value="1" required>
+                    <input class="form-control col-2 col-md-1 productQuantity" type="number" id="product<?php echo $product['product_id']; ?>Quantity" placeholder="Quantità" value="1" min="1" required>
                   </form>
                   <form class="form-group form-inline">
                     <label class="col-form-label col-5 col-sm-3 col-md-2 justify-content-start" for="product<?php echo $product['product_id']; ?>Notes">Note</label>
@@ -362,15 +362,25 @@ $(function() {
       order["enteredAddressName"] = $("#enteredAddressName").val()
     }
     // create the array for the products
+    var valid=true;
     order.products = []
     $.each($("#toOrderProducts .productCard"), function() {
       product = {}
       product["id"] = $(this).data("product-id")
       product["quantity"] = $(this).find(".productQuantity").val()
+      if(product["quantity"]<1){
+        valid=false;
+      }
       product["notes"] = $(this).find(".productNotes").val()
       product["price"] = $(this).find(".productPrice").data('price')
       order["products"].push(product)
     })
+    if(valid==false){
+      $(".alert.alert-danger").text("È necessario acquistare quantità maggiori di 0 per ogni prodotto.")
+      $(".alert.alert-danger").fadeOut()
+      $(".alert.alert-danger").fadeIn()
+      return;
+    }
     $.post("ajax/order_placed.php", {
       data: JSON.stringify(order)
     }).done(function(response) {
