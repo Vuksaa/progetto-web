@@ -89,15 +89,12 @@
               }
             ?>
             <div class="row">
-              <label class="col-4 col-sm-3 col-lg-2 col-form-label border-right" for="product<? echo $id; ?>Price">Prezzo</label>
+              <label class="col-4 col-sm-3 col-lg-2 col-form-label border-right" for="product<?php echo $id; ?>Price">Prezzo</label>
               <div class="input-group col">
                 <div class="input-group-prepend">
                   <span class="input-group-text">€</span>
                 </div>
-                <input type="text" class="form-control col col-sm-6 col-md-5 col-lg-4" id="product<? echo $id; ?>Price" value="<?php echo $price; ?>">
-                <div class="input-group-append d-none">
-                  <button type="button" class="btn btn-secondary align-middle mb-0 mt-0">Save</button>
-                </div>
+                <input type="number" step="0.01" min="0" class="form-control col col-sm-6 col-md-5 col-lg-4 existingProductPrice" id="product<?php echo $id; ?>Price" value="<?php echo $price; ?>" data-product-id="<?php echo $id; ?>">
               </div>
             </div>
           </div>
@@ -131,7 +128,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">€</span>
               </div>
-              <input type="text" class="form-control" id="newProductPrice" placeholder="Prezzo">
+              <input type="number" step="0.01" min="0" class="form-control" id="newProductPrice" placeholder="Prezzo">
             </div>
           </div>
           <hr>
@@ -170,6 +167,19 @@
 
 <script>
   $(function() {
+    $(".existingProductPrice").on('keyup', function(e) {
+      if (!$(this).parent().find(".btnUpdatePriceGroup").length) {
+        var saveButton = $(`
+        <div class="input-group-append btnUpdatePriceGroup">
+          <button type="button" class="btn btn-secondary align-middle mb-0 mt-0" data-product-id="` + $(this).data("product-id") + `">Aggiorna</button>
+        </div>`)
+        saveButton.hide()
+        $(this).parent().append(saveButton)
+        saveButton.fadeIn(200)
+        saveButton.on('click', updateProductPrice)
+      }
+    })
+
     $("#btnCloseModalAddProduct").on('click', cleanModalAddProduct)
     $("#btnAddProduct").on('click', function(e) {
       var name = $("#newProductName").val()
@@ -233,6 +243,20 @@
     $("#newProductPrice").val("")
     $(".addedIngredient").remove()
     $("#addIngredient").prop('disabled', false)
+  }
+
+  function updateProductPrice() {
+    var price = $(this).parent().find(".existingProductPrice").val()
+    var id = $(this).parent().find(".existingProductPrice").data("product-id")
+    var button = $(this)
+    $.post("ajax/update_product_price.php", {
+      price: price,
+      id: id
+    }).done(function(response) {
+      if (response.indexOf("SUCCESS") != -1) {
+        button.fadeOut(200, function() { button.remove() })
+      }
+    })
   }
 </script>
 <?php include("fragments/connection-end.php"); ?>
