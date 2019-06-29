@@ -175,7 +175,7 @@ function btnAcceptClick(e) {
       orderCard.slideUp(400, function() {
         orderCard.detach().appendTo("#ordersAccepted")
         buttonBar.children().remove()
-        buttonBar.append('<button class="btn btn-primary inline" onclick="btnCompleteClick(this)">Complete</button>')
+        buttonBar.append('<button class="btn btn-primary inline" onclick="btnCompleteClick(this)">Completa</button>')
         orderCard.show()
       })
     } else {
@@ -202,7 +202,7 @@ function btnRejectConfirmClick(e) {
       orderCard.slideUp(400, function() {
         orderCard.detach().appendTo("#ordersCompleted")
         buttonBar.children().remove()
-        buttonBar.append('<button class="btn btn-primary inline" onclick="btnCompleteClick(this)">Complete</button>')
+        buttonBar.append('<button class="btn btn-primary inline" onclick="btnCompleteClick(this)">Completa</button>')
         orderCard.show()
         var cardTitle = orderCard.find(".card-title h5")
         cardTitle.html("<strike>" + cardTitle.text() + "</strike>")

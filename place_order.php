@@ -341,7 +341,7 @@ $(function() {
   })
 
   $("#btnComplete").on('click', function(e) {
-    if ($("#listedProducts .productCard").length == 0) {
+    if ($("#toOrderProducts .productCard").length == 0) {
       $(".alert.alert-danger").text("È necessario selezionare almeno un prodotto.")
       $(".alert.alert-danger").fadeOut()
       $(".alert.alert-danger").fadeIn()

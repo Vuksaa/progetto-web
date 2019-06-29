@@ -311,7 +311,6 @@
       $(".provider").each(function(i, provider) {
         if (filterByHours) {
           $(".provider[data-open=" + ($(".checkHours:checked").data("open") ? 0 : 1) + "]").hide()
-          return
         }
         if (filterByTypes) {
           for (type of $(".checkType:checked").toArray()) {
