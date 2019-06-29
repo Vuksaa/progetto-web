@@ -5,3 +5,7 @@
 .searchbar {
   width: 300px;
 }
+
+.form-inline .col-form-label {
+  text-align: left;
+}

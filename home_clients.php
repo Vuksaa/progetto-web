@@ -181,7 +181,7 @@
 
 <!-- Modal for filters -->
 <div class="modal fade" id="modalFilters" tabindex="-1" role="dialog" aria-labelledby="modalLabelFilters" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title ml-2 mr-2" id="modalLabelFilters">Filtri</h4>
