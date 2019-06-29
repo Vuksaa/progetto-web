@@ -47,7 +47,7 @@ include("fragments/connection-begin.php");
       <button class="btn btn-secondary btn-lg btn-block active mb-1" id="headingMenu" data-toggle="collapse" data-target="#collapseMenu" aria-expanded="true" aria-controls="collapseMenu">
         Men&ugrave;
       </button>
-      <div id="collapseMenu" class="collapse mb-4" aria-labelledby="headingMenu" data-parent="#mainAccordion">
+      <div id="collapseMenu" class="collapse show mb-4" aria-labelledby="headingMenu" data-parent="#mainAccordion">
         <div class="searchbar mt-3 mb-2">
           <input class="form-control" id="searchProducts" type="search" placeholder="Search" aria-label="Search">
         </div>
@@ -112,15 +112,15 @@ include("fragments/connection-begin.php");
                         <label class="col-form-label col-5 col-sm-3 col-md-2 justify-content-start" for="product'.$product['product_id'].'Allergens">Allergeni</label>
                         <label class="col-form-label" id="product'.$product['product_id'].'Allergens">';
                         if (in_array($allergensInProductIds[0], $allergenIds)) {
-                          echo '<span style="color: red;"><span class="sr-only">Dangerous allergen </span>'.$allergensInProductNames[0].'</span>';
+                          echo '<span style="color: red;">'.$allergensInProductNames[0].'<span class="sr-only">Allergene segnalato</span></span>';
                         } else {
                           echo '<span>'.$allergensInProductNames[0].'</span>';
                         }
                         for ($i = 1; $i < sizeof($allergensInProductIds); $i++) {
                           if (in_array($allergensInProductIds[$i], $allergenIds)) {
-                            echo '<span style="color: red;"><span class="sr-only">Allergene segnalato </span>'.$allergensInProductNames[$i].'</span>';
+                            echo '<span>, <span style="color: red;">'.$allergensInProductNames[$i].'</span><span class="sr-only"> Allergene segnalato</span></span>';
                           } else {
-                            echo '<span>'.$allergensInProductNames[$i].'</span>';
+                            echo '<span>, '.$allergensInProductNames[$i].'</span>';
                           }
                         }
                       echo '
@@ -156,7 +156,7 @@ include("fragments/connection-begin.php");
         <button class="btn btn-secondary btn-lg btn-block active mb-1" id="headingConfirmation" data-toggle="collapse" data-target="#collapseConfirmation" aria-expanded="false" aria-controls="collapseConfirmation">
           Indirizzo e conferma
         </button>
-        <div id="collapseConfirmation" class="collapse show" aria-labelledby="headingConfirmation" data-parent="#mainAccordion">
+        <div id="collapseConfirmation" class="collapse" aria-labelledby="headingConfirmation" data-parent="#mainAccordion">
           <form class="pt-2">
             <div class="form-group">
               <div class="custom-control custom-radio">

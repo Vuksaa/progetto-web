@@ -11,6 +11,12 @@
 
 <head>
   <?php include("fragments/head-contents.php"); ?>
+  <!-- <link rel="stylesheet" type="text/css" href="styles/base.css"> -->
+  <style>
+    .form-inline .col-form-label {
+      text-align: left;
+    }
+  </style>
 </head>
 
 <body>
@@ -43,7 +49,7 @@
    ?>
   <div class="container mt-4 mb-4">
     <h4 class="display-4 mb-4 text-center text-sm-left">Prodotti</h4>
-    <button type="button" class="btn btn-primary mb-3 col col-sm-auto">Nuovo prodotto</button>
+    <button type="button" class="btn btn-primary mb-3 col col-sm-auto" data-toggle="modal" data-target="#modalAddProduct">Nuovo prodotto</button>
     <?php
       while ($products->fetch()) {
     ?>
@@ -83,8 +89,16 @@
               }
             ?>
             <div class="row">
-              <label class="col-4 col-sm-3 col-lg-2 col-form-label border-right">Prezzo</label>
-              <label class="col col-form-label"><?php echo $price; ?> €</label>
+              <label class="col-4 col-sm-3 col-lg-2 col-form-label border-right" for="product<? echo $id; ?>Price">Prezzo</label>
+              <div class="input-group col">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">€</span>
+                </div>
+                <input type="text" class="form-control col col-sm-6 col-md-5 col-lg-4" id="product<? echo $id; ?>Price" value="<?php echo $price; ?>">
+                <div class="input-group-append d-none">
+                  <button type="button" class="btn btn-secondary align-middle mb-0 mt-0">Save</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -96,11 +110,99 @@
     $ingredients->close();
     ?>
   </div>
+
+  <div class="modal fade" id="modalAddProduct" tabindex="-1" role="dialog" aria-labelledby="modalLabelAddProduct" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabelAddProduct">Aggiungi prodotto</h5>
+          <button type="button" class="close" id="btnCloseModalAddProduct" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-inline">
+            <label class="col-4 col-sm-3 col-form-label sr-only" for="newProductName">Nome</label>
+            <input type="text" class="form-control col" id="newProductName" placeholder="Nome">
+          </div>
+          <div class="form-inline pt-2">
+            <label class="col-4 col-sm-3 col-form-label sr-only" for="newProductPrice">Prezzo</label>
+            <div class="input-group col pl-0 pr-0">
+              <div class="input-group-prepend">
+                <span class="input-group-text">€</span>
+              </div>
+              <input type="text" class="form-control" id="newProductPrice" placeholder="Prezzo">
+            </div>
+          </div>
+          <hr>
+          <div class="form-inline">
+            <label class="col-4 col-sm-3 col-form-label sr-only" for="selectIngredientId">Seleziona ingrediente</label>
+            <div class="input-group col pl-0 pr-0">
+              <select class="form-control col" name="selectIngredientId" id="selectedIngredient">
+                <?php
+                  $query = $conn->query("SELECT * FROM ingredient ORDER BY ingredient_name");
+                  while ($row = mysqli_fetch_array($query)){
+                    $id = $row['ingredient_id'];
+                    $name = $row['ingredient_name'];
+                    echo "<option data-ingredient-id='".$id."' data-ingredient-name='".$name."'>".$name."</option>" ;
+                  }
+                  $query->close();
+                ?>
+              </select>
+              <div class="input-group-append">
+                <button type="button" class="btn btn-secondary" id="addIngredient"><i class="far fa-plus-square"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="pt-2" id="newProductIngredients">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" id="btnAddProduct" class="btn btn-primary ml-2">
+            Aggiungi
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
   <?php include("fragments/footer.php"); ?>
 </body>
 
 <script>
   $(function() {
+    $("#btnCloseModalAddProduct").on('click', cleanModalAddProduct)
+    $("#btnAddProduct").on('click', function(e) {
+      var name = $("#newProductName").val()
+      var price = $("#newProductPrice").val()
+      var ingredients = $.map($(".addedIngredient"), function(ingredient, index) {
+        return $(ingredient).data("ingredient-id")
+      })
+      $.post("ajax/add_product.php", {
+        name: name,
+        price: price,
+        ingredients: ingredients
+      }).done(function(response) {
+        console.log(response)
+        $("#modalAddProduct").modal('hide')
+        cleanModalAddProduct()
+      })
+    })
+    $("#selectedIngredient").on('change', function(e) {
+      $("#addIngredient").prop(
+        'disabled',
+        $(".addedIngredient[data-ingredientid=" + $("#selectedIngredient option:selected")
+          .data("ingredient-id") + "]")
+          .length
+      )
+    })
+    $("#addIngredient").on('click', function(e) {
+      var id = $("#selectedIngredient option:selected").data("ingredient-id")
+      var name = $("#selectedIngredient option:selected").data("ingredient-name")
+      var ingredient = $('<a href="#" class="addedIngredient badge badge-secondary mr-2" data-ingredient-id="' + id + '">' + name + '</a>')
+      ingredient.on('click', removeIngredient)
+      $("#addIngredient").prop('disabled', true)
+      $("#newProductIngredients").append(ingredient)
+    })
     $('body').on('click','.btnConfirmDeletion', function(e) {
       var productId = $(e.currentTarget.outerHTML).find('.productIdContainer').text()
       $.post("ajax/disable_product.php", {
@@ -118,6 +220,20 @@
     element.append( "<span class='sr-only'>(current)</span>" );
     parent.addClass("active");
   })
+
+  function removeIngredient() {
+    if ($("#selectedIngredient option:selected").data("ingredient-id") == $(this).data("ingredient-id")) {
+      $("#addIngredient").prop('disabled', false)
+    }
+     $(this).remove()
+  }
+
+  function cleanModalAddProduct() {
+    $("#newProductName").val("")
+    $("#newProductPrice").val("")
+    $(".addedIngredient").remove()
+    $("#addIngredient").prop('disabled', false)
+  }
 </script>
 <?php include("fragments/connection-end.php"); ?>
 </html>
