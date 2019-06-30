@@ -47,8 +47,8 @@
       echo "Prepare failed.";
     }
    ?>
-  <div class="container mt-4 mb-4">
-    <h4 class="display-4 mb-4 text-center text-sm-left">Prodotti</h4>
+  <section class="container mt-4 mb-4">
+    <h1 class="display-4 mb-4 text-center text-sm-left">Prodotti</h1>
     <button type="button" class="btn btn-primary mb-3 col col-sm-auto" data-toggle="modal" data-target="#modalAddProduct">Nuovo prodotto</button>
     <?php
       while ($products->fetch()) {
@@ -58,7 +58,7 @@
         <button type="button" class="close float-right btnDeleteProduct" data-toggle="popover" data-placement="left" data-html="true" data-trigger="focus" data-content="<a href='#' class='btn btn-danger btnConfirmDeletion'><span class='d-none productIdContainer'><?php echo $id;?></span>Elimina</a>" aria-label="Elimina">
           <span aria-hidden="true" style="color: red;">&times;</span>
         </button>
-        <h5 class="card-title"><?php echo $name; ?></h5>
+        <h5 class="card-title"><?php echo $name; ?></h2>
         <div class="card-text">
           <hr>
           <div class="p-2">
@@ -106,7 +106,7 @@
     $products->close();
     $ingredients->close();
     ?>
-  </div>
+  </section>
 
   <div class="modal fade" id="modalAddProduct" tabindex="-1" role="dialog" aria-labelledby="modalLabelAddProduct" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

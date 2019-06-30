@@ -17,26 +17,38 @@
   <?php include("fragments/navbar.php"); ?>
 
   <div class="container mt-4 mb-4">
-    <h4 class="display-4 mb-4 text-center text-sm-left">Lista ordini</h4>
+    <h1 class="display-4 mb-4 text-center text-sm-left">Lista ordini</h1>
     <div class="container accordion mt-4 mb-4" id="mainAccordion">
-      <button class="btn btn-secondary btn-lg btn-block active mb-1" data-toggle="collapse" data-target="#collapseIncomingOrders" aria-expanded="true" aria-controls="collapseIncomingOrders">
-        Ordini in arrivo
-      </button>
-      <div id="collapseIncomingOrders" class="collapse show mb-4" aria-labelledby="headingIncomingOrders" data-parent="#mainAccordion">
-        <div id="ordersIncoming" class="mt-3"></div>
-      </div>
-      <button class="btn btn-secondary btn-lg btn-block mb-1" data-toggle="collapse" data-target="#collapsePreparedOrders" aria-expanded="false" aria-controls="collapsePreparedOrders">
-        Ordini accettati
-      </button>
-      <div id="collapsePreparedOrders" class="collapse mb-4" aria-labelledby="headingPreparedOrders" data-parent="#mainAccordion">
-        <div id="ordersAccepted" class="mt-3"></div>
-      </div>
-      <button class="btn btn-secondary btn-lg btn-block mb-1" data-toggle="collapse" data-target="#collapseCompletedOrders" aria-expanded="false" aria-controls="collapseCompletedOrders">
-        Ordini conclusi
-      </button>
-      <div id="collapseCompletedOrders" class="collapse mb-4" aria-labelledby="headingCompletedOrders" data-parent="#mainAccordion">
-        <div id="ordersCompleted" class="mt-3"></div>
-      </div>
+      <section>
+        <h2 class="mb-0" id="headingIncomingOrders">
+          <button class="btn btn-secondary btn-lg btn-block active mb-1" data-toggle="collapse" data-target="#collapseIncomingOrders" aria-expanded="true" aria-controls="collapseIncomingOrders">
+            Ordini in arrivo
+          </button>
+        </h2>
+        <div id="collapseIncomingOrders" class="collapse show mb-4" aria-labelledby="headingIncomingOrders" data-parent="#mainAccordion">
+          <div id="ordersIncoming" class="mt-3"></div>
+        </div>
+      </section>
+      <section>
+        <h2 class="mb-0" id="headingPreparedOrders">
+          <button class="btn btn-secondary btn-lg btn-block mb-1" data-toggle="collapse" data-target="#collapsePreparedOrders" aria-expanded="false" aria-controls="collapsePreparedOrders">
+            Ordini accettati
+          </button>
+        </h2>
+        <div id="collapsePreparedOrders" class="collapse mb-4" aria-labelledby="headingPreparedOrders" data-parent="#mainAccordion">
+          <div id="ordersAccepted" class="mt-3"></div>
+        </div>
+      </section>
+      <section>
+        <h2 class="mb-0" id="headingCompletedOrders">
+          <button class="btn btn-secondary btn-lg btn-block mb-1" data-toggle="collapse" data-target="#collapseCompletedOrders" aria-expanded="false" aria-controls="collapseCompletedOrders">
+            Ordini conclusi
+          </button>
+        </h2>
+        <div id="collapseCompletedOrders" class="collapse mb-4" aria-labelledby="headingCompletedOrders" data-parent="#mainAccordion">
+          <div id="ordersCompleted" class="mt-3"></div>
+        </div>
+      </section>
     </div>
   </div>
 
@@ -238,11 +250,10 @@ function createOrderCard(o) {
   <div class="card orderCard mb-3" data-orderId="` + o.order_id + `">
     <div class="card-body">
       <div class="card-title">
-        <h7 class="text-muted float-right">` + o.creation_timestamp + `</h7>
+        <p class="text-muted float-right">` + o.creation_timestamp + `</p>
         <h5>` + o.client_name + (o.status_id != 2 ? `` : `<span style="color: red;"> (rifiutato)</span>`) + `</h5>
       </div>
-      <h5 class="card-title"></h5>
-      <h6 class="card-subtitle mb-2 text-muted">` + o.order_address + `</h6>`
+      <p class="card-subtitle mb-2 text-muted">` + o.order_address + `</p>`
   $.each(o.products, function(index, orderedProduct) {
     element += `
     <div class="card-text">

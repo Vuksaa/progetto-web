@@ -16,15 +16,19 @@
 <body>
   <?php include("fragments/navbar.php"); ?>
   <div class="container mt-4 mb-4">
-    <div id="openOrders" class="d-none">
-      <h4 class="display-4 mb-4 text-center text-sm-left">Ordini aperti</h4>
-    </div>
-    <div id="closedOrders" class="d-none">
-      <h4 class="display-4 mb-4 text-center text-sm-left">Ordini chiusi</h4>
-    </div>
-    <button class="btn btn-primary btn-sm col col-sm-2 mt-2" id="showMore">
-      Mostra altri
-    </button>
+    <section>
+      <h1 class="display-4 mb-4 text-center text-sm-left">Ordini aperti</h1>
+      <div id="openOrders" class="d-none">
+      </div>
+    </section>
+    <section>
+      <h1 class="display-4 mb-4 text-center text-sm-left">Ordini chiusi</h1>
+      <div id="closedOrders" class="d-none">
+      </div>
+      <button class="btn btn-primary btn-sm col col-sm-2 mt-2" id="showMore">
+        Mostra altri
+      </button>
+    </section>
   </div>
   <?php include("fragments/footer.php"); ?>
 </body>
@@ -151,11 +155,10 @@ function createOrderCard(o) {
     <div class="card-body">
       <div class="card-title">
         <h6>` + o.status_name + (o.rejection_reason == null || o.rejection_reason == '' ? '' : `. Motivo: ` + o.rejection_reason) + `</h6>
-        <h7 class="text-muted float-right">` + o.creation_timestamp + `</h7>
+        <p class="text-muted float-right">` + o.creation_timestamp + `</p>
         <a class="h5" href="place_order.php?provider=` + o.provider_id + `">` + o.provider_name + `</a>
       </div>
-      <h5 class="card-title"></h5>
-      <h6 class="card-subtitle mb-2 text-muted">` + o.order_address + `</h6>`
+      <p class="card-subtitle mb-2 text-muted">` + o.order_address + `</p>`
   $.each(o.products, function(index, orderedProduct) {
     element += `
     <div class="card-text">

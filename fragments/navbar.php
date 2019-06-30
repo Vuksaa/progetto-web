@@ -1,6 +1,6 @@
 <!-- The navbar fragment also contains functions and HTML elements used for toast notifications -->
 <?php include("fragments/notifications-".$_SESSION['user_type'].".php"); ?>
-<div class="sticky-top">
+<header class="sticky-top">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand align-bottom" <?php echo ($_SESSION['user_type'] === 'client') ? 'href="home_clients.php"' : 'href="home_providers.php"'; ?>>
       <img src="res/logo.png" width="50" height="50" class="d-inline-block logo" alt="Small logo">
@@ -47,7 +47,7 @@
     <div class="pr-3 pt-3" id="notificationArea" style="position: absolute; top: 0; right: 0;">
     </div>
   </div>
-</div>
+</header>
 <script type="text/javascript">
 function createToast(title, subtitle, body, icon) {
   var toast = $(`<div class="toast" role="alert" aria-live="assertive" aria-atomic="false" data-autohide="false" style="min-width: 230px; max-width: 450px">

@@ -11,6 +11,7 @@
 
 <head>
   <?php include("fragments/head-contents.php"); ?>
+  <link rel="stylesheet" type="text/css" href="styles/style.css">
 </head>
 
 <body>
@@ -51,10 +52,10 @@
   <?php include("fragments/navbar.php"); ?>
 
   <div class="container mt-4 mb-4">
-    <h4 class="display-4 mb-4 text-center text-sm-left">Profilo</h4>
+    <h1 class="display-4 mb-4 text-center text-sm-left">Profilo</h1>
     <div class="row justify-content-center">
-      <div class="col-9 col-sm-6 col-md-5 pt-4">
-        <h4 class="pb-2">Allergeni</h4>
+      <section class="col-9 col-sm-6 col-md-5 pt-4">
+        <h2 class="pb-2">Allergeni</h2>
         <ul class="list-group" id="allergens">
           <button type="button" class="list-group-item list-group-item-action bg-primary text-center text-white m-0" data-toggle="modal" data-target="#modalAddAllergen">
             <i class="far fa-plus-square"></i>
@@ -67,9 +68,9 @@
             $allergens->close();
           ?>
         </ul>
-      </div>
-      <div class="col-9 col-sm-6 col-md-5 pt-4">
-        <h4 class="pb-2">Indirizzi</h4>
+      </section>
+      <section class="col-9 col-sm-6 col-md-5 pt-4">
+        <h2 class="pb-2">Indirizzi</h2>
         <ul class="list-group" id="addresses">
           <button type="button" class="list-group-item list-group-item-action bg-primary text-center text-white m-0" id="btnAddressModal" data-toggle="modal" data-target="#modalAddAddress">
             <i class="far fa-plus-square"></i>
@@ -82,7 +83,7 @@
             $addresses->close();
           ?>
         </ul>
-      </div>
+      </section>
     </div>
   </div>
 

@@ -38,10 +38,10 @@
   <?php include("fragments/navbar.php"); ?>
 
   <div class="container mt-4 mb-4">
-    <h4 class="display-4 mb-4 text-center text-sm-left">Profilo</h4>
+    <h1 class="display-4 mb-4 text-center text-sm-left">Profilo</h1>
     <div class="row justify-content-center">
-      <div class="col-9 col-sm-6 col-md-5 pt-4">
-        <h4 class="pb-2">Orari</h4>
+      <section class="col-9 col-sm-6 col-md-5 pt-4">
+        <h2 class="pb-2">Orari</h2>
         <div class="border p-3">
           <div class="form-group">
             <label for="openingHours" class="sr-only">Apertura (es. 08:00)</label>
@@ -59,9 +59,9 @@
           </div>
           <button type="button" class="btn btn-primary col" id="btnSaveHours">Salva</button>
         </div>
-      </div>
-      <div class="col-9 col-sm-6 col-md-5 pt-4">
-        <h4 class="pb-2">Categorie</h4>
+      </section>
+      <section class="col-9 col-sm-6 col-md-5 pt-4">
+        <h2 class="pb-2">Categorie</h2>
         <ul class="list-group" id="categories">
           <button type="button" class="list-group-item list-group-item-action bg-primary text-center text-white m-0" id="btnCategoryModal" data-toggle="modal" data-target="#modalAddCategory">
             <i class="far fa-plus-square"></i>
@@ -74,7 +74,7 @@
             $categories->close();
           ?>
         </ul>
-      </div>
+      </section>
     </div>
   </div>
   <!-- Modals -->

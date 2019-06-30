@@ -1,7 +1,3 @@
-.card-searchbar {
-    margin-bottom: 15px;
-}
-
 .centered-form {
     align-content: center;
 }
@@ -43,4 +39,8 @@ body {
 .logo {
   border-radius: 30%;
   background-color: rgba(255,46,23,1);
+}
+
+.form-inline .col-form-label {
+  text-align: left;
 }
