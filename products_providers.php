@@ -11,12 +11,7 @@
 
 <head>
   <?php include("fragments/head-contents.php"); ?>
-  <!-- <link rel="stylesheet" type="text/css" href="styles/base.css"> -->
-  <style>
-    .form-inline .col-form-label {
-      text-align: left;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="styles/style.css">
 </head>
 
 <body>
