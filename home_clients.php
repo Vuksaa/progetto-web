@@ -78,7 +78,7 @@
                         $providerCategories->close();
                       }
                     ?>
-                    <p class="text-muted"><?php echo $providerRow['opening_hours']."-".$providerRow['closing_hours']; ?></p>
+                    <p class="text-muted pt-2"><?php echo $providerRow['opening_hours']."-".$providerRow['closing_hours']; ?></p>
                   </div>
                   <div class="btn-group mt-auto" role="group" aria-label="Provider-related actions">
                     <button class="btn btn-primary inline btn-place-order border-right" <?php if (!$providerRow['now_open']) echo "disabled"; ?>>Ordina</button>
@@ -158,7 +158,7 @@
                         $providerCategories->close();
                       }
                     ?>
-                    <p class="text-muted"><?php echo $providerRow['opening_hours']."-".$providerRow['closing_hours']; ?></p>
+                    <p class="text-muted pt-2"><?php echo $providerRow['opening_hours']."-".$providerRow['closing_hours']; ?></p>
                   </div>
                   <div class="btn-group mt-auto" role="group" aria-label="Provider-related actions">
                     <button class="btn btn-primary inline btn-place-order border-right" <?php if (!$providerRow['now_open']) echo "disabled"; ?>>Ordina</button>
