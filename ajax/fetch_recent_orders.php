@@ -2,6 +2,7 @@
 include("../fragments/connection-begin.php");
 session_start();
 // only select the orders that were created in the last week
+$now = date("Y-m-d H:i:s", mktime());
 if ($allOrders = $conn->query(
   "SELECT o.order_id, c.client_name, o.order_address, p.product_name, s.status_name, s.status_id, po.notes, po.quantity, o.creation_timestamp
   FROM uni_web_prod.order o
@@ -17,6 +18,7 @@ if ($allOrders = $conn->query(
   ON co.client_id = c.client_id
   WHERE p.provider_id = '".$_SESSION['user_id']."'"
 )) {
+  $_SESSION['last_awaiting_orders_fetch_timestamp'] = $now;
   $array = array();
   while ($row = $allOrders->fetch_assoc()) {
     $array[] = $row;
