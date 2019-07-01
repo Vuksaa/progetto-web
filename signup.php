@@ -128,103 +128,103 @@
     </form>
   </div>
   <?php include("fragments/footer.php"); ?>
+  <script>
+    $(function() {
+      'use strict';
+      // Hides the alert
+      $(".alert").hide();
+      $("#alertDiv").removeClass("d-none");
+      var form = $("form");
+      form.on('submit', function(event) {
+        event.preventDefault();
+        // Checks form's validity
+        var vconfPassword = $("#signConfirmPassword");
+        var vpassword = $("#signPassword").val();
+        if (vconfPassword.val() !== vpassword) {
+          event.stopPropagation();
+          vconfPassword[0].setCustomValidity("Le password non coincidono!");
+        } else {
+          vconfPassword[0].setCustomValidity("");
+        }
+        if (form[0].checkValidity() === false) {
+          event.stopPropagation();
+        } else {
+          //  Calls the signup_submitted script and sets the alert
+          var vemail = $("#signEmail").val();
+          var vuserType = $("[type=radio][name=userType]").val();
+          var vcName = $("#signName").val();
+          var vcSurname = $("#signSurname").val();
+          var vpName = $("#signPName").val();
+          var vpAddress = $("#signPAddress").val();
+          var vpTypeId = $("#signPType").val();
+          var data = {
+            email: vemail,
+            password: vpassword,
+            userType: vuserType,
+            cName: vcName,
+            cSurname: vcSurname,
+            pName: vpName,
+            pAddress: vpAddress,
+            pTypeId: vpTypeId
+          };
+          $.post("ajax/signup_submitted.php", data).done(function(response) {
+            if (response.indexOf("SIGNUP_SUCCESS") != -1) {
+              $("input.submit").prop('disabled', true);
+              $(".alert.alert-danger").fadeOut();
+              $(".alert.alert-success").fadeOut();
+              $(".alert.alert-success").fadeIn();
+              setTimeout(function() {
+                window.location.href = "login.php"
+              }, 2500)
+            } else {
+              $(".alert.alert-success").fadeOut();
+              $(".alert.alert-danger").fadeOut();
+              $(".alert.alert-danger").text(response);
+              $(".alert.alert-danger").fadeIn();
+            }
+          });
+        }
+        form.addClass('was-validated');
+      });
+      // Shows/hides form inputs depending on user type selected
+      $('[type=radio][name=userType]').change(function() {
+        var cName = $("#clientName");
+        var cSurname = $("#clientSurname");
+        var pName = $("#providerName");
+        var pAddress = $("#providerAddress");
+        var pType = $("#providerType");
+        var icName = $("#signName");
+        var icSurname = $("#signSurname");
+        var ipName = $("#signPName");
+        var ipAddress = $("#signPAddress");
+        var ipType = $("#signPType");
+        if (this.value === 'client') {
+          cName.prop("hidden", false);
+          cSurname.prop("hidden", false);
+          pName.prop("hidden", true);
+          pAddress.prop("hidden", true);
+          pType.prop("hidden", true);
+          icName.prop("required", true);
+          icSurname.prop("required", true);
+          ipName.prop("required", false);
+          ipAddress.prop("required", false);
+          ipType.prop("required", false);
+        } else if (this.value === 'provider') {
+          cName.prop("hidden", true);
+          cSurname.prop("hidden", true);
+          pName.prop("hidden", false);
+          pAddress.prop("hidden", false);
+          pType.prop("hidden", false);
+          icName.prop("required", false);
+          icSurname.prop("required", false);
+          ipName.prop("required", true);
+          ipAddress.prop("required", true);
+          ipType.prop("required", true);
+        }
+      });
+    });
+  </script>
 </body>
-<script type="text/javascript">
-  $(function() {
-    'use strict';
-    // Hides the alert
-    $(".alert").hide();
-    $("#alertDiv").removeClass("d-none");
-    var form = $("form");
-    form.on('submit', function(event) {
-      event.preventDefault();
-      // Checks form's validity
-      var vconfPassword = $("#signConfirmPassword");
-      var vpassword = $("#signPassword").val();
-      if (vconfPassword.val() !== vpassword) {
-        event.stopPropagation();
-        vconfPassword[0].setCustomValidity("Le password non coincidono!");
-      } else {
-        vconfPassword[0].setCustomValidity("");
-      }
-      if (form[0].checkValidity() === false) {
-        event.stopPropagation();
-      } else {
-        //  Calls the signup_submitted script and sets the alert
-        var vemail = $("#signEmail").val();
-        var vuserType = $("[type=radio][name=userType]").val();
-        var vcName = $("#signName").val();
-        var vcSurname = $("#signSurname").val();
-        var vpName = $("#signPName").val();
-        var vpAddress = $("#signPAddress").val();
-        var vpTypeId = $("#signPType").val();
-        var data = {
-          email: vemail,
-          password: vpassword,
-          userType: vuserType,
-          cName: vcName,
-          cSurname: vcSurname,
-          pName: vpName,
-          pAddress: vpAddress,
-          pTypeId: vpTypeId
-        };
-        $.post("ajax/signup_submitted.php", data).done(function(response) {
-          if (response.indexOf("SIGNUP_SUCCESS") != -1) {
-            $("input.submit").prop('disabled', true);
-            $(".alert.alert-danger").fadeOut();
-            $(".alert.alert-success").fadeOut();
-            $(".alert.alert-success").fadeIn();
-            setTimeout(function() {
-              window.location.href = "login.php"
-            }, 2500)
-          } else {
-            $(".alert.alert-success").fadeOut();
-            $(".alert.alert-danger").fadeOut();
-            $(".alert.alert-danger").text(response);
-            $(".alert.alert-danger").fadeIn();
-          }
-        });
-      }
-      form.addClass('was-validated');
-    });
-    // Shows/hides form inputs depending on user type selected
-    $('[type=radio][name=userType]').change(function() {
-      var cName = $("#clientName");
-      var cSurname = $("#clientSurname");
-      var pName = $("#providerName");
-      var pAddress = $("#providerAddress");
-      var pType = $("#providerType");
-      var icName = $("#signName");
-      var icSurname = $("#signSurname");
-      var ipName = $("#signPName");
-      var ipAddress = $("#signPAddress");
-      var ipType = $("#signPType");
-      if (this.value === 'client') {
-        cName.prop("hidden", false);
-        cSurname.prop("hidden", false);
-        pName.prop("hidden", true);
-        pAddress.prop("hidden", true);
-        pType.prop("hidden", true);
-        icName.prop("required", true);
-        icSurname.prop("required", true);
-        ipName.prop("required", false);
-        ipAddress.prop("required", false);
-        ipType.prop("required", false);
-      } else if (this.value === 'provider') {
-        cName.prop("hidden", true);
-        cSurname.prop("hidden", true);
-        pName.prop("hidden", false);
-        pAddress.prop("hidden", false);
-        pType.prop("hidden", false);
-        icName.prop("required", false);
-        icSurname.prop("required", false);
-        ipName.prop("required", true);
-        ipAddress.prop("required", true);
-        ipType.prop("required", true);
-      }
-    });
-  });
-</script>
 <?php include("fragments/connection-end.php"); ?>
 
 </html>

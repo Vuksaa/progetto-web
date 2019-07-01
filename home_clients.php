@@ -62,7 +62,7 @@
                 <div class="card-body d-flex flex-column">
                   <h5 class="card-title"><?php echo $providerRow['provider_name'] ?></h5>
                   <p class="card-subtitle mb-2 text-muted providerType" data-id="<?php echo $providerRow['type_id']; ?>"><?php echo $providerRow['type_name'] ?></p>
-                  <p class="card-text">
+                  <div class="card-text">
                     <?php
                       if ($providerCategories = $conn->query("SELECT c.category_id, c.category_name
                                             FROM provider p
@@ -79,8 +79,8 @@
                       }
                     ?>
                     <p class="text-muted"><?php echo $providerRow['opening_hours']."-".$providerRow['closing_hours']; ?></p>
-                  </p>
-                  <div class="btn-group mt-auto" role="group" aria-labelledby="Provider-related actions">
+                  </div>
+                  <div class="btn-group mt-auto" role="group" aria-label="Provider-related actions">
                     <button class="btn btn-primary inline btn-place-order border-right" <?php if (!$providerRow['now_open']) echo "disabled"; ?>>Ordina</button>
                     <button class="btn btn-primary inline border-left" name="removeFavourite"><span class="sr-only">Rimuovi preferito</span><i class="fas fa-star" aria-hidden="true"></i></button>
                   </div>
@@ -140,7 +140,7 @@
                   <div class="card-body d-flex flex-column">
                     <h5 class="card-title"><?php echo $providerRow['provider_name'] ?></h5>
                     <p class="card-subtitle mb-2 text-muted providerType" data-id="<?php echo $providerRow['type_id']; ?>"><?php echo $providerRow['type_name'] ?></p>
-                    <p class="card-text">
+                    <div class="card-text">
                     <?php
                       if ($providerCategories = $conn->query(
                         "SELECT c.category_id, c.category_name
@@ -159,8 +159,8 @@
                       }
                     ?>
                     <p class="text-muted"><?php echo $providerRow['opening_hours']."-".$providerRow['closing_hours']; ?></p>
-                  </p>
-                  <div class="btn-group mt-auto" role="group" aria-labelledby="Provider-related actions">
+                  </div>
+                  <div class="btn-group mt-auto" role="group" aria-label="Provider-related actions">
                     <button class="btn btn-primary inline btn-place-order border-right" <?php if (!$providerRow['now_open']) echo "disabled"; ?>>Ordina</button>
                     <button class="btn btn-primary inline border-left" name="addFavourite"><span class="sr-only">Aggiungi preferito</span><i class="far fa-star" aria-hidden="true"></i></button>
                   </div>
@@ -180,246 +180,238 @@
     </div>
   </div>
   <?php include("fragments/footer.php"); ?>
-</body>
+  <script>
+    $(function() {
+      $(".checkHours").prop('disabled', true)
+      $("#checkFilterByHours").on('change', function(e) {
+        $(".checkHours").prop('disabled', !this.checked);
+      });
 
-<!-- Modal for filters -->
-<div class="modal fade" id="modalFilters" tabindex="-1" role="dialog" aria-labelledby="modalLabelFilters" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title ml-2 mr-2" id="modalLabelFilters">Filtri</h4>
-        <button type="button" class="close btnSaveFilters" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body ml-2 mr-2">
-        <div class="pb-2 mb-3">
-          <div class="pb-2 pt-2 custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="checkFilterByHours">
-            <label class="custom-control-label" for="checkFilterByHours">
-              <h5>Apertura</h5>
-            </label>
-          </div>
-          <div>
-            <div class="custom-control custom-checkbox">
-              <input type="radio" name="radioHours" class="custom-control-input checkHours" id="hoursOpen" data-open="1">
-              <label class="custom-control-label" for="hoursOpen">Aperto</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-              <input type="radio" name="radioHours" class="custom-control-input checkHours" id="hoursChiuso" data-open="0">
-              <label class="custom-control-label" for="hoursChiuso">Chiuso</label>
-            </div>
-          </div>
-        </div>
-        <hr>
-        <div class="pb-2">
-          <div class="pb-2 pt-2 custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="checkFilterByTypes">
-            <label class="custom-control-label" for="checkFilterByTypes">
-              <h5>Tipi</h5>
-            </label>
-          </div>
-          <?php
-            if ($types = $conn->query(
-              "SELECT type_id, type_name FROM type"
-            )) {
-              while ($type = $types->fetch_assoc()) {
-                $typeId = $type['type_id'];
-                $typeName = $type['type_name'];
-                ?>
-          <div class="custom-control custom-checkbox">
-            <input type="radio" name="radioTypes" class="custom-control-input checkType" id="type<?php echo $typeId; ?>" data-id="<?php echo $typeId; ?>">
-            <label class="custom-control-label" for="type<?php echo $typeId; ?>"><?php echo $typeName; ?></label>
-          </div>
-          <?php
+      $(".checkType").prop('disabled', true);
+      $("#clearCategories").prop('disabled', true);
+      $(".checkCategory").prop('disabled', true);
+
+      $("#checkFilterByTypes").on('change', function(e) {
+        $(".checkType").prop('disabled', !this.checked);
+      });
+      $("#checkFilterByCategories").on('change', function(e) {
+        $("#clearCategories").prop('disabled', !this.checked);
+        $(".checkCategory").prop('disabled', !this.checked);
+      });
+      $("#clearCategories").on('click', function(e) {
+        $(".checkCategory").prop('checked', false);
+      });
+
+      $(".btnSaveFilters").on('click', function(e) {
+        var filterByTypes = $("#checkFilterByTypes").is(":checked");
+        var filterByCategories = $("#checkFilterByCategories").is(":checked");
+        var filterByHours = $("#checkFilterByHours").is(":checked");
+        if (filterByTypes || filterByCategories || filterByHours) {
+          $("#filterState").text("(attivi)");
+          $("#filterState").css('color', 'green');
+        } else {
+          $("#filterState").text("(nessun filtro)");
+          $("#filterState").css('color', 'black');
+        }
+        $(".provider").show();
+        if (!filterByTypes && !filterByCategories && !filterByHours) {
+          return;
+        }
+        $(".provider").each(function(i, provider) {
+          if (filterByHours) {
+            $(".provider[data-open=" + ($(".checkHours:checked").data("open") ? 0 : 1) + "]").hide()
+          }
+          if (filterByTypes) {
+            for (type of $(".checkType:checked").toArray()) {
+              if (!$(provider).find(".providerType[data-id=" + $(type).data("id") + "]").length) {
+                $(provider).hide();
+                return;
               }
-              $types->close();
             }
-          ?>
-        </div>
-        <hr>
-        <div class="pb-2">
-          <div class="pb-2 pt-2 custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="checkFilterByCategories">
-            <label class="custom-control-label" for="checkFilterByCategories">
-              <h5>Categorie</h5>
-            </label>
-          </div>
-          <button type="button" class="btn btn-secondary m-0 mb-1 p-1 pl-2 pr-2" id="clearCategories">Azzera categorie</button>
-          <?php
-            if ($categories = $conn->query(
-              "SELECT category_id, category_name FROM category"
-            )) {
-              while ($category = $categories->fetch_assoc()) {
-                $categoryId = $category['category_id'];
-                $categoryName = $category['category_name'];
-                ?>
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input checkCategory" id="category<?php echo $categoryId; ?>" data-id="<?php echo $categoryId; ?>">
-            <label class="custom-control-label" for="category<?php echo $categoryId; ?>"><?php echo $categoryName; ?></label>
-          </div>
-          <?php
+          }
+          if (filterByCategories) {
+            for (category of $(".checkCategory:checked").toArray()) {
+              if (!$(provider).find(".providerCategory[data-id=" + $(category).data("id") + "]").length) {
+                $(provider).hide();
+                return;
               }
-              $categories->close();
             }
-          ?>
+          }
+        });
+      });
+
+      $("#searchFavourites").on('keyup', function(e) {
+        var inputed = $(this).val().toLowerCase();
+        var items = $(".favouriteProvider");
+        // show all listed product if the searchbar is blank
+        if (inputed === "") {
+          items.show();
+          return;
+        }
+        $.each(items, function() {
+          var providerName = $(this).find(".card-title").text().toLowerCase();
+          // true if the text inputed in the searchbar is not contained in the product's name
+          if (providerName.indexOf(inputed) === -1) {
+            $(this).hide();
+          } else {
+            $(this).show();
+          }
+        });
+      });
+      $("#searchListed").on('keyup', function(e) {
+        var inputed = $(this).val().toLowerCase();
+        var items = $(".listedProvider");
+        // show all listed product if the searchbar is blank
+        if (inputed === "") {
+          items.show();
+          return;
+        }
+        $.each(items, function() {
+          var providerName = $(this).find(".card-title").text().toLowerCase();
+          // true if the text inputed in the searchbar is not contained in the product's name
+          if (providerName.indexOf(inputed) === -1) {
+            $(this).hide();
+          } else {
+            $(this).show();
+          }
+        });
+      });
+
+
+      $(".btn-place-order").click(function() {
+        window.location.href = "place_order.php?provider=" + $(this).parent().parent().parent().parent().data("provider-id");
+      });
+      /* Set navbar voice active with respective screen reader functionality */
+      var homeLink = $("nav div ul li a:contains('Home')");
+      homeLink.append("<span class='sr-only'>(current)</span>");
+      homeLink.parent().addClass("active");
+
+      $("button[name='addFavourite']").on('click', addFavourite);
+      $("button[name='removeFavourite']").on('click', removeFavourite);
+    });
+
+    function addFavourite() {
+      var provider = $(this).parent().parent().parent().parent();
+      var thisButton = $(this);
+      $.post("ajax/add_favourite_provider.php", {
+        providerId: provider.data("provider-id")
+      }).done(function(response) {
+        if (response === "SUCCESS") {
+          provider.fadeOut(250, function() {
+            var newButton = $('<button class="btn btn-primary inline border-left" name="removeFavourite"><i class="far fa-star"></i></button>')
+            newButton.on('click', removeFavourite);
+            thisButton.replaceWith(newButton);
+            provider.detach().appendTo("#favouriteProviders");
+            provider.show();
+          });
+        }
+      });
+    }
+
+    function removeFavourite() {
+      var provider = $(this).parent().parent().parent().parent();
+      var thisButton = $(this);
+      $.post("ajax/remove_favourite_provider.php", {
+        providerId: provider.data("provider-id")
+      }).done(function(response) {
+        if (response === "SUCCESS") {
+          provider.fadeOut(250, function() {
+            var newButton = $('<button class="btn btn-primary inline border-left" name="addFavourite"><i class="fas fa-star"></i></button>');
+            newButton.on('click', addFavourite);
+            thisButton.replaceWith(newButton);
+            provider.detach().appendTo("#listedProviders");
+            provider.show();
+          });
+        }
+      });
+    }
+  </script>
+  <!-- Modal for filters -->
+  <div class="modal fade" id="modalFilters" tabindex="-1" role="dialog" aria-labelledby="modalLabelFilters" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title ml-2 mr-2" id="modalLabelFilters">Filtri</h4>
+          <button type="button" class="close btnSaveFilters" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary col-2 ml-2 btnSaveFilters" data-dismiss="modal">
-          Salva
-        </button>
+        <div class="modal-body ml-2 mr-2">
+          <div class="pb-2 mb-3">
+            <div class="pb-2 pt-2 custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="checkFilterByHours">
+              <label class="h5 custom-control-label" for="checkFilterByHours">Apertura</label>
+            </div>
+            <div>
+              <div class="custom-control custom-checkbox">
+                <input type="radio" name="radioHours" class="custom-control-input checkHours" id="hoursOpen" data-open="1">
+                <label class="custom-control-label" for="hoursOpen">Aperto</label>
+              </div>
+              <div class="custom-control custom-checkbox">
+                <input type="radio" name="radioHours" class="custom-control-input checkHours" id="hoursChiuso" data-open="0">
+                <label class="custom-control-label" for="hoursChiuso">Chiuso</label>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="pb-2">
+            <div class="pb-2 pt-2 custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="checkFilterByTypes">
+              <label class="h5 custom-control-label" for="checkFilterByTypes">Tipi</label>
+            </div>
+            <?php
+              if ($types = $conn->query(
+                "SELECT type_id, type_name FROM type"
+              )) {
+                while ($type = $types->fetch_assoc()) {
+                  $typeId = $type['type_id'];
+                  $typeName = $type['type_name'];
+                  ?>
+            <div class="custom-control custom-checkbox">
+              <input type="radio" name="radioTypes" class="custom-control-input checkType" id="type<?php echo $typeId; ?>" data-id="<?php echo $typeId; ?>">
+              <label class="custom-control-label" for="type<?php echo $typeId; ?>"><?php echo $typeName; ?></label>
+            </div>
+            <?php
+                }
+                $types->close();
+              }
+            ?>
+          </div>
+          <hr>
+          <div class="pb-2">
+            <div class="pb-2 pt-2 custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="checkFilterByCategories">
+              <label class="h5 custom-control-label" for="checkFilterByCategories">Categorie</label>
+            </div>
+            <button type="button" class="btn btn-secondary m-0 mb-1 p-1 pl-2 pr-2" id="clearCategories">Azzera categorie</button>
+            <?php
+              if ($categories = $conn->query(
+                "SELECT category_id, category_name FROM category"
+              )) {
+                while ($category = $categories->fetch_assoc()) {
+                  $categoryId = $category['category_id'];
+                  $categoryName = $category['category_name'];
+                  ?>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input checkCategory" id="category<?php echo $categoryId; ?>" data-id="<?php echo $categoryId; ?>">
+              <label class="custom-control-label" for="category<?php echo $categoryId; ?>"><?php echo $categoryName; ?></label>
+            </div>
+            <?php
+                }
+                $categories->close();
+              }
+            ?>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary col-2 ml-2 btnSaveFilters" data-dismiss="modal">
+            Salva
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-<script type="text/javascript">
-  $(function() {
-    $(".checkHours").prop('disabled', true)
-    $("#checkFilterByHours").on('change', function(e) {
-      $(".checkHours").prop('disabled', !this.checked);
-    });
-
-    $(".checkType").prop('disabled', true);
-    $("#clearCategories").prop('disabled', true);
-    $(".checkCategory").prop('disabled', true);
-
-    $("#checkFilterByTypes").on('change', function(e) {
-      $(".checkType").prop('disabled', !this.checked);
-    });
-    $("#checkFilterByCategories").on('change', function(e) {
-      $("#clearCategories").prop('disabled', !this.checked);
-      $(".checkCategory").prop('disabled', !this.checked);
-    });
-    $("#clearCategories").on('click', function(e) {
-      $(".checkCategory").prop('checked', false);
-    });
-
-    $(".btnSaveFilters").on('click', function(e) {
-      var filterByTypes = $("#checkFilterByTypes").is(":checked");
-      var filterByCategories = $("#checkFilterByCategories").is(":checked");
-      var filterByHours = $("#checkFilterByHours").is(":checked");
-      if (filterByTypes || filterByCategories || filterByHours) {
-        $("#filterState").text("(attivi)");
-        $("#filterState").css('color', 'green');
-      } else {
-        $("#filterState").text("(nessun filtro)");
-        $("#filterState").css('color', 'black');
-      }
-      $(".provider").show();
-      if (!filterByTypes && !filterByCategories && !filterByHours) {
-        return;
-      }
-      $(".provider").each(function(i, provider) {
-        if (filterByHours) {
-          $(".provider[data-open=" + ($(".checkHours:checked").data("open") ? 0 : 1) + "]").hide()
-        }
-        if (filterByTypes) {
-          for (type of $(".checkType:checked").toArray()) {
-            if (!$(provider).find(".providerType[data-id=" + $(type).data("id") + "]").length) {
-              $(provider).hide();
-              return;
-            }
-          }
-        }
-        if (filterByCategories) {
-          for (category of $(".checkCategory:checked").toArray()) {
-            if (!$(provider).find(".providerCategory[data-id=" + $(category).data("id") + "]").length) {
-              $(provider).hide();
-              return;
-            }
-          }
-        }
-      });
-    });
-
-    $("#searchFavourites").on('keyup', function(e) {
-      var inputed = $(this).val().toLowerCase();
-      var items = $(".favouriteProvider");
-      // show all listed product if the searchbar is blank
-      if (inputed === "") {
-        items.show();
-        return;
-      }
-      $.each(items, function() {
-        var providerName = $(this).find(".card-title").text().toLowerCase();
-        // true if the text inputed in the searchbar is not contained in the product's name
-        if (providerName.indexOf(inputed) === -1) {
-          $(this).hide();
-        } else {
-          $(this).show();
-        }
-      });
-    });
-    $("#searchListed").on('keyup', function(e) {
-      var inputed = $(this).val().toLowerCase();
-      var items = $(".listedProvider");
-      // show all listed product if the searchbar is blank
-      if (inputed === "") {
-        items.show();
-        return;
-      }
-      $.each(items, function() {
-        var providerName = $(this).find(".card-title").text().toLowerCase();
-        // true if the text inputed in the searchbar is not contained in the product's name
-        if (providerName.indexOf(inputed) === -1) {
-          $(this).hide();
-        } else {
-          $(this).show();
-        }
-      });
-    });
-
-
-    $(".btn-place-order").click(function() {
-      window.location.href = "place_order.php?provider=" + $(this).parent().parent().parent().parent().data("provider-id");
-    });
-    /* Set navbar voice active with respective screen reader functionality */
-    var homeLink = $("nav div ul li a:contains('Home')");
-    homeLink.append("<span class='sr-only'>(current)</span>");
-    homeLink.parent().addClass("active");
-
-    $("button[name='addFavourite']").on('click', addFavourite);
-    $("button[name='removeFavourite']").on('click', removeFavourite);
-  });
-
-  function addFavourite() {
-    var provider = $(this).parent().parent().parent().parent();
-    var thisButton = $(this);
-    $.post("ajax/add_favourite_provider.php", {
-      providerId: provider.data("provider-id")
-    }).done(function(response) {
-      if (response === "SUCCESS") {
-        provider.fadeOut(250, function() {
-          var newButton = $('<button class="btn btn-primary inline border-left" name="removeFavourite"><i class="far fa-star"></i></button>')
-          newButton.on('click', removeFavourite);
-          thisButton.replaceWith(newButton);
-          provider.detach().appendTo("#favouriteProviders");
-          provider.show();
-        });
-      }
-    });
-  }
-
-  function removeFavourite() {
-    var provider = $(this).parent().parent().parent().parent();
-    var thisButton = $(this);
-    $.post("ajax/remove_favourite_provider.php", {
-      providerId: provider.data("provider-id")
-    }).done(function(response) {
-      if (response === "SUCCESS") {
-        provider.fadeOut(250, function() {
-          var newButton = $('<button class="btn btn-primary inline border-left" name="addFavourite"><i class="fas fa-star"></i></button>');
-          newButton.on('click', addFavourite);
-          thisButton.replaceWith(newButton);
-          provider.detach().appendTo("#listedProviders");
-          provider.show();
-        });
-      }
-    });
-  }
-</script>
+</body>
 <?php include("fragments/connection-end.php"); ?>
 
 </html>

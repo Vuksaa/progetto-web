@@ -53,7 +53,7 @@
         <button type="button" class="close float-right btnDeleteProduct" data-toggle="popover" data-placement="left" data-html="true" data-trigger="focus" data-content="<a href='#' class='btn btn-danger btnConfirmDeletion'><span class='d-none productIdContainer'><?php echo $id;?></span>Elimina</a>" aria-label="Elimina">
           <span aria-hidden="true" style="color: red;">&times;</span>
         </button>
-        <h5 class="card-title"><?php echo $name; ?></h2>
+        <h5 class="card-title"><?php echo $name; ?></h5>
         <div class="card-text">
           <hr>
           <div class="p-2">
@@ -128,15 +128,15 @@
           </div>
           <hr>
           <div class="form-inline">
-            <label class="col-4 col-sm-3 col-form-label sr-only" for="selectIngredientId">Seleziona ingrediente</label>
+            <label class="col-4 col-sm-3 col-form-label sr-only" for="selectedIngredient">Seleziona ingrediente</label>
             <div class="input-group col pl-0 pr-0">
-              <select class="form-control col" name="selectIngredientId" id="selectedIngredient">
+              <select class="form-control col" id="selectedIngredient">
                 <?php
                   $query = $conn->query("SELECT * FROM ingredient ORDER BY ingredient_name");
                   while ($row = mysqli_fetch_array($query)){
                     $id = $row['ingredient_id'];
                     $name = $row['ingredient_name'];
-                    echo "<option data-ingredient-id='".$id."' data-ingredient-name='".$name."'>".$name."</option>" ;
+                    echo '<option data-ingredient-id="'.$id.'" data-ingredient-name="'.$name.'">'.$name.'</option>'."\r\n";
                   }
                   $query->close();
                 ?>
@@ -158,109 +158,110 @@
     </div>
   </div>
   <?php include("fragments/footer.php"); ?>
-</body>
-
-<script>
-  $(function() {
-    $(".existingProductPrice").on('keyup', function(e) {
-      if (!$(this).parent().find(".btnUpdatePriceGroup").length) {
-        var saveButton = $(`
-        <div class="input-group-append btnUpdatePriceGroup">
-          <button type="button" class="btn btn-secondary align-middle mb-0 mt-0" data-product-id="` + $(this).data("product-id") + `">Aggiorna</button>
-        </div>`)
-        saveButton.hide()
-        $(this).parent().append(saveButton)
-        saveButton.fadeIn(200)
-        saveButton.on('click', updateProductPrice)
-      }
-    })
-
-    $("#btnCloseModalAddProduct").on('click', cleanModalAddProduct)
-    $("#btnAddProduct").on('click', function(e) {
-      var name = $("#newProductName").val()
-      var price = $("#newProductPrice").val()
-      var ingredients = $.map($(".addedIngredient"), function(ingredient, index) {
-        return $(ingredient).data("ingredient-id")
-      })
-      if(price<0||!name){
-        return
-      }
-      $.post("ajax/add_product.php", {
-        name: name,
-        price: price,
-        ingredients: ingredients
-      }).done(function(response) {
-        console.log(response)
-        $("#modalAddProduct").modal('hide')
-        cleanModalAddProduct()
-      })
-      window.location.reload(false);
-    })
-    $("#selectedIngredient").on('change', function(e) {
-      $("#addIngredient").prop(
-        'disabled',
-        $(".addedIngredient[data-ingredientid=" + $("#selectedIngredient option:selected")
-          .data("ingredient-id") + "]")
-          .length
-      )
-    })
-    $("#addIngredient").on('click', function(e) {
-      var id = $("#selectedIngredient option:selected").data("ingredient-id")
-      var name = $("#selectedIngredient option:selected").data("ingredient-name")
-      var ingredient = $('<a href="#" class="addedIngredient badge badge-secondary mr-2" data-ingredient-id="' + id + '">' + name + '</a>')
-      ingredient.on('click', removeIngredient)
-      $("#addIngredient").prop('disabled', true)
-      $("#newProductIngredients").append(ingredient)
-    })
-    $('body').on('click','.btnConfirmDeletion', function(e) {
-      var productId = $(e.currentTarget.outerHTML).find('.productIdContainer').text()
-      $.post("ajax/disable_product.php", {
-        product: productId
-      }).done(function(response) {
-        if (response.indexOf("SUCCESS") != -1) {
-          $(".orderCard[data-productid=" + productId + "]").slideUp()
+  <script>
+    $(function() {
+      $(".existingProductPrice").on('keyup', function(e) {
+        if (!$(this).parent().find(".btnUpdatePriceGroup").length) {
+          var saveButton = $(`
+          <div class="input-group-append btnUpdatePriceGroup">
+            <button type="button" class="btn btn-secondary align-middle mb-0 mt-0" data-product-id="` + $(this).data("product-id") + `">Aggiorna</button>
+          </div>`)
+          saveButton.hide()
+          $(this).parent().append(saveButton)
+          saveButton.fadeIn(200)
+          saveButton.on('click', updateProductPrice)
         }
       })
-    })
-    $(".btnDeleteProduct").popover()
-    /* Set navbar voice active with respective screen reader functionality */
-    var element = $("#navbarProducts");
-    var parent = element.parent();
-    element.append( "<span class='sr-only'>(current)</span>" );
-    parent.addClass("active");
-  })
 
-  function removeIngredient() {
-    if ($("#selectedIngredient option:selected").data("ingredient-id") == $(this).data("ingredient-id")) {
+      $("#btnCloseModalAddProduct").on('click', cleanModalAddProduct)
+      $("#btnAddProduct").on('click', function(e) {
+        var name = $("#newProductName").val()
+        var price = $("#newProductPrice").val()
+        var ingredients = $.map($(".addedIngredient"), function(ingredient, index) {
+          return $(ingredient).data("ingredient-id")
+        })
+        if(price<0||!name){
+          return
+        }
+        $.post("ajax/add_product.php", {
+          name: name,
+          price: price,
+          ingredients: ingredients
+        }).done(function(response) {
+          console.log(response)
+          $("#modalAddProduct").modal('hide')
+          cleanModalAddProduct()
+        })
+        window.location.reload(false);
+      })
+      $("#selectedIngredient").on('change', function(e) {
+        $("#addIngredient").prop(
+          'disabled',
+          $(".addedIngredient[data-ingredientid=" + $("#selectedIngredient option:selected")
+            .data("ingredient-id") + "]")
+            .length
+        )
+      })
+      $("#addIngredient").on('click', function(e) {
+        var id = $("#selectedIngredient option:selected").data("ingredient-id")
+        var name = $("#selectedIngredient option:selected").data("ingredient-name")
+        var ingredient = $('<a href="#" class="addedIngredient badge badge-secondary mr-2" data-ingredient-id="' + id + '">' + name + '</a>')
+        ingredient.on('click', removeIngredient)
+        $("#addIngredient").prop('disabled', true)
+        $("#newProductIngredients").append(ingredient)
+      })
+      $('body').on('click','.btnConfirmDeletion', function(e) {
+        e.preventDefault()
+        var productId = $(e.currentTarget.outerHTML).find('.productIdContainer').text()
+        $.post("ajax/disable_product.php", {
+          product: productId
+        }).done(function(response) {
+          if (response.indexOf("SUCCESS") != -1) {
+            $(".orderCard[data-productid=" + productId + "]").slideUp()
+          }
+        })
+      })
+      $(".btnDeleteProduct").popover()
+      /* Set navbar voice active with respective screen reader functionality */
+      var element = $("#navbarProducts");
+      var parent = element.parent();
+      element.append( "<span class='sr-only'>(current)</span>" );
+      parent.addClass("active");
+    })
+
+    function removeIngredient(e) {
+      e.preventDefault();
+      if ($("#selectedIngredient option:selected").data("ingredient-id") == $(this).data("ingredient-id")) {
+        $("#addIngredient").prop('disabled', false)
+      }
+       $(this).remove()
+    }
+
+    function cleanModalAddProduct() {
+      $("#newProductName").val("")
+      $("#newProductPrice").val("")
+      $(".addedIngredient").remove()
       $("#addIngredient").prop('disabled', false)
     }
-     $(this).remove()
-  }
 
-  function cleanModalAddProduct() {
-    $("#newProductName").val("")
-    $("#newProductPrice").val("")
-    $(".addedIngredient").remove()
-    $("#addIngredient").prop('disabled', false)
-  }
-
-  function updateProductPrice() {
-    var price = $(this).parent().find(".existingProductPrice").val()
-    var id = $(this).parent().find(".existingProductPrice").data("product-id")
-    var button = $(this)
-    if(price<0) {
-      return
-    }
-    $.post("ajax/update_product_price.php", {
-      price: price,
-      id: id
-    }).done(function(response) {
-      if (response.indexOf("SUCCESS") != -1) {
-        button.fadeOut(200, function() { button.remove() })
+    function updateProductPrice() {
+      var price = $(this).parent().find(".existingProductPrice").val()
+      var id = $(this).parent().find(".existingProductPrice").data("product-id")
+      var button = $(this)
+      if(price<0) {
+        return
       }
-    })
-    window.location.reload(false);
-  }
-</script>
+      $.post("ajax/update_product_price.php", {
+        price: price,
+        id: id
+      }).done(function(response) {
+        if (response.indexOf("SUCCESS") != -1) {
+          button.fadeOut(200, function() { button.remove() })
+        }
+      })
+      window.location.reload(false);
+    }
+  </script>
+</body>
 <?php include("fragments/connection-end.php"); ?>
 </html>

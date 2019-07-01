@@ -45,11 +45,11 @@
         <div class="border p-3">
           <div class="form-group">
             <label for="openingHours" class="sr-only">Apertura (es. 08:00)</label>
-            <input type="time" class="form-control" placeholder="Apertura (es. 08:00)" id="openingHours" value="<?php echo $_SESSION['opening_hours']; ?>" />
+            <input type="time" class="form-control" id="openingHours" value="<?php echo $_SESSION['opening_hours']; ?>" />
           </div>
           <div class="form-group">
             <label for="closingHours" class="sr-only">Chiusura (es. 18:00)</label>
-            <input type="time" class="form-control" placeholder="Chiusura (es. 18:00)" id="closingHours" value="<?php echo $_SESSION['closing_hours']; ?>" />
+            <input type="time" class="form-control" id="closingHours" value="<?php echo $_SESSION['closing_hours']; ?>" />
           </div>
           <div class="alert alert-success col d-none" role="alert">
             Aggiornamento salvato
@@ -62,14 +62,20 @@
       </section>
       <section class="col-9 col-sm-6 col-md-5 pt-4">
         <h2 class="pb-2">Categorie</h2>
-        <ul class="list-group" id="categories">
-          <button type="button" class="list-group-item list-group-item-action bg-primary text-center text-white m-0" id="btnCategoryModal" data-toggle="modal" data-target="#modalAddCategory">
-            <i class="far fa-plus-square"></i>
-            <span class="sr-only">Aggiungi categoria</span>
-          </button>
+        <ul class="list-group text-center" id="categories">
+          <li class="list-group-item list-group-item-action bg-primary text-center text-white p-0 m-0">
+            <button type="button" class="list-group-item list-group-item-action bg-primary text-white border-0" id="btnCategoryModal" data-toggle="modal" data-target="#modalAddCategory">
+              <i class="far fa-plus-square"></i>
+              <span class="sr-only">Aggiungi categoria</span>
+            </button>
+          </li>
           <?php
             while ($categories->fetch()) {
-              echo '<button type="button" class="btnRemoveCategory list-group-item list-group-item-action text-center m-0" data-categoryid="'.$categoryId.'">'.$categoryName.'</button>';
+              echo '
+              <li class="btnRemoveAllergen list-group-item list-group-item-action text-center p-0 m-0">
+                <button type="button" class="btnRemoveCategory list-group-item list-group-item-action border-0" data-categoryid="'.$categoryId.'">'.$categoryName.'</button>
+              </li>
+              ';
             }
             $categories->close();
           ?>
@@ -88,7 +94,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <label for="selectCategoryId" class="sr-only">Seleziona categoria</label>
+          <label for="selectedCategoryId" class="sr-only">Seleziona categoria</label>
           <select class="form-control" name="selectCategoryId" id="selectedCategoryId">
             <?php
               $query = $conn->query("SELECT * FROM category ORDER BY category_name");
@@ -111,75 +117,74 @@
   </div>
 
   <?php include("fragments/footer.php"); ?>
-</body>
+  <script>
+  $(function() {
+    /* Set navbar voice active with respective screen reader functionality */
+    var element = $("#navbarProfile");
+    var parent = element.parent();
+    element.append("<span class='sr-only'>(current)</span>");
+    parent.addClass("active");
 
-<script>
-$(function() {
-  /* Set navbar voice active with respective screen reader functionality */
-  var element = $("#navbarProfile");
-  var parent = element.parent();
-  element.append("<span class='sr-only'>(current)</span>");
-  parent.addClass("active");
-
-  $("#btnSaveHours").on('click', function() {
-    if (!$("#openingHours")[0].checkValidity() || !$("#closingHours")[0].checkValidity()) {
-      $(".alert-danger").hide()
-      $(".alert-danger").removeClass("d-none")
-      $(".alert-danger").fadeIn()
-      $(".alert-danger").fadeOut()
-      $(".alert-danger").fadeIn()
-    } else {
-      $.post("ajax/set_hours.php", {
-        opening: $("#openingHours").val(),
-        closing: $("#closingHours").val()
-      }).done(function(response) {
-        $(".alert-success").hide()
+    $("#btnSaveHours").on('click', function() {
+      if (!$("#openingHours")[0].checkValidity() || !$("#closingHours")[0].checkValidity()) {
         $(".alert-danger").hide()
-        if (response.indexOf("SUCCESS") != -1) {
-          $(".alert-success").removeClass("d-none")
-          $(".alert-success").fadeIn()
-          $(".alert-success").fadeOut()
-          $(".alert-success").fadeIn()
-        } else {
         $(".alert-danger").removeClass("d-none")
         $(".alert-danger").fadeIn()
         $(".alert-danger").fadeOut()
         $(".alert-danger").fadeIn()
-        }
+      } else {
+        $.post("ajax/set_hours.php", {
+          opening: $("#openingHours").val(),
+          closing: $("#closingHours").val()
+        }).done(function(response) {
+          $(".alert-success").hide()
+          $(".alert-danger").hide()
+          if (response.indexOf("SUCCESS") != -1) {
+            $(".alert-success").removeClass("d-none")
+            $(".alert-success").fadeIn()
+            $(".alert-success").fadeOut()
+            $(".alert-success").fadeIn()
+          } else {
+          $(".alert-danger").removeClass("d-none")
+          $(".alert-danger").fadeIn()
+          $(".alert-danger").fadeOut()
+          $(".alert-danger").fadeIn()
+          }
+        })
+      }
+    })
+
+    $("#btnAddCategory").on('click', function(e) {
+      var category = $("#selectedCategoryId :selected")
+      var categoryId = $(category).data("categoryid")
+      var categoryName = $(category).data("categoryname")
+      $.post("ajax/add_category.php", {
+        category: categoryId
+      }).done(function(response) {
+        if (response.indexOf("ERROR") == -1) {
+          var newCategory = '<button type="button" class="btnRemoveCategory list-group-item list-group-item-action text-center m-0" data-categoryId="' + categoryId + '">' + categoryName + '</button>'
+          $(newCategory).hide()
+          $(newCategory).appendTo("#categories").on('click', removeCategory)
+          $(newCategory).slideDown(200)
+        } else console.log(response)
       })
-    }
+    })
+    $(".btnRemoveCategory").on('click', removeCategory)
   })
 
-  $("#btnAddCategory").on('click', function(e) {
-    var category = $("#selectedCategoryId :selected")
-    var categoryId = $(category).data("categoryid")
-    var categoryName = $(category).data("categoryname")
-    $.post("ajax/add_category.php", {
-      category: categoryId
+  function removeCategory() {
+    self = $(this)
+    $.post("ajax/remove_category.php", {
+      category: $(self).data("categoryid")
     }).done(function(response) {
       if (response.indexOf("ERROR") == -1) {
-        var newCategory = '<button type="button" class="btnRemoveCategory list-group-item list-group-item-action text-center m-0" data-categoryId="' + categoryId + '">' + categoryName + '</button>'
-        $(newCategory).hide()
-        $(newCategory).appendTo("#categories").on('click', removeCategory)
-        $(newCategory).slideDown(200)
+        $(self).slideUp(200, function() {
+          $(self).remove()
+        })
       } else console.log(response)
     })
-  })
-  $(".btnRemoveCategory").on('click', removeCategory)
-})
-
-function removeCategory() {
-  self = $(this)
-  $.post("ajax/remove_category.php", {
-    category: $(self).data("categoryid")
-  }).done(function(response) {
-    if (response.indexOf("ERROR") == -1) {
-      $(self).slideUp(200, function() {
-        $(self).remove()
-      })
-    } else console.log(response)
-  })
-}
-</script>
+  }
+  </script>
+</body>
 <?php include("fragments/connection-end.php"); ?>
 </html>

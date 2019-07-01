@@ -57,13 +57,19 @@
       <section class="col-9 col-sm-6 col-md-5 pt-4">
         <h2 class="pb-2">Allergeni</h2>
         <ul class="list-group" id="allergens">
-          <button type="button" class="list-group-item list-group-item-action bg-primary text-center text-white m-0" data-toggle="modal" data-target="#modalAddAllergen">
-            <i class="far fa-plus-square"></i>
-            <span class="sr-only">Aggiungi allergene</span>
-          </button>
+          <li class="list-group-item list-group-item-action bg-primary text-center text-white p-0 m-0">
+            <button type="button" class="list-group-item list-group-item-action bg-primary text-center text-white border-0" data-toggle="modal" data-target="#modalAddAllergen">
+              <i class="far fa-plus-square"></i>
+              <span class="sr-only">Aggiungi allergene</span>
+            </button>
+          </li>
           <?php
             while ($allergens->fetch()) {
-              echo '<button type="button" class="btnRemoveAllergen list-group-item list-group-item-action text-center m-0" data-allergenId="'.$allergenId.'">'.$allergenName.'</button>';
+              echo '
+              <li class="btnRemoveAllergen list-group-item list-group-item-action text-center p-0 m-0">
+                <button type="button" class="btnRemoveAllergen list-group-item list-group-item-action border-0" data-allergenId="'.$allergenId.'">'.$allergenName.'</button>
+              </li>
+              ';
             }
             $allergens->close();
           ?>
@@ -72,13 +78,19 @@
       <section class="col-9 col-sm-6 col-md-5 pt-4">
         <h2 class="pb-2">Indirizzi</h2>
         <ul class="list-group" id="addresses">
-          <button type="button" class="list-group-item list-group-item-action bg-primary text-center text-white m-0" id="btnAddressModal" data-toggle="modal" data-target="#modalAddAddress">
-            <i class="far fa-plus-square"></i>
-            <span class="sr-only">Aggiungi indirizzo</span>
-          </button>
+          <li class="list-group-item list-group-item-action bg-primary text-center text-white p-0 m-0">
+            <button type="button" class="list-group-item list-group-item-action bg-primary text-center text-white border-0" id="btnAddressModal" data-toggle="modal" data-target="#modalAddAddress">
+              <i class="far fa-plus-square"></i>
+              <span class="sr-only">Aggiungi indirizzo</span>
+            </button>
+          </li>
           <?php
             while ($addresses->fetch()) {
-              echo '<button type="button" class="btnRemoveAddress list-group-item list-group-item-action text-center m-0" data-addressid="'.$addressId.'">'.$addressName.', '.$addressInfo.'</button>';
+              echo '
+              <li class="btnRemoveAddress list-group-item list-group-item-action text-center p-0 m-0">
+                <button type="button" class="btnRemoveAddress list-group-item list-group-item-action border-0" data-addressid="'.$addressId.'">'.$addressName.', '.$addressInfo.'</button>
+              </li>
+              ';
             }
             $addresses->close();
           ?>
@@ -98,8 +110,8 @@
           </button>
         </div>
         <div class="modal-body">
-          <label for="selectAllergenId" class="sr-only">Seleziona allergene</label>
-          <select class="form-control" name="selectAllergenId" id="selectedAllergenId">
+          <label for="selectedAllergenId" class="sr-only">Seleziona allergene</label>
+          <select class="form-control" id="selectedAllergenId">
             <?php
               $query = $conn->query("SELECT * FROM allergen ORDER BY allergen_name");
               while ($row = mysqli_fetch_array($query)){
@@ -130,10 +142,10 @@
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="clientAddressName" class="sr-only">Nome indirizzo</label>
-            <input type="text" class="form-control mb-2" name="addressName" autocomplete="on" placeholder="Nome indirizzo" required autofocus id="addressName" />
-            <label for="clientAddressInfo" class="sr-only">Via e civico</label>
-            <input type="text" class="form-control" name="addressInfo" autocomplete="on" placeholder="Via e civico" required autofocus id="addressInfo" />
+            <label for="addressName" class="sr-only">Nome indirizzo</label>
+            <input type="text" class="form-control mb-2" name="addressName" autocomplete="on" placeholder="Nome indirizzo" required id="addressName" />
+            <label for="addressInfo" class="sr-only">Via e civico</label>
+            <input type="text" class="form-control" name="addressInfo" autocomplete="on" placeholder="Via e civico" required id="addressInfo" />
           </div>
         </div>
         <div class="modal-footer">
@@ -145,77 +157,77 @@
     </div>
   </div>
   <?php include("fragments/footer.php"); ?>
+  <script>
+  $(function() {
+    /* Set navbar voice active with respective screen reader functionality */
+    var element = $("#navbarProfile");
+    var parent = element.parent();
+    element.append( "<span class='sr-only'>(current)</span>" );
+    parent.addClass("active");
+
+    $("#btnAddAllergen").on('click', function(e) {
+      var allergen = $("#selectedAllergenId :selected")
+      var allergenId = $(allergen).data("allergenid")
+      var allergenName = $(allergen).data("allergenname")
+      $.post("ajax/add_allergen.php", {
+        allergen: allergenId
+      }).done(function(response) {
+        if (response.indexOf("ERROR") == -1) {
+          var newAllergen = '<button type="button" class="btnRemoveAllergen list-group-item list-group-item-action text-center m-0" data-allergenId="' + allergenId + '">' + allergenName + '</button>'
+          $(newAllergen).hide()
+          $(newAllergen).appendTo("#allergens").on('click', removeAllergen)
+          $(newAllergen).slideDown(200)
+        } else console.log(response)
+      })
+    })
+    $("#btnAddAddress").on('click', function(e) {
+      var addressName = $(this).parent().parent().find("#addressName")
+      var addressInfo = $(this).parent().parent().find("#addressInfo")
+      $.post("ajax/add_address.php", {
+        name: addressName.val(),
+        info: addressInfo.val()
+      }).done(function(response) {
+        if (response.indexOf("ERROR") == -1) {
+          var newAddress = '<button type="button" class="btnRemoveAddress list-group-item list-group-item-action text-center m-0" data-addressid="' + response + '">' + addressName.val() + ', ' + addressInfo.val() + '</button>'
+          $(newAddress).hide()
+          $(newAddress).appendTo("#addresses").on('click', removeAddress)
+          $(addressName).val("")
+          $(addressInfo).val("")
+          $(newAddress).slideDown(200)
+        } else console.log(response)
+      })
+    })
+    $(".btnRemoveAllergen").on('click', removeAllergen)
+    $(".btnRemoveAddress").on('click', removeAddress)
+  })
+
+  function removeAllergen() {
+    self = $(this)
+    $.post("ajax/remove_allergen.php", {
+      allergen: $(self).data("allergenid")
+    }).done(function(response) {
+      if (response.indexOf("ERROR") == -1) {
+        $(self).slideUp(200, function() {
+          $(self).remove()
+        })
+      } else console.log(response)
+    })
+  }
+
+  function removeAddress() {
+    self = $(this)
+    $.post("ajax/remove_address.php", {
+      address: $(self).data("addressid")
+    }).done(function(response) {
+      if (response.indexOf("ERROR") == -1) {
+        $(self).slideUp(200, function() {
+          $(self).remove()
+        })
+      } else console.log(response)
+    })
+  }
+
+  </script>
 </body>
-<script type="text/javascript">
-$(function() {
-  /* Set navbar voice active with respective screen reader functionality */
-  var element = $("#navbarProfile");
-  var parent = element.parent();
-  element.append( "<span class='sr-only'>(current)</span>" );
-  parent.addClass("active");
-
-  $("#btnAddAllergen").on('click', function(e) {
-    var allergen = $("#selectedAllergenId :selected")
-    var allergenId = $(allergen).data("allergenid")
-    var allergenName = $(allergen).data("allergenname")
-    $.post("ajax/add_allergen.php", {
-      allergen: allergenId
-    }).done(function(response) {
-      if (response.indexOf("ERROR") == -1) {
-        var newAllergen = '<button type="button" class="btnRemoveAllergen list-group-item list-group-item-action text-center m-0" data-allergenId="' + allergenId + '">' + allergenName + '</button>'
-        $(newAllergen).hide()
-        $(newAllergen).appendTo("#allergens").on('click', removeAllergen)
-        $(newAllergen).slideDown(200)
-      } else console.log(response)
-    })
-  })
-  $("#btnAddAddress").on('click', function(e) {
-    var addressName = $(this).parent().parent().find("#addressName")
-    var addressInfo = $(this).parent().parent().find("#addressInfo")
-    $.post("ajax/add_address.php", {
-      name: addressName.val(),
-      info: addressInfo.val()
-    }).done(function(response) {
-      if (response.indexOf("ERROR") == -1) {
-        var newAddress = '<button type="button" class="btnRemoveAddress list-group-item list-group-item-action text-center m-0" data-addressid="' + response + '">' + addressName.val() + ', ' + addressInfo.val() + '</button>'
-        $(newAddress).hide()
-        $(newAddress).appendTo("#addresses").on('click', removeAddress)
-        $(addressName).val("")
-        $(addressInfo).val("")
-        $(newAddress).slideDown(200)
-      } else console.log(response)
-    })
-  })
-  $(".btnRemoveAllergen").on('click', removeAllergen)
-  $(".btnRemoveAddress").on('click', removeAddress)
-})
-
-function removeAllergen() {
-  self = $(this)
-  $.post("ajax/remove_allergen.php", {
-    allergen: $(self).data("allergenid")
-  }).done(function(response) {
-    if (response.indexOf("ERROR") == -1) {
-      $(self).slideUp(200, function() {
-        $(self).remove()
-      })
-    } else console.log(response)
-  })
-}
-
-function removeAddress() {
-  self = $(this)
-  $.post("ajax/remove_address.php", {
-    address: $(self).data("addressid")
-  }).done(function(response) {
-    if (response.indexOf("ERROR") == -1) {
-      $(self).slideUp(200, function() {
-        $(self).remove()
-      })
-    } else console.log(response)
-  })
-}
-
-</script>
 <?php include("fragments/connection-end.php"); ?>
 </html>

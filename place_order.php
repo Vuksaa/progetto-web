@@ -12,11 +12,6 @@ include("fragments/connection-begin.php");
 <head>
   <?php include("fragments/head-contents.php"); ?>
   <link rel="stylesheet" type="text/css" href="styles/style.css">
-  <style>
-  .form-inline .col-form-label {
-    text-align: left;
-  }
-  </style>
 </head>
 
 <body>
@@ -101,7 +96,7 @@ include("fragments/connection-begin.php");
                       ?>
                     </p>
                     <form class="form-group form-inline">
-                      <label class="col-form-label col-5 col-sm-3 col-md-2 justify-content-start" for="product<?php echo $product['product_id']; ?>Price">Prezzo</label>
+                      <label class="col-form-label col-5 col-sm-3 col-md-2 justify-content-start">Prezzo</label>
                       <label class="col-form-label productPrice" id="product<?php echo $product['product_id']; ?>Price" data-price="<?php echo $product['product_price'];?>"><?php echo $product['product_price']." €"; ?></label>
                     </form>
                     <form class="form-group form-inline">
@@ -116,7 +111,7 @@ include("fragments/connection-begin.php");
                       if (!empty($allergensInProductIds)) {
                         echo '
                         <form class="form-group form-inline">
-                          <label class="col-form-label col-5 col-sm-3 col-md-2 justify-content-start" for="product'.$product['product_id'].'Allergens">Allergeni</label>
+                          <label class="col-form-label col-5 col-sm-3 col-md-2 justify-content-start">Allergeni</label>
                           <label class="col-form-label" id="product'.$product['product_id'].'Allergens">';
                           if (in_array($allergensInProductIds[0], $allergenIds)) {
                             echo '<span style="color: red;">'.$allergensInProductNames[0].'<span class="sr-only">Allergene segnalato</span></span>';
@@ -235,7 +230,6 @@ include("fragments/connection-begin.php");
         </section>
       </div>
     </div>
-  </div>
   <div class="modal fade" id="modalOrderPlaced" tabindex="-1" role="dialog" aria-labelledby="modalLabelOrderPlaced" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -256,161 +250,157 @@ include("fragments/connection-begin.php");
       </div>
     </div>
   </div>
-  <?php
-  include("fragments/footer.php");
-  ?>
-</body>
+  <?php include("fragments/footer.php"); ?>
+  <script>
+  $(function() {
 
-<script type="text/javascript">
-$(function() {
-
-  $("#collapseConfirmation").on('show.bs.collapse', function() {
-    if($("#toOrderProducts .productCard").length >0){
-      $("#totalPrice").val(
-        $("#toOrderProducts .productCard").length == 1 ? parseFloat($("#toOrderProducts .productCard").find(".productPrice").data("price")) * parseInt($("#toOrderProducts .productCard").find(".productQuantity").val())
-          : $("#toOrderProducts .productCard").toArray().reduce(function(p1, p2) {
-          return parseFloat($(p1).find(".productPrice").data("price")) * parseInt($(p1).find(".productQuantity").val()) +
-            parseFloat($(p2).find(".productPrice").data("price")) * parseInt($(p2).find(".productQuantity").val());
-          }))
-      }
-  })
-  $('#modalOrderPlaced').on('hide.bs.modal', function (e) {
-    window.location.href = "home_clients.php"
-  })
-  $(".alert").hide()
-  // Hide "enter address" form, and add event handlers for hiding the appropriate form on the radiobuttons
-  $("#formEnterAddress").hide()
-  $("#radioEnterAddress").on('change', function(e) {
-    $("#formEnterAddress").show()
-    $("#formSelectAddress").hide()
-  })
-  $("#radioSelectAddress").on('change', function(e) {
+    $("#collapseConfirmation").on('show.bs.collapse', function() {
+      if($("#toOrderProducts .productCard").length >0){
+        $("#totalPrice").val(
+          $("#toOrderProducts .productCard").length == 1 ? parseFloat($("#toOrderProducts .productCard").find(".productPrice").data("price")) * parseInt($("#toOrderProducts .productCard").find(".productQuantity").val())
+            : $("#toOrderProducts .productCard").toArray().reduce(function(p1, p2) {
+            return parseFloat($(p1).find(".productPrice").data("price")) * parseInt($(p1).find(".productQuantity").val()) +
+              parseFloat($(p2).find(".productPrice").data("price")) * parseInt($(p2).find(".productQuantity").val());
+            }))
+        }
+    })
+    $('#modalOrderPlaced').on('hide.bs.modal', function (e) {
+      window.location.href = "home_clients.php"
+    })
+    $(".alert").hide()
+    // Hide "enter address" form, and add event handlers for hiding the appropriate form on the radiobuttons
     $("#formEnterAddress").hide()
-    $("#formSelectAddress").show()
-  })
+    $("#radioEnterAddress").on('change', function(e) {
+      $("#formEnterAddress").show()
+      $("#formSelectAddress").hide()
+    })
+    $("#radioSelectAddress").on('change', function(e) {
+      $("#formEnterAddress").hide()
+      $("#formSelectAddress").show()
+    })
 
-  // hide the field for entering the address name if the user doesn't wish to save it. it is hidden by default
-  $("#formEnterAddressName").hide()
-  $("#checkSaveAddress").on('change', function(e) {
-    if ($(this).is(":checked") == true) {
-      $("#formEnterAddressName").show()
-    } else {
-      $("#formEnterAddressName").hide()
-    }
-  })
-
-  // filter the listed products whenever the searchbar's text changes
-  $("#searchProducts").on('keyup', function(e) {
-    var inputed = $(this).val().toLowerCase()
-    var items = $("#listedProducts .productCard")
-    // show all listed product if the searchbar is blank
-    if (inputed == "") {
-      items.show()
-      return
-    }
-    $.each(items, function() {
-      var productName = $(this).find(".card-title").text().toLowerCase()
-      // true if the text inputed in the searchbar is not contained in the product's name
-      if (productName.indexOf(inputed) == -1) {
-        $(this).hide()
+    // hide the field for entering the address name if the user doesn't wish to save it. it is hidden by default
+    $("#formEnterAddressName").hide()
+    $("#checkSaveAddress").on('change', function(e) {
+      if ($(this).is(":checked") == true) {
+        $("#formEnterAddressName").show()
       } else {
-        $(this).show()
+        $("#formEnterAddressName").hide()
       }
     })
-  })
 
-  // function for showing products when the "show more" button is clicked.
-  // the class d-none is used because the searchbar already hides products with the hide function
-  var nextHiddenProductGroup = 0
-  function showNextProducts() {
-    $(".productCard").filter(function() {
-      return ($(this).data("product-group") == nextHiddenProductGroup)
-    }).removeClass("d-none")
-    nextHiddenProductGroup++
-  }
-  showNextProducts()
-  $("#productsShowMore").on('click', showNextProducts)
-
-  // hide "-" buttons on each product card, since at first the order is empty
-  $(".btnRemoveProduct").hide()
-  $(".btnAddProduct").on('click', function(e) {
-    var productCard = $(this).parent().parent()
-    productCard.slideUp(400, function() {
-      productCard.detach().appendTo("#toOrderProducts")
-      productCard.find(".btnAddProduct").hide()
-      productCard.find(".btnRemoveProduct").show()
-      productCard.show()
-    })
-  })
-  $(".btnRemoveProduct").on('click', function(e) {
-    var productCard = $(this).parent().parent()
-    productCard.slideUp(400, function() {
-      productCard.detach().appendTo("#listedProducts")
-      productCard.find(".btnAddProduct").show()
-      productCard.find(".btnRemoveProduct").hide()
-      productCard.show()
-    })
-  })
-
-  $("#btnComplete").on('click', function(e) {
-    if ($("#toOrderProducts .productCard").length == 0) {
-      $(".alert.alert-danger").text("È necessario selezionare almeno un prodotto.")
-      $(".alert.alert-danger").fadeOut()
-      $(".alert.alert-danger").fadeIn()
-      return
-    }
-    if ($("#selectedAddress").val() === '' && $("#enteredAddress").val() === '') {
-      $(".alert.alert-danger").text("È necessario inserire o selezionare un indirizzo.")
-      $(".alert.alert-danger").fadeOut()
-      $(".alert.alert-danger").fadeIn()
-      return
-    }
-    order = {}
-    if ($("#radioSelectAddress:checked").val()) {
-      // grab the address from the dropdown
-      order["selectedAddress"] = $("#selectedAddress").val()
-    } else {
-      // grab the address from the textbox
-      order["enteredAddress"] = $("#enteredAddress").val()
-      order["saveAddress"] = $("#checkSaveAddress").is(":checked")
-      order["enteredAddressName"] = $("#enteredAddressName").val()
-    }
-    // create the array for the products
-    var valid=true;
-    order.products = []
-    $.each($("#toOrderProducts .productCard"), function() {
-      product = {}
-      product["id"] = $(this).data("product-id")
-      product["quantity"] = $(this).find(".productQuantity").val()
-      if(product["quantity"]<1){
-        valid=false;
+    // filter the listed products whenever the searchbar's text changes
+    $("#searchProducts").on('keyup', function(e) {
+      var inputed = $(this).val().toLowerCase()
+      var items = $("#listedProducts .productCard")
+      // show all listed product if the searchbar is blank
+      if (inputed == "") {
+        items.show()
+        return
       }
-      product["notes"] = $(this).find(".productNotes").val()
-      product["price"] = $(this).find(".productPrice").data('price')
-      order["products"].push(product)
+      $.each(items, function() {
+        var productName = $(this).find(".card-title").text().toLowerCase()
+        // true if the text inputed in the searchbar is not contained in the product's name
+        if (productName.indexOf(inputed) == -1) {
+          $(this).hide()
+        } else {
+          $(this).show()
+        }
+      })
     })
-    if(valid==false){
-      $(".alert.alert-danger").text("È necessario acquistare quantità maggiori di 0 per ogni prodotto.")
-      $(".alert.alert-danger").fadeOut()
-      $(".alert.alert-danger").fadeIn()
-      return;
+
+    // function for showing products when the "show more" button is clicked.
+    // the class d-none is used because the searchbar already hides products with the hide function
+    var nextHiddenProductGroup = 0
+    function showNextProducts() {
+      $(".productCard").filter(function() {
+        return ($(this).data("product-group") == nextHiddenProductGroup)
+      }).removeClass("d-none")
+      nextHiddenProductGroup++
     }
-    $.post("ajax/order_placed.php", {
-      data: JSON.stringify(order)
-    }).done(function(response) {
-      console.log(response)
-      if (response.indexOf("SUCCESS") != -1) {
-        $("#modalOrderPlaced").modal('show')
-      } else {
-        console.log(response)
-        $(".alert.alert-danger").text("Errore.")
+    showNextProducts()
+    $("#productsShowMore").on('click', showNextProducts)
+
+    // hide "-" buttons on each product card, since at first the order is empty
+    $(".btnRemoveProduct").hide()
+    $(".btnAddProduct").on('click', function(e) {
+      var productCard = $(this).parent().parent()
+      productCard.slideUp(400, function() {
+        productCard.detach().appendTo("#toOrderProducts")
+        productCard.find(".btnAddProduct").hide()
+        productCard.find(".btnRemoveProduct").show()
+        productCard.show()
+      })
+    })
+    $(".btnRemoveProduct").on('click', function(e) {
+      var productCard = $(this).parent().parent()
+      productCard.slideUp(400, function() {
+        productCard.detach().appendTo("#listedProducts")
+        productCard.find(".btnAddProduct").show()
+        productCard.find(".btnRemoveProduct").hide()
+        productCard.show()
+      })
+    })
+
+    $("#btnComplete").on('click', function(e) {
+      if ($("#toOrderProducts .productCard").length == 0) {
+        $(".alert.alert-danger").text("È necessario selezionare almeno un prodotto.")
+        $(".alert.alert-danger").fadeOut()
         $(".alert.alert-danger").fadeIn()
+        return
       }
+      if ($("#selectedAddress").val() === '' && $("#enteredAddress").val() === '') {
+        $(".alert.alert-danger").text("È necessario inserire o selezionare un indirizzo.")
+        $(".alert.alert-danger").fadeOut()
+        $(".alert.alert-danger").fadeIn()
+        return
+      }
+      order = {}
+      if ($("#radioSelectAddress:checked").val()) {
+        // grab the address from the dropdown
+        order["selectedAddress"] = $("#selectedAddress").val()
+      } else {
+        // grab the address from the textbox
+        order["enteredAddress"] = $("#enteredAddress").val()
+        order["saveAddress"] = $("#checkSaveAddress").is(":checked")
+        order["enteredAddressName"] = $("#enteredAddressName").val()
+      }
+      // create the array for the products
+      var valid=true;
+      order.products = []
+      $.each($("#toOrderProducts .productCard"), function() {
+        product = {}
+        product["id"] = $(this).data("product-id")
+        product["quantity"] = $(this).find(".productQuantity").val()
+        if(product["quantity"]<1){
+          valid=false;
+        }
+        product["notes"] = $(this).find(".productNotes").val()
+        product["price"] = $(this).find(".productPrice").data('price')
+        order["products"].push(product)
+      })
+      if(valid==false){
+        $(".alert.alert-danger").text("È necessario acquistare quantità maggiori di 0 per ogni prodotto.")
+        $(".alert.alert-danger").fadeOut()
+        $(".alert.alert-danger").fadeIn()
+        return;
+      }
+      $.post("ajax/order_placed.php", {
+        data: JSON.stringify(order)
+      }).done(function(response) {
+        console.log(response)
+        if (response.indexOf("SUCCESS") != -1) {
+          $("#modalOrderPlaced").modal('show')
+        } else {
+          console.log(response)
+          $(".alert.alert-danger").text("Errore.")
+          $(".alert.alert-danger").fadeIn()
+        }
+      })
     })
+
   })
-
-})
-</script>
-
+  </script>
+</body>
 <?php include("fragments/connection-end.php"); ?>
 </html>

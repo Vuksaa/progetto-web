@@ -44,11 +44,11 @@
     </div>
   </nav>
   <div aria-live="polite" aria-atomic="true" style="position: relative;">
-    <div class="pr-3 pt-3" id="notificationArea" style="position: absolute; top: 0; right: 0;">
+    <div class="pr-3 pl-3 pt-3" id="notificationArea" style="position: absolute; top: 0; right: 0;">
     </div>
   </div>
 </header>
-<script type="text/javascript">
+<script>
 function createToast(title, subtitle, body, icon) {
   var toast = $(`<div class="toast" role="alert" aria-live="assertive" aria-atomic="false" data-autohide="false" style="min-width: 230px; max-width: 450px">
     <div class="toast-header">
