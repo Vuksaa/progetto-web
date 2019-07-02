@@ -50,8 +50,8 @@ include("fragments/connection-begin.php");
           </button>
         </h2>
         <div id="collapseMenu" class="collapse show mb-4" aria-labelledby="headingMenu" data-parent="#mainAccordion">
-          <div class="searchbar mt-3 mb-2">
-            <input class="form-control" id="searchProducts" type="search" placeholder="Search" aria-label="Search">
+          <div class="searchbar col col-md-7 pl-0 pr-0 mt-3 mb-2">
+            <input class="form-control" id="searchProducts" type="search" placeholder="Cerca" aria-label="Cerca">
           </div>
           <div id="listedProducts">
             <?php
@@ -290,23 +290,11 @@ include("fragments/connection-begin.php");
     })
 
     // filter the listed products whenever the searchbar's text changes
+    $("#searchProducts").on('search', function(e) {
+      search($(this).val().toLowerCase(), $("#listedProducts .productCard"), ".card-title")
+    });
     $("#searchProducts").on('keyup', function(e) {
-      var inputed = $(this).val().toLowerCase()
-      var items = $("#listedProducts .productCard")
-      // show all listed product if the searchbar is blank
-      if (inputed == "") {
-        items.show()
-        return
-      }
-      $.each(items, function() {
-        var productName = $(this).find(".card-title").text().toLowerCase()
-        // true if the text inputed in the searchbar is not contained in the product's name
-        if (productName.indexOf(inputed) == -1) {
-          $(this).hide()
-        } else {
-          $(this).show()
-        }
-      })
+      search($(this).val().toLowerCase(), $("#listedProducts .productCard"), ".card-title")
     })
 
     // function for showing products when the "show more" button is clicked.
@@ -400,6 +388,22 @@ include("fragments/connection-begin.php");
     })
 
   })
+  function search(inputed, items, toFind) {
+    // show all items if the searchbar is blank
+    if (inputed === "") {
+      items.show();
+      return;
+    }
+    $.each(items, function() {
+      var providerName = $(this).find(toFind).text().toLowerCase();
+      // true if the text inputed in the searchbar is not contained in the product's name
+      if (providerName.indexOf(inputed) === -1) {
+        $(this).hide();
+      } else {
+        $(this).show();
+      }
+    });
+  }
   </script>
 </body>
 <?php include("fragments/connection-end.php"); ?>
