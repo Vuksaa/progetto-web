@@ -240,43 +240,19 @@
         });
       });
 
+
+      $("#searchFavourites").on('search', function(e) {
+        search($(this).val().toLowerCase(), $(".favouriteProvider"), ".card-title")
+      });
       $("#searchFavourites").on('keyup', function(e) {
-        var inputed = $(this).val().toLowerCase();
-        var items = $(".favouriteProvider");
-        // show all listed product if the searchbar is blank
-        if (inputed === "") {
-          items.show();
-          return;
-        }
-        $.each(items, function() {
-          var providerName = $(this).find(".card-title").text().toLowerCase();
-          // true if the text inputed in the searchbar is not contained in the product's name
-          if (providerName.indexOf(inputed) === -1) {
-            $(this).hide();
-          } else {
-            $(this).show();
-          }
-        });
+        search($(this).val().toLowerCase(), $(".favouriteProvider"), ".card-title")
+      });
+      $("#searchListed").on('search', function(e) {
+        search($(this).val().toLowerCase(), $(".listedProvider"), ".card-title")
       });
       $("#searchListed").on('keyup', function(e) {
-        var inputed = $(this).val().toLowerCase();
-        var items = $(".listedProvider");
-        // show all listed product if the searchbar is blank
-        if (inputed === "") {
-          items.show();
-          return;
-        }
-        $.each(items, function() {
-          var providerName = $(this).find(".card-title").text().toLowerCase();
-          // true if the text inputed in the searchbar is not contained in the product's name
-          if (providerName.indexOf(inputed) === -1) {
-            $(this).hide();
-          } else {
-            $(this).show();
-          }
-        });
+        search($(this).val().toLowerCase(), $(".listedProvider"), ".card-title")
       });
-
 
       $(".btn-place-order").click(function() {
         window.location.href = "place_order.php?provider=" + $(this).parent().parent().parent().parent().data("provider-id");
@@ -289,6 +265,23 @@
       $("button[name='addFavourite']").on('click', addFavourite);
       $("button[name='removeFavourite']").on('click', removeFavourite);
     });
+
+    function search(inputed, items, toFind) {
+      // show all items if the searchbar is blank
+      if (inputed === "") {
+        items.show();
+        return;
+      }
+      $.each(items, function() {
+        var providerName = $(this).find(toFind).text().toLowerCase();
+        // true if the text inputed in the searchbar is not contained in the product's name
+        if (providerName.indexOf(inputed) === -1) {
+          $(this).hide();
+        } else {
+          $(this).show();
+        }
+      });
+    }
 
     function addFavourite() {
       var provider = $(this).parent().parent().parent().parent();
